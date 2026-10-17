@@ -1,12 +1,12 @@
 {
   "schema": "apex-changelog-v1",
-  "generatedAt": "2026-10-17T05:40:05Z",
+  "generatedAt": "2026-10-17T06:15:26Z",
   "latest": {
-    "versionName": "1.4.9.23",
-    "versionCode": 99,
-    "tag": "v1.4.9.23",
+    "versionName": "1.4.9.24",
+    "versionCode": 100,
+    "tag": "v1.4.9.24",
     "date": "2026-10-17",
-    "title": "v1.4.9.23 更新内容",
+    "title": "v1.4.9.24 更新内容",
     "notes": [
       "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
       "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
@@ -20,12 +20,44 @@
       "主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试",
       "测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁",
       "CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断",
-      "标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）"
+      "标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）",
+      "门控提问卡挂起时背景整体模糊 + 模态幕帘：液态玻璃采样盲区的文字透出干扰根治",
+      "skill / MCP / 工具确认面收敛为零打扰：第三方首次确认与风险弹窗全部移除，仅保留显式敏感动作的会话内一次确认",
+      "Agent 模式任务卡激活期去重同文用户气泡：执行中下方不再重复显示",
+      "Coding 流水轴空思考卡治理：空思考分片不建卡 + 空白收尾移除占位（不思考模型不再挂「思考中」）"
     ],
-    "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补\n\n---\n\n# 代码审查全量落地 —— 18 issue 一次收口\n\n- 修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用\n- 安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）\n- 市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用\n- MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断\n- i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）\n- 主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试\n- 测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁\n- CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断\n- 标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.23"
+    "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补\n\n---\n\n# 代码审查全量落地 —— 18 issue 一次收口\n\n- 修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用\n- 安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）\n- 市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用\n- MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断\n- i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）\n- 主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试\n- 测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁\n- CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断\n- 标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）\n\n---\n\n# 玻璃幕帘背景模糊 + 确认面零打扰 + 空思考卡治理\n\n- 门控提问卡挂起时背景整体模糊 + 模态幕帘：液态玻璃采样盲区的文字透出干扰根治\n- skill / MCP / 工具确认面收敛为零打扰：第三方首次确认与风险弹窗全部移除，仅保留显式敏感动作的会话内一次确认\n- Agent 模式任务卡激活期去重同文用户气泡：执行中下方不再重复显示\n- Coding 流水轴空思考卡治理：空思考分片不建卡 + 空白收尾移除占位（不思考模型不再挂「思考中」）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.24"
   },
   "history": [
+    {
+      "versionName": "1.4.9.24",
+      "versionCode": 100,
+      "tag": "v1.4.9.24",
+      "date": "2026-10-17",
+      "title": "v1.4.9.24 更新内容",
+      "notes": [
+        "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
+        "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
+        "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
+        "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
+        "修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用",
+        "安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）",
+        "市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用",
+        "MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断",
+        "i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）",
+        "主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试",
+        "测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁",
+        "CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断",
+        "标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）",
+        "门控提问卡挂起时背景整体模糊 + 模态幕帘：液态玻璃采样盲区的文字透出干扰根治",
+        "skill / MCP / 工具确认面收敛为零打扰：第三方首次确认与风险弹窗全部移除，仅保留显式敏感动作的会话内一次确认",
+        "Agent 模式任务卡激活期去重同文用户气泡：执行中下方不再重复显示",
+        "Coding 流水轴空思考卡治理：空思考分片不建卡 + 空白收尾移除占位（不思考模型不再挂「思考中」）"
+      ],
+      "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补\n\n---\n\n# 代码审查全量落地 —— 18 issue 一次收口\n\n- 修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用\n- 安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）\n- 市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用\n- MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断\n- i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）\n- 主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试\n- 测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁\n- CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断\n- 标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）\n\n---\n\n# 玻璃幕帘背景模糊 + 确认面零打扰 + 空思考卡治理\n\n- 门控提问卡挂起时背景整体模糊 + 模态幕帘：液态玻璃采样盲区的文字透出干扰根治\n- skill / MCP / 工具确认面收敛为零打扰：第三方首次确认与风险弹窗全部移除，仅保留显式敏感动作的会话内一次确认\n- Agent 模式任务卡激活期去重同文用户气泡：执行中下方不再重复显示\n- Coding 流水轴空思考卡治理：空思考分片不建卡 + 空白收尾移除占位（不思考模型不再挂「思考中」）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.24"
+    },
     {
       "versionName": "1.4.9.23",
       "versionCode": 99,
