@@ -1,0 +1,36 @@
+{
+  "schema": "apex-changelog-v1",
+  "generatedAt": "2026-10-17T04:02:15Z",
+  "latest": {
+    "versionName": "1.4.9.20",
+    "versionCode": 96,
+    "tag": "v1.4.9.20",
+    "date": "2026-10-17",
+    "title": "v1.4.9.20 更新内容",
+    "notes": [
+      "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
+      "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
+      "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
+      "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补"
+    ],
+    "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.20"
+  },
+  "history": [
+    {
+      "versionName": "1.4.9.20",
+      "versionCode": 96,
+      "tag": "v1.4.9.20",
+      "date": "2026-10-17",
+      "title": "v1.4.9.20 更新内容",
+      "notes": [
+        "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
+        "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
+        "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
+        "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补"
+      ],
+      "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.20"
+    }
+  ]
+}
