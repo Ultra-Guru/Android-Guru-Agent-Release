@@ -1,27 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-24T13:59:58Z",
+  "generatedAt": "2026-10-24T14:18:25Z",
   "latest": {
-    "versionName": "1.4.9.59",
-    "versionCode": 135,
-    "tag": "v1.4.9.59",
+    "versionName": "1.4.9.60",
+    "versionCode": 136,
+    "tag": "v1.4.9.60",
     "date": "2026-10-24",
-    "title": "v1.4.9.59 更新内容",
-    "notes": [
-      "更新日志弹窗支持配图展示：发布器（apex-Administrator v2.3+）发送片段时可附最多 9 张截图",
-      "发布器压缩自律：最长边 ≤1600px / JPEG 85，配图与片段同一 commit 原子提交",
-      "`changelog.json` schema 升级 v3：一级日志新增 `images` 字段（URL 列表），老客户端忽略新字段不受影响",
-      "弹窗图廊交互：横向滑动浏览、点开全屏（复用 ImageLightbox：双指缩放 / 拖拽平移 / 双击缩放）",
-      "聚合端要点提取同步增强：行内图片引用剥除（纯图 bullet 不占要点位、首行摘要跳过纯图行）"
+    "title": "v1.4.9.60 更新内容",
+    "notes": [],
+    "images": [],
+    "pr": [
+      {
+        "title": "settings terminal notif update",
+        "notes": [
+          "设置中心新增「终端」大分类：字号 / 单色 / 键栏 / 响铃振动 / 屏幕常亮 / 配色方案 / 扩展键宏 / 命令黑白名单全部收入两级抽屉（此前只藏在终端页弹层），设置中心与终端页实时同步生效",
+          "新增「通知」设置页：任务完成通知与循环运行通知聚合一处，附系统通知渠道直达入口",
+          "新增「应用更新」设置页：自动检查更新开关与下载镜像（自动测速 / 直连 / 三个加速节点）从关于页收编进设置中心"
+        ]
+      }
     ],
-    "images": [
-      "https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent/main/.changelog/images/demo-1.jpg"
-    ],
-    "pr": [],
-    "markdown": "# 更新日志配图通道（changelog v3）\n\n- 更新日志弹窗支持配图展示：发布器（apex-Administrator v2.3+）发送片段时可附最多 9 张截图\n- 发布器压缩自律：最长边 ≤1600px / JPEG 85，配图与片段同一 commit 原子提交\n- `changelog.json` schema 升级 v3：一级日志新增 `images` 字段（URL 列表），老客户端忽略新字段不受影响\n- 弹窗图廊交互：横向滑动浏览、点开全屏（复用 ImageLightbox：双指缩放 / 拖拽平移 / 双击缩放）\n- 聚合端要点提取同步增强：行内图片引用剥除（纯图 bullet 不占要点位、首行摘要跳过纯图行）\n\n![配图1](https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent/main/.changelog/images/demo-1.jpg)",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.59"
+    "markdown": "- 设置中心新增「终端」大分类：字号 / 单色 / 键栏 / 响铃振动 / 屏幕常亮 / 配色方案 / 扩展键宏 / 命令黑白名单全部收入两级抽屉（此前只藏在终端页弹层），设置中心与终端页实时同步生效\n- 新增「通知」设置页：任务完成通知与循环运行通知聚合一处，附系统通知渠道直达入口\n- 新增「应用更新」设置页：自动检查更新开关与下载镜像（自动测速 / 直连 / 三个加速节点）从关于页收编进设置中心",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.60"
   },
   "history": [
+    {
+      "versionName": "1.4.9.60",
+      "versionCode": 136,
+      "tag": "v1.4.9.60",
+      "date": "2026-10-24",
+      "title": "v1.4.9.60 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "settings terminal notif update",
+          "notes": [
+            "设置中心新增「终端」大分类：字号 / 单色 / 键栏 / 响铃振动 / 屏幕常亮 / 配色方案 / 扩展键宏 / 命令黑白名单全部收入两级抽屉（此前只藏在终端页弹层），设置中心与终端页实时同步生效",
+            "新增「通知」设置页：任务完成通知与循环运行通知聚合一处，附系统通知渠道直达入口",
+            "新增「应用更新」设置页：自动检查更新开关与下载镜像（自动测速 / 直连 / 三个加速节点）从关于页收编进设置中心"
+          ]
+        }
+      ],
+      "markdown": "- 设置中心新增「终端」大分类：字号 / 单色 / 键栏 / 响铃振动 / 屏幕常亮 / 配色方案 / 扩展键宏 / 命令黑白名单全部收入两级抽屉（此前只藏在终端页弹层），设置中心与终端页实时同步生效\n- 新增「通知」设置页：任务完成通知与循环运行通知聚合一处，附系统通知渠道直达入口\n- 新增「应用更新」设置页：自动检查更新开关与下载镜像（自动测速 / 直连 / 三个加速节点）从关于页收编进设置中心",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.60"
+    },
     {
       "versionName": "1.4.9.59",
       "versionCode": 135,
