@@ -1,80 +1,55 @@
 {
   "schema": "apex-changelog-v2",
-  "generatedAt": "2026-10-24T10:37:58Z",
+  "generatedAt": "2026-10-24T12:48:38Z",
   "latest": {
-    "versionName": "1.4.9.56",
-    "versionCode": 132,
-    "tag": "v1.4.9.56",
+    "versionName": "1.4.9.57",
+    "versionCode": 133,
+    "tag": "v1.4.9.57",
     "date": "2026-10-24",
-    "title": "v1.4.9.56 更新内容",
+    "title": "v1.4.9.57 更新内容",
     "notes": [],
     "pr": [
       {
-        "title": "settings drawer two level",
+        "title": "修复：悬浮窗缩放 / 上下文仪表盘 / 多行输入 / 模板工坊 / 顶栏模型入口 / 抽屉收回（六连修）",
         "notes": [
-          "设置页换新导航：从总抽屉点「设置」后总抽屉自动收起，进入独立的设置抽屉",
-          "设置抽屉两级分层：第一列大分类（模型配置 / Agent 配置 / 界面外观 / 数据与备份），点击大分类展开二级页面项，点击二级项收起抽屉进入对应页面",
-          "设置功能全面整理：旧三页签全部功能分区归入 4 大分类 24 个独立页面，随时可从顶栏汉堡重新打开设置抽屉切换"
-        ]
-      },
-      {
-        "title": "settings browser tabs",
-        "notes": [
-          "设置页面浏览器式多标签：打开的设置页以标签形式排列在页面最上方，点击标签即时切换",
-          "标签叉号关闭：点 × 关闭对应页面并自动回退到相邻标签，关闭最后一个标签返回设置抽屉",
-          "标签页状态各自记忆：每个标签的滚动位置与未保存输入互不干扰，系统返回键关闭当前标签"
-        ]
-      },
-      {
-        "title": "修复：Agent 执行命令高错误率 + 流式输出只有思考没有回答",
-        "notes": [
-          "**工具名幻觉兜底**：模型调用不存在的 `bash` / `sh` / `run_command` 等工具名",
-          "**一次性命令改用真 bash**：TerminalExec 的 Ubuntu 沙箱通道从 `/bin/sh`",
-          "**失败原因不再丢失**：宿主命令通道（root / Shizuku / 本地）在 stdout",
-          "**cd 记忆加固**：路径含空格 / 引号时安全包裹；工作目录记忆若指向",
-          "**提示词声明 Shell 方言地图**：明确告知模型两套 shell 的边界 —— 宿主",
-          "**流式输出修复**：思考型模型把最终回答整体写进思考通道（或网关把正文"
-        ]
-      },
-      {
-        "title": "restrictive license",
-        "notes": [
-          "许可协议从 TBD 落定为 **UGRL v1.0（Ultra-Guru 受限使用许可协议）**：仓库新增 LICENSE（中英双语，中文为权威版本），README 徽章与「许可证」章节同步更新——收紧原因是软件具备 MITM / 证书注入 / SSL Pinning 绕过 / APK 重打包 / 动态插桩 / root 提权等高危能力，仅授权个人学习与获书面授权的安全测试，禁止再分发与任何商业用途，商用需联系作者"
-        ]
-      },
-      {
-        "title": "<!-- pr: browser-speed-batch-v1.8.0 -->",
-        "notes": [
-          "浏览器自动化提速（apex-kit-browser v1.8.0 接入，lock bump 365bc0e→06563a0）：动作后固定延迟改探针轮询早退（典型点击 ~550ms→~140ms，click/input/select/press_key/hover/drag 全覆盖）；snapshot 不再每次重复注入网络监控 JS（Tab.netHooked 位图去重）；BrowserWaitFor 等待前 1.2s 用 100ms 快轮；快照摘要 lineOf 按 bid 缓存",
-          "新工具 BrowserBatchActions：一次调用串行执行 ≤8 个动作（click/input/select/press_key/scroll/wait），逐个带重试/熔断/模糊自愈/动作后验证，任一失败即停并标明断点——表单填写场景模型往返 N→1",
-          "BrowserWaitFor 补齐七模式：element_gone / text_gone / network_idle（在途请求归零）/ selector_count（命中数谓词，如 'li.item >= 10'）此前引擎已支持但工具面只暴露 3 种",
-          "BrowserScroll 增 to 参数（top/bottom 一步到边界，超长页面优先于 delta_y）；BrowserSnapshot 增 token_budget 参数（400..4000，默认 1600）",
-          "修库侧后台视口截图死代码：提前 return 守卫使手动 measure/layout 兜底永不可达（未挂浮窗的 WebView 截图必失败），移除守卫后兜底重新生效",
-          "浏览器仪表盘 UI：动作卡改 tracer 事件流即时驱动（落记录即滚，轮询放缓至 2.5s 兜底）；动作条目增成败色点（失败=错误红）与慢动作耗时警示（>2s 琥珀色）",
-          "聊天工具卡：BrowserSnapshot 输出渲染为紧凑快照卡（交互元素计数 chip + 截断警示 chip + 限高等宽滚动列表），不再以文本墙撑爆聊天流"
-        ]
-      },
-      {
-        "title": "<!-- pr: fix-drawer-version-badge-layout -->",
-        "notes": [
-          "抽屉品牌头部布局调整：图标从 48dp 缩小至 40dp，版本号徽章从 tagline 行移至标题\"APEX//AGENT\"同行横向排列，tagline 独占一行，整体更紧凑"
-        ]
-      },
-      {
-        "title": "修复：proot 的 libtalloc.so.2 SONAME staging —— git/MCP/marketplace 三条通道全线恢复",
-        "notes": [
-          "**根因（真机实证，OPPO PLE110 / Android 16）**：proot 的 `DT_NEEDED` 是",
-          "**修复**：新增共享助手 `PRootLibtallocStaging`（platform:terminal），",
-          "**悬空链接修复**：app 升级后 nativeLibraryDir 路径变化（新 pkg hash",
-          "**失败可观测**：不再静默吞异常，逐目录返回 FAILED + 异常详情，",
-          "回归测试：`PRootLibtallocStagingTest`（6 例）锁定：全目录建链、幂等、"
+          "浏览器自动化悬浮页面支持双指缩放：引擎 WebView 开启缩放能力（隐藏系统 +/- 浮钮仅保留捏合手势），实时页面悬浮窗、人工接管全屏与 in-app 浏览器均可捏合缩放页面（apex-kit-browser ef571a1，锁已重钉）",
+          "移除顶部「上下文仪表盘」长条：顶部堆叠高度回落一档，页面整体上抬；token 用量数据仍可在「用量仪表盘」页查看",
+          "输入框真·多行：修复 EditText 因 inputType 缺 MULTI_LINE 标记被系统强制单行的问题 —— 长文本自动换行、输入框 1→8 行自适应增高（Agent 与 Coding 两屏同享）；回车行为仍按设置「回车发送 / 回车换行」分档，Shift+Enter 始终可插入换行",
+          "模板工坊内容补齐：修复内置 10 套模板从未播种（全新安装两个页签恒为空清单、切换「没有反应」）—— 首次打开即见 Agent/Coding 各 5 套内置模板，页签切换有实际内容可看",
+          "Coding 屏顶栏右端空隙位新增 LLM 模型图标（小大脑）：点击即弹出模型列表 / 参数调节 / 配置入口，选择即热生效 —— 不再需要到横向滚动工具行末位寻找模型菜单",
+          "抽屉点击空白处可收回：自建 scrim 点击捕获层（M3 1.4.0 将 scrim 点击关闭错误地门控在 gesturesEnabled 之后，与防误触所需的关闭手势冲突）",
+          "抽屉再次点击当前页（如 Agent 模式页的「Agent 模式」项）可收回抽屉：修复玻璃导航项对已选中条目禁用点击导致抽屉悬停不关的问题"
         ]
       }
     ],
-    "markdown": "- 设置页换新导航：从总抽屉点「设置」后总抽屉自动收起，进入独立的设置抽屉\n- 设置抽屉两级分层：第一列大分类（模型配置 / Agent 配置 / 界面外观 / 数据与备份），点击大分类展开二级页面项，点击二级项收起抽屉进入对应页面\n- 设置功能全面整理：旧三页签全部功能分区归入 4 大分类 24 个独立页面，随时可从顶栏汉堡重新打开设置抽屉切换\n\n---\n\n- 设置页面浏览器式多标签：打开的设置页以标签形式排列在页面最上方，点击标签即时切换\n- 标签叉号关闭：点 × 关闭对应页面并自动回退到相邻标签，关闭最后一个标签返回设置抽屉\n- 标签页状态各自记忆：每个标签的滚动位置与未保存输入互不干扰，系统返回键关闭当前标签\n\n---\n\n# 修复：Agent 执行命令高错误率 + 流式输出只有思考没有回答\n\n- **工具名幻觉兜底**：模型调用不存在的 `bash` / `sh` / `run_command` 等工具名\n  （训练自 Claude Code / OpenAI 工具集的肌肉记忆）时，别名表静默路由到\n  TerminalExec —— 不再连环 `Unknown tool` 404 后盲目换名重试；未知工具的\n  错误文案同时补上「命令用 TerminalExec、找工具用 ToolSearch」的可执行\n  指引，模型下一步有确定动作。\n- **一次性命令改用真 bash**：TerminalExec 的 Ubuntu 沙箱通道从 `/bin/sh`\n  （dash）切换为 `/bin/bash` —— pipefail / 数组 / 进程替换 / here-string\n  等 bashism 不再 `not found`，与 PTY 交互会话同方言。\n- **失败原因不再丢失**：宿主命令通道（root / Shizuku / 本地）在 stdout\n  非空时不再静默丢弃 stderr —— 双流并存时以 `[stderr]` 标记追加，模型\n  能看到真实报错，不再盲重试。\n- **cd 记忆加固**：路径含空格 / 引号时安全包裹；工作目录记忆若指向\n  Ubuntu 沙箱内路径（如 `/workspace`，宿主不存在）自动丢弃 —— 不再让\n  `cd /workspace && cmd` 的语法错误污染命令结果。\n- **提示词声明 Shell 方言地图**：明确告知模型两套 shell 的边界 —— 宿主\n  mksh+toybox 仅 POSIX 子集、python3/gcc/git/npm 只存在于 Ubuntu 沙箱、\n  不存在名为 bash 的工具 —— 从源头减少方言错配。\n- **流式输出修复**：思考型模型把最终回答整体写进思考通道（或网关把正文\n  挂在流式末帧 message 上）时，正文恒空被误判为「无效响应」—— 现在以\n  思考文本兜底为最终回答（先补发 ResponseChunk 再收尾），并新增末帧\n  message 正文/思考内容兜底解析；「只有思考过程、没有文字回答」不再出现。\n\n---\n\n- 许可协议从 TBD 落定为 **UGRL v1.0（Ultra-Guru 受限使用许可协议）**：仓库新增 LICENSE（中英双语，中文为权威版本），README 徽章与「许可证」章节同步更新——收紧原因是软件具备 MITM / 证书注入 / SSL Pinning 绕过 / APK 重打包 / 动态插桩 / root 提权等高危能力，仅授权个人学习与获书面授权的安全测试，禁止再分发与任何商业用途，商用需联系作者\n\n---\n\n<!-- pr: browser-speed-batch-v1.8.0 -->\n- 浏览器自动化提速（apex-kit-browser v1.8.0 接入，lock bump 365bc0e→06563a0）：动作后固定延迟改探针轮询早退（典型点击 ~550ms→~140ms，click/input/select/press_key/hover/drag 全覆盖）；snapshot 不再每次重复注入网络监控 JS（Tab.netHooked 位图去重）；BrowserWaitFor 等待前 1.2s 用 100ms 快轮；快照摘要 lineOf 按 bid 缓存\n- 新工具 BrowserBatchActions：一次调用串行执行 ≤8 个动作（click/input/select/press_key/scroll/wait），逐个带重试/熔断/模糊自愈/动作后验证，任一失败即停并标明断点——表单填写场景模型往返 N→1\n- BrowserWaitFor 补齐七模式：element_gone / text_gone / network_idle（在途请求归零）/ selector_count（命中数谓词，如 'li.item >= 10'）此前引擎已支持但工具面只暴露 3 种\n- BrowserScroll 增 to 参数（top/bottom 一步到边界，超长页面优先于 delta_y）；BrowserSnapshot 增 token_budget 参数（400..4000，默认 1600）\n- 修库侧后台视口截图死代码：提前 return 守卫使手动 measure/layout 兜底永不可达（未挂浮窗的 WebView 截图必失败），移除守卫后兜底重新生效\n- 浏览器仪表盘 UI：动作卡改 tracer 事件流即时驱动（落记录即滚，轮询放缓至 2.5s 兜底）；动作条目增成败色点（失败=错误红）与慢动作耗时警示（>2s 琥珀色）\n- 聊天工具卡：BrowserSnapshot 输出渲染为紧凑快照卡（交互元素计数 chip + 截断警示 chip + 限高等宽滚动列表），不再以文本墙撑爆聊天流\n\n---\n\n<!-- pr: fix-drawer-version-badge-layout -->\n- 抽屉品牌头部布局调整：图标从 48dp 缩小至 40dp，版本号徽章从 tagline 行移至标题\"APEX//AGENT\"同行横向排列，tagline 独占一行，整体更紧凑\n\n---\n\n# 修复：proot 的 libtalloc.so.2 SONAME staging —— git/MCP/marketplace 三条通道全线恢复\n\n- **根因（真机实证，OPPO PLE110 / Android 16）**：proot 的 `DT_NEEDED` 是\n  `libtalloc.so.2`，而 Android 打包要求 jniLibs 以 `lib*.so` 命名（真实文件\n  只能叫 `libtalloc.so`）。此前四份拷贝的兜底循环只做「同目录软链」：遍历\n  LD_LIBRARY_PATH 目录，仅在**含 libtalloc.so** 的目录（nativeLibraryDir）\n  建 `libtalloc.so.2` 链接——staging 目录（filesDir/linux/bin，LD_LIBRARY_PATH\n  首项、可写性有保证）里没有 libtalloc.so，永远拿不到链接；而\n  nativeLibraryDir 建链在部分真机**静默失败**（`runCatching` 吞掉异常）。\n  结果 git status/clone（经 apex-workspace-kit 的 GitEngine → 宿主\n  ProotGitCommandRunner）、MCP 进程、marketplace 沙箱三条 proot 通道\n  全线 `CANNOT LINK EXECUTABLE libproot.so: library libtalloc.so.2 not found`。\n  用户在 filesDir 手工建链后 proot 立即恢复——实证根因。\n- **修复**：新增共享助手 `PRootLibtallocStaging`（platform:terminal），\n  幂等地在 **LD_LIBRARY_PATH 每个目录**重建 SONAME 入口，统一指向真实\n  libtalloc.so——staging 目录从此也有可用链接（linker 按序搜索，staging\n  在首位先命中）。四处拷贝（git / MCP / tools spawner / marketplace）\n  全部收敛到该助手，同时：\n  - **悬空链接修复**：app 升级后 nativeLibraryDir 路径变化（新 pkg hash\n    目录），staging 旧链接指向已删除目录成为悬空链接——`File.exists()`\n    对悬空链接返回 false，旧代码既删不掉也建不了（`createSymbolicLink`\n    抛 FileAlreadyExistsException），`PRootHostEnvironment.prepare()` 在\n    升级后**整体失败**（终端 proot 通道全断）。助手显式判\n    `isSymbolicLink && !exists` → 删除重建。\n  - **失败可观测**：不再静默吞异常，逐目录返回 FAILED + 异常详情，\n    调用方 WARN 留痕——下次诊断日志直接可见真实异常，不必再靠手工\n    实验反推。\n- 回归测试：`PRootLibtallocStagingTest`（6 例）锁定：全目录建链、幂等、\n  悬空链接重建、libtalloc.so 缺失的 FAILED 可观测、LD_LIBRARY_PATH\n  缺失空操作、`prepare()` 悬空链接场景成功。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.56"
+    "markdown": "# 修复：悬浮窗缩放 / 上下文仪表盘 / 多行输入 / 模板工坊 / 顶栏模型入口 / 抽屉收回（六连修）\n\n- 浏览器自动化悬浮页面支持双指缩放：引擎 WebView 开启缩放能力（隐藏系统 +/- 浮钮仅保留捏合手势），实时页面悬浮窗、人工接管全屏与 in-app 浏览器均可捏合缩放页面（apex-kit-browser ef571a1，锁已重钉）\n- 移除顶部「上下文仪表盘」长条：顶部堆叠高度回落一档，页面整体上抬；token 用量数据仍可在「用量仪表盘」页查看\n- 输入框真·多行：修复 EditText 因 inputType 缺 MULTI_LINE 标记被系统强制单行的问题 —— 长文本自动换行、输入框 1→8 行自适应增高（Agent 与 Coding 两屏同享）；回车行为仍按设置「回车发送 / 回车换行」分档，Shift+Enter 始终可插入换行\n- 模板工坊内容补齐：修复内置 10 套模板从未播种（全新安装两个页签恒为空清单、切换「没有反应」）—— 首次打开即见 Agent/Coding 各 5 套内置模板，页签切换有实际内容可看\n- Coding 屏顶栏右端空隙位新增 LLM 模型图标（小大脑）：点击即弹出模型列表 / 参数调节 / 配置入口，选择即热生效 —— 不再需要到横向滚动工具行末位寻找模型菜单\n- 抽屉点击空白处可收回：自建 scrim 点击捕获层（M3 1.4.0 将 scrim 点击关闭错误地门控在 gesturesEnabled 之后，与防误触所需的关闭手势冲突）\n- 抽屉再次点击当前页（如 Agent 模式页的「Agent 模式」项）可收回抽屉：修复玻璃导航项对已选中条目禁用点击导致抽屉悬停不关的问题",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.57"
   },
   "history": [
+    {
+      "versionName": "1.4.9.57",
+      "versionCode": 133,
+      "tag": "v1.4.9.57",
+      "date": "2026-10-24",
+      "title": "v1.4.9.57 更新内容",
+      "notes": [],
+      "pr": [
+        {
+          "title": "修复：悬浮窗缩放 / 上下文仪表盘 / 多行输入 / 模板工坊 / 顶栏模型入口 / 抽屉收回（六连修）",
+          "notes": [
+            "浏览器自动化悬浮页面支持双指缩放：引擎 WebView 开启缩放能力（隐藏系统 +/- 浮钮仅保留捏合手势），实时页面悬浮窗、人工接管全屏与 in-app 浏览器均可捏合缩放页面（apex-kit-browser ef571a1，锁已重钉）",
+            "移除顶部「上下文仪表盘」长条：顶部堆叠高度回落一档，页面整体上抬；token 用量数据仍可在「用量仪表盘」页查看",
+            "输入框真·多行：修复 EditText 因 inputType 缺 MULTI_LINE 标记被系统强制单行的问题 —— 长文本自动换行、输入框 1→8 行自适应增高（Agent 与 Coding 两屏同享）；回车行为仍按设置「回车发送 / 回车换行」分档，Shift+Enter 始终可插入换行",
+            "模板工坊内容补齐：修复内置 10 套模板从未播种（全新安装两个页签恒为空清单、切换「没有反应」）—— 首次打开即见 Agent/Coding 各 5 套内置模板，页签切换有实际内容可看",
+            "Coding 屏顶栏右端空隙位新增 LLM 模型图标（小大脑）：点击即弹出模型列表 / 参数调节 / 配置入口，选择即热生效 —— 不再需要到横向滚动工具行末位寻找模型菜单",
+            "抽屉点击空白处可收回：自建 scrim 点击捕获层（M3 1.4.0 将 scrim 点击关闭错误地门控在 gesturesEnabled 之后，与防误触所需的关闭手势冲突）",
+            "抽屉再次点击当前页（如 Agent 模式页的「Agent 模式」项）可收回抽屉：修复玻璃导航项对已选中条目禁用点击导致抽屉悬停不关的问题"
+          ]
+        }
+      ],
+      "markdown": "# 修复：悬浮窗缩放 / 上下文仪表盘 / 多行输入 / 模板工坊 / 顶栏模型入口 / 抽屉收回（六连修）\n\n- 浏览器自动化悬浮页面支持双指缩放：引擎 WebView 开启缩放能力（隐藏系统 +/- 浮钮仅保留捏合手势），实时页面悬浮窗、人工接管全屏与 in-app 浏览器均可捏合缩放页面（apex-kit-browser ef571a1，锁已重钉）\n- 移除顶部「上下文仪表盘」长条：顶部堆叠高度回落一档，页面整体上抬；token 用量数据仍可在「用量仪表盘」页查看\n- 输入框真·多行：修复 EditText 因 inputType 缺 MULTI_LINE 标记被系统强制单行的问题 —— 长文本自动换行、输入框 1→8 行自适应增高（Agent 与 Coding 两屏同享）；回车行为仍按设置「回车发送 / 回车换行」分档，Shift+Enter 始终可插入换行\n- 模板工坊内容补齐：修复内置 10 套模板从未播种（全新安装两个页签恒为空清单、切换「没有反应」）—— 首次打开即见 Agent/Coding 各 5 套内置模板，页签切换有实际内容可看\n- Coding 屏顶栏右端空隙位新增 LLM 模型图标（小大脑）：点击即弹出模型列表 / 参数调节 / 配置入口，选择即热生效 —— 不再需要到横向滚动工具行末位寻找模型菜单\n- 抽屉点击空白处可收回：自建 scrim 点击捕获层（M3 1.4.0 将 scrim 点击关闭错误地门控在 gesturesEnabled 之后，与防误触所需的关闭手势冲突）\n- 抽屉再次点击当前页（如 Agent 模式页的「Agent 模式」项）可收回抽屉：修复玻璃导航项对已选中条目禁用点击导致抽屉悬停不关的问题",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.57"
+    },
     {
       "versionName": "1.4.9.56",
       "versionCode": 132,
