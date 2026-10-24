@@ -1,27 +1,101 @@
 {
   "schema": "apex-changelog-v2",
-  "generatedAt": "2026-10-24T05:40:27Z",
+  "generatedAt": "2026-10-24T08:27:44Z",
   "latest": {
-    "versionName": "1.4.9.50",
-    "versionCode": 126,
-    "tag": "v1.4.9.50",
+    "versionName": "1.4.9.51",
+    "versionCode": 127,
+    "tag": "v1.4.9.51",
     "date": "2026-10-24",
-    "title": "v1.4.9.50 更新内容",
+    "title": "v1.4.9.51 更新内容",
     "notes": [],
     "pr": [
       {
-        "title": "<!-- pr: fix-main-quality-gate-repair -->",
+        "title": "胶囊流水线 v3：参数流式可视化 + 同族聚合胶囊",
         "notes": [
-          "修复 main 分支 Quality Gate 红灯：#427 合并后 CodeViewModel 达 1205 行突破 1200 门禁（PR 侧门禁漏拦），现拆出会话快照三动作面（restore/build/persist，#152）至同包扩展 CodeSessionSnapshotOps.kt，VM 回落至 1130 行、余量 70",
-          "堵住 empty-catch 门禁正则漏洞：GATE 4 字符类补下划线——`catch (_: Throwable) {}` 弃名参数此前绕过 `[a-zA-Z. :]+` 匹配；弃名参数不豁免（要忽略须写明为何可安全吞）",
-          "三处真实空 catch 补防御式 IO 留痕（#260 纪律）：MoreCapabilitiesHost 通知渠道创建 / ApkInstaller 会话放弃 / ComposeFoundry UiRenderer 色值解析，均改为异常折叠 + warn 日志"
+          "**写/编辑实时可视**：LLM 流式生成 tool_calls 参数期间，新增",
+          "**过程自动展开/完成收回**：参数生成期即建「等待态」胶囊（工具意图先于",
+          "**同族聚合胶囊**：同族连续胶囊 ≥2 收成一颗——折叠态始终展示**最新",
+          "**聚合流水式生命周期**：分组内出现活跃胶囊自动展开（否则折叠态会遮住",
+          "兼容口径：CodeEdit（old_string/new_string）与 Agent 屏 FileEdit"
+        ]
+      },
+      {
+        "title": "胶囊流水线 v4：全面可视化增强",
+        "notes": [
+          "**运行统计收尾卡**：Complete 收尾从纯文本「完成 · N 轮 · N 次工具 ·",
+          "**聚合胶囊调用历史状态条**：折叠态聚合胶囊在主行下方新增历史条——",
+          "**实时进度迷你条**：单颗胶囊在 RUNNING 且有进度时展示 2dp 细条——",
+          "**流式光标呼吸动画**：实时代码窗的尾部光标块从静态「▍」升级为",
+          "**验证轮次卡增删徽标**：轮次头行新增 +N −M 行级改动量徽标（轮内编辑",
+          "测试：统计卡字段 / 失败数跨 run 基线 / 检查点往返 3 例新测试，2 处"
+        ]
+      },
+      {
+        "title": "记忆系统完全重做：拆库 apex-memory-kit + 宿主薄接线层",
+        "notes": [
+          "认知记忆域整体拆库为独立模块 `com.apex.memkit:memory-core`（仓库",
+          "P0 生产断链根治：宏匹配 `appPackage` 由捕获端口单源提供全程贯穿",
+          "宏模型类型化：`MacroAction` sealed（Tap/Swipe/Input/Back/Home），",
+          "会话并发根治：SessionDirector 多会话键控；宿主 `MemoryObserverAdapter`",
+          "维护机制去隐喻：能量衰减 / 剪枝 / 保鲜 / 晶化并入 `MacroMaintenance`",
+          "appVersion 取**被采集目标 App** 版本（宿主经 PackageManager 解析），",
+          "宿主侧新模块 `:platform:memory-host`（薄接线层）：平台端口",
+          "记忆页 / 认知市场 / MCP memory transport 全部改读库门面",
+          "CI 接线（与 courier/loom 同构）：settings.gradle.kts 条件 includeBuild"
         ]
       }
     ],
-    "markdown": "<!-- pr: fix-main-quality-gate-repair -->\n- 修复 main 分支 Quality Gate 红灯：#427 合并后 CodeViewModel 达 1205 行突破 1200 门禁（PR 侧门禁漏拦），现拆出会话快照三动作面（restore/build/persist，#152）至同包扩展 CodeSessionSnapshotOps.kt，VM 回落至 1130 行、余量 70\n- 堵住 empty-catch 门禁正则漏洞：GATE 4 字符类补下划线——`catch (_: Throwable) {}` 弃名参数此前绕过 `[a-zA-Z. :]+` 匹配；弃名参数不豁免（要忽略须写明为何可安全吞）\n- 三处真实空 catch 补防御式 IO 留痕（#260 纪律）：MoreCapabilitiesHost 通知渠道创建 / ApkInstaller 会话放弃 / ComposeFoundry UiRenderer 色值解析，均改为异常折叠 + warn 日志",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.50"
+    "markdown": "# 胶囊流水线 v3：参数流式可视化 + 同族聚合胶囊\n\n- **写/编辑实时可视**：LLM 流式生成 tool_calls 参数期间，新增\n  `ToolCallArgsDelta` 事件逐帧上抛（引擎累积与上抛同源，全量参数与旧管线\n  零差异）；Coding 胶囊时间轴对半截 JSON 做**增量键锚定提取**（结构性\n  锚定防值内同名文本误命中、转义感知解码、尾部不完整 `\\u` 存进度等下片、\n  超长截头留 24K 尾窗），写文件绿色流入 + 尾部光标块、编辑文件红删\n  （`−` 前缀）在前绿增（`+` 前缀）在后——正在写入的代码过程实时可见。\n- **过程自动展开/完成收回**：参数生成期即建「等待态」胶囊（工具意图先于\n  执行可见），实时代码窗随分片展开；Start 到达升级为运行态（预览保留、\n  计数不重复），Complete/中止自动收回折叠为单行胶囊；点击胶囊详情层同款\n  实时预览（400 行大视口）。名字晚到的 provider 由分片缓冲兜底回放。\n- **同族聚合胶囊**：同族连续胶囊 ≥2 收成一颗——折叠态始终展示**最新\n  调用**（名称/命令/状态/耗时与单颗同款）+ ×N 计数徽标；展开态平铺全部\n  历史胶囊、每颗可点击进详情、头行可再收起；几十条终端命令只占一行。\n- **聚合流水式生命周期**：分组内出现活跃胶囊自动展开（否则折叠态会遮住\n  实时代码窗）、全部收束且未手动干预自动收回；手动展开/收起永远优先，\n  新流式周期重置手动态（与终端面板/思考卡同款语义）；预览长度计入贴尾\n  锚定素材——代码流入时时间轴跟随。\n- 兼容口径：CodeEdit（old_string/new_string）与 Agent 屏 FileEdit\n  （edits[].search/replace）两组键名都监听；MCP/未知族不建等待态胶囊，\n  Start 按原路径兜底——旧管线行为零回退。20 例新测试锁定归约语义\n  （升级幂等/迟到分片忽略/中止收口/缓冲回放/终端三信号）。\n\n---\n\n# 胶囊流水线 v4：全面可视化增强\n\n- **运行统计收尾卡**：Complete 收尾从纯文本「完成 · N 轮 · N 次工具 ·\n  Ns」状态行升级为结构化统计卡——头行（完成图标 + 总耗时）+ FlowRow\n  统计 chips（迭代轮数 / 工具调用 / 触碰文件 / 失败数），失败 >0 全卡\n  错误色转述；失败数为**本轮口径**（会话累计差值，跨 run 不串台）；\n  检查点扁平化存取（\"runstats\" 类型，旧档默认 0 双向兼容）。\n- **聚合胶囊调用历史状态条**：折叠态聚合胶囊在主行下方新增历史条——\n  每次调用一枚色块 tick（终态按成对语义色着色：绿成 / 红败 / 琥珀中断；\n  运行中族色**呼吸脉冲**），几十条命令的成败分布不展开即可扫读；\n  tick 上限 12 + 超出「+还有 N 个」文本（复用文件 chips 省略键）。\n- **实时进度迷你条**：单颗胶囊在 RUNNING 且有进度时展示 2dp 细条——\n  编辑类按 hunksApplied/Total、其余按 ToolProgress percent（0..1 与\n  0..100 两套量纲都兼容），推进感不再只靠数字徽标。\n- **流式光标呼吸动画**：实时代码窗的尾部光标块从静态「▍」升级为\n  0.15↔1 透明度往返脉冲（750ms，AnnotatedString 单 span 着色）——\n  写入进行中的「活」感；终态收束后随窗口销毁停。\n- **验证轮次卡增删徽标**：轮次头行新增 +N −M 行级改动量徽标（轮内编辑\n  胶囊 diff 原文现场解析求和，绿增色与全局口径一致）；恢复回放的轮次\n  calls 为空则不显（红绿态保留）。\n- 测试：统计卡字段 / 失败数跨 run 基线 / 检查点往返 3 例新测试，2 处\n  旧「完成状态行」断言同步迁移到结构化条目。\n\n---\n\n# 记忆系统完全重做：拆库 apex-memory-kit + 宿主薄接线层\n\n- 认知记忆域整体拆库为独立模块 `com.apex.memkit:memory-core`（仓库\n  Ultra-Guru/apex-memory-kit，纯 Kotlin JVM 零 Android 依赖，63 项单测）：\n  统一旧 `:platform:cs-mem`（UI 轨迹 / FSM 宏 / Room 图库）与旧\n  `app/mcp/builtin/memory`（聊天账本 / 知识图谱 JSON）三套存储为同一套\n  JSON 原子文档（`memory_kit/{nodes,episodes,macros,chat,graph,quarantine}.json`，\n  单写者 mutex + dirty 合并落盘，杀 Room 及其 N+1 写路径）。\n- P0 生产断链根治：宏匹配 `appPackage` 由捕获端口单源提供全程贯穿\n  （旧链路引擎传 null → 宏存 null → 匹配查前台包 → 永远失配）；采集与\n  匹配共用同一条「捕获 → 降维 → 指纹」库内路径（旧采集用 roots 嵌套树、\n  匹配用 nodes 扁平剥离视图的指纹系统性不一致从结构上消灭）。\n- 宏模型类型化：`MacroAction` sealed（Tap/Swipe/Input/Back/Home），\n  引擎动作字符串仅在库内 ActionNotation 一处解析；宏匹配从单指纹改为\n  入口指纹集合重合率（含别名桥回退）。旧 FSM 宏的 `actionParams` 裸\n  字符串由一次性迁移器类型化搬迁，任何一条解析失败即整宏丢弃。\n- 会话并发根治：SessionDirector 多会话键控；宿主 `MemoryObserverAdapter`\n  按协程 Job 祖先链关联会话（Agent 与 Code 引擎共享观察者时动作归因\n  不再互踩）；引擎侧 `ExecutionMemoryObserver` 契约零改动。\n- 维护机制去隐喻：能量衰减 / 剪枝 / 保鲜 / 晶化并入 `MacroMaintenance`\n  （WorkManager 约束沿用旧\"梦境\"口径：充电 + 电量不低 + 空闲 + WiFi，\n  每 2h）；免疫 → `IngestGuard`（策略可配、隔离键用节点指纹、带 TTL）。\n- appVersion 取**被采集目标 App** 版本（宿主经 PackageManager 解析），\n  拓扑别名桥的触发信号恢复正确；Episode 统计字段全为真实值。\n- 宿主侧新模块 `:platform:memory-host`（薄接线层）：平台端口\n  （PrivilegeSceneCapture / PrivilegeActionPerformer / ModelRuntimeChatModel）\n  + Hilt DI（MemoryKitModule）+ 旧存储一次性迁移（LegacyCsMemMigrator：\n  Room cs_mem_graph.db / mcp_memory/memory.json / chat_memory/ledger.json\n  三源搬迁，幂等 + meta 标志守门 + `.imported` 留档防重入）+ 维护调度\n  （MaintenanceWorker）+ 三个记忆召回工具（id 与参数零变化，模型侧\n  无感迁移）。\n- 记忆页 / 认知市场 / MCP memory transport 全部改读库门面\n  （MemoryViewModel / SkillAnalytics / BuiltinMemoryMcpTransport）；\n  旧模块 `:platform:cs-mem`（32 文件 5031 行）与旧聊天管线\n  （KnowledgeGraphStore / MemoryLedgerStore / MemoryDistiller /\n  ChatMemoryPipeline）删除；对应宿主单测迁移或由库内 63 项测试接管\n  （新宿主层测试：迁移器 transitions 类型化映射 6 项 + MCP transport\n  JSON-RPC 适配 6 项）。\n- CI 接线（与 courier/loom 同构）：settings.gradle.kts 条件 includeBuild\n  （兄弟/嵌套目录）+ `gradle/memory-kit.lock` 钉版 + ci/apk/release\n  pinned checkout 步骤 + sync-memory-kit.yml 只跟绿提交自动 bump。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.51"
   },
   "history": [
+    {
+      "versionName": "1.4.9.51",
+      "versionCode": 127,
+      "tag": "v1.4.9.51",
+      "date": "2026-10-24",
+      "title": "v1.4.9.51 更新内容",
+      "notes": [],
+      "pr": [
+        {
+          "title": "胶囊流水线 v3：参数流式可视化 + 同族聚合胶囊",
+          "notes": [
+            "**写/编辑实时可视**：LLM 流式生成 tool_calls 参数期间，新增",
+            "**过程自动展开/完成收回**：参数生成期即建「等待态」胶囊（工具意图先于",
+            "**同族聚合胶囊**：同族连续胶囊 ≥2 收成一颗——折叠态始终展示**最新",
+            "**聚合流水式生命周期**：分组内出现活跃胶囊自动展开（否则折叠态会遮住",
+            "兼容口径：CodeEdit（old_string/new_string）与 Agent 屏 FileEdit"
+          ]
+        },
+        {
+          "title": "胶囊流水线 v4：全面可视化增强",
+          "notes": [
+            "**运行统计收尾卡**：Complete 收尾从纯文本「完成 · N 轮 · N 次工具 ·",
+            "**聚合胶囊调用历史状态条**：折叠态聚合胶囊在主行下方新增历史条——",
+            "**实时进度迷你条**：单颗胶囊在 RUNNING 且有进度时展示 2dp 细条——",
+            "**流式光标呼吸动画**：实时代码窗的尾部光标块从静态「▍」升级为",
+            "**验证轮次卡增删徽标**：轮次头行新增 +N −M 行级改动量徽标（轮内编辑",
+            "测试：统计卡字段 / 失败数跨 run 基线 / 检查点往返 3 例新测试，2 处"
+          ]
+        },
+        {
+          "title": "记忆系统完全重做：拆库 apex-memory-kit + 宿主薄接线层",
+          "notes": [
+            "认知记忆域整体拆库为独立模块 `com.apex.memkit:memory-core`（仓库",
+            "P0 生产断链根治：宏匹配 `appPackage` 由捕获端口单源提供全程贯穿",
+            "宏模型类型化：`MacroAction` sealed（Tap/Swipe/Input/Back/Home），",
+            "会话并发根治：SessionDirector 多会话键控；宿主 `MemoryObserverAdapter`",
+            "维护机制去隐喻：能量衰减 / 剪枝 / 保鲜 / 晶化并入 `MacroMaintenance`",
+            "appVersion 取**被采集目标 App** 版本（宿主经 PackageManager 解析），",
+            "宿主侧新模块 `:platform:memory-host`（薄接线层）：平台端口",
+            "记忆页 / 认知市场 / MCP memory transport 全部改读库门面",
+            "CI 接线（与 courier/loom 同构）：settings.gradle.kts 条件 includeBuild"
+          ]
+        }
+      ],
+      "markdown": "# 胶囊流水线 v3：参数流式可视化 + 同族聚合胶囊\n\n- **写/编辑实时可视**：LLM 流式生成 tool_calls 参数期间，新增\n  `ToolCallArgsDelta` 事件逐帧上抛（引擎累积与上抛同源，全量参数与旧管线\n  零差异）；Coding 胶囊时间轴对半截 JSON 做**增量键锚定提取**（结构性\n  锚定防值内同名文本误命中、转义感知解码、尾部不完整 `\\u` 存进度等下片、\n  超长截头留 24K 尾窗），写文件绿色流入 + 尾部光标块、编辑文件红删\n  （`−` 前缀）在前绿增（`+` 前缀）在后——正在写入的代码过程实时可见。\n- **过程自动展开/完成收回**：参数生成期即建「等待态」胶囊（工具意图先于\n  执行可见），实时代码窗随分片展开；Start 到达升级为运行态（预览保留、\n  计数不重复），Complete/中止自动收回折叠为单行胶囊；点击胶囊详情层同款\n  实时预览（400 行大视口）。名字晚到的 provider 由分片缓冲兜底回放。\n- **同族聚合胶囊**：同族连续胶囊 ≥2 收成一颗——折叠态始终展示**最新\n  调用**（名称/命令/状态/耗时与单颗同款）+ ×N 计数徽标；展开态平铺全部\n  历史胶囊、每颗可点击进详情、头行可再收起；几十条终端命令只占一行。\n- **聚合流水式生命周期**：分组内出现活跃胶囊自动展开（否则折叠态会遮住\n  实时代码窗）、全部收束且未手动干预自动收回；手动展开/收起永远优先，\n  新流式周期重置手动态（与终端面板/思考卡同款语义）；预览长度计入贴尾\n  锚定素材——代码流入时时间轴跟随。\n- 兼容口径：CodeEdit（old_string/new_string）与 Agent 屏 FileEdit\n  （edits[].search/replace）两组键名都监听；MCP/未知族不建等待态胶囊，\n  Start 按原路径兜底——旧管线行为零回退。20 例新测试锁定归约语义\n  （升级幂等/迟到分片忽略/中止收口/缓冲回放/终端三信号）。\n\n---\n\n# 胶囊流水线 v4：全面可视化增强\n\n- **运行统计收尾卡**：Complete 收尾从纯文本「完成 · N 轮 · N 次工具 ·\n  Ns」状态行升级为结构化统计卡——头行（完成图标 + 总耗时）+ FlowRow\n  统计 chips（迭代轮数 / 工具调用 / 触碰文件 / 失败数），失败 >0 全卡\n  错误色转述；失败数为**本轮口径**（会话累计差值，跨 run 不串台）；\n  检查点扁平化存取（\"runstats\" 类型，旧档默认 0 双向兼容）。\n- **聚合胶囊调用历史状态条**：折叠态聚合胶囊在主行下方新增历史条——\n  每次调用一枚色块 tick（终态按成对语义色着色：绿成 / 红败 / 琥珀中断；\n  运行中族色**呼吸脉冲**），几十条命令的成败分布不展开即可扫读；\n  tick 上限 12 + 超出「+还有 N 个」文本（复用文件 chips 省略键）。\n- **实时进度迷你条**：单颗胶囊在 RUNNING 且有进度时展示 2dp 细条——\n  编辑类按 hunksApplied/Total、其余按 ToolProgress percent（0..1 与\n  0..100 两套量纲都兼容），推进感不再只靠数字徽标。\n- **流式光标呼吸动画**：实时代码窗的尾部光标块从静态「▍」升级为\n  0.15↔1 透明度往返脉冲（750ms，AnnotatedString 单 span 着色）——\n  写入进行中的「活」感；终态收束后随窗口销毁停。\n- **验证轮次卡增删徽标**：轮次头行新增 +N −M 行级改动量徽标（轮内编辑\n  胶囊 diff 原文现场解析求和，绿增色与全局口径一致）；恢复回放的轮次\n  calls 为空则不显（红绿态保留）。\n- 测试：统计卡字段 / 失败数跨 run 基线 / 检查点往返 3 例新测试，2 处\n  旧「完成状态行」断言同步迁移到结构化条目。\n\n---\n\n# 记忆系统完全重做：拆库 apex-memory-kit + 宿主薄接线层\n\n- 认知记忆域整体拆库为独立模块 `com.apex.memkit:memory-core`（仓库\n  Ultra-Guru/apex-memory-kit，纯 Kotlin JVM 零 Android 依赖，63 项单测）：\n  统一旧 `:platform:cs-mem`（UI 轨迹 / FSM 宏 / Room 图库）与旧\n  `app/mcp/builtin/memory`（聊天账本 / 知识图谱 JSON）三套存储为同一套\n  JSON 原子文档（`memory_kit/{nodes,episodes,macros,chat,graph,quarantine}.json`，\n  单写者 mutex + dirty 合并落盘，杀 Room 及其 N+1 写路径）。\n- P0 生产断链根治：宏匹配 `appPackage` 由捕获端口单源提供全程贯穿\n  （旧链路引擎传 null → 宏存 null → 匹配查前台包 → 永远失配）；采集与\n  匹配共用同一条「捕获 → 降维 → 指纹」库内路径（旧采集用 roots 嵌套树、\n  匹配用 nodes 扁平剥离视图的指纹系统性不一致从结构上消灭）。\n- 宏模型类型化：`MacroAction` sealed（Tap/Swipe/Input/Back/Home），\n  引擎动作字符串仅在库内 ActionNotation 一处解析；宏匹配从单指纹改为\n  入口指纹集合重合率（含别名桥回退）。旧 FSM 宏的 `actionParams` 裸\n  字符串由一次性迁移器类型化搬迁，任何一条解析失败即整宏丢弃。\n- 会话并发根治：SessionDirector 多会话键控；宿主 `MemoryObserverAdapter`\n  按协程 Job 祖先链关联会话（Agent 与 Code 引擎共享观察者时动作归因\n  不再互踩）；引擎侧 `ExecutionMemoryObserver` 契约零改动。\n- 维护机制去隐喻：能量衰减 / 剪枝 / 保鲜 / 晶化并入 `MacroMaintenance`\n  （WorkManager 约束沿用旧\"梦境\"口径：充电 + 电量不低 + 空闲 + WiFi，\n  每 2h）；免疫 → `IngestGuard`（策略可配、隔离键用节点指纹、带 TTL）。\n- appVersion 取**被采集目标 App** 版本（宿主经 PackageManager 解析），\n  拓扑别名桥的触发信号恢复正确；Episode 统计字段全为真实值。\n- 宿主侧新模块 `:platform:memory-host`（薄接线层）：平台端口\n  （PrivilegeSceneCapture / PrivilegeActionPerformer / ModelRuntimeChatModel）\n  + Hilt DI（MemoryKitModule）+ 旧存储一次性迁移（LegacyCsMemMigrator：\n  Room cs_mem_graph.db / mcp_memory/memory.json / chat_memory/ledger.json\n  三源搬迁，幂等 + meta 标志守门 + `.imported` 留档防重入）+ 维护调度\n  （MaintenanceWorker）+ 三个记忆召回工具（id 与参数零变化，模型侧\n  无感迁移）。\n- 记忆页 / 认知市场 / MCP memory transport 全部改读库门面\n  （MemoryViewModel / SkillAnalytics / BuiltinMemoryMcpTransport）；\n  旧模块 `:platform:cs-mem`（32 文件 5031 行）与旧聊天管线\n  （KnowledgeGraphStore / MemoryLedgerStore / MemoryDistiller /\n  ChatMemoryPipeline）删除；对应宿主单测迁移或由库内 63 项测试接管\n  （新宿主层测试：迁移器 transitions 类型化映射 6 项 + MCP transport\n  JSON-RPC 适配 6 项）。\n- CI 接线（与 courier/loom 同构）：settings.gradle.kts 条件 includeBuild\n  （兄弟/嵌套目录）+ `gradle/memory-kit.lock` 钉版 + ci/apk/release\n  pinned checkout 步骤 + sync-memory-kit.yml 只跟绿提交自动 bump。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.51"
+    },
     {
       "versionName": "1.4.9.50",
       "versionCode": 126,
