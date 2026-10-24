@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout this release repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Read current manifest and guard preconditions"
         id: read
@@ -136,7 +136,7 @@ jobs:
           echo "✅ 白名单守卫通过（dev@${HEAD_SHA:0:8}，$(echo "$FILES" | grep -c . || true) 个数据文件变更）"
 
       - name: "Checkout dev repository (sparse: hot-load assets only)"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ env.DEV_REPO }}
           ref: ${{ steps.guard.outputs.head_sha }}

@@ -69,7 +69,7 @@ App「关于 → 检查更新」
     "baseVersionCode": 49,
     "targetVersionCode": 49,
     "targetVersionName": "1.4.7",
-    "url": "https://github.com/AceGuru-mjh/Android-Guru-Agent-Release/releases/download/v1.4.7/hot_v1.4.7.zip",
+    "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.4.7/hot_v1.4.7.zip",
     "sizeBytes": 1048576,
     "sha256": "…"
   },
