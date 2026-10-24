@@ -1,27 +1,195 @@
 {
   "schema": "apex-changelog-v2",
-  "generatedAt": "2026-10-24T09:04:34Z",
+  "generatedAt": "2026-10-24T09:22:33Z",
   "latest": {
-    "versionName": "1.4.9.52",
-    "versionCode": 128,
-    "tag": "v1.4.9.52",
+    "versionName": "1.4.9.53",
+    "versionCode": 129,
+    "tag": "v1.4.9.53",
     "date": "2026-10-24",
-    "title": "v1.4.9.52 更新内容",
+    "title": "v1.4.9.53 更新内容",
     "notes": [],
     "pr": [
       {
-        "title": "M³ 现代终端（Material 3 Terminal UI）+ main 编译断裂修复（browser-kit 锁回退）",
+        "title": "html layout core",
         "notes": [
-          "**M³ 现代终端页**（新模块 `feature/terminal-m3`，自包含 Compose 库）：Material 3",
-          "**main 编译断裂修复**：`platform:browser-agent` 的 KSP 因 `BookmarkStore` /",
-          "**main 质量门禁红灯修复（记忆库拆分善后）**：a58dc7ff 拆库提交使测试纪律"
+          "新增 HTML 布局分析引擎（core 层）：轻量解析器 + 布局语义模型 + 分析器，为后续「Agent 分析页面布局」能力（布局分析工具 / 预览检查器）提供纯 JVM 基座",
+          "解析器零第三方依赖：标签/属性/实体/void 元素/隐式闭合/原文捕获，带节点数/深度/文本块三重防御上限，病态输入返回部分树不崩溃",
+          "分析器输出布局报告：页面骨架括号速览（body > header + main[flex](aside+article) + footer）、缩进布局树、响应式画像（viewport/媒体查询/固定宽度溢出风险）、40+ 类问题检测（语义/可访问性/定位/溢出/性能）与 Markdown 全量报告",
+          "配套 44 项行为契约测试（解析 24 + 分析 20），纯 JVM 可在 CI 与本地 kotlinc 镜像双路径验证"
+        ]
+      },
+      {
+        "title": "layout tools",
+        "notes": [
+          "新增布局分析双工具：HtmlAnalyzeLayout（本地 HTML 产物静态分析，毫秒级、可离线，工作区沙箱防护）+ BrowserAnalyzeLayout（内置浏览器当前页真实渲染几何采集：视口溢出 / landmark 区块 / flex·grid 属性 / absolute 定位祖先判定 / z-index 失配 / 标题链）",
+          "两工具互补成对：写完页面先静态验证（骨架 / 响应式 / 可访问性 40+ 类问题），浏览器打开后动态复核（真实 getComputedStyle 几何）；「为什么横向滚动 / 为什么重叠」这类问题从此有直接诊断入口",
+          "HtmlAnalyzeLayout 报告体积硬上限 12KB，支持 include_tree=false 省上下文；BrowserAnalyzeLayout 采集脚本只读 DOM、元素扫描上限 4000、每类列表截断",
+          "配套 7 项工具契约测试（路径解析 / 沙箱拒绝 / include_tree 分支），CI 与本地 kotlinc 镜像双路径验证"
+        ]
+      },
+      {
+        "title": "preview inspector",
+        "notes": [
+          "HTML 预览对话框新增布局检查器：工具条 Layers 开关一键开启，页面可见元素按 display 类型着色描边（flex 蓝 / grid 紫 / 定位橙 / 块绿），肉眼即可看穿页面骨架，配套图例行",
+          "描边实现为幂等注入脚本：只改 outline（不占布局、不触发重排），touched 台账记录原值，关闭时精确还原页面自带 outline；页面加载完成自动补描，开关切换即时生效",
+          "修复预览对话框无关重组触发整页重载的隐患：装载加 (file, tick) 守卫，刷新不再因其他状态变化而误触发"
+        ]
+      },
+      {
+        "title": "knowledge infra",
+        "notes": [
+          "新增 Agent 角色专属知识库体系（基础设施）：每个角色模板将配一套 ≥2000 行的 Markdown 知识库（assets/knowledge/），统一结构为「必看内容 + 快速索引 + 编号章节」",
+          "新增 KnowledgeBase 工具（五动作）：list 列出全部知识库 / must_read 读必看内容 / index 一键定位（想找什么 → 去哪一节）/ search 关键词检索（命中章节 + 上下文预览 + 相关度排序）/ read 精读章节（标题、纯编号、去编号标题均可命中）",
+          "角色激活时自动注入检索指引：角色绑定了知识库，「must_read → index/search → read」工作流写进 Role definition，随引擎提示词下发（Agent 屏与 Coding 屏两通道同步接线）",
+          "解析与服务防御式设计：kb 头（id/role/title/version）+ 保留节精确匹配；坏资产跳过不抛（一套坏文件不影响其余）；同角色多套时首个生效留日志；懒加载 + Mutex 并发安全",
+          "全能 Agent 知识库 v1 种子版随本版落盘（结构样板，完整版随后续版本替换）；配套 11 项行为契约测试"
+        ]
+      },
+      {
+        "title": "kb android",
+        "notes": [
+          "新增 Android 专家角色专属知识库（2030 行 / 109 章节 / 108 条快速索引）：必看内容（三大心智模型/Compose 时代默认/协程纪律/性能红线）+ 快速索引 + 编号章节全覆盖",
+          "内容主线：Compose 全套（心智/状态/性能/布局/导航/内部机制/快照系统）、协程与 Flow（配方级）、Hilt/Room/WorkManager/DataStore、生命周期、权限、后台限制（Doze/FGS 类型表）、网络/图片/通知、性能（启动四段分解/R8/Baseline Profile）、测试、厂商兼容（小米/华为矩阵）、发布签名",
+          "特色板块：5 个场景剧本（新页面/SDK/推送/深链/支付）、3 张反模式表（性能/协程/Compose）、109 节三态渲染完整模板、全库反向速配卡（症状 → 节号一行表）、API 级别差异与版本矩阵",
+          "知识库解析器增强：多段「必看内容」按序拼接、「快速索引 · 续」并入同一索引（全库单索引口径）—— 支持 2000+ 行大库分块书写"
+        ]
+      },
+      {
+        "title": "kb kotlin",
+        "notes": [
+          "新增 Kotlin 专家角色专属知识库（2003 行 / 131 章节 / 135 条快速索引，索引目标 0 缺失）：必看内容（空安全消毒链/K2 推断收紧/协程纪律/表达式化）+ 快速索引 + 编号章节全覆盖",
+          "主线：语言基础（空安全/智能转换/when/泛型型变）→ 函数与 lambda（内联三修饰/作用域函数五件套）→ 类与委托 → 集合与序列（性能数据/选型决策表）→ 协程与 Flow（结构化并发/热流口径/内部状态机原理）→ 互操作（@Jvm 族/平台类型消毒）→ K2（收紧清单/迁移）→ 测试（runTest 虚拟时间/替身分层）→ 性能（装箱/内联成本/基准）",
+          "特色板块：Java→Kotlin 惯用法对照大表、反模式 FAQ、DSL 设计三件套、value class 单位安全（Millis/KiloBytes）、131 节服务层完整模板（ErrKind+retryable 模型）、深度问答五组 60 问、版本时间线（1.1→2.3）"
+        ]
+      },
+      {
+        "title": "kb core four",
+        "notes": [
+          "新增 4 套角色专属知识库（各 ≥2000 行，索引目标缺失数均为 0）：",
+          "全能 Agent（2001 行/176 节）：v1 种子版整体替换为全量版 —— 工具面总纲/24 剧本/38 速查表/2 完整任务实录/软技能与汇报口径/红线与回执文化",
+          "全栈工程师（2043 行/200 节）：竖切交付/API 契约/错误体系/幂等/两段式迁移/观测三件套/灰度回滚/SLO —— 含 18 份清单与 6 份模板（ADR/RFC/值班/复盘）",
+          "Git 专家（2000 行/137 节）：三区模型/reflog 救援/240+ 命令/16 剧本/6 实录/团队约定与本仓库纪律（锁文件治理/PR 流程/changelog 联动）",
+          "前端专家（2001 行/174 节）：语义 HTML 全表/CSS 体系（特异性/层叠/盒模型）/Flex·Grid 配方/响应式 375 基线/a11y 全链（键盘/焦点/ARIA）/性能红线/16 组件示例/双查交付"
+        ]
+      },
+      {
+        "title": "kb android kotlin upgrade",
+        "notes": [
+          "知识库内容红线落地：Android / Kotlin 两套专家知识库进阶化改造 —— 移除模型已掌握的教科书层内容（集合类型表 / 基础速查 / 入门级配方），替换为生产级深水内容，行数 2030→2357 / 2003→2253，索引目标 0 缺失校验全绿",
+          "Android：环境与工具链 → 构建变体与 AGP 内幕；Compose 心智模型升级为强跳过模式 / 稳定性推断新口径（2025）；生命周期章节补 edge-to-edge 15 强制 / predictive back；新增基线剖析 GOT 机制与启动路径预算",
+          "Kotlin：集合总览（类型表）→ 集合性能成本模型与选型决策（热路径）；序列章节补 fuse 优化内幕；K2 收紧清单对齐 2.2/2.3 语义；必看内容重写为纪律级（空安全消毒链 / 表达式化 / 协程纪律）",
+          "全部 6 个升级知识点经 web 检索校准（Compose strong skipping、Android 16 行为变化、Room 2.8 KMP、Kotlin 2.2 K2 等 2024-2026 最新口径）"
+        ]
+      },
+      {
+        "title": "kb core four upgrade",
+        "notes": [
+          "知识库内容红线落地：全能 / 全栈 / Git / 前端 4 套知识库进阶化改造 —— 教科书节全面替换为生产级深水内容，行数 2001→2190 / 2043→2182 / 2000→2064 / 2001→2273，索引目标 0 缺失校验全绿",
+          "前端：「元素总表 / 全局属性 / 文档骨架」等 API 罗列节 → 解析与失效内幕（preload scanner / invalidation sets / layout thrashing）/ 加载调度内幕（fetchpriority / speculation rules / 103 Early Hints）/ :has() 性能画像与 v-flag 正则 / 选择器引擎右到左匹配内幕；表单节升级 ElementInternals / requestSubmit 深水",
+          "Git：「fetch/pull 基础」→ fetch 深水（负 refspec / blobless vs treeless 部分克隆实测 -88% / promisor / maintenance hourly prefetch）；「大文件」→ LFS 经济学与 filter-repo 瘦身普查；命令全表 → 取证级检视（blame -C / log -L / range-diff）与维护加速内幕（sparse-index / fsmonitor）",
+          "全栈：「认证 use-JWT 级」→ 认证深水（refresh token 轮换 + 复用检测 token family 撤销 / CSRF-SameSite 互动矩阵 / passkeys WebAuthn 2025 口径 / alg 混淆攻击）；HTTP 教科书表 → 语义深水（merge-patch vs JSON Patch / SWR / Sunset RFC 8594 / CHIPS 分区 Cookie / CORS PNA）",
+          "全能：保留本 App 环境特有知识（工具面 / 任务流 / 权限语义），替换通用教科书节（正则速查 → ReDoS 防御与 v-flag / possessive 量词；git 动作基础 → 部分克隆与提交图内幕）；14 项 web 检索校准 2024-2026 最新口径"
         ]
       }
     ],
-    "markdown": "# M³ 现代终端（Material 3 Terminal UI）+ main 编译断裂修复（browser-kit 锁回退）\n\n- **M³ 现代终端页**（新模块 `feature/terminal-m3`，自包含 Compose 库）：Material 3\n  终端 REPL —— 28dp 全圆角 OutlinedTextField（prefix \"$ \" / FilledIconButton·Send /\n  IME Send 回车提交 / placeholder「输入命令…」）+ 24dp 圆角终端卡片\n  （surfaceContainerHigh 面 + 1dp 描边）；**单源输入同步**——输入框与终端卡片\n  「当前输入行」共用 ViewModel 同一 `mutableStateOf` 状态（onValueChange →\n  onInputChange 落回，终端末行 \"$ + 文本 + 闪烁光标 ▌\" 同帧刷新，零双状态零\n  回调同步）；命令 token 级**代码高亮**（prompt 绿 / 命令名亮白加粗 / 旗标与\n  引号串橙 / 参数弱灰）+ 行类型着色（✓ 成功绿 / 错误红 / 执行中灰斜体）；\n  GitHub Dark 恒暗配色（#0D1117/#161B22/#E6EDF3/#8B949E/#30363D/#7EE787/\n  #FF7B72）+ 全站等宽字体 13sp/20sp；内置 help / clear·cls / echo / date /\n  未知命令 500ms 模拟执行（PENDING 行原位替换为 SUCCESS，键稳定不跳滚）；\n  空输入与执行中双守卫；LazyColumn 新行自动滚底；SelectionContainer 长按复制。\n  入口：抽屉「终端 · M³」（DrawerDestination.TerminalM3），与 PRoot Ubuntu\n  沙箱终端并存 —— 重型终端与轻量命令台两种工作流各取所需。\n- **main 编译断裂修复**：`platform:browser-agent` 的 KSP 因 `BookmarkStore` /\n  `DownloadCenter` / `EngineDisplayController`（apex-kit-browser v1.7.0 会话\n  增强组件）无法解析而全红 —— 根因是 sync 工作流把 `gradle/browser-kit.lock`\n  bump 到更名后的 kit main HEAD（f28647b1），而 v1.7.0 分支（365bc0e6）当时\n  未合入 kit main。kit 仓 PR #20/#29 已把 v1.7.0 会话增强列车合回 kit main\n  （94ef6e40，含 Consumer Check 绿灯），sync 工作流已把锁 bump 至该 SHA（7ee75fa7），本 PR 合并与之对齐 —— 坐标\n  com.apex.browser 三层未随更名变动，编译即恢复，且与 sync 工作流的后续\n  bump 自然衔接（同为 kit main HEAD，无再踩风险）。\n- **main 质量门禁红灯修复（记忆库拆分善后）**：a58dc7ff 拆库提交使测试纪律\n  棘轮超基线（runBlocking 698 > 696，issue #276）—— `KnowledgeGraphStoreTest`\n  8 处 runBlocking 转 runTest（MemKit.create 仅同步 store.load()、写管道须\n  显式 start() 才启动，与 apex-memory-kit 库内 MemKitFacadeTest 同款 runTest\n  口径），存量降至 690 ≤ 基线 696，绿灯。本 PR 合入即恢复 main 的 CI /\n  Quality Gate / Release 三线全绿。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.52"
+    "markdown": "- 新增 HTML 布局分析引擎（core 层）：轻量解析器 + 布局语义模型 + 分析器，为后续「Agent 分析页面布局」能力（布局分析工具 / 预览检查器）提供纯 JVM 基座\n- 解析器零第三方依赖：标签/属性/实体/void 元素/隐式闭合/原文捕获，带节点数/深度/文本块三重防御上限，病态输入返回部分树不崩溃\n- 分析器输出布局报告：页面骨架括号速览（body > header + main[flex](aside+article) + footer）、缩进布局树、响应式画像（viewport/媒体查询/固定宽度溢出风险）、40+ 类问题检测（语义/可访问性/定位/溢出/性能）与 Markdown 全量报告\n- 配套 44 项行为契约测试（解析 24 + 分析 20），纯 JVM 可在 CI 与本地 kotlinc 镜像双路径验证\n\n---\n\n- 新增布局分析双工具：HtmlAnalyzeLayout（本地 HTML 产物静态分析，毫秒级、可离线，工作区沙箱防护）+ BrowserAnalyzeLayout（内置浏览器当前页真实渲染几何采集：视口溢出 / landmark 区块 / flex·grid 属性 / absolute 定位祖先判定 / z-index 失配 / 标题链）\n- 两工具互补成对：写完页面先静态验证（骨架 / 响应式 / 可访问性 40+ 类问题），浏览器打开后动态复核（真实 getComputedStyle 几何）；「为什么横向滚动 / 为什么重叠」这类问题从此有直接诊断入口\n- HtmlAnalyzeLayout 报告体积硬上限 12KB，支持 include_tree=false 省上下文；BrowserAnalyzeLayout 采集脚本只读 DOM、元素扫描上限 4000、每类列表截断\n- 配套 7 项工具契约测试（路径解析 / 沙箱拒绝 / include_tree 分支），CI 与本地 kotlinc 镜像双路径验证\n\n---\n\n- HTML 预览对话框新增布局检查器：工具条 Layers 开关一键开启，页面可见元素按 display 类型着色描边（flex 蓝 / grid 紫 / 定位橙 / 块绿），肉眼即可看穿页面骨架，配套图例行\n- 描边实现为幂等注入脚本：只改 outline（不占布局、不触发重排），touched 台账记录原值，关闭时精确还原页面自带 outline；页面加载完成自动补描，开关切换即时生效\n- 修复预览对话框无关重组触发整页重载的隐患：装载加 (file, tick) 守卫，刷新不再因其他状态变化而误触发\n\n---\n\n- 新增 Agent 角色专属知识库体系（基础设施）：每个角色模板将配一套 ≥2000 行的 Markdown 知识库（assets/knowledge/），统一结构为「必看内容 + 快速索引 + 编号章节」\n- 新增 KnowledgeBase 工具（五动作）：list 列出全部知识库 / must_read 读必看内容 / index 一键定位（想找什么 → 去哪一节）/ search 关键词检索（命中章节 + 上下文预览 + 相关度排序）/ read 精读章节（标题、纯编号、去编号标题均可命中）\n- 角色激活时自动注入检索指引：角色绑定了知识库，「must_read → index/search → read」工作流写进 Role definition，随引擎提示词下发（Agent 屏与 Coding 屏两通道同步接线）\n- 解析与服务防御式设计：kb 头（id/role/title/version）+ 保留节精确匹配；坏资产跳过不抛（一套坏文件不影响其余）；同角色多套时首个生效留日志；懒加载 + Mutex 并发安全\n- 全能 Agent 知识库 v1 种子版随本版落盘（结构样板，完整版随后续版本替换）；配套 11 项行为契约测试\n\n---\n\n- 新增 Android 专家角色专属知识库（2030 行 / 109 章节 / 108 条快速索引）：必看内容（三大心智模型/Compose 时代默认/协程纪律/性能红线）+ 快速索引 + 编号章节全覆盖\n- 内容主线：Compose 全套（心智/状态/性能/布局/导航/内部机制/快照系统）、协程与 Flow（配方级）、Hilt/Room/WorkManager/DataStore、生命周期、权限、后台限制（Doze/FGS 类型表）、网络/图片/通知、性能（启动四段分解/R8/Baseline Profile）、测试、厂商兼容（小米/华为矩阵）、发布签名\n- 特色板块：5 个场景剧本（新页面/SDK/推送/深链/支付）、3 张反模式表（性能/协程/Compose）、109 节三态渲染完整模板、全库反向速配卡（症状 → 节号一行表）、API 级别差异与版本矩阵\n- 知识库解析器增强：多段「必看内容」按序拼接、「快速索引 · 续」并入同一索引（全库单索引口径）—— 支持 2000+ 行大库分块书写\n\n---\n\n- 新增 Kotlin 专家角色专属知识库（2003 行 / 131 章节 / 135 条快速索引，索引目标 0 缺失）：必看内容（空安全消毒链/K2 推断收紧/协程纪律/表达式化）+ 快速索引 + 编号章节全覆盖\n- 主线：语言基础（空安全/智能转换/when/泛型型变）→ 函数与 lambda（内联三修饰/作用域函数五件套）→ 类与委托 → 集合与序列（性能数据/选型决策表）→ 协程与 Flow（结构化并发/热流口径/内部状态机原理）→ 互操作（@Jvm 族/平台类型消毒）→ K2（收紧清单/迁移）→ 测试（runTest 虚拟时间/替身分层）→ 性能（装箱/内联成本/基准）\n- 特色板块：Java→Kotlin 惯用法对照大表、反模式 FAQ、DSL 设计三件套、value class 单位安全（Millis/KiloBytes）、131 节服务层完整模板（ErrKind+retryable 模型）、深度问答五组 60 问、版本时间线（1.1→2.3）\n\n---\n\n- 新增 4 套角色专属知识库（各 ≥2000 行，索引目标缺失数均为 0）：\n  - 全能 Agent（2001 行/176 节）：v1 种子版整体替换为全量版 —— 工具面总纲/24 剧本/38 速查表/2 完整任务实录/软技能与汇报口径/红线与回执文化\n  - 全栈工程师（2043 行/200 节）：竖切交付/API 契约/错误体系/幂等/两段式迁移/观测三件套/灰度回滚/SLO —— 含 18 份清单与 6 份模板（ADR/RFC/值班/复盘）\n  - Git 专家（2000 行/137 节）：三区模型/reflog 救援/240+ 命令/16 剧本/6 实录/团队约定与本仓库纪律（锁文件治理/PR 流程/changelog 联动）\n  - 前端专家（2001 行/174 节）：语义 HTML 全表/CSS 体系（特异性/层叠/盒模型）/Flex·Grid 配方/响应式 375 基线/a11y 全链（键盘/焦点/ARIA）/性能红线/16 组件示例/双查交付\n\n---\n\n- 知识库内容红线落地：Android / Kotlin 两套专家知识库进阶化改造 —— 移除模型已掌握的教科书层内容（集合类型表 / 基础速查 / 入门级配方），替换为生产级深水内容，行数 2030→2357 / 2003→2253，索引目标 0 缺失校验全绿\n- Android：环境与工具链 → 构建变体与 AGP 内幕；Compose 心智模型升级为强跳过模式 / 稳定性推断新口径（2025）；生命周期章节补 edge-to-edge 15 强制 / predictive back；新增基线剖析 GOT 机制与启动路径预算\n- Kotlin：集合总览（类型表）→ 集合性能成本模型与选型决策（热路径）；序列章节补 fuse 优化内幕；K2 收紧清单对齐 2.2/2.3 语义；必看内容重写为纪律级（空安全消毒链 / 表达式化 / 协程纪律）\n- 全部 6 个升级知识点经 web 检索校准（Compose strong skipping、Android 16 行为变化、Room 2.8 KMP、Kotlin 2.2 K2 等 2024-2026 最新口径）\n\n---\n\n- 知识库内容红线落地：全能 / 全栈 / Git / 前端 4 套知识库进阶化改造 —— 教科书节全面替换为生产级深水内容，行数 2001→2190 / 2043→2182 / 2000→2064 / 2001→2273，索引目标 0 缺失校验全绿\n- 前端：「元素总表 / 全局属性 / 文档骨架」等 API 罗列节 → 解析与失效内幕（preload scanner / invalidation sets / layout thrashing）/ 加载调度内幕（fetchpriority / speculation rules / 103 Early Hints）/ :has() 性能画像与 v-flag 正则 / 选择器引擎右到左匹配内幕；表单节升级 ElementInternals / requestSubmit 深水\n- Git：「fetch/pull 基础」→ fetch 深水（负 refspec / blobless vs treeless 部分克隆实测 -88% / promisor / maintenance hourly prefetch）；「大文件」→ LFS 经济学与 filter-repo 瘦身普查；命令全表 → 取证级检视（blame -C / log -L / range-diff）与维护加速内幕（sparse-index / fsmonitor）\n- 全栈：「认证 use-JWT 级」→ 认证深水（refresh token 轮换 + 复用检测 token family 撤销 / CSRF-SameSite 互动矩阵 / passkeys WebAuthn 2025 口径 / alg 混淆攻击）；HTTP 教科书表 → 语义深水（merge-patch vs JSON Patch / SWR / Sunset RFC 8594 / CHIPS 分区 Cookie / CORS PNA）\n- 全能：保留本 App 环境特有知识（工具面 / 任务流 / 权限语义），替换通用教科书节（正则速查 → ReDoS 防御与 v-flag / possessive 量词；git 动作基础 → 部分克隆与提交图内幕）；14 项 web 检索校准 2024-2026 最新口径",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.53"
   },
   "history": [
+    {
+      "versionName": "1.4.9.53",
+      "versionCode": 129,
+      "tag": "v1.4.9.53",
+      "date": "2026-10-24",
+      "title": "v1.4.9.53 更新内容",
+      "notes": [],
+      "pr": [
+        {
+          "title": "html layout core",
+          "notes": [
+            "新增 HTML 布局分析引擎（core 层）：轻量解析器 + 布局语义模型 + 分析器，为后续「Agent 分析页面布局」能力（布局分析工具 / 预览检查器）提供纯 JVM 基座",
+            "解析器零第三方依赖：标签/属性/实体/void 元素/隐式闭合/原文捕获，带节点数/深度/文本块三重防御上限，病态输入返回部分树不崩溃",
+            "分析器输出布局报告：页面骨架括号速览（body > header + main[flex](aside+article) + footer）、缩进布局树、响应式画像（viewport/媒体查询/固定宽度溢出风险）、40+ 类问题检测（语义/可访问性/定位/溢出/性能）与 Markdown 全量报告",
+            "配套 44 项行为契约测试（解析 24 + 分析 20），纯 JVM 可在 CI 与本地 kotlinc 镜像双路径验证"
+          ]
+        },
+        {
+          "title": "layout tools",
+          "notes": [
+            "新增布局分析双工具：HtmlAnalyzeLayout（本地 HTML 产物静态分析，毫秒级、可离线，工作区沙箱防护）+ BrowserAnalyzeLayout（内置浏览器当前页真实渲染几何采集：视口溢出 / landmark 区块 / flex·grid 属性 / absolute 定位祖先判定 / z-index 失配 / 标题链）",
+            "两工具互补成对：写完页面先静态验证（骨架 / 响应式 / 可访问性 40+ 类问题），浏览器打开后动态复核（真实 getComputedStyle 几何）；「为什么横向滚动 / 为什么重叠」这类问题从此有直接诊断入口",
+            "HtmlAnalyzeLayout 报告体积硬上限 12KB，支持 include_tree=false 省上下文；BrowserAnalyzeLayout 采集脚本只读 DOM、元素扫描上限 4000、每类列表截断",
+            "配套 7 项工具契约测试（路径解析 / 沙箱拒绝 / include_tree 分支），CI 与本地 kotlinc 镜像双路径验证"
+          ]
+        },
+        {
+          "title": "preview inspector",
+          "notes": [
+            "HTML 预览对话框新增布局检查器：工具条 Layers 开关一键开启，页面可见元素按 display 类型着色描边（flex 蓝 / grid 紫 / 定位橙 / 块绿），肉眼即可看穿页面骨架，配套图例行",
+            "描边实现为幂等注入脚本：只改 outline（不占布局、不触发重排），touched 台账记录原值，关闭时精确还原页面自带 outline；页面加载完成自动补描，开关切换即时生效",
+            "修复预览对话框无关重组触发整页重载的隐患：装载加 (file, tick) 守卫，刷新不再因其他状态变化而误触发"
+          ]
+        },
+        {
+          "title": "knowledge infra",
+          "notes": [
+            "新增 Agent 角色专属知识库体系（基础设施）：每个角色模板将配一套 ≥2000 行的 Markdown 知识库（assets/knowledge/），统一结构为「必看内容 + 快速索引 + 编号章节」",
+            "新增 KnowledgeBase 工具（五动作）：list 列出全部知识库 / must_read 读必看内容 / index 一键定位（想找什么 → 去哪一节）/ search 关键词检索（命中章节 + 上下文预览 + 相关度排序）/ read 精读章节（标题、纯编号、去编号标题均可命中）",
+            "角色激活时自动注入检索指引：角色绑定了知识库，「must_read → index/search → read」工作流写进 Role definition，随引擎提示词下发（Agent 屏与 Coding 屏两通道同步接线）",
+            "解析与服务防御式设计：kb 头（id/role/title/version）+ 保留节精确匹配；坏资产跳过不抛（一套坏文件不影响其余）；同角色多套时首个生效留日志；懒加载 + Mutex 并发安全",
+            "全能 Agent 知识库 v1 种子版随本版落盘（结构样板，完整版随后续版本替换）；配套 11 项行为契约测试"
+          ]
+        },
+        {
+          "title": "kb android",
+          "notes": [
+            "新增 Android 专家角色专属知识库（2030 行 / 109 章节 / 108 条快速索引）：必看内容（三大心智模型/Compose 时代默认/协程纪律/性能红线）+ 快速索引 + 编号章节全覆盖",
+            "内容主线：Compose 全套（心智/状态/性能/布局/导航/内部机制/快照系统）、协程与 Flow（配方级）、Hilt/Room/WorkManager/DataStore、生命周期、权限、后台限制（Doze/FGS 类型表）、网络/图片/通知、性能（启动四段分解/R8/Baseline Profile）、测试、厂商兼容（小米/华为矩阵）、发布签名",
+            "特色板块：5 个场景剧本（新页面/SDK/推送/深链/支付）、3 张反模式表（性能/协程/Compose）、109 节三态渲染完整模板、全库反向速配卡（症状 → 节号一行表）、API 级别差异与版本矩阵",
+            "知识库解析器增强：多段「必看内容」按序拼接、「快速索引 · 续」并入同一索引（全库单索引口径）—— 支持 2000+ 行大库分块书写"
+          ]
+        },
+        {
+          "title": "kb kotlin",
+          "notes": [
+            "新增 Kotlin 专家角色专属知识库（2003 行 / 131 章节 / 135 条快速索引，索引目标 0 缺失）：必看内容（空安全消毒链/K2 推断收紧/协程纪律/表达式化）+ 快速索引 + 编号章节全覆盖",
+            "主线：语言基础（空安全/智能转换/when/泛型型变）→ 函数与 lambda（内联三修饰/作用域函数五件套）→ 类与委托 → 集合与序列（性能数据/选型决策表）→ 协程与 Flow（结构化并发/热流口径/内部状态机原理）→ 互操作（@Jvm 族/平台类型消毒）→ K2（收紧清单/迁移）→ 测试（runTest 虚拟时间/替身分层）→ 性能（装箱/内联成本/基准）",
+            "特色板块：Java→Kotlin 惯用法对照大表、反模式 FAQ、DSL 设计三件套、value class 单位安全（Millis/KiloBytes）、131 节服务层完整模板（ErrKind+retryable 模型）、深度问答五组 60 问、版本时间线（1.1→2.3）"
+          ]
+        },
+        {
+          "title": "kb core four",
+          "notes": [
+            "新增 4 套角色专属知识库（各 ≥2000 行，索引目标缺失数均为 0）：",
+            "全能 Agent（2001 行/176 节）：v1 种子版整体替换为全量版 —— 工具面总纲/24 剧本/38 速查表/2 完整任务实录/软技能与汇报口径/红线与回执文化",
+            "全栈工程师（2043 行/200 节）：竖切交付/API 契约/错误体系/幂等/两段式迁移/观测三件套/灰度回滚/SLO —— 含 18 份清单与 6 份模板（ADR/RFC/值班/复盘）",
+            "Git 专家（2000 行/137 节）：三区模型/reflog 救援/240+ 命令/16 剧本/6 实录/团队约定与本仓库纪律（锁文件治理/PR 流程/changelog 联动）",
+            "前端专家（2001 行/174 节）：语义 HTML 全表/CSS 体系（特异性/层叠/盒模型）/Flex·Grid 配方/响应式 375 基线/a11y 全链（键盘/焦点/ARIA）/性能红线/16 组件示例/双查交付"
+          ]
+        },
+        {
+          "title": "kb android kotlin upgrade",
+          "notes": [
+            "知识库内容红线落地：Android / Kotlin 两套专家知识库进阶化改造 —— 移除模型已掌握的教科书层内容（集合类型表 / 基础速查 / 入门级配方），替换为生产级深水内容，行数 2030→2357 / 2003→2253，索引目标 0 缺失校验全绿",
+            "Android：环境与工具链 → 构建变体与 AGP 内幕；Compose 心智模型升级为强跳过模式 / 稳定性推断新口径（2025）；生命周期章节补 edge-to-edge 15 强制 / predictive back；新增基线剖析 GOT 机制与启动路径预算",
+            "Kotlin：集合总览（类型表）→ 集合性能成本模型与选型决策（热路径）；序列章节补 fuse 优化内幕；K2 收紧清单对齐 2.2/2.3 语义；必看内容重写为纪律级（空安全消毒链 / 表达式化 / 协程纪律）",
+            "全部 6 个升级知识点经 web 检索校准（Compose strong skipping、Android 16 行为变化、Room 2.8 KMP、Kotlin 2.2 K2 等 2024-2026 最新口径）"
+          ]
+        },
+        {
+          "title": "kb core four upgrade",
+          "notes": [
+            "知识库内容红线落地：全能 / 全栈 / Git / 前端 4 套知识库进阶化改造 —— 教科书节全面替换为生产级深水内容，行数 2001→2190 / 2043→2182 / 2000→2064 / 2001→2273，索引目标 0 缺失校验全绿",
+            "前端：「元素总表 / 全局属性 / 文档骨架」等 API 罗列节 → 解析与失效内幕（preload scanner / invalidation sets / layout thrashing）/ 加载调度内幕（fetchpriority / speculation rules / 103 Early Hints）/ :has() 性能画像与 v-flag 正则 / 选择器引擎右到左匹配内幕；表单节升级 ElementInternals / requestSubmit 深水",
+            "Git：「fetch/pull 基础」→ fetch 深水（负 refspec / blobless vs treeless 部分克隆实测 -88% / promisor / maintenance hourly prefetch）；「大文件」→ LFS 经济学与 filter-repo 瘦身普查；命令全表 → 取证级检视（blame -C / log -L / range-diff）与维护加速内幕（sparse-index / fsmonitor）",
+            "全栈：「认证 use-JWT 级」→ 认证深水（refresh token 轮换 + 复用检测 token family 撤销 / CSRF-SameSite 互动矩阵 / passkeys WebAuthn 2025 口径 / alg 混淆攻击）；HTTP 教科书表 → 语义深水（merge-patch vs JSON Patch / SWR / Sunset RFC 8594 / CHIPS 分区 Cookie / CORS PNA）",
+            "全能：保留本 App 环境特有知识（工具面 / 任务流 / 权限语义），替换通用教科书节（正则速查 → ReDoS 防御与 v-flag / possessive 量词；git 动作基础 → 部分克隆与提交图内幕）；14 项 web 检索校准 2024-2026 最新口径"
+          ]
+        }
+      ],
+      "markdown": "- 新增 HTML 布局分析引擎（core 层）：轻量解析器 + 布局语义模型 + 分析器，为后续「Agent 分析页面布局」能力（布局分析工具 / 预览检查器）提供纯 JVM 基座\n- 解析器零第三方依赖：标签/属性/实体/void 元素/隐式闭合/原文捕获，带节点数/深度/文本块三重防御上限，病态输入返回部分树不崩溃\n- 分析器输出布局报告：页面骨架括号速览（body > header + main[flex](aside+article) + footer）、缩进布局树、响应式画像（viewport/媒体查询/固定宽度溢出风险）、40+ 类问题检测（语义/可访问性/定位/溢出/性能）与 Markdown 全量报告\n- 配套 44 项行为契约测试（解析 24 + 分析 20），纯 JVM 可在 CI 与本地 kotlinc 镜像双路径验证\n\n---\n\n- 新增布局分析双工具：HtmlAnalyzeLayout（本地 HTML 产物静态分析，毫秒级、可离线，工作区沙箱防护）+ BrowserAnalyzeLayout（内置浏览器当前页真实渲染几何采集：视口溢出 / landmark 区块 / flex·grid 属性 / absolute 定位祖先判定 / z-index 失配 / 标题链）\n- 两工具互补成对：写完页面先静态验证（骨架 / 响应式 / 可访问性 40+ 类问题），浏览器打开后动态复核（真实 getComputedStyle 几何）；「为什么横向滚动 / 为什么重叠」这类问题从此有直接诊断入口\n- HtmlAnalyzeLayout 报告体积硬上限 12KB，支持 include_tree=false 省上下文；BrowserAnalyzeLayout 采集脚本只读 DOM、元素扫描上限 4000、每类列表截断\n- 配套 7 项工具契约测试（路径解析 / 沙箱拒绝 / include_tree 分支），CI 与本地 kotlinc 镜像双路径验证\n\n---\n\n- HTML 预览对话框新增布局检查器：工具条 Layers 开关一键开启，页面可见元素按 display 类型着色描边（flex 蓝 / grid 紫 / 定位橙 / 块绿），肉眼即可看穿页面骨架，配套图例行\n- 描边实现为幂等注入脚本：只改 outline（不占布局、不触发重排），touched 台账记录原值，关闭时精确还原页面自带 outline；页面加载完成自动补描，开关切换即时生效\n- 修复预览对话框无关重组触发整页重载的隐患：装载加 (file, tick) 守卫，刷新不再因其他状态变化而误触发\n\n---\n\n- 新增 Agent 角色专属知识库体系（基础设施）：每个角色模板将配一套 ≥2000 行的 Markdown 知识库（assets/knowledge/），统一结构为「必看内容 + 快速索引 + 编号章节」\n- 新增 KnowledgeBase 工具（五动作）：list 列出全部知识库 / must_read 读必看内容 / index 一键定位（想找什么 → 去哪一节）/ search 关键词检索（命中章节 + 上下文预览 + 相关度排序）/ read 精读章节（标题、纯编号、去编号标题均可命中）\n- 角色激活时自动注入检索指引：角色绑定了知识库，「must_read → index/search → read」工作流写进 Role definition，随引擎提示词下发（Agent 屏与 Coding 屏两通道同步接线）\n- 解析与服务防御式设计：kb 头（id/role/title/version）+ 保留节精确匹配；坏资产跳过不抛（一套坏文件不影响其余）；同角色多套时首个生效留日志；懒加载 + Mutex 并发安全\n- 全能 Agent 知识库 v1 种子版随本版落盘（结构样板，完整版随后续版本替换）；配套 11 项行为契约测试\n\n---\n\n- 新增 Android 专家角色专属知识库（2030 行 / 109 章节 / 108 条快速索引）：必看内容（三大心智模型/Compose 时代默认/协程纪律/性能红线）+ 快速索引 + 编号章节全覆盖\n- 内容主线：Compose 全套（心智/状态/性能/布局/导航/内部机制/快照系统）、协程与 Flow（配方级）、Hilt/Room/WorkManager/DataStore、生命周期、权限、后台限制（Doze/FGS 类型表）、网络/图片/通知、性能（启动四段分解/R8/Baseline Profile）、测试、厂商兼容（小米/华为矩阵）、发布签名\n- 特色板块：5 个场景剧本（新页面/SDK/推送/深链/支付）、3 张反模式表（性能/协程/Compose）、109 节三态渲染完整模板、全库反向速配卡（症状 → 节号一行表）、API 级别差异与版本矩阵\n- 知识库解析器增强：多段「必看内容」按序拼接、「快速索引 · 续」并入同一索引（全库单索引口径）—— 支持 2000+ 行大库分块书写\n\n---\n\n- 新增 Kotlin 专家角色专属知识库（2003 行 / 131 章节 / 135 条快速索引，索引目标 0 缺失）：必看内容（空安全消毒链/K2 推断收紧/协程纪律/表达式化）+ 快速索引 + 编号章节全覆盖\n- 主线：语言基础（空安全/智能转换/when/泛型型变）→ 函数与 lambda（内联三修饰/作用域函数五件套）→ 类与委托 → 集合与序列（性能数据/选型决策表）→ 协程与 Flow（结构化并发/热流口径/内部状态机原理）→ 互操作（@Jvm 族/平台类型消毒）→ K2（收紧清单/迁移）→ 测试（runTest 虚拟时间/替身分层）→ 性能（装箱/内联成本/基准）\n- 特色板块：Java→Kotlin 惯用法对照大表、反模式 FAQ、DSL 设计三件套、value class 单位安全（Millis/KiloBytes）、131 节服务层完整模板（ErrKind+retryable 模型）、深度问答五组 60 问、版本时间线（1.1→2.3）\n\n---\n\n- 新增 4 套角色专属知识库（各 ≥2000 行，索引目标缺失数均为 0）：\n  - 全能 Agent（2001 行/176 节）：v1 种子版整体替换为全量版 —— 工具面总纲/24 剧本/38 速查表/2 完整任务实录/软技能与汇报口径/红线与回执文化\n  - 全栈工程师（2043 行/200 节）：竖切交付/API 契约/错误体系/幂等/两段式迁移/观测三件套/灰度回滚/SLO —— 含 18 份清单与 6 份模板（ADR/RFC/值班/复盘）\n  - Git 专家（2000 行/137 节）：三区模型/reflog 救援/240+ 命令/16 剧本/6 实录/团队约定与本仓库纪律（锁文件治理/PR 流程/changelog 联动）\n  - 前端专家（2001 行/174 节）：语义 HTML 全表/CSS 体系（特异性/层叠/盒模型）/Flex·Grid 配方/响应式 375 基线/a11y 全链（键盘/焦点/ARIA）/性能红线/16 组件示例/双查交付\n\n---\n\n- 知识库内容红线落地：Android / Kotlin 两套专家知识库进阶化改造 —— 移除模型已掌握的教科书层内容（集合类型表 / 基础速查 / 入门级配方），替换为生产级深水内容，行数 2030→2357 / 2003→2253，索引目标 0 缺失校验全绿\n- Android：环境与工具链 → 构建变体与 AGP 内幕；Compose 心智模型升级为强跳过模式 / 稳定性推断新口径（2025）；生命周期章节补 edge-to-edge 15 强制 / predictive back；新增基线剖析 GOT 机制与启动路径预算\n- Kotlin：集合总览（类型表）→ 集合性能成本模型与选型决策（热路径）；序列章节补 fuse 优化内幕；K2 收紧清单对齐 2.2/2.3 语义；必看内容重写为纪律级（空安全消毒链 / 表达式化 / 协程纪律）\n- 全部 6 个升级知识点经 web 检索校准（Compose strong skipping、Android 16 行为变化、Room 2.8 KMP、Kotlin 2.2 K2 等 2024-2026 最新口径）\n\n---\n\n- 知识库内容红线落地：全能 / 全栈 / Git / 前端 4 套知识库进阶化改造 —— 教科书节全面替换为生产级深水内容，行数 2001→2190 / 2043→2182 / 2000→2064 / 2001→2273，索引目标 0 缺失校验全绿\n- 前端：「元素总表 / 全局属性 / 文档骨架」等 API 罗列节 → 解析与失效内幕（preload scanner / invalidation sets / layout thrashing）/ 加载调度内幕（fetchpriority / speculation rules / 103 Early Hints）/ :has() 性能画像与 v-flag 正则 / 选择器引擎右到左匹配内幕；表单节升级 ElementInternals / requestSubmit 深水\n- Git：「fetch/pull 基础」→ fetch 深水（负 refspec / blobless vs treeless 部分克隆实测 -88% / promisor / maintenance hourly prefetch）；「大文件」→ LFS 经济学与 filter-repo 瘦身普查；命令全表 → 取证级检视（blame -C / log -L / range-diff）与维护加速内幕（sparse-index / fsmonitor）\n- 全栈：「认证 use-JWT 级」→ 认证深水（refresh token 轮换 + 复用检测 token family 撤销 / CSRF-SameSite 互动矩阵 / passkeys WebAuthn 2025 口径 / alg 混淆攻击）；HTTP 教科书表 → 语义深水（merge-patch vs JSON Patch / SWR / Sunset RFC 8594 / CHIPS 分区 Cookie / CORS PNA）\n- 全能：保留本 App 环境特有知识（工具面 / 任务流 / 权限语义），替换通用教科书节（正则速查 → ReDoS 防御与 v-flag / possessive 量词；git 动作基础 → 部分克隆与提交图内幕）；14 项 web 检索校准 2024-2026 最新口径",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.53"
+    },
     {
       "versionName": "1.4.9.52",
       "versionCode": 128,
