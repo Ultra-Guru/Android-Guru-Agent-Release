@@ -1,29 +1,51 @@
 {
   "schema": "apex-changelog-v2",
-  "generatedAt": "2026-10-24T04:59:34Z",
+  "generatedAt": "2026-10-24T05:20:05Z",
   "latest": {
-    "versionName": "1.4.9.48",
-    "versionCode": 124,
-    "tag": "v1.4.9.48",
+    "versionName": "1.4.9.49",
+    "versionCode": 125,
+    "tag": "v1.4.9.49",
     "date": "2026-10-24",
-    "title": "v1.4.9.48 更新内容",
+    "title": "v1.4.9.49 更新内容",
     "notes": [],
     "pr": [
       {
-        "title": "<!-- pr: feat-neon-orb-feature-hub -->",
+        "title": "custom fusion ui plugins",
         "notes": [
-          "Coding 输入栏新增「霓虹球」mini 图标入口：呼吸辉光小球（未激活静谧灰蓝 / 激活赛博青→洋红霓虹 + 激活数徽标），点击展开功能聚合面板",
-          "霓虹球功能聚合 16 项能力，三组分区呈现 —— 会话增强（时间注入/网络搜索/结构化输出/深度推理/目标复述/诚实边界）+ 输出口径（简洁模式/详细讲解/步骤编号/无表情符号/语言锁定/语气人设）+ 编码偏好（代码注释/Diff 优先/风险预警/安全命令）",
-          "全部功能真实生效：每轮发送前经 NeonOrbStore 组装「### 霓虹球 · 功能聚合」注入段，与小圆环（#197）同通道拼进引擎 additionalSystemContext；SharedPreferences 持久化 + 一键全关",
-          "结构化输出独立五档（JSON/XML/YAML/Markdown 表格/TOML）；语言锁定（中文/English/跟随输入）与语气人设（专业严谨/亲切友好/直截了当）为单选档，档位回显在入口行",
-          "新增 25 项 JVM 单测锁定契约（目录 ≥15 项 + 时间注入/结构化输出/网络搜索三项钦定在场 + 每项功能注入指令逐段断言 + 空态零注入），:app:testDebugUnitTest 447 项全绿"
+          "FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享",
+          "聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖",
+          "聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包",
+          "王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用",
+          "插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）"
         ]
       }
     ],
-    "markdown": "<!-- pr: feat-neon-orb-feature-hub -->\n- Coding 输入栏新增「霓虹球」mini 图标入口：呼吸辉光小球（未激活静谧灰蓝 / 激活赛博青→洋红霓虹 + 激活数徽标），点击展开功能聚合面板\n- 霓虹球功能聚合 16 项能力，三组分区呈现 —— 会话增强（时间注入/网络搜索/结构化输出/深度推理/目标复述/诚实边界）+ 输出口径（简洁模式/详细讲解/步骤编号/无表情符号/语言锁定/语气人设）+ 编码偏好（代码注释/Diff 优先/风险预警/安全命令）\n- 全部功能真实生效：每轮发送前经 NeonOrbStore 组装「### 霓虹球 · 功能聚合」注入段，与小圆环（#197）同通道拼进引擎 additionalSystemContext；SharedPreferences 持久化 + 一键全关\n- 结构化输出独立五档（JSON/XML/YAML/Markdown 表格/TOML）；语言锁定（中文/English/跟随输入）与语气人设（专业严谨/亲切友好/直截了当）为单选档，档位回显在入口行\n- 新增 25 项 JVM 单测锁定契约（目录 ≥15 项 + 时间注入/结构化输出/网络搜索三项钦定在场 + 每项功能注入指令逐段断言 + 空态零注入），:app:testDebugUnitTest 447 项全绿",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.48"
+    "markdown": "- FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享\n- 聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖\n- 聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包\n- 王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用\n- 插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.49"
   },
   "history": [
+    {
+      "versionName": "1.4.9.49",
+      "versionCode": 125,
+      "tag": "v1.4.9.49",
+      "date": "2026-10-24",
+      "title": "v1.4.9.49 更新内容",
+      "notes": [],
+      "pr": [
+        {
+          "title": "custom fusion ui plugins",
+          "notes": [
+            "FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享",
+            "聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖",
+            "聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包",
+            "王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用",
+            "插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）"
+          ]
+        }
+      ],
+      "markdown": "- FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享\n- 聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖\n- 聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包\n- 王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用\n- 插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.49"
+    },
     {
       "versionName": "1.4.9.48",
       "versionCode": 124,
