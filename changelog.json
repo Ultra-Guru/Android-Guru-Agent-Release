@@ -1,36 +1,65 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-25T05:57:28Z",
+  "generatedAt": "2026-10-25T06:16:46Z",
   "latest": {
-    "versionName": "1.4.9.70",
-    "versionCode": 146,
-    "tag": "v1.4.9.70",
+    "versionName": "1.4.9.71",
+    "versionCode": 147,
+    "tag": "v1.4.9.71",
     "date": "2026-10-25",
-    "title": "v1.4.9.70 更新内容",
+    "title": "v1.4.9.71 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "HTML 布局分析：浏览器动态采集 v2",
+        "title": "知识库：程序化审计与补强（20 套全覆盖）",
         "notes": [
-          "BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）",
-          "报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）",
-          "对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题"
+          "新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑",
+          "按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%",
+          "修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）"
         ]
       },
       {
-        "title": "知识库：跨库全局检索 + 工具参数修复",
+        "title": "第二轮体系文档 + Project 面板收尾",
         "notes": [
-          "KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏",
-          "修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）",
-          "KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf"
+          "新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律",
+          "docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）",
+          "GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）"
         ]
       }
     ],
-    "markdown": "## HTML 布局分析：浏览器动态采集 v2\n\n- BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）\n- 报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）\n- 对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题\n\n---\n\n## 知识库：跨库全局检索 + 工具参数修复\n\n- KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏\n- 修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）\n- KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.70"
+    "markdown": "## 知识库：程序化审计与补强（20 套全覆盖）\n\n- 新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑\n- 按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%\n- 修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）\n\n---\n\n## 第二轮体系文档 + Project 面板收尾\n\n- 新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律\n- docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）\n- GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.71"
   },
   "history": [
+    {
+      "versionName": "1.4.9.71",
+      "versionCode": 147,
+      "tag": "v1.4.9.71",
+      "date": "2026-10-25",
+      "title": "v1.4.9.71 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "知识库：程序化审计与补强（20 套全覆盖）",
+          "notes": [
+            "新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑",
+            "按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%",
+            "修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）"
+          ]
+        },
+        {
+          "title": "第二轮体系文档 + Project 面板收尾",
+          "notes": [
+            "新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律",
+            "docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）",
+            "GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）"
+          ]
+        }
+      ],
+      "markdown": "## 知识库：程序化审计与补强（20 套全覆盖）\n\n- 新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑\n- 按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%\n- 修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）\n\n---\n\n## 第二轮体系文档 + Project 面板收尾\n\n- 新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律\n- docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）\n- GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.71"
+    },
     {
       "versionName": "1.4.9.70",
       "versionCode": 146,
@@ -1398,21 +1427,6 @@
       ],
       "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.22"
-    },
-    {
-      "versionName": "1.4.9.21",
-      "versionCode": 97,
-      "tag": "v1.4.9.21",
-      "date": "2026-10-17",
-      "title": "v1.4.9.21 更新内容",
-      "notes": [
-        "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
-        "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
-        "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
-        "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补"
-      ],
-      "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.21"
     }
   ]
 }
