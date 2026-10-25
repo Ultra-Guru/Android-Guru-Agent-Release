@@ -1,40 +1,65 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-25T05:42:43Z",
+  "generatedAt": "2026-10-25T05:57:28Z",
   "latest": {
-    "versionName": "1.4.9.69",
-    "versionCode": 145,
-    "tag": "v1.4.9.69",
+    "versionName": "1.4.9.70",
+    "versionCode": 146,
+    "tag": "v1.4.9.70",
     "date": "2026-10-25",
-    "title": "v1.4.9.69 更新内容",
+    "title": "v1.4.9.70 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "workstation split kb volumes",
+        "title": "HTML 布局分析：浏览器动态采集 v2",
         "notes": [
-          "双工位绝对分离：Agent 与 Coding 模式的系统提示词按工位分轨构建 —— 编码会话不再携带闲聊姿态与情感调频段，身份行各自声明（AI AGENT / 编码智能体）",
-          "能力声明同源化：任务路由段从本轮实际可见工具派生车道推荐，被工位隔离的工具不再被推荐（全能角色的能力自述与工具面一致，「全能」靠工具+知识库落地而非提示词虚标）",
-          "知识库 v2 多卷制：同一角色可绑定任意多卷知识库（加卷=加文件，知识面无限扩充），检索工具按卷分组展示，每卷独立目录一键定位",
-          "新增全能 Agent 知识库卷二「任务工程与安全治理」（2,096 行 / 40 节：需求工程 / 执行治理 / 验证工程 / 上下文与记忆 / 安全治理 / 协作交付）"
+          "BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）",
+          "报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）",
+          "对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题"
         ]
       },
       {
-        "title": "记忆页全面升级：手动写入口 + 知识图谱分区 + 三轨统一搜索",
+        "title": "知识库：跨库全局检索 + 工具参数修复",
         "notes": [
-          "记忆页新增「添加记忆」入口：「记一条事实」手动保存长期事实（画像/近况/里程碑 + 重要度），「教一次经验」把目标/结果/成败/教训（每行一条）整包沉淀 —— 与 agent 的记忆写入工具同落点，你教的门道 agent 之后会一并召回",
-          "列表视图新增「知识图谱」分区：实体卡呈现类型徽章、观察记录与关联关系（「—关系→ 对端」方向归一），按关联数排序（最中心的知识排最前）；点击「在图谱中查看」直达图谱画布并自动定位选中该实体节点",
-          "搜索升级为三轨统一命中：事实、知识实体、场景节点分组展示，各带类型徽章；事实与实体命中可一键跳转图谱定位对应节点",
-          "概览统计从三项扩为六项：会话、节点、宏技能 + 事实、实体、关联关系",
-          "写入/删除后图谱画布经库侧修订号信号自动软刷新（保位/保选中，探索现场不丢），列表与图谱数据保持一致",
-          "修复英文环境下的中英混杂：聊天记忆的类别标题与来源标签（启发式/蒸馏/手动/迁移）改为资源驱动双语"
+          "KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏",
+          "修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）",
+          "KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf"
         ]
       }
     ],
-    "markdown": "- 双工位绝对分离：Agent 与 Coding 模式的系统提示词按工位分轨构建 —— 编码会话不再携带闲聊姿态与情感调频段，身份行各自声明（AI AGENT / 编码智能体）\n- 能力声明同源化：任务路由段从本轮实际可见工具派生车道推荐，被工位隔离的工具不再被推荐（全能角色的能力自述与工具面一致，「全能」靠工具+知识库落地而非提示词虚标）\n- 知识库 v2 多卷制：同一角色可绑定任意多卷知识库（加卷=加文件，知识面无限扩充），检索工具按卷分组展示，每卷独立目录一键定位\n- 新增全能 Agent 知识库卷二「任务工程与安全治理」（2,096 行 / 40 节：需求工程 / 执行治理 / 验证工程 / 上下文与记忆 / 安全治理 / 协作交付）\n\n---\n\n## 记忆页全面升级：手动写入口 + 知识图谱分区 + 三轨统一搜索\n\n- 记忆页新增「添加记忆」入口：「记一条事实」手动保存长期事实（画像/近况/里程碑 + 重要度），「教一次经验」把目标/结果/成败/教训（每行一条）整包沉淀 —— 与 agent 的记忆写入工具同落点，你教的门道 agent 之后会一并召回\n- 列表视图新增「知识图谱」分区：实体卡呈现类型徽章、观察记录与关联关系（「—关系→ 对端」方向归一），按关联数排序（最中心的知识排最前）；点击「在图谱中查看」直达图谱画布并自动定位选中该实体节点\n- 搜索升级为三轨统一命中：事实、知识实体、场景节点分组展示，各带类型徽章；事实与实体命中可一键跳转图谱定位对应节点\n- 概览统计从三项扩为六项：会话、节点、宏技能 + 事实、实体、关联关系\n- 写入/删除后图谱画布经库侧修订号信号自动软刷新（保位/保选中，探索现场不丢），列表与图谱数据保持一致\n- 修复英文环境下的中英混杂：聊天记忆的类别标题与来源标签（启发式/蒸馏/手动/迁移）改为资源驱动双语",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.69"
+    "markdown": "## HTML 布局分析：浏览器动态采集 v2\n\n- BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）\n- 报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）\n- 对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题\n\n---\n\n## 知识库：跨库全局检索 + 工具参数修复\n\n- KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏\n- 修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）\n- KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.70"
   },
   "history": [
+    {
+      "versionName": "1.4.9.70",
+      "versionCode": 146,
+      "tag": "v1.4.9.70",
+      "date": "2026-10-25",
+      "title": "v1.4.9.70 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "HTML 布局分析：浏览器动态采集 v2",
+          "notes": [
+            "BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）",
+            "报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）",
+            "对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题"
+          ]
+        },
+        {
+          "title": "知识库：跨库全局检索 + 工具参数修复",
+          "notes": [
+            "KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏",
+            "修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）",
+            "KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf"
+          ]
+        }
+      ],
+      "markdown": "## HTML 布局分析：浏览器动态采集 v2\n\n- BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）\n- 报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）\n- 对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题\n\n---\n\n## 知识库：跨库全局检索 + 工具参数修复\n\n- KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏\n- 修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）\n- KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.70"
+    },
     {
       "versionName": "1.4.9.69",
       "versionCode": 145,
@@ -1388,21 +1413,6 @@
       ],
       "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.21"
-    },
-    {
-      "versionName": "1.4.9.20",
-      "versionCode": 96,
-      "tag": "v1.4.9.20",
-      "date": "2026-10-17",
-      "title": "v1.4.9.20 更新内容",
-      "notes": [
-        "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
-        "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
-        "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
-        "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补"
-      ],
-      "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.20"
     }
   ]
 }
