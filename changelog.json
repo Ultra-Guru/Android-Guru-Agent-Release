@@ -1,27 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-25T02:48:01Z",
+  "generatedAt": "2026-10-25T03:04:41Z",
   "latest": {
-    "versionName": "1.4.9.64",
-    "versionCode": 140,
-    "tag": "v1.4.9.64",
+    "versionName": "1.4.9.65",
+    "versionCode": 141,
+    "tag": "v1.4.9.65",
     "date": "2026-10-25",
-    "title": "v1.4.9.64 更新内容",
+    "title": "v1.4.9.65 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "HTML 布局分析：CSS 级联视图",
+        "title": "HTML 布局分析：视觉画像",
         "notes": [
-          "静态布局分析新增 CSS 级联能力：页面 `<style>` 块的规则（类/ID/标签选择器、@media 条件按手机视口评估）现在会并入 display/尺寸/定位/弹性推断 —— 样式写在 style 块里的页面终于能拿到正确的布局画像",
-          "分析报告头部新增「CSS 级联」行，展示已并入推断的规则数量"
+          "布局分析报告新增「视觉画像」区块：调色板（背景/文本/描边频次榜 + 强调色）、字体清单与字号分布、间距刻度（4px/8px 节奏判定）、圆角与阴影语言、暗色主题画像 —— Agent 写完页面即可知道「这页大概长什么样」",
+          "新增 WCAG 文字对比度检测：低对比度文本（正文 <4.5:1 / 大字 <3:1）自动进问题清单，灰字配灰底这类可读性陷阱无处遁形"
         ]
       }
     ],
-    "markdown": "## HTML 布局分析：CSS 级联视图\n\n- 静态布局分析新增 CSS 级联能力：页面 `<style>` 块的规则（类/ID/标签选择器、@media 条件按手机视口评估）现在会并入 display/尺寸/定位/弹性推断 —— 样式写在 style 块里的页面终于能拿到正确的布局画像\n- 分析报告头部新增「CSS 级联」行，展示已并入推断的规则数量",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.64"
+    "markdown": "## HTML 布局分析：视觉画像\n\n- 布局分析报告新增「视觉画像」区块：调色板（背景/文本/描边频次榜 + 强调色）、字体清单与字号分布、间距刻度（4px/8px 节奏判定）、圆角与阴影语言、暗色主题画像 —— Agent 写完页面即可知道「这页大概长什么样」\n- 新增 WCAG 文字对比度检测：低对比度文本（正文 <4.5:1 / 大字 <3:1）自动进问题清单，灰字配灰底这类可读性陷阱无处遁形",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.65"
   },
   "history": [
+    {
+      "versionName": "1.4.9.65",
+      "versionCode": 141,
+      "tag": "v1.4.9.65",
+      "date": "2026-10-25",
+      "title": "v1.4.9.65 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "HTML 布局分析：视觉画像",
+          "notes": [
+            "布局分析报告新增「视觉画像」区块：调色板（背景/文本/描边频次榜 + 强调色）、字体清单与字号分布、间距刻度（4px/8px 节奏判定）、圆角与阴影语言、暗色主题画像 —— Agent 写完页面即可知道「这页大概长什么样」",
+            "新增 WCAG 文字对比度检测：低对比度文本（正文 <4.5:1 / 大字 <3:1）自动进问题清单，灰字配灰底这类可读性陷阱无处遁形"
+          ]
+        }
+      ],
+      "markdown": "## HTML 布局分析：视觉画像\n\n- 布局分析报告新增「视觉画像」区块：调色板（背景/文本/描边频次榜 + 强调色）、字体清单与字号分布、间距刻度（4px/8px 节奏判定）、圆角与阴影语言、暗色主题画像 —— Agent 写完页面即可知道「这页大概长什么样」\n- 新增 WCAG 文字对比度检测：低对比度文本（正文 <4.5:1 / 大字 <3:1）自动进问题清单，灰字配灰底这类可读性陷阱无处遁形",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.65"
+    },
     {
       "versionName": "1.4.9.64",
       "versionCode": 140,
