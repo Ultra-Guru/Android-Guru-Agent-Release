@@ -1,36 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-25T06:16:46Z",
+  "generatedAt": "2026-10-25T07:10:20Z",
   "latest": {
-    "versionName": "1.4.9.71",
-    "versionCode": 147,
-    "tag": "v1.4.9.71",
+    "versionName": "1.4.9.72",
+    "versionCode": 148,
+    "tag": "v1.4.9.72",
     "date": "2026-10-25",
-    "title": "v1.4.9.71 更新内容",
+    "title": "v1.4.9.72 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "知识库：程序化审计与补强（20 套全覆盖）",
+        "title": "settings toolloop ratelimit background",
         "notes": [
-          "新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑",
-          "按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%",
-          "修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）"
-        ]
-      },
-      {
-        "title": "第二轮体系文档 + Project 面板收尾",
-        "notes": [
-          "新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律",
-          "docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）",
-          "GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）"
+          "工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）",
+          "模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合",
+          "自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）"
         ]
       }
     ],
-    "markdown": "## 知识库：程序化审计与补强（20 套全覆盖）\n\n- 新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑\n- 按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%\n- 修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）\n\n---\n\n## 第二轮体系文档 + Project 面板收尾\n\n- 新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律\n- docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）\n- GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.71"
+    "markdown": "- 工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）\n- 模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合\n- 自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.72"
   },
   "history": [
+    {
+      "versionName": "1.4.9.72",
+      "versionCode": 148,
+      "tag": "v1.4.9.72",
+      "date": "2026-10-25",
+      "title": "v1.4.9.72 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "settings toolloop ratelimit background",
+          "notes": [
+            "工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）",
+            "模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合",
+            "自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）"
+          ]
+        }
+      ],
+      "markdown": "- 工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）\n- 模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合\n- 自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.72"
+    },
     {
       "versionName": "1.4.9.71",
       "versionCode": 147,
@@ -1412,21 +1425,6 @@
       ],
       "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补\n\n---\n\n# 代码审查全量落地 —— 18 issue 一次收口\n\n- 修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用\n- 安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）\n- 市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用\n- MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断\n- i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）\n- 主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试\n- 测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁\n- CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断\n- 标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.23"
-    },
-    {
-      "versionName": "1.4.9.22",
-      "versionCode": 98,
-      "tag": "v1.4.9.22",
-      "date": "2026-10-17",
-      "title": "v1.4.9.22 更新内容",
-      "notes": [
-        "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
-        "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
-        "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
-        "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补"
-      ],
-      "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.22"
     }
   ]
 }
