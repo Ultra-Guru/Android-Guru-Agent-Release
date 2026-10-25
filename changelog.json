@@ -1,28 +1,63 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-25T07:10:20Z",
+  "generatedAt": "2026-10-25T08:11:56Z",
   "latest": {
-    "versionName": "1.4.9.72",
-    "versionCode": 148,
-    "tag": "v1.4.9.72",
+    "versionName": "1.4.9.73",
+    "versionCode": 149,
+    "tag": "v1.4.9.73",
     "date": "2026-10-25",
-    "title": "v1.4.9.72 更新内容",
+    "title": "v1.4.9.73 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "settings toolloop ratelimit background",
+        "title": "Agent 终端工具修复：失败不再显绿 + 执行环境全程可见",
         "notes": [
-          "工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）",
-          "模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合",
-          "自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）"
+          "终端命令失败不再误报成功：TerminalExec 返回的结构化结果（exit_code）现在是成败判定的权威信号 —— `command not found`（127）、命令被你拒绝（126）、超时强杀（-1）此前都显示绿色「完成」，现在如实显示红色「失败」",
+          "工具卡新增真实退出码徽标：终端工具完成后展开卡片可见 `exit 0` / `exit 127` 标记，非零退出码红色高亮，失败原因一眼可辨",
+          "工具卡新增执行环境标注：每次终端调用显示执行通道（Ubuntu 沙箱 / Android 宿主 Root/Shizuku/本地）、实际执行目录、关联会话号 —— 双模式下「这条命令跑在哪个根」不再靠猜",
+          "命令挂起可见：等待用户输入的终端命令（INPUT_REQUIRED，如 apt 交互确认）在工具卡上显示琥珀色「等待输入」标记",
+          "Terminal* 工具族获得独立「终端」徽章（终端图标 + 终端绿）：此前全部显示「本地工具」徽章，无法与普通工具区分；折叠卡的智能摘要也会显示 TerminalExec / TerminalRun 正在执行的命令",
+          "TerminalExec 的 cwd 参数统一为 guest 语义：`/workspace`（活跃工作区）、`/sdcard`（共享存储）、`/root`、`~/` 按描述正确映射进 Ubuntu 沙箱 —— 此前按宿主语义解析导致目录不存在报错，与 TerminalCreate 同名参数语义相反",
+          "危险命令审批弹窗显示执行环境：「将在：Ubuntu 沙箱（proot-ubuntu）· 目录 /workspace」—— 同一条 rm 在沙箱内与宿主上后果完全不同，授权决策现在能看到这个区别",
+          "cd 目录记忆支持 guest 路径：Ubuntu 通道里 `cd /workspace/proj && make` 的目录切换会被记住，后续命令同目录执行（此前宿主侧验证失败被静默丢弃）",
+          "TerminalObserve SCREEN 模式返回 guestCwd：交互会话里 shell 上报的当前目录（OSC 7）首次暴露给 Agent —— cd 到哪里、后续 TerminalExec 传什么 cwd 不再靠猜（JVM 回退引擎已生效；设备端 native VT 引擎的 OSC 7 桥接为后续工作，就绪前该字段不出现）",
+          "高危命令检测补漏：`> /etc/passwd` 这类重定向改写系统文件的变体纳入确认清单"
         ]
       }
     ],
-    "markdown": "- 工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）\n- 模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合\n- 自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.72"
+    "markdown": "## Agent 终端工具修复：失败不再显绿 + 执行环境全程可见\n\n- 终端命令失败不再误报成功：TerminalExec 返回的结构化结果（exit_code）现在是成败判定的权威信号 —— `command not found`（127）、命令被你拒绝（126）、超时强杀（-1）此前都显示绿色「完成」，现在如实显示红色「失败」\n- 工具卡新增真实退出码徽标：终端工具完成后展开卡片可见 `exit 0` / `exit 127` 标记，非零退出码红色高亮，失败原因一眼可辨\n- 工具卡新增执行环境标注：每次终端调用显示执行通道（Ubuntu 沙箱 / Android 宿主 Root/Shizuku/本地）、实际执行目录、关联会话号 —— 双模式下「这条命令跑在哪个根」不再靠猜\n- 命令挂起可见：等待用户输入的终端命令（INPUT_REQUIRED，如 apt 交互确认）在工具卡上显示琥珀色「等待输入」标记\n- Terminal* 工具族获得独立「终端」徽章（终端图标 + 终端绿）：此前全部显示「本地工具」徽章，无法与普通工具区分；折叠卡的智能摘要也会显示 TerminalExec / TerminalRun 正在执行的命令\n- TerminalExec 的 cwd 参数统一为 guest 语义：`/workspace`（活跃工作区）、`/sdcard`（共享存储）、`/root`、`~/` 按描述正确映射进 Ubuntu 沙箱 —— 此前按宿主语义解析导致目录不存在报错，与 TerminalCreate 同名参数语义相反\n- 危险命令审批弹窗显示执行环境：「将在：Ubuntu 沙箱（proot-ubuntu）· 目录 /workspace」—— 同一条 rm 在沙箱内与宿主上后果完全不同，授权决策现在能看到这个区别\n- cd 目录记忆支持 guest 路径：Ubuntu 通道里 `cd /workspace/proj && make` 的目录切换会被记住，后续命令同目录执行（此前宿主侧验证失败被静默丢弃）\n- TerminalObserve SCREEN 模式返回 guestCwd：交互会话里 shell 上报的当前目录（OSC 7）首次暴露给 Agent —— cd 到哪里、后续 TerminalExec 传什么 cwd 不再靠猜（JVM 回退引擎已生效；设备端 native VT 引擎的 OSC 7 桥接为后续工作，就绪前该字段不出现）\n- 高危命令检测补漏：`> /etc/passwd` 这类重定向改写系统文件的变体纳入确认清单",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.73"
   },
   "history": [
+    {
+      "versionName": "1.4.9.73",
+      "versionCode": 149,
+      "tag": "v1.4.9.73",
+      "date": "2026-10-25",
+      "title": "v1.4.9.73 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "Agent 终端工具修复：失败不再显绿 + 执行环境全程可见",
+          "notes": [
+            "终端命令失败不再误报成功：TerminalExec 返回的结构化结果（exit_code）现在是成败判定的权威信号 —— `command not found`（127）、命令被你拒绝（126）、超时强杀（-1）此前都显示绿色「完成」，现在如实显示红色「失败」",
+            "工具卡新增真实退出码徽标：终端工具完成后展开卡片可见 `exit 0` / `exit 127` 标记，非零退出码红色高亮，失败原因一眼可辨",
+            "工具卡新增执行环境标注：每次终端调用显示执行通道（Ubuntu 沙箱 / Android 宿主 Root/Shizuku/本地）、实际执行目录、关联会话号 —— 双模式下「这条命令跑在哪个根」不再靠猜",
+            "命令挂起可见：等待用户输入的终端命令（INPUT_REQUIRED，如 apt 交互确认）在工具卡上显示琥珀色「等待输入」标记",
+            "Terminal* 工具族获得独立「终端」徽章（终端图标 + 终端绿）：此前全部显示「本地工具」徽章，无法与普通工具区分；折叠卡的智能摘要也会显示 TerminalExec / TerminalRun 正在执行的命令",
+            "TerminalExec 的 cwd 参数统一为 guest 语义：`/workspace`（活跃工作区）、`/sdcard`（共享存储）、`/root`、`~/` 按描述正确映射进 Ubuntu 沙箱 —— 此前按宿主语义解析导致目录不存在报错，与 TerminalCreate 同名参数语义相反",
+            "危险命令审批弹窗显示执行环境：「将在：Ubuntu 沙箱（proot-ubuntu）· 目录 /workspace」—— 同一条 rm 在沙箱内与宿主上后果完全不同，授权决策现在能看到这个区别",
+            "cd 目录记忆支持 guest 路径：Ubuntu 通道里 `cd /workspace/proj && make` 的目录切换会被记住，后续命令同目录执行（此前宿主侧验证失败被静默丢弃）",
+            "TerminalObserve SCREEN 模式返回 guestCwd：交互会话里 shell 上报的当前目录（OSC 7）首次暴露给 Agent —— cd 到哪里、后续 TerminalExec 传什么 cwd 不再靠猜（JVM 回退引擎已生效；设备端 native VT 引擎的 OSC 7 桥接为后续工作，就绪前该字段不出现）",
+            "高危命令检测补漏：`> /etc/passwd` 这类重定向改写系统文件的变体纳入确认清单"
+          ]
+        }
+      ],
+      "markdown": "## Agent 终端工具修复：失败不再显绿 + 执行环境全程可见\n\n- 终端命令失败不再误报成功：TerminalExec 返回的结构化结果（exit_code）现在是成败判定的权威信号 —— `command not found`（127）、命令被你拒绝（126）、超时强杀（-1）此前都显示绿色「完成」，现在如实显示红色「失败」\n- 工具卡新增真实退出码徽标：终端工具完成后展开卡片可见 `exit 0` / `exit 127` 标记，非零退出码红色高亮，失败原因一眼可辨\n- 工具卡新增执行环境标注：每次终端调用显示执行通道（Ubuntu 沙箱 / Android 宿主 Root/Shizuku/本地）、实际执行目录、关联会话号 —— 双模式下「这条命令跑在哪个根」不再靠猜\n- 命令挂起可见：等待用户输入的终端命令（INPUT_REQUIRED，如 apt 交互确认）在工具卡上显示琥珀色「等待输入」标记\n- Terminal* 工具族获得独立「终端」徽章（终端图标 + 终端绿）：此前全部显示「本地工具」徽章，无法与普通工具区分；折叠卡的智能摘要也会显示 TerminalExec / TerminalRun 正在执行的命令\n- TerminalExec 的 cwd 参数统一为 guest 语义：`/workspace`（活跃工作区）、`/sdcard`（共享存储）、`/root`、`~/` 按描述正确映射进 Ubuntu 沙箱 —— 此前按宿主语义解析导致目录不存在报错，与 TerminalCreate 同名参数语义相反\n- 危险命令审批弹窗显示执行环境：「将在：Ubuntu 沙箱（proot-ubuntu）· 目录 /workspace」—— 同一条 rm 在沙箱内与宿主上后果完全不同，授权决策现在能看到这个区别\n- cd 目录记忆支持 guest 路径：Ubuntu 通道里 `cd /workspace/proj && make` 的目录切换会被记住，后续命令同目录执行（此前宿主侧验证失败被静默丢弃）\n- TerminalObserve SCREEN 模式返回 guestCwd：交互会话里 shell 上报的当前目录（OSC 7）首次暴露给 Agent —— cd 到哪里、后续 TerminalExec 传什么 cwd 不再靠猜（JVM 回退引擎已生效；设备端 native VT 引擎的 OSC 7 桥接为后续工作，就绪前该字段不出现）\n- 高危命令检测补漏：`> /etc/passwd` 这类重定向改写系统文件的变体纳入确认清单",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.73"
+    },
     {
       "versionName": "1.4.9.72",
       "versionCode": 148,
@@ -1401,30 +1436,6 @@
       ],
       "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补\n\n---\n\n# 代码审查全量落地 —— 18 issue 一次收口\n\n- 修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用\n- 安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）\n- 市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用\n- MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断\n- i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）\n- 主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试\n- 测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁\n- CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断\n- 标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）\n\n---\n\n# 玻璃幕帘背景模糊 + 确认面零打扰 + 空思考卡治理\n\n- 门控提问卡挂起时背景整体模糊 + 模态幕帘：液态玻璃采样盲区的文字透出干扰根治\n- skill / MCP / 工具确认面收敛为零打扰：第三方首次确认与风险弹窗全部移除，仅保留显式敏感动作的会话内一次确认\n- Agent 模式任务卡激活期去重同文用户气泡：执行中下方不再重复显示\n- Coding 流水轴空思考卡治理：空思考分片不建卡 + 空白收尾移除占位（不思考模型不再挂「思考中」）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.24"
-    },
-    {
-      "versionName": "1.4.9.23",
-      "versionCode": 99,
-      "tag": "v1.4.9.23",
-      "date": "2026-10-17",
-      "title": "v1.4.9.23 更新内容",
-      "notes": [
-        "新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）",
-        "新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）",
-        "关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）",
-        "配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补",
-        "修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用",
-        "安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）",
-        "市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用",
-        "MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断",
-        "i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）",
-        "主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试",
-        "测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁",
-        "CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断",
-        "标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）"
-      ],
-      "markdown": "# 更新日志通道 v1（changelog channel）\n\n- 新增更新日志弹窗：版本升级 / 热更后首次启动自动展示本版更新内容（同一版本只弹一次，「知道了」记录已读）\n- 新增「发现新版本」弹窗：远端发布新版本时展示新版日志并支持一键前往下载页（遵循设置中的自动检查更新开关）\n- 关于页新增「更新日志」入口：可随时查看历史版本的更新内容（远端清单优先，离线回退 APK 内置副本）\n- 配套发布器 App 与 PR 门禁：`.changelog/unreleased/` 片段随版本自动聚合为 changelog.json，构建期生成、绝不事后人工补\n\n---\n\n# 代码审查全量落地 —— 18 issue 一次收口\n\n- 修复 Agent 模式卡死三连：TaskRuntime 砖化根治（WAITING_USER 回迁 + 清理三连 try-finally + cancel 超时）、#340 确认通道注册先行 + Boolean 回执贯通（迟到确认显式提示「未送达」）、tap 无界、abort 原子换引用\n- 安全三连修：凭据脱敏（provider key 写入即登记擦洗）、SSRF 防护（SsrfGuard 私网/公网判别）、短信限流（频次闸门）\n- 市场与 MCP 六连修：假成功掐断（空响应/畸形握手不再装「已连接、零工具」）、镜像回退、错误体有界读取（防超大错误页 OOM）、跨源去重、门禁加固、启动先启用\n- MCP 传输融合加固：响应体 16MB 有界读取 + 空体即抛 + SSE 按 JSON-RPC id 选帧（规范分帧/通知夹带/心跳全兼容），假成功全链路掐断\n- i18n 收编：Coding 屏四文件 52 处硬编码中文进资源（33 键双语）\n- 主题统一：四套颜色体系统一为 AccentColors 单一事实源 + 契约测试\n- 测试纪律：#276 runBlocking/Thread.sleep 基线钉存棘轮门禁\n- CI 提速：单次 gradlew 合并调用（14 次 → 2 次）+ 失败全模块可见（--continue）+ 依赖解析失败才诊断\n- 标准循环库配套：standard-kit 问答回执通道加固（AtomicReference + 注册先行 + 计划确认 Boolean 回执变体）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.23"
     }
   ]
 }
