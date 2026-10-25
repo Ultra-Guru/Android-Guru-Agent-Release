@@ -19,12 +19,29 @@
 **快速跳转**
 
 <a href="#-下载-apk"><img src="https://img.shields.io/badge/⬇️_下载_APK-最新版-2ea44f" alt="Download"/></a>
+<a href="#-三步上手"><img src="https://img.shields.io/badge/🚀_三步上手-新用户必读-16A34A" alt="Quick Start"/></a>
 <a href="#️-全自动发布流程"><img src="https://img.shields.io/badge/⚙️_发布流程-全自动-1F6FEB" alt="Pipeline"/></a>
 <a href="#️-三通道更新优先级"><img src="https://img.shields.io/badge/🛰️_更新通道-热更·增量·全量-8A2BE2" alt="Channels"/></a>
+<a href="#-更新日志体验"><img src="https://img.shields.io/badge/📜_更新日志-两步弹窗·配图·跨版本-DC2626" alt="Changelog"/></a>
 <a href="#-客户端接入点"><img src="https://img.shields.io/badge/🔌_客户端接入-固定读取点-0077B5" alt="Client API"/></a>
+<a href="#-常见问题-faq"><img src="https://img.shields.io/badge/❓_FAQ-常见问题-6B7280" alt="FAQ"/></a>
 <a href="./HOT_UPDATE.md"><img src="https://img.shields.io/badge/🔥_热更手册-HOT_UPDATE-E95420" alt="Hot Update"/></a>
 
 </div>
+
+---
+
+## 🚀 三步上手
+
+```
+① 下载安装 ─── Releases 最新页拿 arm64 包（现代手机首选），直接安装
+② 首次解包 ─── 内置 Ubuntu 24.04 CLI 环境，首次使用离线解包 2~5 分钟（零网络）
+③ 以后更新 ─── 什么都不用管：App 内自动检查 → 热更/增量/全量自动选最优 →
+                升级后首启弹窗告诉你这次更新了什么（含配图截图）
+```
+
+> 从旧版本一路跨过来的用户也不吃亏：跨多版本升级时，弹窗会聚合你跨过的
+> **每一个版本**的更新日志 —— 要点、配图、功能变更一条不丢。
 
 ---
 
@@ -99,8 +116,46 @@
 ### 更新日志从哪来？
 
 [apex-Administrator](https://github.com/Ultra-Guru/apex-Administrator)（更新日志发布器）是手机端管理工具：
-随时随地写日志、**附配图截图**，一键提交到开发仓库 `.changelog/unreleased/` —— 提交即触发上面的发版流水线，
-新版 App 升级后首启弹窗即展示该日志（v1.4.7+ 支持配图展示）。
+随时随地写日志、**附配图截图**（≤9 张，自动压缩），发送前可「效果预览」
+（1:1 模拟主 App 弹窗），一键提交到开发仓库 `.changelog/unreleased/` —— 
+提交即触发上面的发版流水线，新版 App 升级后首启弹窗即展示该日志。
+
+一级置顶双保险（changelog 通道 v3.1）：`source: publisher` 显式标记 +
+commit 溯源兑底（含「via 发布器」的提交恒进一级）—— 发布器发送的公告
+**绝不会**被误降为二级功能变更。
+
+---
+
+## 📜 更新日志体验
+
+### 两步弹窗（升级后首启）
+
+```
+① 「更新日志」第 1 步：开发者用发布器手写的公告要点（置顶）
+                        + 配图图廊（点开全屏：双指缩放/拖拽/双击）
+           │ 点「下一步 · 功能变更」
+           ▼
+② 「功能变更」第 2 步：本版合并的 PR 功能变更（新增功能/修复，按 PR 分组）
+```
+
+- 两级独立：没有手动公告时直进第 2 步；没有 PR 时单步收尾 —— 互不干扰；
+- 同一版本只弹一次；离线时回退 APK 内置副本，绝不弹错误。
+
+### 跨版本升级聚合（增量补丁链同样适用）
+
+从 v1.4.9.**50** 一路补丁到 v1.4.9.**61**？弹窗展示的是 **50→61 区间内全部
+11 个版本**的日志并集：
+
+- 一级要点跨版本全保留（开发者每一条公告都在）；
+- **配图跨版本全保留**（中间版本的截图一张不丢）；
+- 二级 PR 分组按标题合并去重（同 PR 只展示一次）。
+
+### 随时回看
+
+App「设置 → 关于 → 更新日志」：历史版本列表 → 点开任意一版详情
+（数据源即本仓库 [`changelog.json`](./changelog.json) 的 `history`，封顶 50 版）。
+
+---
 
 ### 应急热修（本仓库独立执行，不走开发仓库发版）
 
@@ -151,22 +206,24 @@ https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent-Release/main/cha
 {
   "schema": "apex-changelog-v3",
   "latest": {                          // 当前最新版（弹窗首选内容源）
-    "versionName": "1.4.9.57",
-    "versionCode": 133,
-    "date": "2026-10-24",
-    "title": "v1.4.9.57 更新内容",
+    "versionName": "1.4.9.62",
+    "versionCode": 138,
+    "date": "2026-10-25",
+    "title": "v1.4.9.62 更新内容",
     "notes": ["……"],                  // 一级日志（发布器手写要点）→ 弹窗置顶
     "images": ["https://…/1.jpg"],     // 配图（发布器附图）→ 弹窗要点下方图廊
     "pr": [{ "title": "…", "notes": ["…"] }],   // 二级日志（PR 合并内容分组）
     "markdown": "…",                   // 全量底稿（两级均空时的纯文本降级）
-    "releaseUrl": "https://…/tag/v1.4.9.57"
+    "releaseUrl": "https://…/tag/v1.4.9.62"
   },
-  "history": [ /* 历史条目，最新在前，封顶 50 条 */ ]
+  "history": [ /* 历史条目，最新在前，封顶 50 条 —— 跨版本聚合的候选池 */ ]
 }
 ```
 
 - 全字段可缺省 + 客户端忽略未知字段 —— schema 演进不崩老客户端，老清单不崩新客户端；
-- `images`（v3 新增）：发布器发送片段时附带的配图 URL 列表，App 弹窗内图廊展示、点开放大。
+- `images`（v3）：发布器发送片段时附带的配图 URL 列表，App 弹窗内图廊展示、点开放大；
+- 跨版本聚合（App v2.3+）：升级跨多版本时，客户端聚合区间内全部条目的
+  notes / images / pr 并集去重 —— 中间版本的更新一条不丢。
 
 </details>
 
@@ -175,21 +232,21 @@ https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent-Release/main/cha
 
 ```jsonc
 {
-  "versionName": "1.4.9.57",
-  "versionCode": 133,                  // 只增不减（门禁强制单调）
-  "tag": "v1.4.9.57",
-  "publishedAt": "2026-10-24T12:58:49Z",
-  "releasePage": "https://…/tag/v1.4.9.57",
+  "versionName": "1.4.9.62",
+  "versionCode": 138,                  // 只增不减（门禁强制单调）
+  "tag": "v1.4.9.62",
+  "publishedAt": "2026-10-25T02:58:49Z",
+  "releasePage": "https://…/tag/v1.4.9.62",
   "download": {
     "arm64":     { "url": "…", "sizeBytes": 341151334, "sha256": "…" },
     "universal": { "url": "…", "sizeBytes": 956075252, "sha256": "…" }
   },
   "patch": {                            // 单补丁档只收 primary（上一版 → 本版）
-    "arm64":     { "fromTag": "v1.4.9.56", "url": "…", "sizeBytes": 11125198, "sha256": "…" },
-    "universal": { "fromTag": "v1.4.9.56", "url": "…", "sizeBytes": 11117347, "sha256": "…" }
+    "arm64":     { "fromTag": "v1.4.9.61", "url": "…", "sizeBytes": 11125198, "sha256": "…" },
+    "universal": { "fromTag": "v1.4.9.61", "url": "…", "sizeBytes": 11117347, "sha256": "…" }
   },
   "hot": {                              // 热更档（data-only 版本出现，见 HOT_UPDATE.md）
-    "url": "…", "baseVersionCode": 132, "targetVersionCode": 133, "targetVersionName": "…"
+    "url": "…", "baseVersionCode": 137, "targetVersionCode": 138, "targetVersionName": "…"
   },
   "commitSha": "…",                     // 构建该 APK 的开发仓库完整 SHA
   "signingCertSha256": "…"              // 签名预检指纹（提前警告签名不一致）
@@ -206,7 +263,47 @@ https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent-Release/main/cha
 | --- | --- |
 | [Android-Guru-Agent](https://github.com/Ultra-Guru/Android-Guru-Agent) | 开发仓库 —— 源代码 / Issue / PR |
 | **本仓库** | 发布仓库 —— 产物与客户端清单（你在这里） |
-| [apex-Administrator](https://github.com/Ultra-Guru/apex-Administrator) | 更新日志发布器 —— 手机端写日志 / 附配图，一键触发发版 |
+| [apex-Administrator](https://github.com/Ultra-Guru/apex-Administrator) | 更新日志发布器 —— 手机端写日志 / 附配图 / 效果预览，一键触发发版 |
+
+---
+
+## ❓ 常见问题（FAQ）
+
+<details>
+<summary><b>升级后没看到更新日志弹窗？</b></summary>
+
+- 同一版本只弹一次（已读口径 = `max(包 versionCode, 已应用热更目标)`）；
+- 关掉了「自动检查更新」不影响本版日志弹窗，但离线时只能用 APK 内置副本；
+- 随时可在 **设置 → 关于 → 更新日志** 回看任意版本详情；
+- 跨多版本升级时弹窗内容 = 区间内全部版本聚合（要点 / 配图 / 功能变更）。
+
+</details>
+
+<details>
+<summary><b>增量更新与全量更新怎么选？</b></summary>
+
+不用选 —— App 自动选最优：官方渠道安装且签名一致 → 增量补丁（典型 ~20 MB 级）；
+跨版本补丁链体积超过全量包 60% → 自动回退全量；本地自编译 / 分叉构建 → 直接全量
+（App 会提前比对签名指纹并警告，不再下载几百 MB 后才报错）。
+
+</details>
+
+<details>
+<summary><b>更新日志里的配图是什么？</b></summary>
+
+开发者用发布器（apex-Administrator）写日志时附带的截图（≤9 张，自动压缩到
+≤1600px），随版本发布进 `changelog.json` 的 `images` 字段 —— App 弹窗内图廊
+展示，点开全屏缩放查看。跨版本升级时中间版本的配图同样保留。
+
+</details>
+
+<details>
+<summary><b>这里为什么没有源代码 / 怎么贡献？</b></summary>
+
+本仓库只存放发布产物与客户端清单（release.yml 全自动维护）。源代码、Issue、
+PR 全部在开发仓库 [Android-Guru-Agent](https://github.com/Ultra-Guru/Android-Guru-Agent)。
+
+</details>
 
 ---
 
