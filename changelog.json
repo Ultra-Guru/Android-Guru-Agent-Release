@@ -1,33 +1,83 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-30T15:49:14Z",
+  "generatedAt": "2026-10-30T16:06:00Z",
   "latest": {
-    "versionName": "1.4.9.78",
-    "versionCode": 154,
-    "tag": "v1.4.9.78",
+    "versionName": "1.4.9.79",
+    "versionCode": 155,
+    "tag": "v1.4.9.79",
     "date": "2026-10-30",
-    "title": "v1.4.9.78 更新内容",
+    "title": "v1.4.9.79 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "机关（Jiguan）V3.0 —— 全能系统级 Agent 终端",
+        "title": "template runtime skeleton",
         "notes": [
-          "新增机关五域操控引擎：进程与内存 / Java-ART / Native / 网络与系统四大维度统一为可降级端口模型",
-          "新增 17 个 Jiguan 工具（Agent 与 Coding 双模式直连）：进程枚举 · 全类型内存扫描（精确/模糊/AOB）· Hex 视图与多类型解释 · 原子内存写入（写前快照）· Java 类枚举 · Java 方法 Hook（LOG/REPLACE）· Java 方法主动调用 · 模块枚举 · Native 函数 Hook · ARM64 反汇编 · 硬件断点 · 抓包与 HTTP 提取 · SSL Pinning 四层绕过 · Root 物理输入注入 · SELinux/Binder 系统巡检",
-          "新增能力面：JiguanCapabilityReport 五域可用性报告 + 结构化降级指引（通道缺席时给出可执行安装步骤）",
-          "新增配方系统：登录加密分析 / 去开屏广告 / 数值修改三大高频场景的步骤化工作流（JiguanRecipes）",
-          "新增全场景记忆 RAG：分析结论按包名+关键词蒸馏复用（JiguanKnowledgeQuery / Remember）",
-          "新增第八台内置 MCP 服务器（jiguan）：手机作为 MCP Server，PC 端 AI 经 mcp__jiguan__* 驱动同一套五域工具",
-          "Omni-Hook 引擎：声明式 HookSpec → 脚本模板生成 → 沙盒 fail-closed 校验 → FRIDA_SERVER/ZYGISK/GADGET 通道择优",
-          "内存通道：Root dd 4096 对齐窗口（GNU/busybox/toybox 三家全兼容），姊妹仓 jiguan-native（Rust 核心加速层）独立发布"
+          "模板系统升级第一步：新增「行为运行时」骨架 —— 模板不再只是一段提示词文本，而是一段可执行的 Kotlin 行为",
+          "新增六阶段管线契约（输入预处理 → 确定性分析 → 提示词组装 → 契约校验 → 格式修复 → 结构渲染），每个内置模板将拥有自己的行为实现",
+          "新增变量合并报告 / 输入形态探测 / 严重度分级 / 输出契约 / 执行轨迹等基础模型，为后续内置模板逐个代码化铺路"
+        ]
+      },
+      {
+        "title": "template builtin immutable",
+        "notes": [
+          "内置模板正式改为不可更改：保存通道对内置模板一刀切拒绝，定制请用「另存为副本」",
+          "磁盘防篡改自愈：外部篡改的内置模板在加载时自动回归出厂定义（使用统计保留）",
+          "「强制重播种」保留为显式还原通道，可一键重置内置模板的使用计数"
+        ]
+      },
+      {
+        "title": "前置重构：共享聊天组件抽离至 ui/chatkit（Agent 模式移除准备 1/6）",
+        "notes": [
+          "**中立包 ui/chatkit 建立**：把 Coding 屏与设置页/组件层共同消费的聊天 UI 组件从 ui/screen/agent 迁至中立包，为后续整目录删除 Agent 屏做零风险铺垫（纯移动 + 导入重写，零行为变化）",
+          "**迁出组件清单**：ModeSelector（含 AGENT_SCREEN_MODES / CODING_SCREEN_MODES）、RoleSelector、BrainMenuButton / ToolkitRingButton（ToolRef + ToolkitChipsRow）、ChatToolkitStore（OutputFormat / ChatRule）、PendingPipelineCommand、QuestionCard、PlanConfirmationCard、llmConfiguredFlow",
+          "**消费方导入全部改指 chatkit**：screen/code · screen/agent · settings · di · ui/component 五处消费域同步重写导入；同包免导入的 agent 屏文件补显式导入",
+          "**编译修复**：QuestionCard 迁移时 Backdrop 导入误指 ui.glass（应为 kyant backdrop 库）、clickable / OutlinedButton 两项 Compose 导入遗漏、AGENT_SCREEN_MODES 两处使用点缺显式导入、agentModeIcon / agentModeDescription 跨包可见性收正（internal → public）—— 以上全部随本 PR 一并修正"
         ]
       }
     ],
-    "markdown": "# 机关（Jiguan）V3.0 —— 全能系统级 Agent 终端\n\n- 新增机关五域操控引擎：进程与内存 / Java-ART / Native / 网络与系统四大维度统一为可降级端口模型\n- 新增 17 个 Jiguan 工具（Agent 与 Coding 双模式直连）：进程枚举 · 全类型内存扫描（精确/模糊/AOB）· Hex 视图与多类型解释 · 原子内存写入（写前快照）· Java 类枚举 · Java 方法 Hook（LOG/REPLACE）· Java 方法主动调用 · 模块枚举 · Native 函数 Hook · ARM64 反汇编 · 硬件断点 · 抓包与 HTTP 提取 · SSL Pinning 四层绕过 · Root 物理输入注入 · SELinux/Binder 系统巡检\n- 新增能力面：JiguanCapabilityReport 五域可用性报告 + 结构化降级指引（通道缺席时给出可执行安装步骤）\n- 新增配方系统：登录加密分析 / 去开屏广告 / 数值修改三大高频场景的步骤化工作流（JiguanRecipes）\n- 新增全场景记忆 RAG：分析结论按包名+关键词蒸馏复用（JiguanKnowledgeQuery / Remember）\n- 新增第八台内置 MCP 服务器（jiguan）：手机作为 MCP Server，PC 端 AI 经 mcp__jiguan__* 驱动同一套五域工具\n- Omni-Hook 引擎：声明式 HookSpec → 脚本模板生成 → 沙盒 fail-closed 校验 → FRIDA_SERVER/ZYGISK/GADGET 通道择优\n- 内存通道：Root dd 4096 对齐窗口（GNU/busybox/toybox 三家全兼容），姊妹仓 jiguan-native（Rust 核心加速层）独立发布",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.78"
+    "markdown": "- 模板系统升级第一步：新增「行为运行时」骨架 —— 模板不再只是一段提示词文本，而是一段可执行的 Kotlin 行为\n- 新增六阶段管线契约（输入预处理 → 确定性分析 → 提示词组装 → 契约校验 → 格式修复 → 结构渲染），每个内置模板将拥有自己的行为实现\n- 新增变量合并报告 / 输入形态探测 / 严重度分级 / 输出契约 / 执行轨迹等基础模型，为后续内置模板逐个代码化铺路\n\n---\n\n- 内置模板正式改为不可更改：保存通道对内置模板一刀切拒绝，定制请用「另存为副本」\n- 磁盘防篡改自愈：外部篡改的内置模板在加载时自动回归出厂定义（使用统计保留）\n- 「强制重播种」保留为显式还原通道，可一键重置内置模板的使用计数\n\n---\n\n## 前置重构：共享聊天组件抽离至 ui/chatkit（Agent 模式移除准备 1/6）\n\n- **中立包 ui/chatkit 建立**：把 Coding 屏与设置页/组件层共同消费的聊天 UI 组件从 ui/screen/agent 迁至中立包，为后续整目录删除 Agent 屏做零风险铺垫（纯移动 + 导入重写，零行为变化）\n- **迁出组件清单**：ModeSelector（含 AGENT_SCREEN_MODES / CODING_SCREEN_MODES）、RoleSelector、BrainMenuButton / ToolkitRingButton（ToolRef + ToolkitChipsRow）、ChatToolkitStore（OutputFormat / ChatRule）、PendingPipelineCommand、QuestionCard、PlanConfirmationCard、llmConfiguredFlow\n- **消费方导入全部改指 chatkit**：screen/code · screen/agent · settings · di · ui/component 五处消费域同步重写导入；同包免导入的 agent 屏文件补显式导入\n- **编译修复**：QuestionCard 迁移时 Backdrop 导入误指 ui.glass（应为 kyant backdrop 库）、clickable / OutlinedButton 两项 Compose 导入遗漏、AGENT_SCREEN_MODES 两处使用点缺显式导入、agentModeIcon / agentModeDescription 跨包可见性收正（internal → public）—— 以上全部随本 PR 一并修正",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.79"
   },
   "history": [
+    {
+      "versionName": "1.4.9.79",
+      "versionCode": 155,
+      "tag": "v1.4.9.79",
+      "date": "2026-10-30",
+      "title": "v1.4.9.79 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "template runtime skeleton",
+          "notes": [
+            "模板系统升级第一步：新增「行为运行时」骨架 —— 模板不再只是一段提示词文本，而是一段可执行的 Kotlin 行为",
+            "新增六阶段管线契约（输入预处理 → 确定性分析 → 提示词组装 → 契约校验 → 格式修复 → 结构渲染），每个内置模板将拥有自己的行为实现",
+            "新增变量合并报告 / 输入形态探测 / 严重度分级 / 输出契约 / 执行轨迹等基础模型，为后续内置模板逐个代码化铺路"
+          ]
+        },
+        {
+          "title": "template builtin immutable",
+          "notes": [
+            "内置模板正式改为不可更改：保存通道对内置模板一刀切拒绝，定制请用「另存为副本」",
+            "磁盘防篡改自愈：外部篡改的内置模板在加载时自动回归出厂定义（使用统计保留）",
+            "「强制重播种」保留为显式还原通道，可一键重置内置模板的使用计数"
+          ]
+        },
+        {
+          "title": "前置重构：共享聊天组件抽离至 ui/chatkit（Agent 模式移除准备 1/6）",
+          "notes": [
+            "**中立包 ui/chatkit 建立**：把 Coding 屏与设置页/组件层共同消费的聊天 UI 组件从 ui/screen/agent 迁至中立包，为后续整目录删除 Agent 屏做零风险铺垫（纯移动 + 导入重写，零行为变化）",
+            "**迁出组件清单**：ModeSelector（含 AGENT_SCREEN_MODES / CODING_SCREEN_MODES）、RoleSelector、BrainMenuButton / ToolkitRingButton（ToolRef + ToolkitChipsRow）、ChatToolkitStore（OutputFormat / ChatRule）、PendingPipelineCommand、QuestionCard、PlanConfirmationCard、llmConfiguredFlow",
+            "**消费方导入全部改指 chatkit**：screen/code · screen/agent · settings · di · ui/component 五处消费域同步重写导入；同包免导入的 agent 屏文件补显式导入",
+            "**编译修复**：QuestionCard 迁移时 Backdrop 导入误指 ui.glass（应为 kyant backdrop 库）、clickable / OutlinedButton 两项 Compose 导入遗漏、AGENT_SCREEN_MODES 两处使用点缺显式导入、agentModeIcon / agentModeDescription 跨包可见性收正（internal → public）—— 以上全部随本 PR 一并修正"
+          ]
+        }
+      ],
+      "markdown": "- 模板系统升级第一步：新增「行为运行时」骨架 —— 模板不再只是一段提示词文本，而是一段可执行的 Kotlin 行为\n- 新增六阶段管线契约（输入预处理 → 确定性分析 → 提示词组装 → 契约校验 → 格式修复 → 结构渲染），每个内置模板将拥有自己的行为实现\n- 新增变量合并报告 / 输入形态探测 / 严重度分级 / 输出契约 / 执行轨迹等基础模型，为后续内置模板逐个代码化铺路\n\n---\n\n- 内置模板正式改为不可更改：保存通道对内置模板一刀切拒绝，定制请用「另存为副本」\n- 磁盘防篡改自愈：外部篡改的内置模板在加载时自动回归出厂定义（使用统计保留）\n- 「强制重播种」保留为显式还原通道，可一键重置内置模板的使用计数\n\n---\n\n## 前置重构：共享聊天组件抽离至 ui/chatkit（Agent 模式移除准备 1/6）\n\n- **中立包 ui/chatkit 建立**：把 Coding 屏与设置页/组件层共同消费的聊天 UI 组件从 ui/screen/agent 迁至中立包，为后续整目录删除 Agent 屏做零风险铺垫（纯移动 + 导入重写，零行为变化）\n- **迁出组件清单**：ModeSelector（含 AGENT_SCREEN_MODES / CODING_SCREEN_MODES）、RoleSelector、BrainMenuButton / ToolkitRingButton（ToolRef + ToolkitChipsRow）、ChatToolkitStore（OutputFormat / ChatRule）、PendingPipelineCommand、QuestionCard、PlanConfirmationCard、llmConfiguredFlow\n- **消费方导入全部改指 chatkit**：screen/code · screen/agent · settings · di · ui/component 五处消费域同步重写导入；同包免导入的 agent 屏文件补显式导入\n- **编译修复**：QuestionCard 迁移时 Backdrop 导入误指 ui.glass（应为 kyant backdrop 库）、clickable / OutlinedButton 两项 Compose 导入遗漏、AGENT_SCREEN_MODES 两处使用点缺显式导入、agentModeIcon / agentModeDescription 跨包可见性收正（internal → public）—— 以上全部随本 PR 一并修正",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.79"
+    },
     {
       "versionName": "1.4.9.78",
       "versionCode": 154,
@@ -1387,19 +1437,6 @@
       ],
       "markdown": "# 编码屏流式修复：回答截断 / 中止冻结 / 气泡同色 / 工具超时三连\n\n- 修复编码屏多轮工具循环后结论气泡被截成末轮残句（如只剩「好的」两字）：完成事件改为 UI 已流式累积的全文优先，引擎侧全文仅在气泡为空时兜底（与 Agent 屏同款「看到什么落什么」策略）\n- 修复流式中间块丢失（深层缺陷）：流式引用不再停在首块快照，第三段起不再出现「首块+最新块」覆盖、中间内容消失\n- 修复点停止后在飞状态冻结：中止时工具胶囊立即收口为「已中止」（不再无限计时转圈），流式气泡落终态；中止事件未达的路径由本地收尾兜底，下一轮开始也会静默收口上一轮残留\n- 修复 Agent 屏任务卡取消路径的工具卡冻结：中止事件同步清理在途工具卡与输出缓冲\n- 用户消息气泡改实色主色（此前与回复气泡同为淡色系肉眼不可分），编码屏与 Agent 屏双端一致，附件卡配色同步适配\n- 修复高风险/第三方工具确认超时后的重试死循环：超时拒绝不再邀请模型重发，同工具 2 分钟冷却内快速失败并指引「先问用户或换路」，冷却不写入会话级拒绝（超时未决语义保持）\n- 修复市场检索 30s 预算错配：MarketSearch/SkillSearch 显式对齐执行器超时（120s/90s，慢网络下不再被「exceeded 30000ms budget」截杀）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.30"
-    },
-    {
-      "versionName": "1.4.9.29",
-      "versionCode": 105,
-      "tag": "v1.4.9.29",
-      "date": "2026-10-17",
-      "title": "v1.4.9.29 更新内容",
-      "notes": [
-        "如果你们遇到问题，积极在QQ反馈，群主会第一时间把你们的反馈上传到githubissue及时会处理"
-      ],
-      "pr": [],
-      "markdown": "如果你们遇到问题，积极在QQ反馈，群主会第一时间把你们的反馈上传到githubissue及时会处理",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.29"
     }
   ]
 }
