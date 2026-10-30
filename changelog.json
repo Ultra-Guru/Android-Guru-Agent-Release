@@ -1,33 +1,53 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-30T21:01:14Z",
+  "generatedAt": "2026-10-30T22:26:56Z",
   "latest": {
-    "versionName": "1.4.9.89",
-    "versionCode": 165,
-    "tag": "v1.4.9.89",
+    "versionName": "1.4.9.90",
+    "versionCode": 166,
+    "tag": "v1.4.9.90",
     "date": "2026-10-30",
-    "title": "v1.4.9.89 更新内容",
+    "title": "v1.4.9.90 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "引擎域 Agent 模式核心移除（Agent 模式移除 3/6）",
+        "title": "remove agent tools 4of6",
         "notes": [
-          "**模式档位收敛**：AgentMode 删 CHAT/AGENT/LOOP/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM 七个 Agent 屏/存量档位，只留编码工位三档 BUILD/PLAN/GOAL（Coding 功能零损失：深潜/标准/织造/信使四线与 Goal 驱动全部保留）",
-          "**整文件删除**：EngineSpecFlow.kt（SPEC 规格）、EnginePromptDelegates.kt（SPEC/Reflection 提示词包装）、assist/ 的 DecisionPointDetector/HumanAssistFlow/ReflectionFlow 三流（含三份测试）、EngineWorkstation.kt（双工位枚举 —— 纯 Coding 软件不再有工位分轨）",
-          "**事件协议收口**：AgentEvent 删 SpecGenerated/SpecAwaitingConfirmation/SpecConfirmed/ReflectionReview 与 ExecutionSpec 载荷；TaskRuntime 与 CodeStreamSession 的对应消费分支同步移除",
-          "**确认通道收口**：spec 确认 deferred/submitSpecConfirmation/abort 收尾三处删除（ConfirmationSink 只剩 PLAN 门；plan/AskUser 通道不动）",
-          "**提示词收口**：模式段（CHAT/AGENT/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM/LOOP）、身份行双工位分轨、CUSTOM 附加指令段、CHAT 攻略豁免门全部移除；恒为 CODING agent 身份行；任务路由的「引导切换 Coding 工位」改写分支删除（git 工具不可见时 GitHub 车道诚实省略）",
-          "**工具计划收口**：AGENT/LOOP 的 Code/Github 族前缀黑名单隔离（AGENT_EXCLUDED_TOOL_PREFIXES/filterOutCodingTools）删除；市场分级作用域隔离（mcpScopeIsolation）保留",
-          "**遗留字段过渡**：AgentConfig.reflectionRounds/customInstruction 字段保留（消费方在工具/设置域，PR 4/6、5/6 随消费方删除），引擎侧消费点已全部移除",
-          "**刻意保留**（grep 引用为准）：goal/ 整包（CodeGoalController/CodeViewModel/DI 实际消费 —— Coding 目标驱动模式在用）、EngineAskUserFlow 与 AskUser 通道（Coding 计划确认/权限门在用）、ModePresets.kt（设置域消费，PR 5/6 删）"
+          "附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）",
+          "Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）",
+          "存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区",
+          "字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT",
+          "红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）"
         ]
       }
     ],
-    "markdown": "## 引擎域 Agent 模式核心移除（Agent 模式移除 3/6）\n\n- **模式档位收敛**：AgentMode 删 CHAT/AGENT/LOOP/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM 七个 Agent 屏/存量档位，只留编码工位三档 BUILD/PLAN/GOAL（Coding 功能零损失：深潜/标准/织造/信使四线与 Goal 驱动全部保留）\n- **整文件删除**：EngineSpecFlow.kt（SPEC 规格）、EnginePromptDelegates.kt（SPEC/Reflection 提示词包装）、assist/ 的 DecisionPointDetector/HumanAssistFlow/ReflectionFlow 三流（含三份测试）、EngineWorkstation.kt（双工位枚举 —— 纯 Coding 软件不再有工位分轨）\n- **事件协议收口**：AgentEvent 删 SpecGenerated/SpecAwaitingConfirmation/SpecConfirmed/ReflectionReview 与 ExecutionSpec 载荷；TaskRuntime 与 CodeStreamSession 的对应消费分支同步移除\n- **确认通道收口**：spec 确认 deferred/submitSpecConfirmation/abort 收尾三处删除（ConfirmationSink 只剩 PLAN 门；plan/AskUser 通道不动）\n- **提示词收口**：模式段（CHAT/AGENT/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM/LOOP）、身份行双工位分轨、CUSTOM 附加指令段、CHAT 攻略豁免门全部移除；恒为 CODING agent 身份行；任务路由的「引导切换 Coding 工位」改写分支删除（git 工具不可见时 GitHub 车道诚实省略）\n- **工具计划收口**：AGENT/LOOP 的 Code/Github 族前缀黑名单隔离（AGENT_EXCLUDED_TOOL_PREFIXES/filterOutCodingTools）删除；市场分级作用域隔离（mcpScopeIsolation）保留\n- **遗留字段过渡**：AgentConfig.reflectionRounds/customInstruction 字段保留（消费方在工具/设置域，PR 4/6、5/6 随消费方删除），引擎侧消费点已全部移除\n- **刻意保留**（grep 引用为准）：goal/ 整包（CodeGoalController/CodeViewModel/DI 实际消费 —— Coding 目标驱动模式在用）、EngineAskUserFlow 与 AskUser 通道（Coding 计划确认/权限门在用）、ModePresets.kt（设置域消费，PR 5/6 删）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.89"
+    "markdown": "- 附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）\n- Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）\n- 存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区\n- 字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT\n- 红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.90"
   },
   "history": [
+    {
+      "versionName": "1.4.9.90",
+      "versionCode": 166,
+      "tag": "v1.4.9.90",
+      "date": "2026-10-30",
+      "title": "v1.4.9.90 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "remove agent tools 4of6",
+          "notes": [
+            "附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）",
+            "Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）",
+            "存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区",
+            "字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT",
+            "红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）"
+          ]
+        }
+      ],
+      "markdown": "- 附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）\n- Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）\n- 存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区\n- 字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT\n- 红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.90"
+    },
     {
       "versionName": "1.4.9.89",
       "versionCode": 165,
@@ -1431,33 +1451,6 @@
       ],
       "markdown": "- 更新日志弹窗升级为两级「下一步」交互：第一步展示管理端发布的更新日志，点「下一步 · 功能变更」再查看 PR 合并内容（新增功能 / 修复），两级独立展示互不覆盖 —— 手动日志与 PR 日志不再互相顶掉\n- 修复跨多版本升级时更新日志丢失：一次升级跨过的所有版本日志（手动日志 + PR 功能变更）自动聚合展示，一条不漏\n- 修复发布流水线偶发把同一片段重复收录进两个相邻版本的问题（v1.4.9.35/36、v1.4.9.39/40 曾重复展示同一 PR 内容）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.41"
-    },
-    {
-      "versionName": "1.4.9.40",
-      "versionCode": 116,
-      "tag": "v1.4.9.40",
-      "date": "2026-10-18",
-      "title": "v1.4.9.40 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "about website feedback",
-          "notes": [
-            "关于页新增「官网」链接（Guru API 同域），排在相关链接区第一位",
-            "关于页新增「问题反馈」邮件直达通道：填写内容（必填 2–2000 字，实时计数）与可选联系方式，提交后经官方后端自动转发开发者邮箱；支持提交中 loading、成功致谢、失败透传后端原因并可重试"
-          ]
-        },
-        {
-          "title": "permission default bypass thinking close",
-          "notes": [
-            "工具权限默认全开：默认档改为「全自动」—— 工具 / MCP / 技能 / shell 命令（含安装 adb 等开发工具链）直接执行，不再逐个弹「智能体需要你的输入」确认；存量用户自动迁移，需要确认预算可在 设置 → 工具权限 切回其他档位",
-            "修复流式输出思考卡死：思考完成后不再常驻「思考中…」，工具开跑 / 正文流出 / 任务收尾时自动定格为思考链终态（标准线与引擎提示路径全覆盖）",
-            "修复聊天页残留思考气泡：任务收尾或异常中断时残留思考自动落为独立思考消息，「推理中…」不再挂到下一条消息"
-          ]
-        }
-      ],
-      "markdown": "- 关于页新增「官网」链接（Guru API 同域），排在相关链接区第一位\n- 关于页新增「问题反馈」邮件直达通道：填写内容（必填 2–2000 字，实时计数）与可选联系方式，提交后经官方后端自动转发开发者邮箱；支持提交中 loading、成功致谢、失败透传后端原因并可重试\n\n---\n\n- 工具权限默认全开：默认档改为「全自动」—— 工具 / MCP / 技能 / shell 命令（含安装 adb 等开发工具链）直接执行，不再逐个弹「智能体需要你的输入」确认；存量用户自动迁移，需要确认预算可在 设置 → 工具权限 切回其他档位\n- 修复流式输出思考卡死：思考完成后不再常驻「思考中…」，工具开跑 / 正文流出 / 任务收尾时自动定格为思考链终态（标准线与引擎提示路径全覆盖）\n- 修复聊天页残留思考气泡：任务收尾或异常中断时残留思考自动落为独立思考消息，「推理中…」不再挂到下一条消息",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.40"
     }
   ]
 }
