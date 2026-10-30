@@ -1,32 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-30T17:24:43Z",
+  "generatedAt": "2026-10-30T18:23:15Z",
   "latest": {
-    "versionName": "1.4.9.82",
-    "versionCode": 158,
-    "tag": "v1.4.9.82",
+    "versionName": "1.4.9.83",
+    "versionCode": 159,
+    "tag": "v1.4.9.83",
     "date": "2026-10-30",
-    "title": "v1.4.9.82 更新内容",
+    "title": "v1.4.9.83 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "Agent 对话屏与任务页整域移除（Agent 模式移除 2/6）",
+        "title": "template behavior code review",
         "notes": [
-          "**整目录删除**：`ui/screen/agent`（48 文件 —— 对话屏/历史/附件/流水渲染/模式指南/斜杠管线）、`ui/screen/tasks`（任务历史）、`loop/`（LOOP 循环调度）、附件双组件与 ViroPet 桌宠",
-          "**导航收口**：抽屉 Agent/Tasks 目的地移除；默认落地页 → Coding；返回栈语义同步",
-          "**全局状态迁移**：原由 AgentChatViewModel 兼职承载的网络监测/设置快照/GitHub 徽标 → 独立轻量 AppStatusViewModel",
-          "**DI 收口**：AgentConfig 组装、TaskRuntime、Skill 激活链 Provider 移除（Coding 引擎自建配置不受影响）",
-          "**服务收口**：LOOP 调度器随服务启停的接线移除",
-          "**备份域收口**：聊天会话备份/恢复（Agent 会话专属）移除；设置 + Vault 备份通道保持",
-          "**资产清理**：strings_loop 双语删除；338 个孤儿字符串键双语同步清理"
+          "「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据",
+          "新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）",
+          "回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）"
         ]
       }
     ],
-    "markdown": "## Agent 对话屏与任务页整域移除（Agent 模式移除 2/6）\n\n- **整目录删除**：`ui/screen/agent`（48 文件 —— 对话屏/历史/附件/流水渲染/模式指南/斜杠管线）、`ui/screen/tasks`（任务历史）、`loop/`（LOOP 循环调度）、附件双组件与 ViroPet 桌宠\n- **导航收口**：抽屉 Agent/Tasks 目的地移除；默认落地页 → Coding；返回栈语义同步\n- **全局状态迁移**：原由 AgentChatViewModel 兼职承载的网络监测/设置快照/GitHub 徽标 → 独立轻量 AppStatusViewModel\n- **DI 收口**：AgentConfig 组装、TaskRuntime、Skill 激活链 Provider 移除（Coding 引擎自建配置不受影响）\n- **服务收口**：LOOP 调度器随服务启停的接线移除\n- **备份域收口**：聊天会话备份/恢复（Agent 会话专属）移除；设置 + Vault 备份通道保持\n- **资产清理**：strings_loop 双语删除；338 个孤儿字符串键双语同步清理",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.82"
+    "markdown": "- 「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据\n- 新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）\n- 回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.83"
   },
   "history": [
+    {
+      "versionName": "1.4.9.83",
+      "versionCode": 159,
+      "tag": "v1.4.9.83",
+      "date": "2026-10-30",
+      "title": "v1.4.9.83 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "template behavior code review",
+          "notes": [
+            "「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据",
+            "新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）",
+            "回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）"
+          ]
+        }
+      ],
+      "markdown": "- 「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据\n- 新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）\n- 回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.83"
+    },
     {
       "versionName": "1.4.9.82",
       "versionCode": 158,
@@ -1389,36 +1406,6 @@
       ],
       "markdown": "- Coding 工位终端命令输出改为流水内联：活跃命令的终端尾窗恒为胶囊时间轴末项，跟随流式输出推进（运行中自动展开跟随，命令收束自动折叠成头行胶囊留在流内），不再悬浮在输入框上方（对齐 main 已收编实现，冲突消解）\n- 修复关于页更新悬浮卡片右侧的「竖杠」（新版本实底徽章在极简黑白主题下呈墨黑高条，与版本号语义重复）：卡片徽章移除、状态头改描边 Download 图标，新版本提醒通道（顶部浮窗 + 更新日志弹窗 + 关于页面板）全部保留",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.34"
-    },
-    {
-      "versionName": "1.4.9.33",
-      "versionCode": 109,
-      "tag": "v1.4.9.33",
-      "date": "2026-10-17",
-      "title": "v1.4.9.33 更新内容",
-      "notes": [
-        "我是Android-agent开发者，欢迎大家来使用我的软件"
-      ],
-      "pr": [
-        {
-          "title": "fix terminal csi clamp abort bridge",
-          "notes": [
-            "修复终端引擎闪退：CSI 大参数整型溢出三连（ICH/DCH/ECH）—— native 引擎 OOB memmove SIGSEGV 与 Kotlin 回退引擎锁内空转 ANR 全链路钳位（派发层 + 操作层 + 屏幕层三道防线，ASAN 宿主回归实证）",
-            "修复「取消任务卡死」：弹窗提问（AskUserChoice/权限确认）期间暂停/取消任务不再吃满 5 分钟超时 —— abort 语义收口，挂起的提问即时按跳过收场",
-            "修复终端输出组合字符无上限累积导致的内存持续增长（单 cell 封顶 16，与会话编解码契约一致）",
-            "修复 VT 喂数黑匣子误报：进程干净关闭后新引擎覆写日志不再产出假 .crash 留档"
-          ]
-        },
-        {
-          "title": "browser tabs tool",
-          "notes": [
-            "新增 BrowserTabs 标签管理工具（list/new/switch/close）：多页面工作流（登录页 + 操作页并行、结果页比对）不再受限单标签 —— 对齐 Playwright MCP browser_tabs 与 BrowserUse 多标签工作流",
-            "配合浏览器库 v1.6：实时页面悬浮窗（浏览器小窗）支持右下角把手拖拽调节大小，比例持久化；窗口拖动/缩放帧对齐节流 + 轮询自适应分档"
-          ]
-        }
-      ],
-      "markdown": "我是Android-agent开发者，欢迎大家来使用我的软件\n\n---\n\n- 修复终端引擎闪退：CSI 大参数整型溢出三连（ICH/DCH/ECH）—— native 引擎 OOB memmove SIGSEGV 与 Kotlin 回退引擎锁内空转 ANR 全链路钳位（派发层 + 操作层 + 屏幕层三道防线，ASAN 宿主回归实证）\n- 修复「取消任务卡死」：弹窗提问（AskUserChoice/权限确认）期间暂停/取消任务不再吃满 5 分钟超时 —— abort 语义收口，挂起的提问即时按跳过收场\n- 修复终端输出组合字符无上限累积导致的内存持续增长（单 cell 封顶 16，与会话编解码契约一致）\n- 修复 VT 喂数黑匣子误报：进程干净关闭后新引擎覆写日志不再产出假 .crash 留档\n\n---\n\n- 新增 BrowserTabs 标签管理工具（list/new/switch/close）：多页面工作流（登录页 + 操作页并行、结果页比对）不再受限单标签 —— 对齐 Playwright MCP browser_tabs 与 BrowserUse 多标签工作流\n- 配合浏览器库 v1.6：实时页面悬浮窗（浏览器小窗）支持右下角把手拖拽调节大小，比例持久化；窗口拖动/缩放帧对齐节流 + 轮询自适应分档",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.33"
     }
   ]
 }
