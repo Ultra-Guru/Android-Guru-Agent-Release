@@ -1,30 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T01:54:36Z",
+  "generatedAt": "2026-10-31T02:11:40Z",
   "latest": {
-    "versionName": "1.4.9.97",
-    "versionCode": 173,
-    "tag": "v1.4.9.97",
+    "versionName": "1.4.9.98",
+    "versionCode": 174,
+    "tag": "v1.4.9.98",
     "date": "2026-10-31",
-    "title": "v1.4.9.97 更新内容",
+    "title": "v1.4.9.98 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "template deepen quality domain",
+        "title": "template runtime finalize",
         "notes": [
-          "「测试用例」框架套件：八套框架规范（JUnit4/5、kotlin.test、Kotest、MockK、pytest、Jest、go test——注解/断言库/生命周期/参数化/mock 全给齐）、四风格命名规则、断言语义映射、TC 编号骨架生成（arrange-act-assert 三段）、覆盖矩阵 + 回包测试代码六类反模式门禁（无断言/循环内断言/裸捕获/魔法 sleep/一测多行为/过宽异常）",
-          "「技术文档」风格指南：句长预算与虚词检查、四型文档模板（概念/指南/API/排障）与内容纪律、示例三查（语言标注/占位符/长度）、术语先用后定义检测、可读性四因子评分（句长/示例占比/章节均衡/层级规范）、文档 lint（跳级/重复标题/空章节/引用残缺）",
-          "「正则解释」工具箱：方言探测（PCRE/Python/Java/JS/POSIX）、灾难性构造优化重写（嵌套量词占有化/歧义交替去重/无界量词收敛/字符类简化/双重否定）、锚点与结构画像、AST 静态样例推导 + Kotlin/Python/JS 三语言测试片段生成",
-          "「代码审查」第三层启发器：命名质量（无意义短名/布尔前缀/同概念双命名）、注释质量（陈旧标记/注释掉的代码/零注释/注释过密）、跨函数坏味道（魔法数字簇/高扇出/God-file）、层次纪律（UI 直连存储/纯逻辑引平台框架）",
-          "四行为 behaviorVersion 升 2，全部接线 ANALYZE/VALIDATE/RENDER 三阶段"
+          "端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）",
+          "深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言",
+          "docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵",
+          "README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目"
         ]
       }
     ],
-    "markdown": "- 「测试用例」框架套件：八套框架规范（JUnit4/5、kotlin.test、Kotest、MockK、pytest、Jest、go test——注解/断言库/生命周期/参数化/mock 全给齐）、四风格命名规则、断言语义映射、TC 编号骨架生成（arrange-act-assert 三段）、覆盖矩阵 + 回包测试代码六类反模式门禁（无断言/循环内断言/裸捕获/魔法 sleep/一测多行为/过宽异常）\n- 「技术文档」风格指南：句长预算与虚词检查、四型文档模板（概念/指南/API/排障）与内容纪律、示例三查（语言标注/占位符/长度）、术语先用后定义检测、可读性四因子评分（句长/示例占比/章节均衡/层级规范）、文档 lint（跳级/重复标题/空章节/引用残缺）\n- 「正则解释」工具箱：方言探测（PCRE/Python/Java/JS/POSIX）、灾难性构造优化重写（嵌套量词占有化/歧义交替去重/无界量词收敛/字符类简化/双重否定）、锚点与结构画像、AST 静态样例推导 + Kotlin/Python/JS 三语言测试片段生成\n- 「代码审查」第三层启发器：命名质量（无意义短名/布尔前缀/同概念双命名）、注释质量（陈旧标记/注释掉的代码/零注释/注释过密）、跨函数坏味道（魔法数字簇/高扇出/God-file）、层次纪律（UI 直连存储/纯逻辑引平台框架）\n- 四行为 behaviorVersion 升 2，全部接线 ANALYZE/VALIDATE/RENDER 三阶段",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.97"
+    "markdown": "- 端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）\n- 深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言\n- docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵\n- README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.98"
   },
   "history": [
+    {
+      "versionName": "1.4.9.98",
+      "versionCode": 174,
+      "tag": "v1.4.9.98",
+      "date": "2026-10-31",
+      "title": "v1.4.9.98 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "template runtime finalize",
+          "notes": [
+            "端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）",
+            "深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言",
+            "docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵",
+            "README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目"
+          ]
+        }
+      ],
+      "markdown": "- 端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）\n- 深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言\n- docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵\n- README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.98"
+    },
     {
       "versionName": "1.4.9.97",
       "versionCode": 173,
@@ -1407,28 +1428,6 @@
       ],
       "markdown": "- FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享\n- 聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖\n- 聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包\n- 王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用\n- 插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.49"
-    },
-    {
-      "versionName": "1.4.9.48",
-      "versionCode": 124,
-      "tag": "v1.4.9.48",
-      "date": "2026-10-24",
-      "title": "v1.4.9.48 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "<!-- pr: feat-neon-orb-feature-hub -->",
-          "notes": [
-            "Coding 输入栏新增「霓虹球」mini 图标入口：呼吸辉光小球（未激活静谧灰蓝 / 激活赛博青→洋红霓虹 + 激活数徽标），点击展开功能聚合面板",
-            "霓虹球功能聚合 16 项能力，三组分区呈现 —— 会话增强（时间注入/网络搜索/结构化输出/深度推理/目标复述/诚实边界）+ 输出口径（简洁模式/详细讲解/步骤编号/无表情符号/语言锁定/语气人设）+ 编码偏好（代码注释/Diff 优先/风险预警/安全命令）",
-            "全部功能真实生效：每轮发送前经 NeonOrbStore 组装「### 霓虹球 · 功能聚合」注入段，与小圆环（#197）同通道拼进引擎 additionalSystemContext；SharedPreferences 持久化 + 一键全关",
-            "结构化输出独立五档（JSON/XML/YAML/Markdown 表格/TOML）；语言锁定（中文/English/跟随输入）与语气人设（专业严谨/亲切友好/直截了当）为单选档，档位回显在入口行",
-            "新增 25 项 JVM 单测锁定契约（目录 ≥15 项 + 时间注入/结构化输出/网络搜索三项钦定在场 + 每项功能注入指令逐段断言 + 空态零注入），:app:testDebugUnitTest 447 项全绿"
-          ]
-        }
-      ],
-      "markdown": "<!-- pr: feat-neon-orb-feature-hub -->\n- Coding 输入栏新增「霓虹球」mini 图标入口：呼吸辉光小球（未激活静谧灰蓝 / 激活赛博青→洋红霓虹 + 激活数徽标），点击展开功能聚合面板\n- 霓虹球功能聚合 16 项能力，三组分区呈现 —— 会话增强（时间注入/网络搜索/结构化输出/深度推理/目标复述/诚实边界）+ 输出口径（简洁模式/详细讲解/步骤编号/无表情符号/语言锁定/语气人设）+ 编码偏好（代码注释/Diff 优先/风险预警/安全命令）\n- 全部功能真实生效：每轮发送前经 NeonOrbStore 组装「### 霓虹球 · 功能聚合」注入段，与小圆环（#197）同通道拼进引擎 additionalSystemContext；SharedPreferences 持久化 + 一键全关\n- 结构化输出独立五档（JSON/XML/YAML/Markdown 表格/TOML）；语言锁定（中文/English/跟随输入）与语气人设（专业严谨/亲切友好/直截了当）为单选档，档位回显在入口行\n- 新增 25 项 JVM 单测锁定契约（目录 ≥15 项 + 时间注入/结构化输出/网络搜索三项钦定在场 + 每项功能注入指令逐段断言 + 空态零注入），:app:testDebugUnitTest 447 项全绿",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.48"
     }
   ]
 }
