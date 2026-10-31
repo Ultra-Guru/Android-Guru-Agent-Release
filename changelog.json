@@ -1,32 +1,69 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T00:57:12Z",
+  "generatedAt": "2026-10-31T01:18:09Z",
   "latest": {
-    "versionName": "1.4.9.94",
-    "versionCode": 170,
-    "tag": "v1.4.9.94",
+    "versionName": "1.4.9.95",
+    "versionCode": 171,
+    "tag": "v1.4.9.95",
     "date": "2026-10-31",
-    "title": "v1.4.9.94 更新内容",
+    "title": "v1.4.9.95 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "remove android shell",
+        "title": "template deepen writing domain",
         "notes": [
-          "后端收敛：生产注册表仅剩 linux-ubuntu（TerminalModule DI 移除 LocalShellBackend 装配）；LocalShellBackend 类移入测试源集作为朴素 shell 夹具（argv/env golden 形态保留，契约/IPC/端到端测试继续可用），androidTest 同步复制",
-          "路由与契约：TerminalRuntime.create() 默认 backendId \"local\"→\"linux-ubuntu\"、shell 参数随 shellHint 一并移除（TerminalCreateTool schema/解析同步收敛，backend 枚举仅 linux-ubuntu）；BackendRuntimeType 枚举移除 ANDROID_LOCAL；workspaceId 仅 LINUX 后端的死守卫移除（全后端皆 LINUX）；BackendStatus/CreateResult 缺省值与 TerminalSdk/TerminalService/TerminalIpcController 默认后端全部对齐 linux-ubuntu；LegacyTerminalManager 兼容层（唯一 shell 位置消费者）删除",
-          "UI 收口：TerminalScreen 四处「先用 Android / Android 会话」入口移除（空态覆盖层统一「重试/安装 Ubuntu」引导）；会话标签回落标签统一 Ubuntu；EnvironmentCenterSheet Android 本地 Shell 卡删除（三卡→双卡）；TerminalViewModel 本地 mksh profile 注入与 init 自动降级本地会话移除，restartActiveSession 一律回 linux-ubuntu",
-          "降级路径收口：TerminalDepCenter 依赖安装会话路由移除 local 降级（Ubuntu 不可用如实报错引导安装）；EnvironmentProvisioner.sessionForApt 移除 local 兜底（apt 只在 Ubuntu 可用）",
-          "SessionRegistry：BACKEND_LOCAL/BACKEND_AGENT 常量删除，无创建方记录的会话回落 linux-ubuntu，inferRuntimeType 未知 shell → UNKNOWN",
-          "字符串双语清理：term_use_android_first / term_new_android_session / term_tab_android / term_android_shell_* / term_notice_fallback_android / term_notice_fallback_session / term_builtin 八键（values/ 与 values-zh/ 镜像同步）",
-          "测试同步：ExecutionBackendGoldenTest 删除（golden 对象已是测试夹具）；TerminalRuntimeBackendTest 语义重排（显式 local 路由 + 默认 linux-ubuntu + workspace 死守卫用例删除）；契约/压力/控制面/观察/协议/端到端/IPC 测试构造补夹具注册表；UbuntuTerminalRuntimeWiringTest W4 更名夹具语义"
+          "「专业翻译」第二层确定性引擎：译文质检器七族检查（数字保真/标点宽度家族/括号引号配对/段落对齐/长度比异常/漏译段探测/空白卫生）+ 百分制得分 + 标点宽度确定性修复（代码块逐字保留）",
+          "「内容总结」结构构建器：中英混合安全切句（缩写/小数/单字母缩写防误切）、术语显著度（标题加权+中英停用词）、四因子句打分、三元组 Jaccard 冗余聚类、要点预算分配、结构化大纲直出 + 要点重叠回包检测",
+          "「提交信息生成」规范体系库：四种风格全规则代码化（conventional/gitmoji/自由/内核）、十二类型知识库（中英动词对+emoji 映射）、风格感知校验/修复、主题草稿合成、footer 规范、风格互转",
+          "三行为 behaviorVersion 升 2：分析/校验/修复/渲染全阶段接线，回包机器摘要新增质检得分与大纲覆盖率等 8 项指标"
+        ]
+      },
+      {
+        "title": "coding only wrapup 6of6",
+        "notes": [
+          "README 重定位：Hero 从「自主智能体（8 种执行模式）」改为「AI 编码工作台（四条思考逻辑线）」，标注 Agent 聊天模式已拆分至 Theocracy 仓库；badge（8 modes→4 thinking lines）、架构图（AgentChat 节点→Code 屏 / agent-engine 节点→共享引擎协议）、双层思考表（删 Agent 六档行）、应用界面表（Agent 屏→Coding 屏 + 终端 Ubuntu 单后端标注）、模块表（agent-engine 描述对齐共享基座）同步修正",
+          "Agent 模式专属文档删除 7 篇：agent-modes.md / agent-roles.md / goal-mode.md / loop-mode.md / agent-execution-overhaul.md / agent-ui-audit.md / agent-life-skills-and-memory.md",
+          "保留文档死链清理：tool-system-v4 / hub-ecosystem 引用行删除；pr-body / scope-isolation / ui-quality-audit / operit-rikkahub-comparison / chat-memory-v2 历史提及改「已随 Agent 模式移除」标注；thinking-levels.md 头部 Agent 六档段落改拆分说明",
+          "系列收口：Agent 模式移除 6-PR 系列（#600 对话屏 / #616 引擎域 / #617 工具域 / #618 设置域 / #635 AndroidShell 收敛 / 本 PR 文档收尾）全部落地 —— 主仓库成为纯 Coding 模式软件，Coding 功能零损失"
         ]
       }
     ],
-    "markdown": "- 后端收敛：生产注册表仅剩 linux-ubuntu（TerminalModule DI 移除 LocalShellBackend 装配）；LocalShellBackend 类移入测试源集作为朴素 shell 夹具（argv/env golden 形态保留，契约/IPC/端到端测试继续可用），androidTest 同步复制\n- 路由与契约：TerminalRuntime.create() 默认 backendId \"local\"→\"linux-ubuntu\"、shell 参数随 shellHint 一并移除（TerminalCreateTool schema/解析同步收敛，backend 枚举仅 linux-ubuntu）；BackendRuntimeType 枚举移除 ANDROID_LOCAL；workspaceId 仅 LINUX 后端的死守卫移除（全后端皆 LINUX）；BackendStatus/CreateResult 缺省值与 TerminalSdk/TerminalService/TerminalIpcController 默认后端全部对齐 linux-ubuntu；LegacyTerminalManager 兼容层（唯一 shell 位置消费者）删除\n- UI 收口：TerminalScreen 四处「先用 Android / Android 会话」入口移除（空态覆盖层统一「重试/安装 Ubuntu」引导）；会话标签回落标签统一 Ubuntu；EnvironmentCenterSheet Android 本地 Shell 卡删除（三卡→双卡）；TerminalViewModel 本地 mksh profile 注入与 init 自动降级本地会话移除，restartActiveSession 一律回 linux-ubuntu\n- 降级路径收口：TerminalDepCenter 依赖安装会话路由移除 local 降级（Ubuntu 不可用如实报错引导安装）；EnvironmentProvisioner.sessionForApt 移除 local 兜底（apt 只在 Ubuntu 可用）\n- SessionRegistry：BACKEND_LOCAL/BACKEND_AGENT 常量删除，无创建方记录的会话回落 linux-ubuntu，inferRuntimeType 未知 shell → UNKNOWN\n- 字符串双语清理：term_use_android_first / term_new_android_session / term_tab_android / term_android_shell_* / term_notice_fallback_android / term_notice_fallback_session / term_builtin 八键（values/ 与 values-zh/ 镜像同步）\n- 测试同步：ExecutionBackendGoldenTest 删除（golden 对象已是测试夹具）；TerminalRuntimeBackendTest 语义重排（显式 local 路由 + 默认 linux-ubuntu + workspace 死守卫用例删除）；契约/压力/控制面/观察/协议/端到端/IPC 测试构造补夹具注册表；UbuntuTerminalRuntimeWiringTest W4 更名夹具语义",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.94"
+    "markdown": "- 「专业翻译」第二层确定性引擎：译文质检器七族检查（数字保真/标点宽度家族/括号引号配对/段落对齐/长度比异常/漏译段探测/空白卫生）+ 百分制得分 + 标点宽度确定性修复（代码块逐字保留）\n- 「内容总结」结构构建器：中英混合安全切句（缩写/小数/单字母缩写防误切）、术语显著度（标题加权+中英停用词）、四因子句打分、三元组 Jaccard 冗余聚类、要点预算分配、结构化大纲直出 + 要点重叠回包检测\n- 「提交信息生成」规范体系库：四种风格全规则代码化（conventional/gitmoji/自由/内核）、十二类型知识库（中英动词对+emoji 映射）、风格感知校验/修复、主题草稿合成、footer 规范、风格互转\n- 三行为 behaviorVersion 升 2：分析/校验/修复/渲染全阶段接线，回包机器摘要新增质检得分与大纲覆盖率等 8 项指标\n\n---\n\n- README 重定位：Hero 从「自主智能体（8 种执行模式）」改为「AI 编码工作台（四条思考逻辑线）」，标注 Agent 聊天模式已拆分至 Theocracy 仓库；badge（8 modes→4 thinking lines）、架构图（AgentChat 节点→Code 屏 / agent-engine 节点→共享引擎协议）、双层思考表（删 Agent 六档行）、应用界面表（Agent 屏→Coding 屏 + 终端 Ubuntu 单后端标注）、模块表（agent-engine 描述对齐共享基座）同步修正\n- Agent 模式专属文档删除 7 篇：agent-modes.md / agent-roles.md / goal-mode.md / loop-mode.md / agent-execution-overhaul.md / agent-ui-audit.md / agent-life-skills-and-memory.md\n- 保留文档死链清理：tool-system-v4 / hub-ecosystem 引用行删除；pr-body / scope-isolation / ui-quality-audit / operit-rikkahub-comparison / chat-memory-v2 历史提及改「已随 Agent 模式移除」标注；thinking-levels.md 头部 Agent 六档段落改拆分说明\n- 系列收口：Agent 模式移除 6-PR 系列（#600 对话屏 / #616 引擎域 / #617 工具域 / #618 设置域 / #635 AndroidShell 收敛 / 本 PR 文档收尾）全部落地 —— 主仓库成为纯 Coding 模式软件，Coding 功能零损失",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.95"
   },
   "history": [
+    {
+      "versionName": "1.4.9.95",
+      "versionCode": 171,
+      "tag": "v1.4.9.95",
+      "date": "2026-10-31",
+      "title": "v1.4.9.95 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "template deepen writing domain",
+          "notes": [
+            "「专业翻译」第二层确定性引擎：译文质检器七族检查（数字保真/标点宽度家族/括号引号配对/段落对齐/长度比异常/漏译段探测/空白卫生）+ 百分制得分 + 标点宽度确定性修复（代码块逐字保留）",
+            "「内容总结」结构构建器：中英混合安全切句（缩写/小数/单字母缩写防误切）、术语显著度（标题加权+中英停用词）、四因子句打分、三元组 Jaccard 冗余聚类、要点预算分配、结构化大纲直出 + 要点重叠回包检测",
+            "「提交信息生成」规范体系库：四种风格全规则代码化（conventional/gitmoji/自由/内核）、十二类型知识库（中英动词对+emoji 映射）、风格感知校验/修复、主题草稿合成、footer 规范、风格互转",
+            "三行为 behaviorVersion 升 2：分析/校验/修复/渲染全阶段接线，回包机器摘要新增质检得分与大纲覆盖率等 8 项指标"
+          ]
+        },
+        {
+          "title": "coding only wrapup 6of6",
+          "notes": [
+            "README 重定位：Hero 从「自主智能体（8 种执行模式）」改为「AI 编码工作台（四条思考逻辑线）」，标注 Agent 聊天模式已拆分至 Theocracy 仓库；badge（8 modes→4 thinking lines）、架构图（AgentChat 节点→Code 屏 / agent-engine 节点→共享引擎协议）、双层思考表（删 Agent 六档行）、应用界面表（Agent 屏→Coding 屏 + 终端 Ubuntu 单后端标注）、模块表（agent-engine 描述对齐共享基座）同步修正",
+            "Agent 模式专属文档删除 7 篇：agent-modes.md / agent-roles.md / goal-mode.md / loop-mode.md / agent-execution-overhaul.md / agent-ui-audit.md / agent-life-skills-and-memory.md",
+            "保留文档死链清理：tool-system-v4 / hub-ecosystem 引用行删除；pr-body / scope-isolation / ui-quality-audit / operit-rikkahub-comparison / chat-memory-v2 历史提及改「已随 Agent 模式移除」标注；thinking-levels.md 头部 Agent 六档段落改拆分说明",
+            "系列收口：Agent 模式移除 6-PR 系列（#600 对话屏 / #616 引擎域 / #617 工具域 / #618 设置域 / #635 AndroidShell 收敛 / 本 PR 文档收尾）全部落地 —— 主仓库成为纯 Coding 模式软件，Coding 功能零损失"
+          ]
+        }
+      ],
+      "markdown": "- 「专业翻译」第二层确定性引擎：译文质检器七族检查（数字保真/标点宽度家族/括号引号配对/段落对齐/长度比异常/漏译段探测/空白卫生）+ 百分制得分 + 标点宽度确定性修复（代码块逐字保留）\n- 「内容总结」结构构建器：中英混合安全切句（缩写/小数/单字母缩写防误切）、术语显著度（标题加权+中英停用词）、四因子句打分、三元组 Jaccard 冗余聚类、要点预算分配、结构化大纲直出 + 要点重叠回包检测\n- 「提交信息生成」规范体系库：四种风格全规则代码化（conventional/gitmoji/自由/内核）、十二类型知识库（中英动词对+emoji 映射）、风格感知校验/修复、主题草稿合成、footer 规范、风格互转\n- 三行为 behaviorVersion 升 2：分析/校验/修复/渲染全阶段接线，回包机器摘要新增质检得分与大纲覆盖率等 8 项指标\n\n---\n\n- README 重定位：Hero 从「自主智能体（8 种执行模式）」改为「AI 编码工作台（四条思考逻辑线）」，标注 Agent 聊天模式已拆分至 Theocracy 仓库；badge（8 modes→4 thinking lines）、架构图（AgentChat 节点→Code 屏 / agent-engine 节点→共享引擎协议）、双层思考表（删 Agent 六档行）、应用界面表（Agent 屏→Coding 屏 + 终端 Ubuntu 单后端标注）、模块表（agent-engine 描述对齐共享基座）同步修正\n- Agent 模式专属文档删除 7 篇：agent-modes.md / agent-roles.md / goal-mode.md / loop-mode.md / agent-execution-overhaul.md / agent-ui-audit.md / agent-life-skills-and-memory.md\n- 保留文档死链清理：tool-system-v4 / hub-ecosystem 引用行删除；pr-body / scope-isolation / ui-quality-audit / operit-rikkahub-comparison / chat-memory-v2 历史提及改「已随 Agent 模式移除」标注；thinking-levels.md 头部 Agent 六档段落改拆分说明\n- 系列收口：Agent 模式移除 6-PR 系列（#600 对话屏 / #616 引擎域 / #617 工具域 / #618 设置域 / #635 AndroidShell 收敛 / 本 PR 文档收尾）全部落地 —— 主仓库成为纯 Coding 模式软件，Coding 功能零损失",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.95"
+    },
     {
       "versionName": "1.4.9.94",
       "versionCode": 170,
@@ -1410,25 +1447,6 @@
       ],
       "markdown": "# 权限安全线修复 + 停止真取消 + 历史会话数据完整性 + 界面文案去 AI 感\n\n- 全自动（BYPASS）权限档补上两条安全线：用户手写的拒绝/询问规则重新生效（旧实现静默吞掉，与文案承诺相悖）；付费等敏感动作（如发短信）保持逐次确认——显式放行规则命中时视为用户已表态直接放行。配套修正权限模式说明文案（中英双语）\n- 修复付费工具逐次确认已整体失效的问题：会话级放行黑名单仍存旧版 snake_case 工具 id（sms_send），PascalCase 化后的 SmsSend 从不命中——现两态并存并提升为权限门与风险门共用的单一事实源；权限门弹窗对付费工具不再提供「本会话允许」选项（与风险门同口径）\n- 「停止/发新消息」真取消：取消等待超时后强制取消引擎镜像收集协程（关闭在途 LLM HTTP 流、终止工具执行、释放互斥位），并等待互斥位释放——旧实现超时返回后在途工具照跑、token 继续烧，紧随其后的新消息撞互斥锁被丢弃并弹英文技术错误；发送路径增加互斥位有界重试兜底\n- 流式输出中段丢字防御：UI 快照比引擎全文短时（事件积压超水位线丢过过程 chunk）完成消息回退引擎全文——「丢过程不丢结果」与「看到什么落什么」两套承诺不再互相顶牛\n- 聊天历史完整性三修：置顶会话不再被滚动归档静默挤出（置顶不参与淘汰）；删除「正在聊的」会话后屏幕与引擎历史同步清空（旧实现下一条消息把已删对话以新会话复活成幽灵）；恢复会话读不到消息时给出可见提示（旧实现静默无反应）\n- 恢复会话时失败的工具卡不再伪装成成功（红卡不再变绿卡）；Agent 屏对齐 Coding 屏：工具开跑即收口思考气泡与计时（思考时长不再混入工具耗时），出错/中止瞬间已流出的思考内容保留为终态消息而非无声消失，salvage 顺序对齐真实时序（思考在前回复在后）\n- 技能工具 PascalCase id（SkillInstall 等）在「接受编辑」档下恢复免确认豁免（旧前缀表只认 snake_case）\n- 界面文案去 AI 感（中英双语同步）：移除聊天/编码/目标/终端/市场/诊断等界面文案中的 emoji 前缀（思考/中止/压缩/超时/拦截等约 60 处）；首屏人格化营销腔改为克制的产品文案（「全能 AI 助手」→「Android 上的 Agent 工作台」、「配置你的 AI 大脑」→「接入模型」等）；「一键×6」「智能安装」等模板词改为自然表述；设置页 Agent 行为区整节英文残留资源化为中文（重试与循环检测/自动恢复/自我评审/后台常驻等 21 项）；计划卡英文硬编码标题资源化；输入法密钥引导卡星光图标改为钥匙图标\n\n---\n\n<!-- pr: docs-four-line -->\n- README 库模块表补齐织造/信使两线（apex-kit-loom / apex-kit-courier 坐标与角色）+ 锁文件清单与 consumer-check 兄弟检出数同步（五 kit）\n- 文档索引补织造/信使引擎两行；双思考逻辑引擎文档头部加四线全景指针（深潜/标准/织造/信使任意切换）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.46"
-    },
-    {
-      "versionName": "1.4.9.45",
-      "versionCode": 121,
-      "tag": "v1.4.9.45",
-      "date": "2026-10-24",
-      "title": "v1.4.9.45 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "<!-- pr: 409 -->",
-          "notes": [
-            "终端原生引擎同步 v0.2.2：OSC 颜色查询（10/11/12）接入宿主主题色，探测类应用（nvim / tmux）据此自动选择明暗配色时不再拿到错误的占位色；颜色上报改为 xterm 16 位/通道规范（白色从 1/256 亮度修正为满亮）。",
-            "浏览器 / 标准任务循环 / 工作区 / 织造 / 信使 / VT 原生引擎 / 通用框架七个附属库仓统一为 apex-(类型)-(名字) 命名（apex-kit-browser 等），主仓接线、CI 检出与同步工作流一并联动，附属库版本钉版机制不变。"
-          ]
-        }
-      ],
-      "markdown": "<!-- pr: 409 -->\n- 终端原生引擎同步 v0.2.2：OSC 颜色查询（10/11/12）接入宿主主题色，探测类应用（nvim / tmux）据此自动选择明暗配色时不再拿到错误的占位色；颜色上报改为 xterm 16 位/通道规范（白色从 1/256 亮度修正为满亮）。\n- 浏览器 / 标准任务循环 / 工作区 / 织造 / 信使 / VT 原生引擎 / 通用框架七个附属库仓统一为 apex-(类型)-(名字) 命名（apex-kit-browser 等），主仓接线、CI 检出与同步工作流一并联动，附属库版本钉版机制不变。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.45"
     }
   ]
 }
