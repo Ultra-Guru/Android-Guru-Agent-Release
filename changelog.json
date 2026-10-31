@@ -1,27 +1,89 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T16:30:38Z",
+  "generatedAt": "2026-10-31T16:45:13Z",
   "latest": {
-    "versionName": "1.5.9",
-    "versionCode": 189,
-    "tag": "v1.5.9",
+    "versionName": "1.5.10",
+    "versionCode": 190,
+    "tag": "v1.5.10",
     "date": "2026-10-31",
-    "title": "v1.5.9 更新内容",
+    "title": "v1.5.10 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "修复",
+        "title": "system workspace real access",
         "notes": [
-          "Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。",
-          "取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。"
+          "「整个系统」工作区兑现真实系统级操作（此前选择整个系统后模型仍只在工作区/沙箱里打转）：",
+          "提示词按工作区分档：root=/ 时明确 code_* 工具在真实 Android 文件系统读写（非沙箱副本）、/data 需 root 与 /system 只读的权限边界、终端侧真实系统根挂载 /host；普通工作区措辞零漂移（新增 CodePrompts 契约测试双锁）",
+          "Ubuntu 通道挂载真实系统根：TerminalExec 一次性命令与 PTY 会话（STANDARD 档）新增 host / → guest /host bind（/host/system/build.prop 即宿主 /system/build.prop；权限门禁仍是真实 Android 权限/SELinux）；TerminalExec 工具描述同步",
+          "cwd=/ 诚实映射 guest /host —— 旧实现走「真实目录同路径 bind」会得到 bind /:/ 覆盖 rootfs（/bin/bash 不复存在命令必炸）；/host 子路径按 guest 风格 cwd 直通（存在性按宿主根验证）",
+          "隔离纪律：市场沙箱（ProotSandboxCommandRunner）、MCP 启动器与 NONE 档（旧裸 -r）不挂 /host —— 隔离收窄的调用方不被动升级"
+        ]
+      },
+      {
+        "title": "composer toolbar regroup",
+        "notes": [
+          "代码页输入栏工具行四件套定版：工作区（固定宽，长名省略号截断不再撑开整行）→ 模型（第 1 位）→ 网络搜索（第 2 位，新）→ 展开 ▲，不再横向滚动",
+          "新增网络搜索三通道单选：模型内置搜索 / SearXNG 本地 / 搜索 MCP——选中自动停其它，再点当前通道即关闭（搜索总闸）",
+          "搜索 MCP 三台零 key 本地服务器三选一：free-search-mcp（多引擎搜索+页面抓取+文档读取）、Searchlight（七引擎+智能缓存+故障转移）、Agent Search MCP（中英文路由省 Token）——首次选择在内嵌 Ubuntu 沙箱真实安装（pip/npm）后启用",
+          "斜杠指令 / 工具聚合 / GitHub 连接 / 调用·时间·规则 / 功能聚合 五件收进「展开」向上层级菜单：点击项弹原面板，点空白或再点收起，图标随状态旋转"
+        ]
+      },
+      {
+        "title": "ubuntu dpkg interrupted autoheal",
+        "notes": [
+          "修复 Ubuntu 引导「dpkg was interrupted」死循环：apt 安装被中断（超时强杀/进程死亡）后，重试安装会在 dpkg 前置检查立即失败并永久挂起「降级就绪」注记；现在自动执行 `dpkg --configure -a` 完成半装包配置并重试一次，引导自愈为完整就绪（控制台退役后用户没有手动修复通道，这是唯一出路）",
+          "健康检查新增 `dpkg --audit` 半装状态检测：此前用 `dpkg --version` 判健康对半装完全无感，自动修复服务永不触发；现在归入可修复维度并给出半装包清单",
+          "引导实际执行后自动失效能力探测缓存：半装的 git 修复后立即从 BROKEN 翻为 AVAILABLE，不再被 5 分钟 TTL 缓存卡住旧状态",
+          "开发环境安装页的 apt 类安装命令前挂非交互 `dpkg --configure -a` 自愈前缀：环境安装按钮同样免疫 dpkg 中断死循环（干净态秒级 no-op，不污染交互会话）"
         ]
       }
     ],
-    "markdown": "# 修复\n\n- Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。\n- 取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.9"
+    "markdown": "- 「整个系统」工作区兑现真实系统级操作（此前选择整个系统后模型仍只在工作区/沙箱里打转）：\n- 提示词按工作区分档：root=/ 时明确 code_* 工具在真实 Android 文件系统读写（非沙箱副本）、/data 需 root 与 /system 只读的权限边界、终端侧真实系统根挂载 /host；普通工作区措辞零漂移（新增 CodePrompts 契约测试双锁）\n- Ubuntu 通道挂载真实系统根：TerminalExec 一次性命令与 PTY 会话（STANDARD 档）新增 host / → guest /host bind（/host/system/build.prop 即宿主 /system/build.prop；权限门禁仍是真实 Android 权限/SELinux）；TerminalExec 工具描述同步\n- cwd=/ 诚实映射 guest /host —— 旧实现走「真实目录同路径 bind」会得到 bind /:/ 覆盖 rootfs（/bin/bash 不复存在命令必炸）；/host 子路径按 guest 风格 cwd 直通（存在性按宿主根验证）\n- 隔离纪律：市场沙箱（ProotSandboxCommandRunner）、MCP 启动器与 NONE 档（旧裸 -r）不挂 /host —— 隔离收窄的调用方不被动升级\n\n---\n\n- 代码页输入栏工具行四件套定版：工作区（固定宽，长名省略号截断不再撑开整行）→ 模型（第 1 位）→ 网络搜索（第 2 位，新）→ 展开 ▲，不再横向滚动\n- 新增网络搜索三通道单选：模型内置搜索 / SearXNG 本地 / 搜索 MCP——选中自动停其它，再点当前通道即关闭（搜索总闸）\n- 搜索 MCP 三台零 key 本地服务器三选一：free-search-mcp（多引擎搜索+页面抓取+文档读取）、Searchlight（七引擎+智能缓存+故障转移）、Agent Search MCP（中英文路由省 Token）——首次选择在内嵌 Ubuntu 沙箱真实安装（pip/npm）后启用\n- 斜杠指令 / 工具聚合 / GitHub 连接 / 调用·时间·规则 / 功能聚合 五件收进「展开」向上层级菜单：点击项弹原面板，点空白或再点收起，图标随状态旋转\n\n---\n\n- 修复 Ubuntu 引导「dpkg was interrupted」死循环：apt 安装被中断（超时强杀/进程死亡）后，重试安装会在 dpkg 前置检查立即失败并永久挂起「降级就绪」注记；现在自动执行 `dpkg --configure -a` 完成半装包配置并重试一次，引导自愈为完整就绪（控制台退役后用户没有手动修复通道，这是唯一出路）\n- 健康检查新增 `dpkg --audit` 半装状态检测：此前用 `dpkg --version` 判健康对半装完全无感，自动修复服务永不触发；现在归入可修复维度并给出半装包清单\n- 引导实际执行后自动失效能力探测缓存：半装的 git 修复后立即从 BROKEN 翻为 AVAILABLE，不再被 5 分钟 TTL 缓存卡住旧状态\n- 开发环境安装页的 apt 类安装命令前挂非交互 `dpkg --configure -a` 自愈前缀：环境安装按钮同样免疫 dpkg 中断死循环（干净态秒级 no-op，不污染交互会话）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.10"
   },
   "history": [
+    {
+      "versionName": "1.5.10",
+      "versionCode": 190,
+      "tag": "v1.5.10",
+      "date": "2026-10-31",
+      "title": "v1.5.10 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "system workspace real access",
+          "notes": [
+            "「整个系统」工作区兑现真实系统级操作（此前选择整个系统后模型仍只在工作区/沙箱里打转）：",
+            "提示词按工作区分档：root=/ 时明确 code_* 工具在真实 Android 文件系统读写（非沙箱副本）、/data 需 root 与 /system 只读的权限边界、终端侧真实系统根挂载 /host；普通工作区措辞零漂移（新增 CodePrompts 契约测试双锁）",
+            "Ubuntu 通道挂载真实系统根：TerminalExec 一次性命令与 PTY 会话（STANDARD 档）新增 host / → guest /host bind（/host/system/build.prop 即宿主 /system/build.prop；权限门禁仍是真实 Android 权限/SELinux）；TerminalExec 工具描述同步",
+            "cwd=/ 诚实映射 guest /host —— 旧实现走「真实目录同路径 bind」会得到 bind /:/ 覆盖 rootfs（/bin/bash 不复存在命令必炸）；/host 子路径按 guest 风格 cwd 直通（存在性按宿主根验证）",
+            "隔离纪律：市场沙箱（ProotSandboxCommandRunner）、MCP 启动器与 NONE 档（旧裸 -r）不挂 /host —— 隔离收窄的调用方不被动升级"
+          ]
+        },
+        {
+          "title": "composer toolbar regroup",
+          "notes": [
+            "代码页输入栏工具行四件套定版：工作区（固定宽，长名省略号截断不再撑开整行）→ 模型（第 1 位）→ 网络搜索（第 2 位，新）→ 展开 ▲，不再横向滚动",
+            "新增网络搜索三通道单选：模型内置搜索 / SearXNG 本地 / 搜索 MCP——选中自动停其它，再点当前通道即关闭（搜索总闸）",
+            "搜索 MCP 三台零 key 本地服务器三选一：free-search-mcp（多引擎搜索+页面抓取+文档读取）、Searchlight（七引擎+智能缓存+故障转移）、Agent Search MCP（中英文路由省 Token）——首次选择在内嵌 Ubuntu 沙箱真实安装（pip/npm）后启用",
+            "斜杠指令 / 工具聚合 / GitHub 连接 / 调用·时间·规则 / 功能聚合 五件收进「展开」向上层级菜单：点击项弹原面板，点空白或再点收起，图标随状态旋转"
+          ]
+        },
+        {
+          "title": "ubuntu dpkg interrupted autoheal",
+          "notes": [
+            "修复 Ubuntu 引导「dpkg was interrupted」死循环：apt 安装被中断（超时强杀/进程死亡）后，重试安装会在 dpkg 前置检查立即失败并永久挂起「降级就绪」注记；现在自动执行 `dpkg --configure -a` 完成半装包配置并重试一次，引导自愈为完整就绪（控制台退役后用户没有手动修复通道，这是唯一出路）",
+            "健康检查新增 `dpkg --audit` 半装状态检测：此前用 `dpkg --version` 判健康对半装完全无感，自动修复服务永不触发；现在归入可修复维度并给出半装包清单",
+            "引导实际执行后自动失效能力探测缓存：半装的 git 修复后立即从 BROKEN 翻为 AVAILABLE，不再被 5 分钟 TTL 缓存卡住旧状态",
+            "开发环境安装页的 apt 类安装命令前挂非交互 `dpkg --configure -a` 自愈前缀：环境安装按钮同样免疫 dpkg 中断死循环（干净态秒级 no-op，不污染交互会话）"
+          ]
+        }
+      ],
+      "markdown": "- 「整个系统」工作区兑现真实系统级操作（此前选择整个系统后模型仍只在工作区/沙箱里打转）：\n- 提示词按工作区分档：root=/ 时明确 code_* 工具在真实 Android 文件系统读写（非沙箱副本）、/data 需 root 与 /system 只读的权限边界、终端侧真实系统根挂载 /host；普通工作区措辞零漂移（新增 CodePrompts 契约测试双锁）\n- Ubuntu 通道挂载真实系统根：TerminalExec 一次性命令与 PTY 会话（STANDARD 档）新增 host / → guest /host bind（/host/system/build.prop 即宿主 /system/build.prop；权限门禁仍是真实 Android 权限/SELinux）；TerminalExec 工具描述同步\n- cwd=/ 诚实映射 guest /host —— 旧实现走「真实目录同路径 bind」会得到 bind /:/ 覆盖 rootfs（/bin/bash 不复存在命令必炸）；/host 子路径按 guest 风格 cwd 直通（存在性按宿主根验证）\n- 隔离纪律：市场沙箱（ProotSandboxCommandRunner）、MCP 启动器与 NONE 档（旧裸 -r）不挂 /host —— 隔离收窄的调用方不被动升级\n\n---\n\n- 代码页输入栏工具行四件套定版：工作区（固定宽，长名省略号截断不再撑开整行）→ 模型（第 1 位）→ 网络搜索（第 2 位，新）→ 展开 ▲，不再横向滚动\n- 新增网络搜索三通道单选：模型内置搜索 / SearXNG 本地 / 搜索 MCP——选中自动停其它，再点当前通道即关闭（搜索总闸）\n- 搜索 MCP 三台零 key 本地服务器三选一：free-search-mcp（多引擎搜索+页面抓取+文档读取）、Searchlight（七引擎+智能缓存+故障转移）、Agent Search MCP（中英文路由省 Token）——首次选择在内嵌 Ubuntu 沙箱真实安装（pip/npm）后启用\n- 斜杠指令 / 工具聚合 / GitHub 连接 / 调用·时间·规则 / 功能聚合 五件收进「展开」向上层级菜单：点击项弹原面板，点空白或再点收起，图标随状态旋转\n\n---\n\n- 修复 Ubuntu 引导「dpkg was interrupted」死循环：apt 安装被中断（超时强杀/进程死亡）后，重试安装会在 dpkg 前置检查立即失败并永久挂起「降级就绪」注记；现在自动执行 `dpkg --configure -a` 完成半装包配置并重试一次，引导自愈为完整就绪（控制台退役后用户没有手动修复通道，这是唯一出路）\n- 健康检查新增 `dpkg --audit` 半装状态检测：此前用 `dpkg --version` 判健康对半装完全无感，自动修复服务永不触发；现在归入可修复维度并给出半装包清单\n- 引导实际执行后自动失效能力探测缓存：半装的 git 修复后立即从 BROKEN 翻为 AVAILABLE，不再被 5 分钟 TTL 缓存卡住旧状态\n- 开发环境安装页的 apt 类安装命令前挂非交互 `dpkg --configure -a` 自愈前缀：环境安装按钮同样免疫 dpkg 中断死循环（干净态秒级 no-op，不污染交互会话）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.10"
+    },
     {
       "versionName": "1.5.9",
       "versionCode": 189,
@@ -1415,26 +1477,6 @@
       ],
       "markdown": "## HTML 布局分析：视觉画像\n\n- 布局分析报告新增「视觉画像」区块：调色板（背景/文本/描边频次榜 + 强调色）、字体清单与字号分布、间距刻度（4px/8px 节奏判定）、圆角与阴影语言、暗色主题画像 —— Agent 写完页面即可知道「这页大概长什么样」\n- 新增 WCAG 文字对比度检测：低对比度文本（正文 <4.5:1 / 大字 <3:1）自动进问题清单，灰字配灰底这类可读性陷阱无处遁形",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.65"
-    },
-    {
-      "versionName": "1.4.9.64",
-      "versionCode": 140,
-      "tag": "v1.4.9.64",
-      "date": "2026-10-25",
-      "title": "v1.4.9.64 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "HTML 布局分析：CSS 级联视图",
-          "notes": [
-            "静态布局分析新增 CSS 级联能力：页面 `<style>` 块的规则（类/ID/标签选择器、@media 条件按手机视口评估）现在会并入 display/尺寸/定位/弹性推断 —— 样式写在 style 块里的页面终于能拿到正确的布局画像",
-            "分析报告头部新增「CSS 级联」行，展示已并入推断的规则数量"
-          ]
-        }
-      ],
-      "markdown": "## HTML 布局分析：CSS 级联视图\n\n- 静态布局分析新增 CSS 级联能力：页面 `<style>` 块的规则（类/ID/标签选择器、@media 条件按手机视口评估）现在会并入 display/尺寸/定位/弹性推断 —— 样式写在 style 块里的页面终于能拿到正确的布局画像\n- 分析报告头部新增「CSS 级联」行，展示已并入推断的规则数量",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.64"
     }
   ]
 }
