@@ -1,33 +1,45 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T14:27:57Z",
+  "generatedAt": "2026-10-31T15:48:43Z",
   "latest": {
-    "versionName": "1.5.6",
-    "versionCode": 186,
-    "tag": "v1.5.6",
+    "versionName": "1.5.7",
+    "versionCode": 187,
+    "tag": "v1.5.7",
     "date": "2026-10-31",
-    "title": "v1.5.6 更新内容",
+    "title": "v1.5.7 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "settings regroup",
+        "title": "修复",
         "notes": [
-          "设置中心新增「集成与扩展」一级分类：GitHub / 本地搜索 / 记忆 三页自「工作台」析出独立成类，工作台瘦身为纯会话行为六页（编程工位/子代理/权限/规则/钩子/目标模式），找集成类设置不再混在会话行为里翻",
-          "「模型配置 · 参数」页收纳高级选项（结构化输出/自定义请求头）——原挂在「提示词」页尾，语义归位：二者同为发请求时生效的模型档位设置"
-        ]
-      },
-      {
-        "title": "theme accent circle alias",
-        "notes": [
-          "修复主题配色选择器圆形色点边缘锯齿：色点改用 M3 Surface 直绘（shape 参数抗锯齿 fill/stroke），移除硬件渲染下不抗锯齿的 clip(CircleShape) 手搓圆——点击选中、描边加粗后锯齿尤其明显的问题一并根治"
+          "修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。"
         ]
       }
     ],
-    "markdown": "- 设置中心新增「集成与扩展」一级分类：GitHub / 本地搜索 / 记忆 三页自「工作台」析出独立成类，工作台瘦身为纯会话行为六页（编程工位/子代理/权限/规则/钩子/目标模式），找集成类设置不再混在会话行为里翻\n- 「模型配置 · 参数」页收纳高级选项（结构化输出/自定义请求头）——原挂在「提示词」页尾，语义归位：二者同为发请求时生效的模型档位设置\n\n---\n\n- 修复主题配色选择器圆形色点边缘锯齿：色点改用 M3 Surface 直绘（shape 参数抗锯齿 fill/stroke），移除硬件渲染下不抗锯齿的 clip(CircleShape) 手搓圆——点击选中、描边加粗后锯齿尤其明显的问题一并根治",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.6"
+    "markdown": "# 修复\n\n- 修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.7"
   },
   "history": [
+    {
+      "versionName": "1.5.7",
+      "versionCode": 187,
+      "tag": "v1.5.7",
+      "date": "2026-10-31",
+      "title": "v1.5.7 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "修复",
+          "notes": [
+            "修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。"
+          ]
+        }
+      ],
+      "markdown": "# 修复\n\n- 修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.7"
+    },
     {
       "versionName": "1.5.6",
       "versionCode": 186,
@@ -1437,29 +1449,6 @@
       ],
       "markdown": "## 终端大重构：真实执行 + 入口统一 + 功能全量转移\n\n- 终端命令改为**真实执行**：M3 控制台提交的命令在真实 PTY 会话（Ubuntu PRoot / Android toybox）中运行，输出逐行实时上屏，退出码来自 OSC 633 marker 协议（不再是 500ms 模拟）\n- 删除旧交互终端入口与 feature:terminal-m3 模块：抽屉只剩一个「终端」，「M³」字样全部移除\n- 设置中心「终端」分类随控制台收窄：配色方案与扩展键宏两叶随旧交互终端退役，单色 / 键栏 / 响铃振动等网格时代项一并移除\n- 功能全量转移：多会话标签（多对话）、Ubuntu 环境中心（安装/进度/修复/删除/镜像/apt 依赖）、命令历史（记录/召回/Sheet）、黑白名单（与 Agent 运行时策略共键）、字号 8–24 与亮屏设置、崩溃恢复死标签 + 重启\n- 新增真实执行管线纯件与测试：RawStreamSanitizer（回显/marker/提示符剥离）、RealCommandExecutor（流式 + 真实退出码）\n\n### 构建修复轮（CI 实测驱动）\n\n- 修复 strings_terminal 键重复（设置名单占位撞名 term_cmd_hint → term_policy_hint）\n- 修复提示符尾正则：真实 PS1 形如 `user@host:cwd $ `（$ 前有空格），补 `\\s*` 容忍\n- 修复输出高亮字母循环括号缺失（行尾 token 越界）\n- 修复历史载入侧不滤含换行条目；检索断言改为最新在前",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.62"
-    },
-    {
-      "versionName": "1.4.9.61",
-      "versionCode": 137,
-      "tag": "v1.4.9.61",
-      "date": "2026-10-24",
-      "title": "v1.4.9.61 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "<!-- pr: normal-browser-and-git -->",
-          "notes": [
-            "修浏览器打开即「人工接管」：openBrowser 不再强制 enterHandoffMode——用户从抽屉打开浏览器看到的是正常浏览器（输入网址即可上网），人工接管回归显式动作（仪表盘按钮 / BrowserShow）；空态引导文案同步改写（中英）",
-            "新工具 CodeGitRun（任意 git 子命令通道，PRoot 沙箱执行）：clone/pull/push/fetch/rebase/tag 等直达，GitHub 已连接时自动注入凭据桥（GH_TOKEN + credential.helper）——GitHub 仓库任务「clone→改→commit→push→PR」全程 git 命令完成，不经浏览器；交互式子命令前置拒绝并给替代方案；引号感知参数切分（纯 JVM 单测 6 例）",
-            "新工具 GithubCreatePullRequest（POST /pulls）：补全 git 通路的最后一环，fork PR 支持 user:branch 形态；GithubApiService 增 createPullRequest + PR 数据模型",
-            "系统提示词新增「Task Routing」四车道分工段：GitHub 仓库操作走 CodeGitRun+GithubCreatePullRequest / 技术问题 WebSearch 后用 GitHub 工具读权威源 / 浏览器族仅用于真实网页自动化（登录/表单/验证码）/ 读页面内容用 WebFetch——纠正「什么都往浏览器塞」的选道错误",
-            "WebSearch 工具描述补 GitHub 优先引导（技术/代码/库问题优先 GithubSearchRepos→SearchCode→ReadFile）；BrowserNavigate 描述明确「自动化专用」定位与替代车道"
-          ]
-        }
-      ],
-      "markdown": "<!-- pr: normal-browser-and-git -->\n- 修浏览器打开即「人工接管」：openBrowser 不再强制 enterHandoffMode——用户从抽屉打开浏览器看到的是正常浏览器（输入网址即可上网），人工接管回归显式动作（仪表盘按钮 / BrowserShow）；空态引导文案同步改写（中英）\n- 新工具 CodeGitRun（任意 git 子命令通道，PRoot 沙箱执行）：clone/pull/push/fetch/rebase/tag 等直达，GitHub 已连接时自动注入凭据桥（GH_TOKEN + credential.helper）——GitHub 仓库任务「clone→改→commit→push→PR」全程 git 命令完成，不经浏览器；交互式子命令前置拒绝并给替代方案；引号感知参数切分（纯 JVM 单测 6 例）\n- 新工具 GithubCreatePullRequest（POST /pulls）：补全 git 通路的最后一环，fork PR 支持 user:branch 形态；GithubApiService 增 createPullRequest + PR 数据模型\n- 系统提示词新增「Task Routing」四车道分工段：GitHub 仓库操作走 CodeGitRun+GithubCreatePullRequest / 技术问题 WebSearch 后用 GitHub 工具读权威源 / 浏览器族仅用于真实网页自动化（登录/表单/验证码）/ 读页面内容用 WebFetch——纠正「什么都往浏览器塞」的选道错误\n- WebSearch 工具描述补 GitHub 优先引导（技术/代码/库问题优先 GithubSearchRepos→SearchCode→ReadFile）；BrowserNavigate 描述明确「自动化专用」定位与替代车道",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.61"
     }
   ]
 }
