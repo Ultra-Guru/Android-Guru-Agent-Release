@@ -1,21 +1,53 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T05:43:08Z",
+  "generatedAt": "2026-10-31T06:32:14Z",
   "latest": {
-    "versionName": "1.5.3",
-    "versionCode": 183,
-    "tag": "v1.5.3",
+    "versionName": "1.5.4",
+    "versionCode": 184,
+    "tag": "v1.5.4",
     "date": "2026-10-31",
-    "title": "v1.5.3 更新内容",
-    "notes": [
-      "例行版本更新与稳定性改进。"
-    ],
+    "title": "v1.5.4 更新内容",
+    "notes": [],
     "images": [],
-    "pr": [],
-    "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.3"
+    "pr": [
+      {
+        "title": "searxng local search",
+        "notes": [
+          "全新「本地搜索（SearXNG）」开关：在内置 PRoot Ubuntu 沙箱中运行私有 SearXNG 元搜索实例（git 源码 + venv + pip 运行时安装，幂等断点续装），设置页一键启停，全程状态机可视（安装阶段进度 → 启动中 → 运行中绿点 → 失败重试）",
+          "Agent 搜索优先本地：WebSearchTool 回退链链首插入 SearXNG 本地实例（127.0.0.1:8888 JSON API），就绪时优先聚合 Google/Bing/DDG 等 6 个可自选引擎，不可用时静默回退 DDG→DDG-Lite→Bing 远程链，用户与模型全程无感",
+          "守护进程可靠性：15s 周期健康看门狗 + 真实退出码观察者双通道自愈（连续 3 次失联自动重启，预算封顶防崩溃循环）；进程挂在 TerminalRuntime headless 会话上（specialUse 前台服务存续期间持久运行，服务收尾统一清场不留僵尸）",
+          "持久化与自恢复：开关意图落盘，App 重启 / 开机（BootReceiver 携带启动 action）/ 服务重建三路 reconcile 幂等对账恢复；引擎多选变更即时生效（运行中自动重启守护）",
+          "维护入口：设置页「排查与维护」二级区提供实例地址展示（F12 排查）与「清除已安装的搜索组件」（删除 /opt/searxng，约 300MB，偏好保留）；中文/英文文案全量镜像"
+        ]
+      }
+    ],
+    "markdown": "- 全新「本地搜索（SearXNG）」开关：在内置 PRoot Ubuntu 沙箱中运行私有 SearXNG 元搜索实例（git 源码 + venv + pip 运行时安装，幂等断点续装），设置页一键启停，全程状态机可视（安装阶段进度 → 启动中 → 运行中绿点 → 失败重试）\n- Agent 搜索优先本地：WebSearchTool 回退链链首插入 SearXNG 本地实例（127.0.0.1:8888 JSON API），就绪时优先聚合 Google/Bing/DDG 等 6 个可自选引擎，不可用时静默回退 DDG→DDG-Lite→Bing 远程链，用户与模型全程无感\n- 守护进程可靠性：15s 周期健康看门狗 + 真实退出码观察者双通道自愈（连续 3 次失联自动重启，预算封顶防崩溃循环）；进程挂在 TerminalRuntime headless 会话上（specialUse 前台服务存续期间持久运行，服务收尾统一清场不留僵尸）\n- 持久化与自恢复：开关意图落盘，App 重启 / 开机（BootReceiver 携带启动 action）/ 服务重建三路 reconcile 幂等对账恢复；引擎多选变更即时生效（运行中自动重启守护）\n- 维护入口：设置页「排查与维护」二级区提供实例地址展示（F12 排查）与「清除已安装的搜索组件」（删除 /opt/searxng，约 300MB，偏好保留）；中文/英文文案全量镜像",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.4"
   },
   "history": [
+    {
+      "versionName": "1.5.4",
+      "versionCode": 184,
+      "tag": "v1.5.4",
+      "date": "2026-10-31",
+      "title": "v1.5.4 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "searxng local search",
+          "notes": [
+            "全新「本地搜索（SearXNG）」开关：在内置 PRoot Ubuntu 沙箱中运行私有 SearXNG 元搜索实例（git 源码 + venv + pip 运行时安装，幂等断点续装），设置页一键启停，全程状态机可视（安装阶段进度 → 启动中 → 运行中绿点 → 失败重试）",
+            "Agent 搜索优先本地：WebSearchTool 回退链链首插入 SearXNG 本地实例（127.0.0.1:8888 JSON API），就绪时优先聚合 Google/Bing/DDG 等 6 个可自选引擎，不可用时静默回退 DDG→DDG-Lite→Bing 远程链，用户与模型全程无感",
+            "守护进程可靠性：15s 周期健康看门狗 + 真实退出码观察者双通道自愈（连续 3 次失联自动重启，预算封顶防崩溃循环）；进程挂在 TerminalRuntime headless 会话上（specialUse 前台服务存续期间持久运行，服务收尾统一清场不留僵尸）",
+            "持久化与自恢复：开关意图落盘，App 重启 / 开机（BootReceiver 携带启动 action）/ 服务重建三路 reconcile 幂等对账恢复；引擎多选变更即时生效（运行中自动重启守护）",
+            "维护入口：设置页「排查与维护」二级区提供实例地址展示（F12 排查）与「清除已安装的搜索组件」（删除 /opt/searxng，约 300MB，偏好保留）；中文/英文文案全量镜像"
+          ]
+        }
+      ],
+      "markdown": "- 全新「本地搜索（SearXNG）」开关：在内置 PRoot Ubuntu 沙箱中运行私有 SearXNG 元搜索实例（git 源码 + venv + pip 运行时安装，幂等断点续装），设置页一键启停，全程状态机可视（安装阶段进度 → 启动中 → 运行中绿点 → 失败重试）\n- Agent 搜索优先本地：WebSearchTool 回退链链首插入 SearXNG 本地实例（127.0.0.1:8888 JSON API），就绪时优先聚合 Google/Bing/DDG 等 6 个可自选引擎，不可用时静默回退 DDG→DDG-Lite→Bing 远程链，用户与模型全程无感\n- 守护进程可靠性：15s 周期健康看门狗 + 真实退出码观察者双通道自愈（连续 3 次失联自动重启，预算封顶防崩溃循环）；进程挂在 TerminalRuntime headless 会话上（specialUse 前台服务存续期间持久运行，服务收尾统一清场不留僵尸）\n- 持久化与自恢复：开关意图落盘，App 重启 / 开机（BootReceiver 携带启动 action）/ 服务重建三路 reconcile 幂等对账恢复；引擎多选变更即时生效（运行中自动重启守护）\n- 维护入口：设置页「排查与维护」二级区提供实例地址展示（F12 排查）与「清除已安装的搜索组件」（删除 /opt/searxng，约 300MB，偏好保留）；中文/英文文案全量镜像",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.4"
+    },
     {
       "versionName": "1.5.3",
       "versionCode": 183,
@@ -1356,28 +1388,6 @@
       "pr": [],
       "markdown": "# 更新日志配图通道（changelog v3）\n\n- 更新日志弹窗支持配图展示：发布器（apex-Administrator v2.3+）发送片段时可附最多 9 张截图\n- 发布器压缩自律：最长边 ≤1600px / JPEG 85，配图与片段同一 commit 原子提交\n- `changelog.json` schema 升级 v3：一级日志新增 `images` 字段（URL 列表），老客户端忽略新字段不受影响\n- 弹窗图廊交互：横向滑动浏览、点开全屏（复用 ImageLightbox：双指缩放 / 拖拽平移 / 双击缩放）\n- 聚合端要点提取同步增强：行内图片引用剥除（纯图 bullet 不占要点位、首行摘要跳过纯图行）\n\n![配图1](https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent/main/.changelog/images/demo-1.jpg)",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.59"
-    },
-    {
-      "versionName": "1.4.9.58",
-      "versionCode": 134,
-      "tag": "v1.4.9.58",
-      "date": "2026-10-24",
-      "title": "v1.4.9.58 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "新功能：记忆图谱视图 —— 六类记忆节点 × 六类关系边的交互式可视化",
-          "notes": [
-            "记忆页新增「图谱 / 列表」双形态切换（顶栏树状图标）：把情景、宏技能、聊天事实、知识实体、UI 节点、应用簇六类记忆画成一张可漫游的关系网（apex-kit-memory:memory-graph-ui 库首发）",
-            "力导向布局自动成形：同应用 / 同类别记忆自然聚团，连线长度表达语义距离；支持捏合缩放、单指平移、拖拽任意记忆节点重新安家（松手邻域记忆轻轻让位）",
-            "点按任意节点 → 底部弹出该记忆的完整内幕：情景（目标 / 动作数 / 观察到的 UI 元素 / 蒸馏产出的宏）；宏技能（动作序列时间线 / 能量条 / 成功率 / 晶化勋章）；聊天事实（类别 / 重要性 / 来源）；知识实体（观察记录 / 三元组关系）；应用簇（包内成员统计与样本）",
-            "选中节点后邻接记忆高亮、其余淡出 —— 一眼看清这段记忆的关系网；详情内可点「溯源情景 / 派生宏 / 相邻实体」芯片在图上直接漫游跳转",
-            "六类过滤 chips + 搜索（命中橙环高亮）+ 图例说明；晶化宏带金色勋章环、情景节点带成功 / 失败状态点、跨版本别名桥虚线可见"
-          ]
-        }
-      ],
-      "markdown": "# 新功能：记忆图谱视图 —— 六类记忆节点 × 六类关系边的交互式可视化\n\n- 记忆页新增「图谱 / 列表」双形态切换（顶栏树状图标）：把情景、宏技能、聊天事实、知识实体、UI 节点、应用簇六类记忆画成一张可漫游的关系网（apex-kit-memory:memory-graph-ui 库首发）\n- 力导向布局自动成形：同应用 / 同类别记忆自然聚团，连线长度表达语义距离；支持捏合缩放、单指平移、拖拽任意记忆节点重新安家（松手邻域记忆轻轻让位）\n- 点按任意节点 → 底部弹出该记忆的完整内幕：情景（目标 / 动作数 / 观察到的 UI 元素 / 蒸馏产出的宏）；宏技能（动作序列时间线 / 能量条 / 成功率 / 晶化勋章）；聊天事实（类别 / 重要性 / 来源）；知识实体（观察记录 / 三元组关系）；应用簇（包内成员统计与样本）\n- 选中节点后邻接记忆高亮、其余淡出 —— 一眼看清这段记忆的关系网；详情内可点「溯源情景 / 派生宏 / 相邻实体」芯片在图上直接漫游跳转\n- 六类过滤 chips + 搜索（命中橙环高亮）+ 图例说明；晶化宏带金色勋章环、情景节点带成功 / 失败状态点、跨版本别名桥虚线可见",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.58"
     }
   ]
 }
