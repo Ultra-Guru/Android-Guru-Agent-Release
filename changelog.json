@@ -1,29 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T02:11:40Z",
+  "generatedAt": "2026-10-31T02:31:44Z",
   "latest": {
-    "versionName": "1.4.9.98",
-    "versionCode": 174,
-    "tag": "v1.4.9.98",
+    "versionName": "1.4.9.99",
+    "versionCode": 175,
+    "tag": "v1.4.9.99",
     "date": "2026-10-31",
-    "title": "v1.4.9.98 更新内容",
+    "title": "v1.4.9.99 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "template runtime finalize",
+        "title": "memory page v3",
         "notes": [
-          "端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）",
-          "深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言",
-          "docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵",
-          "README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目"
+          "记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮",
+          "新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图",
+          "经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景",
+          "知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空"
         ]
       }
     ],
-    "markdown": "- 端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）\n- 深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言\n- docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵\n- README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.98"
+    "markdown": "- 记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮\n- 新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图\n- 经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景\n- 知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.99"
   },
   "history": [
+    {
+      "versionName": "1.4.9.99",
+      "versionCode": 175,
+      "tag": "v1.4.9.99",
+      "date": "2026-10-31",
+      "title": "v1.4.9.99 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "memory page v3",
+          "notes": [
+            "记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮",
+            "新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图",
+            "经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景",
+            "知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空"
+          ]
+        }
+      ],
+      "markdown": "- 记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮\n- 新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图\n- 经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景\n- 知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.99"
+    },
     {
       "versionName": "1.4.9.98",
       "versionCode": 174,
@@ -1406,28 +1428,6 @@
       ],
       "markdown": "<!-- pr: fix-main-quality-gate-repair -->\n- 修复 main 分支 Quality Gate 红灯：#427 合并后 CodeViewModel 达 1205 行突破 1200 门禁（PR 侧门禁漏拦），现拆出会话快照三动作面（restore/build/persist，#152）至同包扩展 CodeSessionSnapshotOps.kt，VM 回落至 1130 行、余量 70\n- 堵住 empty-catch 门禁正则漏洞：GATE 4 字符类补下划线——`catch (_: Throwable) {}` 弃名参数此前绕过 `[a-zA-Z. :]+` 匹配；弃名参数不豁免（要忽略须写明为何可安全吞）\n- 三处真实空 catch 补防御式 IO 留痕（#260 纪律）：MoreCapabilitiesHost 通知渠道创建 / ApkInstaller 会话放弃 / ComposeFoundry UiRenderer 色值解析，均改为异常折叠 + warn 日志",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.50"
-    },
-    {
-      "versionName": "1.4.9.49",
-      "versionCode": 125,
-      "tag": "v1.4.9.49",
-      "date": "2026-10-24",
-      "title": "v1.4.9.49 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "custom fusion ui plugins",
-          "notes": [
-            "FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享",
-            "聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖",
-            "聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包",
-            "王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用",
-            "插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）"
-          ]
-        }
-      ],
-      "markdown": "- FUSION 聚合包新增「组合我的聚合包」：从已安装的技能 / MCP 服务器 / 功能插件中自由勾选成员，1 个是聚合、多个混搭也是聚合——命名并保存后与内置体系包同权（王冠菜单选用、一键激活、强制使用协议）；自建包支持编辑成员、删除、导出 JSON 分享\n- 聚合包新增「安装成员」：聚合可引用官方仓库里尚未安装的技能与 MCP（skillPicks/mcpPicks），点「安装成员」一键装齐（不激活）；组合器可直接从官方仓库目录勾选成员建套装——换机重装一套聚合即可拉齐全部依赖\n- 聚合包（FusionBundle）manifest 新增 plugins[] 段：功能插件可随包一键聚合激活（斜杠指令 / 工具宏经既有插件管线落位），单组件失败进跳过清单不弃包\n- 王冠菜单新增「导入 Claude 插件包（.zip）」：Claude 生态的 skills（SKILL.md）/ commands / agents 三段自动映射为本机聚合包——技能名 kebab-case 自动归一 PascalCase、commands 变斜杠指令、agents 变体系人设，导入即用\n- 插件支持带 UI 页面（双轨）：功能性插件可在 plugin.json 声明 HTML 页面（市场插件行「打开页面」直接查看，文件不越出插件目录）；APK 插件可声明原生 UI 入口（同签名校验通过后跳转插件自己的页面）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.49"
     }
   ]
 }
