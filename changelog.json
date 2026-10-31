@@ -1,21 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T16:12:39Z",
+  "generatedAt": "2026-10-31T16:30:38Z",
   "latest": {
-    "versionName": "1.5.8",
-    "versionCode": 188,
-    "tag": "v1.5.8",
+    "versionName": "1.5.9",
+    "versionCode": 189,
+    "tag": "v1.5.9",
     "date": "2026-10-31",
-    "title": "v1.5.8 更新内容",
-    "notes": [
-      "例行版本更新与稳定性改进。"
-    ],
+    "title": "v1.5.9 更新内容",
+    "notes": [],
     "images": [],
-    "pr": [],
-    "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.8"
+    "pr": [
+      {
+        "title": "修复",
+        "notes": [
+          "Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。",
+          "取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。"
+        ]
+      }
+    ],
+    "markdown": "# 修复\n\n- Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。\n- 取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.9"
   },
   "history": [
+    {
+      "versionName": "1.5.9",
+      "versionCode": 189,
+      "tag": "v1.5.9",
+      "date": "2026-10-31",
+      "title": "v1.5.9 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "修复",
+          "notes": [
+            "Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。",
+            "取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。"
+          ]
+        }
+      ],
+      "markdown": "# 修复\n\n- Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。\n- 取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.9"
+    },
     {
       "versionName": "1.5.8",
       "versionCode": 188,
@@ -1409,28 +1435,6 @@
       ],
       "markdown": "## HTML 布局分析：CSS 级联视图\n\n- 静态布局分析新增 CSS 级联能力：页面 `<style>` 块的规则（类/ID/标签选择器、@media 条件按手机视口评估）现在会并入 display/尺寸/定位/弹性推断 —— 样式写在 style 块里的页面终于能拿到正确的布局画像\n- 分析报告头部新增「CSS 级联」行，展示已并入推断的规则数量",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.64"
-    },
-    {
-      "versionName": "1.4.9.63",
-      "versionCode": 139,
-      "tag": "v1.4.9.63",
-      "date": "2026-10-25",
-      "title": "v1.4.9.63 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "changelog tier robust",
-          "notes": [
-            "更新日志发布链路健壮化：`pr:` 片段标记正式纳入聚合协议 —— 组标题直接取 PR slug（修复标记原文泄漏到弹窗标题的错位展示）",
-            "一级日志判定双通道：`source: publisher` 标记之外新增 git 溯源兜底（commit 含「via 发布器」的片段恒进一级置顶）—— 老版发布器发送的公告不再被误降为二级功能变更",
-            "跨多版本升级（含增量补丁链）聚合补齐配图合并：中间版本的更新截图与要点、功能变更一样跨版本全量保留，一条不丢",
-            "更新日志规范文档（.changelog/README.md）与 Agent 知识库同步至 v3 标记协议"
-          ]
-        }
-      ],
-      "markdown": "- 更新日志发布链路健壮化：`pr:` 片段标记正式纳入聚合协议 —— 组标题直接取 PR slug（修复标记原文泄漏到弹窗标题的错位展示）\n- 一级日志判定双通道：`source: publisher` 标记之外新增 git 溯源兜底（commit 含「via 发布器」的片段恒进一级置顶）—— 老版发布器发送的公告不再被误降为二级功能变更\n- 跨多版本升级（含增量补丁链）聚合补齐配图合并：中间版本的更新截图与要点、功能变更一样跨版本全量保留，一条不丢\n- 更新日志规范文档（.changelog/README.md）与 Agent 知识库同步至 v3 标记协议",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.63"
     }
   ]
 }
