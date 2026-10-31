@@ -1,55 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T04:35:03Z",
+  "generatedAt": "2026-10-31T04:58:00Z",
   "latest": {
-    "versionName": "1.5",
-    "versionCode": 180,
-    "tag": "v1.5",
+    "versionName": "1.5.1",
+    "versionCode": 181,
+    "tag": "v1.5.1",
     "date": "2026-10-31",
-    "title": "v1.5 更新内容",
+    "title": "v1.5.1 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "aggregation center",
+        "title": "fix/standard kit v5 tool surface",
         "notes": [
-          "全新「工具聚合中心」取代旧市场顶层：融合面板置顶——把技能、MCP、工具、插件融合成一个聚合，一键新建或导入 Claude 插件包；「我的聚合」横滑卡片集中管理激活/停用/安装成员/编辑",
-          "原市场的五类成员（插件/技能/MCP/连接器/集成）收编为成员体系：「添加成员 / 我的成员」两档段控 + Agent/Coding 工位分级，安装与管理机器全部保留",
-          "抽屉入口更名「工具聚合中心」，老用户导航位置与聚合包数据零迁移",
-          "Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记",
-          "聚合包新增策略路由（因果规则）：互斥组（打架的技能同时最多激活一个，宿主强制执行）、包级同时激活上限、常驻成员（免淘汰）、每技能触发条件（场景描述 + 自动装备关键词双轨）；组合器新增完整策略编辑段；Superpowers 包随包示范"
-        ]
-      },
-      {
-        "title": "role experience git skills github mcp",
-        "notes": [
-          "角色经验卡：每次任务结束自动提炼一条结构化经验（场景 / 工具序列 / 结果 / 下次注意），确定性规则引擎生成而非提示词发挥；同类任务开工时检索注入 top-3 相关经验（含 hitCount 强化信号，被复用的经验更易再次命中），跨会话越用越准",
-          "模板工坊点击任意角色模板打开详情面板：查看该角色的经验卡列表（可单删 / 清空）+ 激活入口；行点击从「直接激活」升级为「先看再激活」",
-          "Git 角色专属技能（9 套，默认全开）：git-advanced-workflows / git-advanced / git-workflows / github-actions-advanced / sync-repos / relay-merge / gh-cherry-pick / github-multi-repo / github-release-management —— 每套为阶段化 runbook（命令模板 + 逐阶段验证 + 安全护栏），上游社区仓库逐一标注；模板工坊 → Git 角色详情可逐个开关，下轮请求即生效",
-          "输入框 GitHub 图标新增「GitHub MCP 配置」：内置 GitHub MCP（进程内 7 工具）与官方远程 GitHub MCP（api.githubcopilot.com 全量工具面）双服务器启停 + 连接态同屏管理；官方服务器支持工具集订阅（repos / issues / pull_requests / actions 等 10 集，全选 = 服务器默认），勾选即重连生效；PAT 经令牌桥零落盘"
-        ]
-      },
-      {
-        "title": "stream order scroll fix",
-        "notes": [
-          "修复收尾回答的落位：agent 最终回答现在出现在全部工具调用记录**之后**（时间轴末尾），不再悬在中间过程上方 —— 旧实现把最终回答原位拼进了工具调用前建立的旧气泡",
-          "流式输出时可自由上滑回看历史，不再被强制吸底拽回",
-          "上滑后底部出现「回到底部」箭头按钮，点击即恢复自动跟随；手动滑回最底部也会自动恢复跟踪",
-          "版本号升级到 1.5（v1.4.9 档期 CI 自动追加序号已到 .102，1.5 起档期归零）"
-        ]
-      },
-      {
-        "title": "toolwright npm mirror",
-        "notes": [
-          "新增内置聚合包「Toolwright · 工具创造者」：两个元能力技能——CreateSkill（把重复流程沉淀为技能：SkillCreate 一行创建、PascalCase 命名规范、正文写法与验证闭环）与 CreateMcp（MCP 工具源接入：远程/沙箱形态选型、配置模板、启动失败三查）；激活后技能在市场与斜杠菜单独立可见可单独卸载",
-          "修复本地 MCP 启动失败的头号根因：沙箱内 npx 首次拉包直连 npmjs.org 国内大面积超时——现默认注入 npmmirror 镜像源（npm 官方 env 机制，已缓存包零影响，用户自配 registry 优先）"
+          "修复「逻辑·标准」线在 v5 工具注册表（PascalCase id）下 shell / 终端 / 编码工具族整体缺失的问题：工具面优先序前缀失配导致 48 个工具的截断退化为字典序，会话只剩 App 控制 / 浏览器自动化 / 模型配置 + task（表现为 agent 无法执行 Ubuntu 命令，general 子代理同样无 shell 工具）—— 经 apex-kit-standard 工具 id 形态归一修复后锁定 bump @ aae8693",
+          "一并恢复被同一根因静默破坏的行为：规划师 / 探索 / 评审只读画像不再空面、DEFAULT 模式不再对 CodeRead 误弹权限询问、子代理读操作不再被 ASK 折叠拒绝、ACCEPT_EDITS 重新放行编辑类、bash 别名不再误判未知工具、read-before-edit 守卫与 Todo / 纪律提示词指引回归"
         ]
       }
     ],
-    "markdown": "- 全新「工具聚合中心」取代旧市场顶层：融合面板置顶——把技能、MCP、工具、插件融合成一个聚合，一键新建或导入 Claude 插件包；「我的聚合」横滑卡片集中管理激活/停用/安装成员/编辑\n- 原市场的五类成员（插件/技能/MCP/连接器/集成）收编为成员体系：「添加成员 / 我的成员」两档段控 + Agent/Coding 工位分级，安装与管理机器全部保留\n- 抽屉入口更名「工具聚合中心」，老用户导航位置与聚合包数据零迁移\n- Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记\n- Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记\n- 聚合包新增策略路由（因果规则）：互斥组（打架的技能同时最多激活一个，宿主强制执行）、包级同时激活上限、常驻成员（免淘汰）、每技能触发条件（场景描述 + 自动装备关键词双轨）；组合器新增完整策略编辑段；Superpowers 包随包示范\n\n---\n\n- 角色经验卡：每次任务结束自动提炼一条结构化经验（场景 / 工具序列 / 结果 / 下次注意），确定性规则引擎生成而非提示词发挥；同类任务开工时检索注入 top-3 相关经验（含 hitCount 强化信号，被复用的经验更易再次命中），跨会话越用越准\n- 模板工坊点击任意角色模板打开详情面板：查看该角色的经验卡列表（可单删 / 清空）+ 激活入口；行点击从「直接激活」升级为「先看再激活」\n- Git 角色专属技能（9 套，默认全开）：git-advanced-workflows / git-advanced / git-workflows / github-actions-advanced / sync-repos / relay-merge / gh-cherry-pick / github-multi-repo / github-release-management —— 每套为阶段化 runbook（命令模板 + 逐阶段验证 + 安全护栏），上游社区仓库逐一标注；模板工坊 → Git 角色详情可逐个开关，下轮请求即生效\n- 输入框 GitHub 图标新增「GitHub MCP 配置」：内置 GitHub MCP（进程内 7 工具）与官方远程 GitHub MCP（api.githubcopilot.com 全量工具面）双服务器启停 + 连接态同屏管理；官方服务器支持工具集订阅（repos / issues / pull_requests / actions 等 10 集，全选 = 服务器默认），勾选即重连生效；PAT 经令牌桥零落盘\n\n---\n\n- 修复收尾回答的落位：agent 最终回答现在出现在全部工具调用记录**之后**（时间轴末尾），不再悬在中间过程上方 —— 旧实现把最终回答原位拼进了工具调用前建立的旧气泡\n- 流式输出时可自由上滑回看历史，不再被强制吸底拽回\n- 上滑后底部出现「回到底部」箭头按钮，点击即恢复自动跟随；手动滑回最底部也会自动恢复跟踪\n- 版本号升级到 1.5（v1.4.9 档期 CI 自动追加序号已到 .102，1.5 起档期归零）\n\n---\n\n- 新增内置聚合包「Toolwright · 工具创造者」：两个元能力技能——CreateSkill（把重复流程沉淀为技能：SkillCreate 一行创建、PascalCase 命名规范、正文写法与验证闭环）与 CreateMcp（MCP 工具源接入：远程/沙箱形态选型、配置模板、启动失败三查）；激活后技能在市场与斜杠菜单独立可见可单独卸载\n- 修复本地 MCP 启动失败的头号根因：沙箱内 npx 首次拉包直连 npmjs.org 国内大面积超时——现默认注入 npmmirror 镜像源（npm 官方 env 机制，已缓存包零影响，用户自配 registry 优先）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5"
+    "markdown": "- 修复「逻辑·标准」线在 v5 工具注册表（PascalCase id）下 shell / 终端 / 编码工具族整体缺失的问题：工具面优先序前缀失配导致 48 个工具的截断退化为字典序，会话只剩 App 控制 / 浏览器自动化 / 模型配置 + task（表现为 agent 无法执行 Ubuntu 命令，general 子代理同样无 shell 工具）—— 经 apex-kit-standard 工具 id 形态归一修复后锁定 bump @ aae8693\n- 一并恢复被同一根因静默破坏的行为：规划师 / 探索 / 评审只读画像不再空面、DEFAULT 模式不再对 CodeRead 误弹权限询问、子代理读操作不再被 ASK 折叠拒绝、ACCEPT_EDITS 重新放行编辑类、bash 别名不再误判未知工具、read-before-edit 守卫与 Todo / 纪律提示词指引回归",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.1"
   },
   "history": [
+    {
+      "versionName": "1.5.1",
+      "versionCode": 181,
+      "tag": "v1.5.1",
+      "date": "2026-10-31",
+      "title": "v1.5.1 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "fix/standard kit v5 tool surface",
+          "notes": [
+            "修复「逻辑·标准」线在 v5 工具注册表（PascalCase id）下 shell / 终端 / 编码工具族整体缺失的问题：工具面优先序前缀失配导致 48 个工具的截断退化为字典序，会话只剩 App 控制 / 浏览器自动化 / 模型配置 + task（表现为 agent 无法执行 Ubuntu 命令，general 子代理同样无 shell 工具）—— 经 apex-kit-standard 工具 id 形态归一修复后锁定 bump @ aae8693",
+            "一并恢复被同一根因静默破坏的行为：规划师 / 探索 / 评审只读画像不再空面、DEFAULT 模式不再对 CodeRead 误弹权限询问、子代理读操作不再被 ASK 折叠拒绝、ACCEPT_EDITS 重新放行编辑类、bash 别名不再误判未知工具、read-before-edit 守卫与 Todo / 纪律提示词指引回归"
+          ]
+        }
+      ],
+      "markdown": "- 修复「逻辑·标准」线在 v5 工具注册表（PascalCase id）下 shell / 终端 / 编码工具族整体缺失的问题：工具面优先序前缀失配导致 48 个工具的截断退化为字典序，会话只剩 App 控制 / 浏览器自动化 / 模型配置 + task（表现为 agent 无法执行 Ubuntu 命令，general 子代理同样无 shell 工具）—— 经 apex-kit-standard 工具 id 形态归一修复后锁定 bump @ aae8693\n- 一并恢复被同一根因静默破坏的行为：规划师 / 探索 / 评审只读画像不再空面、DEFAULT 模式不再对 CodeRead 误弹权限询问、子代理读操作不再被 ASK 折叠拒绝、ACCEPT_EDITS 重新放行编辑类、bash 别名不再误判未知工具、read-before-edit 守卫与 Todo / 纪律提示词指引回归",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.1"
+    },
     {
       "versionName": "1.5",
       "versionCode": 180,
@@ -1461,26 +1453,6 @@
       ],
       "markdown": "- 设置页换新导航：从总抽屉点「设置」后总抽屉自动收起，进入独立的设置抽屉\n- 设置抽屉两级分层：第一列大分类（模型配置 / Agent 配置 / 界面外观 / 数据与备份），点击大分类展开二级页面项，点击二级项收起抽屉进入对应页面\n- 设置功能全面整理：旧三页签全部功能分区归入 4 大分类 24 个独立页面，随时可从顶栏汉堡重新打开设置抽屉切换\n\n---\n\n- 设置页面浏览器式多标签：打开的设置页以标签形式排列在页面最上方，点击标签即时切换\n- 标签叉号关闭：点 × 关闭对应页面并自动回退到相邻标签，关闭最后一个标签返回设置抽屉\n- 标签页状态各自记忆：每个标签的滚动位置与未保存输入互不干扰，系统返回键关闭当前标签\n\n---\n\n# 修复：Agent 执行命令高错误率 + 流式输出只有思考没有回答\n\n- **工具名幻觉兜底**：模型调用不存在的 `bash` / `sh` / `run_command` 等工具名\n  （训练自 Claude Code / OpenAI 工具集的肌肉记忆）时，别名表静默路由到\n  TerminalExec —— 不再连环 `Unknown tool` 404 后盲目换名重试；未知工具的\n  错误文案同时补上「命令用 TerminalExec、找工具用 ToolSearch」的可执行\n  指引，模型下一步有确定动作。\n- **一次性命令改用真 bash**：TerminalExec 的 Ubuntu 沙箱通道从 `/bin/sh`\n  （dash）切换为 `/bin/bash` —— pipefail / 数组 / 进程替换 / here-string\n  等 bashism 不再 `not found`，与 PTY 交互会话同方言。\n- **失败原因不再丢失**：宿主命令通道（root / Shizuku / 本地）在 stdout\n  非空时不再静默丢弃 stderr —— 双流并存时以 `[stderr]` 标记追加，模型\n  能看到真实报错，不再盲重试。\n- **cd 记忆加固**：路径含空格 / 引号时安全包裹；工作目录记忆若指向\n  Ubuntu 沙箱内路径（如 `/workspace`，宿主不存在）自动丢弃 —— 不再让\n  `cd /workspace && cmd` 的语法错误污染命令结果。\n- **提示词声明 Shell 方言地图**：明确告知模型两套 shell 的边界 —— 宿主\n  mksh+toybox 仅 POSIX 子集、python3/gcc/git/npm 只存在于 Ubuntu 沙箱、\n  不存在名为 bash 的工具 —— 从源头减少方言错配。\n- **流式输出修复**：思考型模型把最终回答整体写进思考通道（或网关把正文\n  挂在流式末帧 message 上）时，正文恒空被误判为「无效响应」—— 现在以\n  思考文本兜底为最终回答（先补发 ResponseChunk 再收尾），并新增末帧\n  message 正文/思考内容兜底解析；「只有思考过程、没有文字回答」不再出现。\n\n---\n\n- 许可协议从 TBD 落定为 **UGRL v1.0（Ultra-Guru 受限使用许可协议）**：仓库新增 LICENSE（中英双语，中文为权威版本），README 徽章与「许可证」章节同步更新——收紧原因是软件具备 MITM / 证书注入 / SSL Pinning 绕过 / APK 重打包 / 动态插桩 / root 提权等高危能力，仅授权个人学习与获书面授权的安全测试，禁止再分发与任何商业用途，商用需联系作者\n\n---\n\n<!-- pr: browser-speed-batch-v1.8.0 -->\n- 浏览器自动化提速（apex-kit-browser v1.8.0 接入，lock bump 365bc0e→06563a0）：动作后固定延迟改探针轮询早退（典型点击 ~550ms→~140ms，click/input/select/press_key/hover/drag 全覆盖）；snapshot 不再每次重复注入网络监控 JS（Tab.netHooked 位图去重）；BrowserWaitFor 等待前 1.2s 用 100ms 快轮；快照摘要 lineOf 按 bid 缓存\n- 新工具 BrowserBatchActions：一次调用串行执行 ≤8 个动作（click/input/select/press_key/scroll/wait），逐个带重试/熔断/模糊自愈/动作后验证，任一失败即停并标明断点——表单填写场景模型往返 N→1\n- BrowserWaitFor 补齐七模式：element_gone / text_gone / network_idle（在途请求归零）/ selector_count（命中数谓词，如 'li.item >= 10'）此前引擎已支持但工具面只暴露 3 种\n- BrowserScroll 增 to 参数（top/bottom 一步到边界，超长页面优先于 delta_y）；BrowserSnapshot 增 token_budget 参数（400..4000，默认 1600）\n- 修库侧后台视口截图死代码：提前 return 守卫使手动 measure/layout 兜底永不可达（未挂浮窗的 WebView 截图必失败），移除守卫后兜底重新生效\n- 浏览器仪表盘 UI：动作卡改 tracer 事件流即时驱动（落记录即滚，轮询放缓至 2.5s 兜底）；动作条目增成败色点（失败=错误红）与慢动作耗时警示（>2s 琥珀色）\n- 聊天工具卡：BrowserSnapshot 输出渲染为紧凑快照卡（交互元素计数 chip + 截断警示 chip + 限高等宽滚动列表），不再以文本墙撑爆聊天流\n\n---\n\n<!-- pr: fix-drawer-version-badge-layout -->\n- 抽屉品牌头部布局调整：图标从 48dp 缩小至 40dp，版本号徽章从 tagline 行移至标题\"APEX//AGENT\"同行横向排列，tagline 独占一行，整体更紧凑\n\n---\n\n# 修复：proot 的 libtalloc.so.2 SONAME staging —— git/MCP/marketplace 三条通道全线恢复\n\n- **根因（真机实证，OPPO PLE110 / Android 16）**：proot 的 `DT_NEEDED` 是\n  `libtalloc.so.2`，而 Android 打包要求 jniLibs 以 `lib*.so` 命名（真实文件\n  只能叫 `libtalloc.so`）。此前四份拷贝的兜底循环只做「同目录软链」：遍历\n  LD_LIBRARY_PATH 目录，仅在**含 libtalloc.so** 的目录（nativeLibraryDir）\n  建 `libtalloc.so.2` 链接——staging 目录（filesDir/linux/bin，LD_LIBRARY_PATH\n  首项、可写性有保证）里没有 libtalloc.so，永远拿不到链接；而\n  nativeLibraryDir 建链在部分真机**静默失败**（`runCatching` 吞掉异常）。\n  结果 git status/clone（经 apex-workspace-kit 的 GitEngine → 宿主\n  ProotGitCommandRunner）、MCP 进程、marketplace 沙箱三条 proot 通道\n  全线 `CANNOT LINK EXECUTABLE libproot.so: library libtalloc.so.2 not found`。\n  用户在 filesDir 手工建链后 proot 立即恢复——实证根因。\n- **修复**：新增共享助手 `PRootLibtallocStaging`（platform:terminal），\n  幂等地在 **LD_LIBRARY_PATH 每个目录**重建 SONAME 入口，统一指向真实\n  libtalloc.so——staging 目录从此也有可用链接（linker 按序搜索，staging\n  在首位先命中）。四处拷贝（git / MCP / tools spawner / marketplace）\n  全部收敛到该助手，同时：\n  - **悬空链接修复**：app 升级后 nativeLibraryDir 路径变化（新 pkg hash\n    目录），staging 旧链接指向已删除目录成为悬空链接——`File.exists()`\n    对悬空链接返回 false，旧代码既删不掉也建不了（`createSymbolicLink`\n    抛 FileAlreadyExistsException），`PRootHostEnvironment.prepare()` 在\n    升级后**整体失败**（终端 proot 通道全断）。助手显式判\n    `isSymbolicLink && !exists` → 删除重建。\n  - **失败可观测**：不再静默吞异常，逐目录返回 FAILED + 异常详情，\n    调用方 WARN 留痕——下次诊断日志直接可见真实异常，不必再靠手工\n    实验反推。\n- 回归测试：`PRootLibtallocStagingTest`（6 例）锁定：全目录建链、幂等、\n  悬空链接重建、libtalloc.so 缺失的 FAILED 可观测、LD_LIBRARY_PATH\n  缺失空操作、`prepare()` 悬空链接场景成功。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.56"
-    },
-    {
-      "versionName": "1.4.9.55",
-      "versionCode": 131,
-      "tag": "v1.4.9.55",
-      "date": "2026-10-24",
-      "title": "v1.4.9.55 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "<!-- pr: feat-thinking-engine-quality -->",
-          "notes": [
-            "思考引擎 AUTO 选档的文本信号词表与计分核心收敛为单一事实源（ThinkingSignalAnalyzer）：Agent 与 Coding 两个选档器共用一份词表/权重/理由拼装，消除跨模块双份维护的漂移风险；选档行为与决策理由文案保持不变，既有 30+ 选档测试全数锁定",
-            "ThinkingLevel 提示词回退改为直接委托 ThinkingProfile 画像表（主路径与回退字面同源）；清除全仓零调用的 toThinkingBudget / toReasoningEffortName 死方法，AgentConfig 净减约 70 行重复文本",
-            "新增 ThinkingSignalAnalyzer 专项单测：四维度检测与标签、引擎专有维度插入位、短平快标注、理由拼装格式、纯函数确定性全覆盖"
-          ]
-        }
-      ],
-      "markdown": "<!-- pr: feat-thinking-engine-quality -->\n- 思考引擎 AUTO 选档的文本信号词表与计分核心收敛为单一事实源（ThinkingSignalAnalyzer）：Agent 与 Coding 两个选档器共用一份词表/权重/理由拼装，消除跨模块双份维护的漂移风险；选档行为与决策理由文案保持不变，既有 30+ 选档测试全数锁定\n- ThinkingLevel 提示词回退改为直接委托 ThinkingProfile 画像表（主路径与回退字面同源）；清除全仓零调用的 toThinkingBudget / toReasoningEffortName 死方法，AgentConfig 净减约 70 行重复文本\n- 新增 ThinkingSignalAnalyzer 专项单测：四维度检测与标签、引擎专有维度插入位、短平快标注、理由拼装格式、纯函数确定性全覆盖",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.55"
     }
   ]
 }
