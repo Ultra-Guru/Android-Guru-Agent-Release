@@ -1,30 +1,175 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T06:32:14Z",
+  "generatedAt": "2026-10-31T14:08:04Z",
   "latest": {
-    "versionName": "1.5.4",
-    "versionCode": 184,
-    "tag": "v1.5.4",
+    "versionName": "1.5.5",
+    "versionCode": 185,
+    "tag": "v1.5.5",
     "date": "2026-10-31",
-    "title": "v1.5.4 更新内容",
+    "title": "v1.5.5 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "searxng local search",
+        "title": "ubuntu agent console removal",
         "notes": [
-          "全新「本地搜索（SearXNG）」开关：在内置 PRoot Ubuntu 沙箱中运行私有 SearXNG 元搜索实例（git 源码 + venv + pip 运行时安装，幂等断点续装），设置页一键启停，全程状态机可视（安装阶段进度 → 启动中 → 运行中绿点 → 失败重试）",
-          "Agent 搜索优先本地：WebSearchTool 回退链链首插入 SearXNG 本地实例（127.0.0.1:8888 JSON API），就绪时优先聚合 Google/Bing/DDG 等 6 个可自选引擎，不可用时静默回退 DDG→DDG-Lite→Bing 远程链，用户与模型全程无感",
-          "守护进程可靠性：15s 周期健康看门狗 + 真实退出码观察者双通道自愈（连续 3 次失联自动重启，预算封顶防崩溃循环）；进程挂在 TerminalRuntime headless 会话上（specialUse 前台服务存续期间持久运行，服务收尾统一清场不留僵尸）",
-          "持久化与自恢复：开关意图落盘，App 重启 / 开机（BootReceiver 携带启动 action）/ 服务重建三路 reconcile 幂等对账恢复；引擎多选变更即时生效（运行中自动重启守护）",
-          "维护入口：设置页「排查与维护」二级区提供实例地址展示（F12 排查）与「清除已安装的搜索组件」（删除 /opt/searxng，约 300MB，偏好保留）；中文/英文文案全量镜像"
+          "Ubuntu 大重构：终端控制台 UI 整体退役 —— Ubuntu 由 Agent 全权掌控（TerminalUbuntuEnsure / TerminalExec / TerminalLinuxPackages 等工具直连），用户不再手动输入命令",
+          "「终端」页改为「Ubuntu 环境」页：只保留 rootfs 生命周期卡（安装/修复/删除/进度/能力清单）+ 开发环境安装卡（版本自选）",
+          "开发环境版本自选：JDK 17/21/11/8 · Gradle 8.12/8.11/8.10 · Build-Tools 35/34/36/33 · NDK 27/26/25 · Node 22/20/18 · Go 1.24/1.23/1.22 · Rust stable/nightly",
+          "依赖目录修复：Gradle 改官方 zip 发行版（apt 源是 4.x 古董）；cmdline-tools 改直链 zip 落地（修复 sdkmanager 无本体可用的死锁）；移除 TUNA 伪代理镜像命令（100% 失败的 --proxy_host 用法）",
+          "真镜像支持：apt→TUNA（arm64 自动走 ubuntu-ports）、Gradle/AndroidSDK→腾讯、Node→npmmirror、Go→USTC、Rust→rsproxy.cn",
+          "已装状态徽章：一条复合命令批量探测全部条目（D <id> OK/MISSING 锚定解析），顶栏可手动刷新",
+          "修复 bootstrap 阻断 bug：BasePackageProfile 把虚拟包 awk 写进 essential（apt 报 \"Package 'awk' has no installation candidate\" exit 100 → BASE_PACKAGES 失败 → 降级就绪）——改为真实包 mawk（截图实测根因）",
+          "安装命令全面改纯 && 链并禁用 set -e：交互式 PTY 里 set -e 会把单步失败升级为整个 bash 会话退出（杀死后续所有安装）；失败现在如实返回非零退出码",
+          "清理 ~1700 行控制台代码（TerminalScreen/ViewModel/Syntax/CommandHistory/History/SettingsSheet/RealCommandExecutor/RawStreamSanitizer/SessionRegistry/EnvironmentCenterSheet 及配套测试）；设置中心 terminal/appearance 叶随控制台退役（字号/亮屏无消费者），环境页安装期间自主亮屏"
+        ]
+      },
+      {
+        "title": "ubuntu open issues 235 669 671",
+        "notes": [
+          "Ubuntu 安装失败横幅人话前置（#235 残余收口）：内部错误码（如 `INSUFFICIENT_STORAGE: Need 3400000000 bytes…`）折叠为括号后缀，中文「发生了什么 + 怎么办」文案排前 —— UI 横幅截断（take 200）不再把人话截掉或挤掉；诊断串完整保留供日志与 Agent 分析",
+          "rootfs 解压器流关闭补边界（#669/#643）：改用 use{} 惯用法，非 gzip / 截断档案在 GZIPInputStream 构造函数抛异常时外层文件流也能关闭（旧 try/finally 只兜构造成功之后的路径）；补两组结构化失败回归测试（ZipException / EOFException）",
+          "沙箱命令执行器收尾对齐（#671/#638）：ProotSandboxCommandRunner 补齐 markIncomplete 契约（超时与正常路径 join 宽限用尽时如实标注「输出可能不完整」，不再无条件当完整报告）；两个 runner（git / marketplace）的超时与取消路径统一追加 drain 线程 interrupt() 双保险（关流为主手段、interrupt 为副手段，缩窄线程泄漏窗口）"
+        ]
+      },
+      {
+        "title": "linux chroot backend t98",
+        "notes": [
+          "全新「linux-ubuntu-chroot」执行后端：真实 Root 设备上以 su + mount + chroot 直跑**同一个** Ubuntu rootfs —— 无 ptrace 依赖（PRoot 在 HyperOS/ColorOS 等收紧 ptrace 的 ROM 上假死的问题从架构上绕开），syscall 原生执行无翻译损耗（apt/构建/git 等文件密集任务提速明显）",
+          "双模式数据互通：与 PRoot 后端共享同一 rootfs 安装、同一 workspace 目录池、同一持久化 home（/root）与 guest 环境基线 —— 两种模式交替使用，文件与配置零迁移",
+          "Agent 全链路可选：TerminalBackends 真实可用性双列展示（未 Root 设备如实报 SU_NOT_FOUND 并引导默认 PRoot 后端）；TerminalCreate 新增 backend=\"linux-ubuntu-chroot\" 参数（enum 同步扩展）；默认后端保持 PRoot 不变，不隐式自动切换",
+          "工程质量：挂载幂等守卫（mountpoint -q，异常退出的残留挂载直接复用不叠加）+ LIFO 最佳努力 umount 收尾 + 多会话共享挂载 EBUSY 安全；env 防注入 trampoline / guest cwd 映射与 PRoot 后端单一事实源（新抽 GuestCwdMapper，双后端逐字节同映射）；17 项 JVM 单测锁定脚本契约（挂载顺序 / cd 语义 / shellQuote 防注入 / 授权窗口诚实失败）"
+        ]
+      },
+      {
+        "title": "coding context ring ux overhaul",
+        "notes": [
+          "Coding 顶栏图标语义重构：长任务 = 对话气泡图标（点击展示执行过的任务，卡片操作：复制任务 / 重跑 / 检查点续跑 / 对比上次 / 导出分享 / 删除），对话历史 = 时钟图标（直觉指向「历史」），两者互换不再歧义",
+          "新对话图标由裸「＋」换为对话气泡加号（AddComment）——「发起新对话」一眼可读",
+          "会话上下文眼睛图标退役，改为「上下文用量圆环」（新对话图标右侧）：圆环白弧按上下文占用百分比实时填充，用量涨多少弧就走多少；点击展开详情卡——上下文占用（used/max/百分比）、会话累计输入输出 tokens、缓存命中率（OpenAI 兼容端点 prompt_tokens_details.cached_tokens 真实统计，端点不返回时显式显示「暂无数据」而非假 0%）",
+          "圆环分母接通真实模型窗口：默认模型 Profile 的 contextWindow（effectiveContextWindow），切模型即正确反映 8k/200k 差异，不再恒按硬编码 128k 满打满算",
+          "长任务中心的「任务模板」「档位效能」两页签随功能整体删除：LongTaskTemplates / 档位统计追踪器 / 模板记录豁免 / 复制任务的档位覆盖全链路移除（含 DI、持久化语义与字符串）",
+          "设置中心归类合并（27 叶 / 6 分类 → 24 叶 / 5 分类）：上下文压缩并入「上下文」、限速友好并入「网络」、高级选项并入「提示词」、对话显示并入「外观」、本地搜索并入「工作台」——同类设置归为一页，不再一个开关一页",
+          "假设置清理与真接线：删除无消费方的视觉三件套（Enable Vision/截图质量/截图上限）与 Coding 假开关（工具面/读守卫/自动项目规则）；「任务完成通知」接通真实通道（后台跑完发系统通知、前台静音、中止不打扰）；token 用量仪表盘接通逐轮落账（UsageLedger 从此有真数据）"
+        ]
+      },
+      {
+        "title": "fusion first class",
+        "notes": [
+          "聚合升到与技能/MCP同级的一等公民：已装聚合目录常驻系统提示词（模型无需探测即知有哪些聚合可激活）；新增 FusionCreate（把当前组合自建为聚合）与 FusionInstallMembers（装成员不激活）两个模型工具；斜杠菜单新增 Fusion 类目"
+        ]
+      },
+      {
+        "title": "update check mirrors",
+        "notes": [
+          "检查更新不再需要梯子：version.json / patches.json / changelog.json 三份清单改走国内镜像回退链（ghfast.top / ghproxy.net / gh-proxy.com 依次尝试，全败自动回退直连，海外与代理环境行为不变）",
+          "坏镜像防御：镜像返回 HTML 挑战页（伪 200）时自动降级下一候选，镜像档 4 秒短超时快速降级，不让死节点拖慢检查"
+        ]
+      },
+      {
+        "title": "rikka output style",
+        "notes": [
+          "Coding 屏新增「Rikka 风格」输出，与原版胶囊时间轴可在 设置→工作台→Coding 工位→输出风格 一键切换（空闲时即时生效，运行中不打断当前轮；与「输出方式」流式/整段正交，两种风格都适用）",
+          "Rikka 风格完整覆盖：用户右对齐实色气泡、Markdown 结论气泡（流式光标）、可折叠思考过程（流式展开跟随/收束自动折叠）、居中状态 pill、错误/停止/验证轮次/运行统计卡同风格化",
+          "工具调用聚合块：连续工具调用（跨族）收进一张卡——流式中「正在调用工具…」+ 实时行（实时代码窗/输出尾窗），收束后折叠为「已调用 N 个工具」+ 内置/技能/MCP 三分类 chips，可展开每次调用明细（工具名/参数摘要/状态/耗时/退出码，点击进详情看 diff 与终端全文）",
+          "技能与 MCP 溯源标识（星芒/拼图图标 + 技能 id/MCP 服务器名）在工具行、聚合 chips、运行统计卡三处一致呈现；聚合为纯派生视图，切回时间轴风格零丢失"
+        ]
+      },
+      {
+        "title": "depitem comment repair",
+        "notes": [
+          "修复 main 编译红：DepItem.kt KDoc 注释体里的 `/etc/profile.d/*.sh` 写法含 `/*` 序列，在 Kotlin 可嵌套块注释里开了一层悬垂嵌套——注释吞到文件尾触发 \"Unclosed comment\"（app 编译 / Quality Gate 注释完整性门禁双红）。改为文字描述「/etc/profile.d 目录下的 .sh 片段」（AGENTS.md 注释铁律：注释体内不出现斜杠紧跟星号的序列）"
         ]
       }
     ],
-    "markdown": "- 全新「本地搜索（SearXNG）」开关：在内置 PRoot Ubuntu 沙箱中运行私有 SearXNG 元搜索实例（git 源码 + venv + pip 运行时安装，幂等断点续装），设置页一键启停，全程状态机可视（安装阶段进度 → 启动中 → 运行中绿点 → 失败重试）\n- Agent 搜索优先本地：WebSearchTool 回退链链首插入 SearXNG 本地实例（127.0.0.1:8888 JSON API），就绪时优先聚合 Google/Bing/DDG 等 6 个可自选引擎，不可用时静默回退 DDG→DDG-Lite→Bing 远程链，用户与模型全程无感\n- 守护进程可靠性：15s 周期健康看门狗 + 真实退出码观察者双通道自愈（连续 3 次失联自动重启，预算封顶防崩溃循环）；进程挂在 TerminalRuntime headless 会话上（specialUse 前台服务存续期间持久运行，服务收尾统一清场不留僵尸）\n- 持久化与自恢复：开关意图落盘，App 重启 / 开机（BootReceiver 携带启动 action）/ 服务重建三路 reconcile 幂等对账恢复；引擎多选变更即时生效（运行中自动重启守护）\n- 维护入口：设置页「排查与维护」二级区提供实例地址展示（F12 排查）与「清除已安装的搜索组件」（删除 /opt/searxng，约 300MB，偏好保留）；中文/英文文案全量镜像",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.4"
+    "markdown": "- Ubuntu 大重构：终端控制台 UI 整体退役 —— Ubuntu 由 Agent 全权掌控（TerminalUbuntuEnsure / TerminalExec / TerminalLinuxPackages 等工具直连），用户不再手动输入命令\n- 「终端」页改为「Ubuntu 环境」页：只保留 rootfs 生命周期卡（安装/修复/删除/进度/能力清单）+ 开发环境安装卡（版本自选）\n- 开发环境版本自选：JDK 17/21/11/8 · Gradle 8.12/8.11/8.10 · Build-Tools 35/34/36/33 · NDK 27/26/25 · Node 22/20/18 · Go 1.24/1.23/1.22 · Rust stable/nightly\n- 依赖目录修复：Gradle 改官方 zip 发行版（apt 源是 4.x 古董）；cmdline-tools 改直链 zip 落地（修复 sdkmanager 无本体可用的死锁）；移除 TUNA 伪代理镜像命令（100% 失败的 --proxy_host 用法）\n- 真镜像支持：apt→TUNA（arm64 自动走 ubuntu-ports）、Gradle/AndroidSDK→腾讯、Node→npmmirror、Go→USTC、Rust→rsproxy.cn\n- 已装状态徽章：一条复合命令批量探测全部条目（D <id> OK/MISSING 锚定解析），顶栏可手动刷新\n- 修复 bootstrap 阻断 bug：BasePackageProfile 把虚拟包 awk 写进 essential（apt 报 \"Package 'awk' has no installation candidate\" exit 100 → BASE_PACKAGES 失败 → 降级就绪）——改为真实包 mawk（截图实测根因）\n- 安装命令全面改纯 && 链并禁用 set -e：交互式 PTY 里 set -e 会把单步失败升级为整个 bash 会话退出（杀死后续所有安装）；失败现在如实返回非零退出码\n- 清理 ~1700 行控制台代码（TerminalScreen/ViewModel/Syntax/CommandHistory/History/SettingsSheet/RealCommandExecutor/RawStreamSanitizer/SessionRegistry/EnvironmentCenterSheet 及配套测试）；设置中心 terminal/appearance 叶随控制台退役（字号/亮屏无消费者），环境页安装期间自主亮屏\n\n---\n\n- Ubuntu 安装失败横幅人话前置（#235 残余收口）：内部错误码（如 `INSUFFICIENT_STORAGE: Need 3400000000 bytes…`）折叠为括号后缀，中文「发生了什么 + 怎么办」文案排前 —— UI 横幅截断（take 200）不再把人话截掉或挤掉；诊断串完整保留供日志与 Agent 分析\n- rootfs 解压器流关闭补边界（#669/#643）：改用 use{} 惯用法，非 gzip / 截断档案在 GZIPInputStream 构造函数抛异常时外层文件流也能关闭（旧 try/finally 只兜构造成功之后的路径）；补两组结构化失败回归测试（ZipException / EOFException）\n- 沙箱命令执行器收尾对齐（#671/#638）：ProotSandboxCommandRunner 补齐 markIncomplete 契约（超时与正常路径 join 宽限用尽时如实标注「输出可能不完整」，不再无条件当完整报告）；两个 runner（git / marketplace）的超时与取消路径统一追加 drain 线程 interrupt() 双保险（关流为主手段、interrupt 为副手段，缩窄线程泄漏窗口）\n\n---\n\n- 全新「linux-ubuntu-chroot」执行后端：真实 Root 设备上以 su + mount + chroot 直跑**同一个** Ubuntu rootfs —— 无 ptrace 依赖（PRoot 在 HyperOS/ColorOS 等收紧 ptrace 的 ROM 上假死的问题从架构上绕开），syscall 原生执行无翻译损耗（apt/构建/git 等文件密集任务提速明显）\n- 双模式数据互通：与 PRoot 后端共享同一 rootfs 安装、同一 workspace 目录池、同一持久化 home（/root）与 guest 环境基线 —— 两种模式交替使用，文件与配置零迁移\n- Agent 全链路可选：TerminalBackends 真实可用性双列展示（未 Root 设备如实报 SU_NOT_FOUND 并引导默认 PRoot 后端）；TerminalCreate 新增 backend=\"linux-ubuntu-chroot\" 参数（enum 同步扩展）；默认后端保持 PRoot 不变，不隐式自动切换\n- 工程质量：挂载幂等守卫（mountpoint -q，异常退出的残留挂载直接复用不叠加）+ LIFO 最佳努力 umount 收尾 + 多会话共享挂载 EBUSY 安全；env 防注入 trampoline / guest cwd 映射与 PRoot 后端单一事实源（新抽 GuestCwdMapper，双后端逐字节同映射）；17 项 JVM 单测锁定脚本契约（挂载顺序 / cd 语义 / shellQuote 防注入 / 授权窗口诚实失败）\n\n---\n\n- Coding 顶栏图标语义重构：长任务 = 对话气泡图标（点击展示执行过的任务，卡片操作：复制任务 / 重跑 / 检查点续跑 / 对比上次 / 导出分享 / 删除），对话历史 = 时钟图标（直觉指向「历史」），两者互换不再歧义\n- 新对话图标由裸「＋」换为对话气泡加号（AddComment）——「发起新对话」一眼可读\n- 会话上下文眼睛图标退役，改为「上下文用量圆环」（新对话图标右侧）：圆环白弧按上下文占用百分比实时填充，用量涨多少弧就走多少；点击展开详情卡——上下文占用（used/max/百分比）、会话累计输入输出 tokens、缓存命中率（OpenAI 兼容端点 prompt_tokens_details.cached_tokens 真实统计，端点不返回时显式显示「暂无数据」而非假 0%）\n- 圆环分母接通真实模型窗口：默认模型 Profile 的 contextWindow（effectiveContextWindow），切模型即正确反映 8k/200k 差异，不再恒按硬编码 128k 满打满算\n- 长任务中心的「任务模板」「档位效能」两页签随功能整体删除：LongTaskTemplates / 档位统计追踪器 / 模板记录豁免 / 复制任务的档位覆盖全链路移除（含 DI、持久化语义与字符串）\n- 设置中心归类合并（27 叶 / 6 分类 → 24 叶 / 5 分类）：上下文压缩并入「上下文」、限速友好并入「网络」、高级选项并入「提示词」、对话显示并入「外观」、本地搜索并入「工作台」——同类设置归为一页，不再一个开关一页\n- 假设置清理与真接线：删除无消费方的视觉三件套（Enable Vision/截图质量/截图上限）与 Coding 假开关（工具面/读守卫/自动项目规则）；「任务完成通知」接通真实通道（后台跑完发系统通知、前台静音、中止不打扰）；token 用量仪表盘接通逐轮落账（UsageLedger 从此有真数据）\n\n---\n\n- 聚合升到与技能/MCP同级的一等公民：已装聚合目录常驻系统提示词（模型无需探测即知有哪些聚合可激活）；新增 FusionCreate（把当前组合自建为聚合）与 FusionInstallMembers（装成员不激活）两个模型工具；斜杠菜单新增 Fusion 类目\n\n---\n\n- 检查更新不再需要梯子：version.json / patches.json / changelog.json 三份清单改走国内镜像回退链（ghfast.top / ghproxy.net / gh-proxy.com 依次尝试，全败自动回退直连，海外与代理环境行为不变）\n- 坏镜像防御：镜像返回 HTML 挑战页（伪 200）时自动降级下一候选，镜像档 4 秒短超时快速降级，不让死节点拖慢检查\n\n---\n\n- Coding 屏新增「Rikka 风格」输出，与原版胶囊时间轴可在 设置→工作台→Coding 工位→输出风格 一键切换（空闲时即时生效，运行中不打断当前轮；与「输出方式」流式/整段正交，两种风格都适用）\n- Rikka 风格完整覆盖：用户右对齐实色气泡、Markdown 结论气泡（流式光标）、可折叠思考过程（流式展开跟随/收束自动折叠）、居中状态 pill、错误/停止/验证轮次/运行统计卡同风格化\n- 工具调用聚合块：连续工具调用（跨族）收进一张卡——流式中「正在调用工具…」+ 实时行（实时代码窗/输出尾窗），收束后折叠为「已调用 N 个工具」+ 内置/技能/MCP 三分类 chips，可展开每次调用明细（工具名/参数摘要/状态/耗时/退出码，点击进详情看 diff 与终端全文）\n- 技能与 MCP 溯源标识（星芒/拼图图标 + 技能 id/MCP 服务器名）在工具行、聚合 chips、运行统计卡三处一致呈现；聚合为纯派生视图，切回时间轴风格零丢失\n\n---\n\n- 修复 main 编译红：DepItem.kt KDoc 注释体里的 `/etc/profile.d/*.sh` 写法含 `/*` 序列，在 Kotlin 可嵌套块注释里开了一层悬垂嵌套——注释吞到文件尾触发 \"Unclosed comment\"（app 编译 / Quality Gate 注释完整性门禁双红）。改为文字描述「/etc/profile.d 目录下的 .sh 片段」（AGENTS.md 注释铁律：注释体内不出现斜杠紧跟星号的序列）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.5"
   },
   "history": [
+    {
+      "versionName": "1.5.5",
+      "versionCode": 185,
+      "tag": "v1.5.5",
+      "date": "2026-10-31",
+      "title": "v1.5.5 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "ubuntu agent console removal",
+          "notes": [
+            "Ubuntu 大重构：终端控制台 UI 整体退役 —— Ubuntu 由 Agent 全权掌控（TerminalUbuntuEnsure / TerminalExec / TerminalLinuxPackages 等工具直连），用户不再手动输入命令",
+            "「终端」页改为「Ubuntu 环境」页：只保留 rootfs 生命周期卡（安装/修复/删除/进度/能力清单）+ 开发环境安装卡（版本自选）",
+            "开发环境版本自选：JDK 17/21/11/8 · Gradle 8.12/8.11/8.10 · Build-Tools 35/34/36/33 · NDK 27/26/25 · Node 22/20/18 · Go 1.24/1.23/1.22 · Rust stable/nightly",
+            "依赖目录修复：Gradle 改官方 zip 发行版（apt 源是 4.x 古董）；cmdline-tools 改直链 zip 落地（修复 sdkmanager 无本体可用的死锁）；移除 TUNA 伪代理镜像命令（100% 失败的 --proxy_host 用法）",
+            "真镜像支持：apt→TUNA（arm64 自动走 ubuntu-ports）、Gradle/AndroidSDK→腾讯、Node→npmmirror、Go→USTC、Rust→rsproxy.cn",
+            "已装状态徽章：一条复合命令批量探测全部条目（D <id> OK/MISSING 锚定解析），顶栏可手动刷新",
+            "修复 bootstrap 阻断 bug：BasePackageProfile 把虚拟包 awk 写进 essential（apt 报 \"Package 'awk' has no installation candidate\" exit 100 → BASE_PACKAGES 失败 → 降级就绪）——改为真实包 mawk（截图实测根因）",
+            "安装命令全面改纯 && 链并禁用 set -e：交互式 PTY 里 set -e 会把单步失败升级为整个 bash 会话退出（杀死后续所有安装）；失败现在如实返回非零退出码",
+            "清理 ~1700 行控制台代码（TerminalScreen/ViewModel/Syntax/CommandHistory/History/SettingsSheet/RealCommandExecutor/RawStreamSanitizer/SessionRegistry/EnvironmentCenterSheet 及配套测试）；设置中心 terminal/appearance 叶随控制台退役（字号/亮屏无消费者），环境页安装期间自主亮屏"
+          ]
+        },
+        {
+          "title": "ubuntu open issues 235 669 671",
+          "notes": [
+            "Ubuntu 安装失败横幅人话前置（#235 残余收口）：内部错误码（如 `INSUFFICIENT_STORAGE: Need 3400000000 bytes…`）折叠为括号后缀，中文「发生了什么 + 怎么办」文案排前 —— UI 横幅截断（take 200）不再把人话截掉或挤掉；诊断串完整保留供日志与 Agent 分析",
+            "rootfs 解压器流关闭补边界（#669/#643）：改用 use{} 惯用法，非 gzip / 截断档案在 GZIPInputStream 构造函数抛异常时外层文件流也能关闭（旧 try/finally 只兜构造成功之后的路径）；补两组结构化失败回归测试（ZipException / EOFException）",
+            "沙箱命令执行器收尾对齐（#671/#638）：ProotSandboxCommandRunner 补齐 markIncomplete 契约（超时与正常路径 join 宽限用尽时如实标注「输出可能不完整」，不再无条件当完整报告）；两个 runner（git / marketplace）的超时与取消路径统一追加 drain 线程 interrupt() 双保险（关流为主手段、interrupt 为副手段，缩窄线程泄漏窗口）"
+          ]
+        },
+        {
+          "title": "linux chroot backend t98",
+          "notes": [
+            "全新「linux-ubuntu-chroot」执行后端：真实 Root 设备上以 su + mount + chroot 直跑**同一个** Ubuntu rootfs —— 无 ptrace 依赖（PRoot 在 HyperOS/ColorOS 等收紧 ptrace 的 ROM 上假死的问题从架构上绕开），syscall 原生执行无翻译损耗（apt/构建/git 等文件密集任务提速明显）",
+            "双模式数据互通：与 PRoot 后端共享同一 rootfs 安装、同一 workspace 目录池、同一持久化 home（/root）与 guest 环境基线 —— 两种模式交替使用，文件与配置零迁移",
+            "Agent 全链路可选：TerminalBackends 真实可用性双列展示（未 Root 设备如实报 SU_NOT_FOUND 并引导默认 PRoot 后端）；TerminalCreate 新增 backend=\"linux-ubuntu-chroot\" 参数（enum 同步扩展）；默认后端保持 PRoot 不变，不隐式自动切换",
+            "工程质量：挂载幂等守卫（mountpoint -q，异常退出的残留挂载直接复用不叠加）+ LIFO 最佳努力 umount 收尾 + 多会话共享挂载 EBUSY 安全；env 防注入 trampoline / guest cwd 映射与 PRoot 后端单一事实源（新抽 GuestCwdMapper，双后端逐字节同映射）；17 项 JVM 单测锁定脚本契约（挂载顺序 / cd 语义 / shellQuote 防注入 / 授权窗口诚实失败）"
+          ]
+        },
+        {
+          "title": "coding context ring ux overhaul",
+          "notes": [
+            "Coding 顶栏图标语义重构：长任务 = 对话气泡图标（点击展示执行过的任务，卡片操作：复制任务 / 重跑 / 检查点续跑 / 对比上次 / 导出分享 / 删除），对话历史 = 时钟图标（直觉指向「历史」），两者互换不再歧义",
+            "新对话图标由裸「＋」换为对话气泡加号（AddComment）——「发起新对话」一眼可读",
+            "会话上下文眼睛图标退役，改为「上下文用量圆环」（新对话图标右侧）：圆环白弧按上下文占用百分比实时填充，用量涨多少弧就走多少；点击展开详情卡——上下文占用（used/max/百分比）、会话累计输入输出 tokens、缓存命中率（OpenAI 兼容端点 prompt_tokens_details.cached_tokens 真实统计，端点不返回时显式显示「暂无数据」而非假 0%）",
+            "圆环分母接通真实模型窗口：默认模型 Profile 的 contextWindow（effectiveContextWindow），切模型即正确反映 8k/200k 差异，不再恒按硬编码 128k 满打满算",
+            "长任务中心的「任务模板」「档位效能」两页签随功能整体删除：LongTaskTemplates / 档位统计追踪器 / 模板记录豁免 / 复制任务的档位覆盖全链路移除（含 DI、持久化语义与字符串）",
+            "设置中心归类合并（27 叶 / 6 分类 → 24 叶 / 5 分类）：上下文压缩并入「上下文」、限速友好并入「网络」、高级选项并入「提示词」、对话显示并入「外观」、本地搜索并入「工作台」——同类设置归为一页，不再一个开关一页",
+            "假设置清理与真接线：删除无消费方的视觉三件套（Enable Vision/截图质量/截图上限）与 Coding 假开关（工具面/读守卫/自动项目规则）；「任务完成通知」接通真实通道（后台跑完发系统通知、前台静音、中止不打扰）；token 用量仪表盘接通逐轮落账（UsageLedger 从此有真数据）"
+          ]
+        },
+        {
+          "title": "fusion first class",
+          "notes": [
+            "聚合升到与技能/MCP同级的一等公民：已装聚合目录常驻系统提示词（模型无需探测即知有哪些聚合可激活）；新增 FusionCreate（把当前组合自建为聚合）与 FusionInstallMembers（装成员不激活）两个模型工具；斜杠菜单新增 Fusion 类目"
+          ]
+        },
+        {
+          "title": "update check mirrors",
+          "notes": [
+            "检查更新不再需要梯子：version.json / patches.json / changelog.json 三份清单改走国内镜像回退链（ghfast.top / ghproxy.net / gh-proxy.com 依次尝试，全败自动回退直连，海外与代理环境行为不变）",
+            "坏镜像防御：镜像返回 HTML 挑战页（伪 200）时自动降级下一候选，镜像档 4 秒短超时快速降级，不让死节点拖慢检查"
+          ]
+        },
+        {
+          "title": "rikka output style",
+          "notes": [
+            "Coding 屏新增「Rikka 风格」输出，与原版胶囊时间轴可在 设置→工作台→Coding 工位→输出风格 一键切换（空闲时即时生效，运行中不打断当前轮；与「输出方式」流式/整段正交，两种风格都适用）",
+            "Rikka 风格完整覆盖：用户右对齐实色气泡、Markdown 结论气泡（流式光标）、可折叠思考过程（流式展开跟随/收束自动折叠）、居中状态 pill、错误/停止/验证轮次/运行统计卡同风格化",
+            "工具调用聚合块：连续工具调用（跨族）收进一张卡——流式中「正在调用工具…」+ 实时行（实时代码窗/输出尾窗），收束后折叠为「已调用 N 个工具」+ 内置/技能/MCP 三分类 chips，可展开每次调用明细（工具名/参数摘要/状态/耗时/退出码，点击进详情看 diff 与终端全文）",
+            "技能与 MCP 溯源标识（星芒/拼图图标 + 技能 id/MCP 服务器名）在工具行、聚合 chips、运行统计卡三处一致呈现；聚合为纯派生视图，切回时间轴风格零丢失"
+          ]
+        },
+        {
+          "title": "depitem comment repair",
+          "notes": [
+            "修复 main 编译红：DepItem.kt KDoc 注释体里的 `/etc/profile.d/*.sh` 写法含 `/*` 序列，在 Kotlin 可嵌套块注释里开了一层悬垂嵌套——注释吞到文件尾触发 \"Unclosed comment\"（app 编译 / Quality Gate 注释完整性门禁双红）。改为文字描述「/etc/profile.d 目录下的 .sh 片段」（AGENTS.md 注释铁律：注释体内不出现斜杠紧跟星号的序列）"
+          ]
+        }
+      ],
+      "markdown": "- Ubuntu 大重构：终端控制台 UI 整体退役 —— Ubuntu 由 Agent 全权掌控（TerminalUbuntuEnsure / TerminalExec / TerminalLinuxPackages 等工具直连），用户不再手动输入命令\n- 「终端」页改为「Ubuntu 环境」页：只保留 rootfs 生命周期卡（安装/修复/删除/进度/能力清单）+ 开发环境安装卡（版本自选）\n- 开发环境版本自选：JDK 17/21/11/8 · Gradle 8.12/8.11/8.10 · Build-Tools 35/34/36/33 · NDK 27/26/25 · Node 22/20/18 · Go 1.24/1.23/1.22 · Rust stable/nightly\n- 依赖目录修复：Gradle 改官方 zip 发行版（apt 源是 4.x 古董）；cmdline-tools 改直链 zip 落地（修复 sdkmanager 无本体可用的死锁）；移除 TUNA 伪代理镜像命令（100% 失败的 --proxy_host 用法）\n- 真镜像支持：apt→TUNA（arm64 自动走 ubuntu-ports）、Gradle/AndroidSDK→腾讯、Node→npmmirror、Go→USTC、Rust→rsproxy.cn\n- 已装状态徽章：一条复合命令批量探测全部条目（D <id> OK/MISSING 锚定解析），顶栏可手动刷新\n- 修复 bootstrap 阻断 bug：BasePackageProfile 把虚拟包 awk 写进 essential（apt 报 \"Package 'awk' has no installation candidate\" exit 100 → BASE_PACKAGES 失败 → 降级就绪）——改为真实包 mawk（截图实测根因）\n- 安装命令全面改纯 && 链并禁用 set -e：交互式 PTY 里 set -e 会把单步失败升级为整个 bash 会话退出（杀死后续所有安装）；失败现在如实返回非零退出码\n- 清理 ~1700 行控制台代码（TerminalScreen/ViewModel/Syntax/CommandHistory/History/SettingsSheet/RealCommandExecutor/RawStreamSanitizer/SessionRegistry/EnvironmentCenterSheet 及配套测试）；设置中心 terminal/appearance 叶随控制台退役（字号/亮屏无消费者），环境页安装期间自主亮屏\n\n---\n\n- Ubuntu 安装失败横幅人话前置（#235 残余收口）：内部错误码（如 `INSUFFICIENT_STORAGE: Need 3400000000 bytes…`）折叠为括号后缀，中文「发生了什么 + 怎么办」文案排前 —— UI 横幅截断（take 200）不再把人话截掉或挤掉；诊断串完整保留供日志与 Agent 分析\n- rootfs 解压器流关闭补边界（#669/#643）：改用 use{} 惯用法，非 gzip / 截断档案在 GZIPInputStream 构造函数抛异常时外层文件流也能关闭（旧 try/finally 只兜构造成功之后的路径）；补两组结构化失败回归测试（ZipException / EOFException）\n- 沙箱命令执行器收尾对齐（#671/#638）：ProotSandboxCommandRunner 补齐 markIncomplete 契约（超时与正常路径 join 宽限用尽时如实标注「输出可能不完整」，不再无条件当完整报告）；两个 runner（git / marketplace）的超时与取消路径统一追加 drain 线程 interrupt() 双保险（关流为主手段、interrupt 为副手段，缩窄线程泄漏窗口）\n\n---\n\n- 全新「linux-ubuntu-chroot」执行后端：真实 Root 设备上以 su + mount + chroot 直跑**同一个** Ubuntu rootfs —— 无 ptrace 依赖（PRoot 在 HyperOS/ColorOS 等收紧 ptrace 的 ROM 上假死的问题从架构上绕开），syscall 原生执行无翻译损耗（apt/构建/git 等文件密集任务提速明显）\n- 双模式数据互通：与 PRoot 后端共享同一 rootfs 安装、同一 workspace 目录池、同一持久化 home（/root）与 guest 环境基线 —— 两种模式交替使用，文件与配置零迁移\n- Agent 全链路可选：TerminalBackends 真实可用性双列展示（未 Root 设备如实报 SU_NOT_FOUND 并引导默认 PRoot 后端）；TerminalCreate 新增 backend=\"linux-ubuntu-chroot\" 参数（enum 同步扩展）；默认后端保持 PRoot 不变，不隐式自动切换\n- 工程质量：挂载幂等守卫（mountpoint -q，异常退出的残留挂载直接复用不叠加）+ LIFO 最佳努力 umount 收尾 + 多会话共享挂载 EBUSY 安全；env 防注入 trampoline / guest cwd 映射与 PRoot 后端单一事实源（新抽 GuestCwdMapper，双后端逐字节同映射）；17 项 JVM 单测锁定脚本契约（挂载顺序 / cd 语义 / shellQuote 防注入 / 授权窗口诚实失败）\n\n---\n\n- Coding 顶栏图标语义重构：长任务 = 对话气泡图标（点击展示执行过的任务，卡片操作：复制任务 / 重跑 / 检查点续跑 / 对比上次 / 导出分享 / 删除），对话历史 = 时钟图标（直觉指向「历史」），两者互换不再歧义\n- 新对话图标由裸「＋」换为对话气泡加号（AddComment）——「发起新对话」一眼可读\n- 会话上下文眼睛图标退役，改为「上下文用量圆环」（新对话图标右侧）：圆环白弧按上下文占用百分比实时填充，用量涨多少弧就走多少；点击展开详情卡——上下文占用（used/max/百分比）、会话累计输入输出 tokens、缓存命中率（OpenAI 兼容端点 prompt_tokens_details.cached_tokens 真实统计，端点不返回时显式显示「暂无数据」而非假 0%）\n- 圆环分母接通真实模型窗口：默认模型 Profile 的 contextWindow（effectiveContextWindow），切模型即正确反映 8k/200k 差异，不再恒按硬编码 128k 满打满算\n- 长任务中心的「任务模板」「档位效能」两页签随功能整体删除：LongTaskTemplates / 档位统计追踪器 / 模板记录豁免 / 复制任务的档位覆盖全链路移除（含 DI、持久化语义与字符串）\n- 设置中心归类合并（27 叶 / 6 分类 → 24 叶 / 5 分类）：上下文压缩并入「上下文」、限速友好并入「网络」、高级选项并入「提示词」、对话显示并入「外观」、本地搜索并入「工作台」——同类设置归为一页，不再一个开关一页\n- 假设置清理与真接线：删除无消费方的视觉三件套（Enable Vision/截图质量/截图上限）与 Coding 假开关（工具面/读守卫/自动项目规则）；「任务完成通知」接通真实通道（后台跑完发系统通知、前台静音、中止不打扰）；token 用量仪表盘接通逐轮落账（UsageLedger 从此有真数据）\n\n---\n\n- 聚合升到与技能/MCP同级的一等公民：已装聚合目录常驻系统提示词（模型无需探测即知有哪些聚合可激活）；新增 FusionCreate（把当前组合自建为聚合）与 FusionInstallMembers（装成员不激活）两个模型工具；斜杠菜单新增 Fusion 类目\n\n---\n\n- 检查更新不再需要梯子：version.json / patches.json / changelog.json 三份清单改走国内镜像回退链（ghfast.top / ghproxy.net / gh-proxy.com 依次尝试，全败自动回退直连，海外与代理环境行为不变）\n- 坏镜像防御：镜像返回 HTML 挑战页（伪 200）时自动降级下一候选，镜像档 4 秒短超时快速降级，不让死节点拖慢检查\n\n---\n\n- Coding 屏新增「Rikka 风格」输出，与原版胶囊时间轴可在 设置→工作台→Coding 工位→输出风格 一键切换（空闲时即时生效，运行中不打断当前轮；与「输出方式」流式/整段正交，两种风格都适用）\n- Rikka 风格完整覆盖：用户右对齐实色气泡、Markdown 结论气泡（流式光标）、可折叠思考过程（流式展开跟随/收束自动折叠）、居中状态 pill、错误/停止/验证轮次/运行统计卡同风格化\n- 工具调用聚合块：连续工具调用（跨族）收进一张卡——流式中「正在调用工具…」+ 实时行（实时代码窗/输出尾窗），收束后折叠为「已调用 N 个工具」+ 内置/技能/MCP 三分类 chips，可展开每次调用明细（工具名/参数摘要/状态/耗时/退出码，点击进详情看 diff 与终端全文）\n- 技能与 MCP 溯源标识（星芒/拼图图标 + 技能 id/MCP 服务器名）在工具行、聚合 chips、运行统计卡三处一致呈现；聚合为纯派生视图，切回时间轴风格零丢失\n\n---\n\n- 修复 main 编译红：DepItem.kt KDoc 注释体里的 `/etc/profile.d/*.sh` 写法含 `/*` 序列，在 Kotlin 可嵌套块注释里开了一层悬垂嵌套——注释吞到文件尾触发 \"Unclosed comment\"（app 编译 / Quality Gate 注释完整性门禁双红）。改为文字描述「/etc/profile.d 目录下的 .sh 片段」（AGENTS.md 注释铁律：注释体内不出现斜杠紧跟星号的序列）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.5"
+    },
     {
       "versionName": "1.5.4",
       "versionCode": 184,
@@ -1368,26 +1513,6 @@
       ],
       "markdown": "- 设置中心新增「终端」大分类：字号 / 单色 / 键栏 / 响铃振动 / 屏幕常亮 / 配色方案 / 扩展键宏 / 命令黑白名单全部收入两级抽屉（此前只藏在终端页弹层），设置中心与终端页实时同步生效\n- 新增「通知」设置页：任务完成通知与循环运行通知聚合一处，附系统通知渠道直达入口\n- 新增「应用更新」设置页：自动检查更新开关与下载镜像（自动测速 / 直连 / 三个加速节点）从关于页收编进设置中心",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.60"
-    },
-    {
-      "versionName": "1.4.9.59",
-      "versionCode": 135,
-      "tag": "v1.4.9.59",
-      "date": "2026-10-24",
-      "title": "v1.4.9.59 更新内容",
-      "notes": [
-        "更新日志弹窗支持配图展示：发布器（apex-Administrator v2.3+）发送片段时可附最多 9 张截图",
-        "发布器压缩自律：最长边 ≤1600px / JPEG 85，配图与片段同一 commit 原子提交",
-        "`changelog.json` schema 升级 v3：一级日志新增 `images` 字段（URL 列表），老客户端忽略新字段不受影响",
-        "弹窗图廊交互：横向滑动浏览、点开全屏（复用 ImageLightbox：双指缩放 / 拖拽平移 / 双击缩放）",
-        "聚合端要点提取同步增强：行内图片引用剥除（纯图 bullet 不占要点位、首行摘要跳过纯图行）"
-      ],
-      "images": [
-        "https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent/main/.changelog/images/demo-1.jpg"
-      ],
-      "pr": [],
-      "markdown": "# 更新日志配图通道（changelog v3）\n\n- 更新日志弹窗支持配图展示：发布器（apex-Administrator v2.3+）发送片段时可附最多 9 张截图\n- 发布器压缩自律：最长边 ≤1600px / JPEG 85，配图与片段同一 commit 原子提交\n- `changelog.json` schema 升级 v3：一级日志新增 `images` 字段（URL 列表），老客户端忽略新字段不受影响\n- 弹窗图廊交互：横向滑动浏览、点开全屏（复用 ImageLightbox：双指缩放 / 拖拽平移 / 双击缩放）\n- 聚合端要点提取同步增强：行内图片引用剥除（纯图 bullet 不占要点位、首行摘要跳过纯图行）\n\n![配图1](https://raw.githubusercontent.com/Ultra-Guru/Android-Guru-Agent/main/.changelog/images/demo-1.jpg)",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.59"
     }
   ]
 }
