@@ -1,29 +1,67 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-30T23:36:52Z",
+  "generatedAt": "2026-10-30T23:53:34Z",
   "latest": {
-    "versionName": "1.4.9.91",
-    "versionCode": 167,
-    "tag": "v1.4.9.91",
+    "versionName": "1.4.9.92",
+    "versionCode": 168,
+    "tag": "v1.4.9.92",
     "date": "2026-10-30",
-    "title": "v1.4.9.91 更新内容",
+    "title": "v1.4.9.92 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "Coding 思考选择器重做:深度滑块 + 逻辑切换圆角收敛 + 文案全面重写",
+        "title": "Coding 新增会话上下文查看:看清模型到底收到了什么",
         "notes": [
-          "思考深度七档改为滑块选择:拖动实时预览目标档(档名/预算徽标/说明跟随),松手即生效;自动档保留独立入口,拖滑块即切固定档",
-          "思考逻辑触发胶囊从全圆改为 10dp 小圆角,与思考档位胶囊形成区分",
-          "思考逻辑/思考程度全部说明文案重写:去掉「梭回合机」「勘合通行证」「收发匣」等自造词,改为描述真实行为(自动选档、并行工具、权限确认、会话压缩);中文环境不再混显英文长句",
-          "审计确认:四条思考逻辑(深潜/标准/织造/信使)为四个真实引擎路由,档位切换真实下发迭代上限/输出预算/压缩阈值三参数并随档缩放,自动档预检与运行中升级真实生效"
+          "Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容",
+          "深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容"
+        ]
+      },
+      {
+        "title": "remove agent settings 5of6",
+        "notes": [
+          "设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）",
+          "迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用",
+          "AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）",
+          "字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正",
+          "红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留"
         ]
       }
     ],
-    "markdown": "## Coding 思考选择器重做:深度滑块 + 逻辑切换圆角收敛 + 文案全面重写\n\n- 思考深度七档改为滑块选择:拖动实时预览目标档(档名/预算徽标/说明跟随),松手即生效;自动档保留独立入口,拖滑块即切固定档\n- 思考逻辑触发胶囊从全圆改为 10dp 小圆角,与思考档位胶囊形成区分\n- 思考逻辑/思考程度全部说明文案重写:去掉「梭回合机」「勘合通行证」「收发匣」等自造词,改为描述真实行为(自动选档、并行工具、权限确认、会话压缩);中文环境不再混显英文长句\n- 审计确认:四条思考逻辑(深潜/标准/织造/信使)为四个真实引擎路由,档位切换真实下发迭代上限/输出预算/压缩阈值三参数并随档缩放,自动档预检与运行中升级真实生效",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.91"
+    "markdown": "## Coding 新增会话上下文查看:看清模型到底收到了什么\n\n- Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容\n- 深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容\n\n---\n\n- 设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）\n- 迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用\n- AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）\n- 字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正\n- 红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.92"
   },
   "history": [
+    {
+      "versionName": "1.4.9.92",
+      "versionCode": 168,
+      "tag": "v1.4.9.92",
+      "date": "2026-10-30",
+      "title": "v1.4.9.92 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "Coding 新增会话上下文查看:看清模型到底收到了什么",
+          "notes": [
+            "Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容",
+            "深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容"
+          ]
+        },
+        {
+          "title": "remove agent settings 5of6",
+          "notes": [
+            "设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）",
+            "迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用",
+            "AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）",
+            "字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正",
+            "红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留"
+          ]
+        }
+      ],
+      "markdown": "## Coding 新增会话上下文查看:看清模型到底收到了什么\n\n- Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容\n- 深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容\n\n---\n\n- 设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）\n- 迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用\n- AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）\n- 字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正\n- 红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.92"
+    },
     {
       "versionName": "1.4.9.91",
       "versionCode": 167,
@@ -1419,39 +1457,6 @@
       ],
       "markdown": "- 内置浏览器工具集扩至 34 个：新增 9 个会话级工具——BrowserBack/Forward/Reload（历史导航）、BrowserHistory（浏览历史查询）、BrowserFind（页内查找计数）、BrowserDownloads（下载全量台账 + 取消/重试）、BrowserBookmarks（书签管理）、BrowserZoom（文字缩放）、BrowserClearData（清除浏览数据，需确认的敏感操作）；浏览器截图支持 full_page 整页拼接模式\n- 上述能力与浏览器页签共用同一引擎与书签/下载/显示设置存储：Agent 做的改动在界面上即时可见，手动操作对 Agent 同样生效；插件宿主桥同步暴露全部 34 个 browser_* 工具\n- 工具恢复口径修正：BrowserDownloads 归类为非幂等（含取消/重试动作，恢复计划不得自动重放）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.43"
-    },
-    {
-      "versionName": "1.4.9.42",
-      "versionCode": 118,
-      "tag": "v1.4.9.42",
-      "date": "2026-10-23",
-      "title": "v1.4.9.42 更新内容",
-      "notes": [],
-      "pr": [
-        {
-          "title": "ux refine batch",
-          "notes": [
-            "关于页内容焕新：本版亮点更新为浏览器智能体/Coding 真实文件夹工作区/终端重写/双思考体系，功能一览新增「浏览器智能体」行，各功能描述对齐当前版本实际能力",
-            "思考程度调节全面英文化：Agent 屏（Default/Low/Medium/High/Max + Forced Thinking）与 Coding 屏（Off/Light/Standard/Deep/Max/Ultra/Apex/Adaptive）档名、触发胶囊与调节面板文案统一英文（跨模型技术词汇，中文直译易歧义）",
-            "Agent 屏思考调节悬浮框不再超出屏幕：固定 300dp 宽在窄屏溢出，改为系统感知宽度（上限 = 屏宽-24dp），容器同步 24dp 圆角",
-            "Coding 屏思考档位选择器 v3 重设计：24dp 圆角菜单容器 + 档位行 14dp 圆角选中胶囊底 + 7 段递增深度仪表（音量条）+ 8dp 圆角预算徽标，选中档主色点亮",
-            "Coding 屏移除与工作区浏览器内置 Git 重复的独立 Git 图标（CallSplit），v6 Git 面板（CodeWorkspacePanel）整体退役，git 走工作区浏览器 Git 页签",
-            "工作区选择迁移：顶栏左上角选择器移除，迁入输入栏工具行首位（CodeWorkspaceSelector）；「选择文件夹…」走 SAF 真实选目录（externalstorage 树 URI 解码为宿主路径，同目录幂等复用，删除仅解绑不动用户文件）；新增常驻「整个系统」工作区（根 = /，默认激活，不可删除）"
-          ]
-        },
-        {
-          "title": "agent real capabilities diag",
-          "notes": [
-            "Agent 获得真实应用控制能力（用户诉求「不能用提示词注入，要给 agent 工具」）：新增 AppScreenOpen（打开设置/诊断/市场/终端等 14 个页面，经导航桥真实压栈）、ModelProfileUpdate（修改模型档案白名单字段：模型 ID/Base URL/温度/思考档/上下文窗口等）、ModelConfigImport（JSON/Python/YAML/TOML 配置文本直接导入建档，与设置页导入弹窗共用同一份识别与落盘代码）、SystemDiagnose（采集 MCP/Skills/工具审计结构化快照，含失败详情，agent 可基于真实数据做根因分析）；四工具均有纯 JVM 单测（18 例）",
-            "模型配置导入支持从文件选择（用户需求「json 导入使用」）：导入弹窗新增「从文件导入」按钮（SAF 文件选择器），选中的 .json/.yaml/.toml/.py 配置文件读入文本域后走既有防抖解析-预览-导入链，粘贴与文件两条路径完全同源",
-            "诊断中心四连增强（用户诉求「便于我寻找问题」）：新增 MCP 服务器区（配置/传输形态/启用/连接状态实时快照）、技能区（安装清单+Agent/Coding 双工位启用位+工具数）、工具与终端调用日志区（tool-audit.jsonl 最近 50 条：时间/工具/决策/通道/耗时/命令）、失败详细记录区（失败子集错误色强调，点击弹窗看命令/详情/退出码/耗时/执行通道全现场）",
-            "ToolAuditLogger 补齐读取侧 API：recentEntries/recentFailures（倒序、上限防护、坏行容错），诊断页与 SystemDiagnose 工具共用同一数据源",
-            "设置页导入逻辑提取为 ModelConfigImportApplier 共享层：设置页弹窗与 Agent 的 ModelConfigImport 工具走同一份识别与建档代码（预览所见即导入所得的唯一真源）"
-          ]
-        }
-      ],
-      "markdown": "- 关于页内容焕新：本版亮点更新为浏览器智能体/Coding 真实文件夹工作区/终端重写/双思考体系，功能一览新增「浏览器智能体」行，各功能描述对齐当前版本实际能力\n- 思考程度调节全面英文化：Agent 屏（Default/Low/Medium/High/Max + Forced Thinking）与 Coding 屏（Off/Light/Standard/Deep/Max/Ultra/Apex/Adaptive）档名、触发胶囊与调节面板文案统一英文（跨模型技术词汇，中文直译易歧义）\n- Agent 屏思考调节悬浮框不再超出屏幕：固定 300dp 宽在窄屏溢出，改为系统感知宽度（上限 = 屏宽-24dp），容器同步 24dp 圆角\n- Coding 屏思考档位选择器 v3 重设计：24dp 圆角菜单容器 + 档位行 14dp 圆角选中胶囊底 + 7 段递增深度仪表（音量条）+ 8dp 圆角预算徽标，选中档主色点亮\n- Coding 屏移除与工作区浏览器内置 Git 重复的独立 Git 图标（CallSplit），v6 Git 面板（CodeWorkspacePanel）整体退役，git 走工作区浏览器 Git 页签\n- 工作区选择迁移：顶栏左上角选择器移除，迁入输入栏工具行首位（CodeWorkspaceSelector）；「选择文件夹…」走 SAF 真实选目录（externalstorage 树 URI 解码为宿主路径，同目录幂等复用，删除仅解绑不动用户文件）；新增常驻「整个系统」工作区（根 = /，默认激活，不可删除）\n\n---\n\n- Agent 获得真实应用控制能力（用户诉求「不能用提示词注入，要给 agent 工具」）：新增 AppScreenOpen（打开设置/诊断/市场/终端等 14 个页面，经导航桥真实压栈）、ModelProfileUpdate（修改模型档案白名单字段：模型 ID/Base URL/温度/思考档/上下文窗口等）、ModelConfigImport（JSON/Python/YAML/TOML 配置文本直接导入建档，与设置页导入弹窗共用同一份识别与落盘代码）、SystemDiagnose（采集 MCP/Skills/工具审计结构化快照，含失败详情，agent 可基于真实数据做根因分析）；四工具均有纯 JVM 单测（18 例）\n- 模型配置导入支持从文件选择（用户需求「json 导入使用」）：导入弹窗新增「从文件导入」按钮（SAF 文件选择器），选中的 .json/.yaml/.toml/.py 配置文件读入文本域后走既有防抖解析-预览-导入链，粘贴与文件两条路径完全同源\n- 诊断中心四连增强（用户诉求「便于我寻找问题」）：新增 MCP 服务器区（配置/传输形态/启用/连接状态实时快照）、技能区（安装清单+Agent/Coding 双工位启用位+工具数）、工具与终端调用日志区（tool-audit.jsonl 最近 50 条：时间/工具/决策/通道/耗时/命令）、失败详细记录区（失败子集错误色强调，点击弹窗看命令/详情/退出码/耗时/执行通道全现场）\n- ToolAuditLogger 补齐读取侧 API：recentEntries/recentFailures（倒序、上限防护、坏行容错），诊断页与 SystemDiagnose 工具共用同一数据源\n- 设置页导入逻辑提取为 ModelConfigImportApplier 共享层：设置页弹窗与 Agent 的 ModelConfigImport 工具走同一份识别与建档代码（预览所见即导入所得的唯一真源）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.42"
     }
   ]
 }
