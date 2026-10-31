@@ -1,32 +1,45 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T17:02:46Z",
+  "generatedAt": "2026-10-31T17:20:54Z",
   "latest": {
-    "versionName": "1.5.11",
-    "versionCode": 191,
-    "tag": "v1.5.11",
+    "versionName": "1.5.12",
+    "versionCode": 192,
+    "tag": "v1.5.12",
     "date": "2026-10-31",
-    "title": "v1.5.11 更新内容",
+    "title": "v1.5.12 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "guru web workbench",
+        "title": "修复",
         "notes": [
-          "Guru Web 智能体工作台（Web 版）：Next.js 16 全栈单页，与 Android 版同仓并存（`src/` 与 `app/` 同根、互不覆盖），独立 `package.json` / Prisma SQLite",
-          "工作区绑定对话 + 两级规则（软件级全局 / 项目级工作区）：注入预览诚实上报，所见即所发；规则模板一键插入",
-          "用户画像六维度（技术栈 / 编码风格 / 偏好 / 关注领域 / 工作习惯 / 目标）+「从编码对话提炼」AI 蒸馏，Coding 模式按置信度注入 Top 条目",
-          "对话记忆四类（稳定事实 / 近况 / 里程碑 / 偏好）综合评分召回，消息后自动蒸馏、注入即访问反馈",
-          "游乐场完全重写：代码打字机 / 粒子星系 / 霓虹贪吃蛇三内置精品 + LLM 生成管线 13 条硬性契约（单文件自包含 / 零网络请求 / 体积上限）",
-          "全局命令面板 ⌘K / Ctrl+K：跨工作区深度搜索（命中对话标题与正文、关键词高亮）+ 快速动作（新对话 / 主题切换 / 视图跳转）",
-          "SSE 流式输出、停止 / 重新生成、自动标题、亮暗主题、移动端适配、数据导出 / 导入 JSON 快照"
+          "Coding 后台任务完成、但系统通知被禁用时不再静默丢弃：回前台给一次性「通知已关闭」横幅与设置入口（#237）。"
         ]
       }
     ],
-    "markdown": "- Guru Web 智能体工作台（Web 版）：Next.js 16 全栈单页，与 Android 版同仓并存（`src/` 与 `app/` 同根、互不覆盖），独立 `package.json` / Prisma SQLite\n- 工作区绑定对话 + 两级规则（软件级全局 / 项目级工作区）：注入预览诚实上报，所见即所发；规则模板一键插入\n- 用户画像六维度（技术栈 / 编码风格 / 偏好 / 关注领域 / 工作习惯 / 目标）+「从编码对话提炼」AI 蒸馏，Coding 模式按置信度注入 Top 条目\n- 对话记忆四类（稳定事实 / 近况 / 里程碑 / 偏好）综合评分召回，消息后自动蒸馏、注入即访问反馈\n- 游乐场完全重写：代码打字机 / 粒子星系 / 霓虹贪吃蛇三内置精品 + LLM 生成管线 13 条硬性契约（单文件自包含 / 零网络请求 / 体积上限）\n- 全局命令面板 ⌘K / Ctrl+K：跨工作区深度搜索（命中对话标题与正文、关键词高亮）+ 快速动作（新对话 / 主题切换 / 视图跳转）\n- SSE 流式输出、停止 / 重新生成、自动标题、亮暗主题、移动端适配、数据导出 / 导入 JSON 快照",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.11"
+    "markdown": "# 修复\n\n- Coding 后台任务完成、但系统通知被禁用时不再静默丢弃：回前台给一次性「通知已关闭」横幅与设置入口（#237）。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.12"
   },
   "history": [
+    {
+      "versionName": "1.5.12",
+      "versionCode": 192,
+      "tag": "v1.5.12",
+      "date": "2026-10-31",
+      "title": "v1.5.12 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "修复",
+          "notes": [
+            "Coding 后台任务完成、但系统通知被禁用时不再静默丢弃：回前台给一次性「通知已关闭」横幅与设置入口（#237）。"
+          ]
+        }
+      ],
+      "markdown": "# 修复\n\n- Coding 后台任务完成、但系统通知被禁用时不再静默丢弃：回前台给一次性「通知已关闭」横幅与设置入口（#237）。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.12"
+    },
     {
       "versionName": "1.5.11",
       "versionCode": 191,
@@ -1445,27 +1458,6 @@
       ],
       "markdown": "- 网页抓取抗拦截升级：WebFetch / HttpRequest 默认携带浏览器指纹（UA / Accept / Referer 同源头），云 WAF 裸客户端 405 拦截不再发生；用户自定义 headers 仍可逐项覆盖\n- SPA 空壳页面自动识别：抓到「下载 App」类 JS 应用壳时直接给出行动指引（找 XHR/API 接口、试 v1/v2/v3 相邻版本），不再让模型在浏览器渲染的弯路上空转\n- HTTP 404 / 403 / 405 智能向导：404 提示探测相邻 API 版本，403/405 拦截页提示补浏览器头重试 —— 实测中 api/v1→v2 的盲猜环节从此有路标\n- 工具输出截断告别「假完整」：所有截断产物尾部统一追加机器可读告示（[OUTPUT TRUNCATED: ...]，明示内容不完整、省略区还有更多、如何取回）—— 修复把 2 万字符正文当摘要交差的最大误判\n- 终端参数命名宽容：sessionId / session_id 等驼峰与下划线两种风格全链路互认，必填参数不再因命名风格白丢一轮调用\n- heredoc 挂死全面防护：终端命令内联 heredoc 自动前置警告（先落文件再执行），会话挂死在 '>' 续行符时给出正确自救（TerminalWrite CTRL_C —— 信号层送不到前台 shell 本体）\n- TerminalObserve EVENT 模式附带读取指引：事件计数不是输出文本，读内容走 SCREEN / RAW —— 消除「拿到 eventCount 就当读过了」的误区\n- 一次性命令建议改为引导式：不再用绝对 STOP 措辞打断正常的短探测工作流，同时把 heredoc 禁忌与自救路径写进提醒\n- 幂等只读工具（AgentProfileList 等 13 个）重复调用阈值放宽：确认式重读不再被误判死循环，振荡乒乓仍严格拦截\n- 模型配置零门槛直达：AgentProfileList / AgentProfileSetDefault 常驻工具集，AgentSettingGet 输出附带「模型配置在哪、怎么开」指针 —— 弱模型不再困在 ToolSearch 两跳盲区\n- API Key 写入输出升级：明确 write-only 设计下的唯一写确认（长度）与真实验证路径（切默认模型发小样本消息）\n- PRoot Ubuntu 启动噪音根除：宿主补充组自动补进 guest /etc/group，「groups: cannot find name for group ID」六行刷屏从此消失\n- Agent 终端会话默认列宽 80 → 200：长命令不再硬折行拆碎标识符（isinstance 被折成 isins + tance 的读屏误读源头）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.67"
-    },
-    {
-      "versionName": "1.4.9.66",
-      "versionCode": 142,
-      "tag": "v1.4.9.66",
-      "date": "2026-10-25",
-      "title": "v1.4.9.66 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "memory graph live refresh",
-          "notes": [
-            "记忆图谱实时生长：后台任务 / 对话沉淀的新记忆自动出现在画布上，无需手动刷新",
-            "图谱探索现场保全：自动刷新不打乱已建立的节点位置与选中状态，巡航态自动纳入新节点视野",
-            "静态兜底不变：刷新失败静默保持现状，手动刷新与首次装载行为与旧版一致"
-          ]
-        }
-      ],
-      "markdown": "- 记忆图谱实时生长：后台任务 / 对话沉淀的新记忆自动出现在画布上，无需手动刷新\n- 图谱探索现场保全：自动刷新不打乱已建立的节点位置与选中状态，巡航态自动纳入新节点视野\n- 静态兜底不变：刷新失败静默保持现状，手动刷新与首次装载行为与旧版一致",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.66"
     }
   ]
 }
