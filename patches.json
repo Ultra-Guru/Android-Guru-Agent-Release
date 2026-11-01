@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-01T01:33:15Z",
-  "latestTag": "v1.5.17",
+  "generatedAt": "2026-11-01T01:51:31Z",
+  "latestTag": "v1.5.18",
   "patches": [
     {
       "variant": "arm64",
@@ -22857,6 +22857,166 @@
       "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.17/patch_universal_v1.5.7_to_v1.5.17.vcdiff",
       "sizeBytes": 22779280,
       "sha256": "c6fb7fa0bc36f32e302e43476650d4bf0ad5869d6b777f7a6c84c81f92f2e77c"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.17",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.17_to_v1.5.18.vcdiff",
+      "sizeBytes": 8636875,
+      "sha256": "c00c55f656530c666aa9ac4be04ecfcbed690a6878a827ce2f950ab2dc01529c"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.17",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.17_to_v1.5.18.vcdiff",
+      "sizeBytes": 8618716,
+      "sha256": "0ed9bd5874bd5fef3b0482ca0122463bf01bd44f12612927037c97b726c23ad8"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.16",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.16_to_v1.5.18.vcdiff",
+      "sizeBytes": 20092606,
+      "sha256": "c546a89c73c0a36af4abe67271d7e0eb415966f7a8ca6c3fbf94335f7bd7c271"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.16",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.16_to_v1.5.18.vcdiff",
+      "sizeBytes": 20099645,
+      "sha256": "eb4b9a59c980295cb968ad0f31702186f1a16217bfe8da1113672e4e6e707db1"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.15",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.15_to_v1.5.18.vcdiff",
+      "sizeBytes": 20133456,
+      "sha256": "0bca38cd625b5b0a66cfd841bfae9cf8bc5ea8f3766f963124271b50f98d1438"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.15",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.15_to_v1.5.18.vcdiff",
+      "sizeBytes": 20107821,
+      "sha256": "b347e0ba039c3ed37ce154147bc91c84a1fb2be3afc3c00aa19c338684584ee3"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.14",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.14_to_v1.5.18.vcdiff",
+      "sizeBytes": 20121843,
+      "sha256": "4819c7db213e2343efbdf0cfc86115f37a3fa432f3396c4c21e6a0ab741f4b2b"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.14",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.14_to_v1.5.18.vcdiff",
+      "sizeBytes": 20095990,
+      "sha256": "aa68c0612a603656ef83188ab9e6bc698a3a93ab7bf56e8de187588ceede51db"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.13",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.13_to_v1.5.18.vcdiff",
+      "sizeBytes": 20138756,
+      "sha256": "34f8c698d4eb357b3128e5b95c1bec8f11c87e01ab63cb0bf0aa53f458c06774"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.13",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.13_to_v1.5.18.vcdiff",
+      "sizeBytes": 20088293,
+      "sha256": "4928d26c6f3a691df73627b7350ca51f0591e37394b8f3df202bd3f5421240f4"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.12",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.12_to_v1.5.18.vcdiff",
+      "sizeBytes": 20104909,
+      "sha256": "c6163694199670e54b1ab13822ac5f8f9c0aabc1a712218140f0ab060dcacc8b"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.12",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.12_to_v1.5.18.vcdiff",
+      "sizeBytes": 20088149,
+      "sha256": "be7a766bd250a12304daf407dbe332598a7b71ff739fc7bcf7bf77693001f5dc"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.11",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.11_to_v1.5.18.vcdiff",
+      "sizeBytes": 22835577,
+      "sha256": "e15437b91ffc620c523f0ae9c05a7e07ccb6c070e627eac732d8a752406ddcee"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.11",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.11_to_v1.5.18.vcdiff",
+      "sizeBytes": 22858087,
+      "sha256": "0df4162a8f96474aab3bedb4de45fbc51725f24826ce08c5e203dedcdf915ee1"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.10",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.10_to_v1.5.18.vcdiff",
+      "sizeBytes": 22847496,
+      "sha256": "7c4bd7dd795bfe704663ba0dc058d4b76169224cf9fb44a12cee53bf156863b2"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.10",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.10_to_v1.5.18.vcdiff",
+      "sizeBytes": 22861033,
+      "sha256": "7673f926a57438faf1b5052787cd996aeaa84f7281b9d21921bbeabf8bae8f7b"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.9",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.9_to_v1.5.18.vcdiff",
+      "sizeBytes": 22792434,
+      "sha256": "db6b9d5202a1d27db268dd1c821e97954bada98d554271b3b11f837a2867b823"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.9",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.9_to_v1.5.18.vcdiff",
+      "sizeBytes": 22811646,
+      "sha256": "7f04d5f321dd4c94dc89f8177ad908d318ea90967ca9cc3fcddfeb3aa1376f1a"
+    },
+    {
+      "variant": "arm64",
+      "fromTag": "v1.5.8",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_arm64_v1.5.8_to_v1.5.18.vcdiff",
+      "sizeBytes": 22776323,
+      "sha256": "95edbd09c7a51c4d988c2ce9fa9c49b614758d9d1736f59cca2cb782bb0e030f"
+    },
+    {
+      "variant": "universal",
+      "fromTag": "v1.5.8",
+      "toTag": "v1.5.18",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.18/patch_universal_v1.5.8_to_v1.5.18.vcdiff",
+      "sizeBytes": 22787329,
+      "sha256": "48f5b8c7043f71144eeb53f92986ff2730a93fda7a23ec6c31768ee36303ceed"
     }
   ]
 }

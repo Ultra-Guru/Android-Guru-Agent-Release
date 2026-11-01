@@ -1,29 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-01T01:20:37Z",
+  "generatedAt": "2026-11-01T01:38:49Z",
   "latest": {
-    "versionName": "1.5.17",
-    "versionCode": 197,
-    "tag": "v1.5.17",
+    "versionName": "1.5.18",
+    "versionCode": 198,
+    "tag": "v1.5.18",
     "date": "2026-11-01",
-    "title": "v1.5.17 更新内容",
+    "title": "v1.5.18 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "settings truth polish",
+        "title": "batch3 casts pumps logging",
         "notes": [
-          "设置页「真设置化」第二波：移除 5 项数据预埋假设置（显示思考过程 / 连接保活 / Auth Type / Organization·Project / Key 轮换策略——均为无运行时消费方的摆设项）",
-          "压缩三件套真接线：保留近轮 / 压缩阈值 / 工具输出长度的设置值现在真实生效（此前引擎侧硬编码、改了没用）；默认值对齐引擎基准，老用户零行为漂移；富载荷模式改为在用户基准上增量抬升",
-          "补全缺失设置：模型原生联网搜索模式下拉（关闭/自动/按 Provider，请求侧真实消费）+ JSON Schema 编辑入口（JSON_SCHEMA 模式生效）",
-          "修正过期文案：模型角色说明改为真实路由描述（FAST 驱动目标校验 / SUMMARY 驱动压缩，缺失自动回退主模型）；多 Key 输入提示如实标注「当前使用第一个 Key」"
+          "修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度",
+          "修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲",
+          "工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断"
         ]
       }
     ],
-    "markdown": "- 设置页「真设置化」第二波：移除 5 项数据预埋假设置（显示思考过程 / 连接保活 / Auth Type / Organization·Project / Key 轮换策略——均为无运行时消费方的摆设项）\n- 压缩三件套真接线：保留近轮 / 压缩阈值 / 工具输出长度的设置值现在真实生效（此前引擎侧硬编码、改了没用）；默认值对齐引擎基准，老用户零行为漂移；富载荷模式改为在用户基准上增量抬升\n- 补全缺失设置：模型原生联网搜索模式下拉（关闭/自动/按 Provider，请求侧真实消费）+ JSON Schema 编辑入口（JSON_SCHEMA 模式生效）\n- 修正过期文案：模型角色说明改为真实路由描述（FAST 驱动目标校验 / SUMMARY 驱动压缩，缺失自动回退主模型）；多 Key 输入提示如实标注「当前使用第一个 Key」",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.17"
+    "markdown": "- 修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度\n- 修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲\n- 工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.18"
   },
   "history": [
+    {
+      "versionName": "1.5.18",
+      "versionCode": 198,
+      "tag": "v1.5.18",
+      "date": "2026-11-01",
+      "title": "v1.5.18 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "batch3 casts pumps logging",
+          "notes": [
+            "修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度",
+            "修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲",
+            "工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断"
+          ]
+        }
+      ],
+      "markdown": "- 修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度\n- 修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲\n- 工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.18"
+    },
     {
       "versionName": "1.5.17",
       "versionCode": 197,
@@ -1368,27 +1388,6 @@
       ],
       "markdown": "## Agent 终端工具修复：失败不再显绿 + 执行环境全程可见\n\n- 终端命令失败不再误报成功：TerminalExec 返回的结构化结果（exit_code）现在是成败判定的权威信号 —— `command not found`（127）、命令被你拒绝（126）、超时强杀（-1）此前都显示绿色「完成」，现在如实显示红色「失败」\n- 工具卡新增真实退出码徽标：终端工具完成后展开卡片可见 `exit 0` / `exit 127` 标记，非零退出码红色高亮，失败原因一眼可辨\n- 工具卡新增执行环境标注：每次终端调用显示执行通道（Ubuntu 沙箱 / Android 宿主 Root/Shizuku/本地）、实际执行目录、关联会话号 —— 双模式下「这条命令跑在哪个根」不再靠猜\n- 命令挂起可见：等待用户输入的终端命令（INPUT_REQUIRED，如 apt 交互确认）在工具卡上显示琥珀色「等待输入」标记\n- Terminal* 工具族获得独立「终端」徽章（终端图标 + 终端绿）：此前全部显示「本地工具」徽章，无法与普通工具区分；折叠卡的智能摘要也会显示 TerminalExec / TerminalRun 正在执行的命令\n- TerminalExec 的 cwd 参数统一为 guest 语义：`/workspace`（活跃工作区）、`/sdcard`（共享存储）、`/root`、`~/` 按描述正确映射进 Ubuntu 沙箱 —— 此前按宿主语义解析导致目录不存在报错，与 TerminalCreate 同名参数语义相反\n- 危险命令审批弹窗显示执行环境：「将在：Ubuntu 沙箱（proot-ubuntu）· 目录 /workspace」—— 同一条 rm 在沙箱内与宿主上后果完全不同，授权决策现在能看到这个区别\n- cd 目录记忆支持 guest 路径：Ubuntu 通道里 `cd /workspace/proj && make` 的目录切换会被记住，后续命令同目录执行（此前宿主侧验证失败被静默丢弃）\n- TerminalObserve SCREEN 模式返回 guestCwd：交互会话里 shell 上报的当前目录（OSC 7）首次暴露给 Agent —— cd 到哪里、后续 TerminalExec 传什么 cwd 不再靠猜（JVM 回退引擎已生效；设备端 native VT 引擎的 OSC 7 桥接为后续工作，就绪前该字段不出现）\n- 高危命令检测补漏：`> /etc/passwd` 这类重定向改写系统文件的变体纳入确认清单",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.73"
-    },
-    {
-      "versionName": "1.4.9.72",
-      "versionCode": 148,
-      "tag": "v1.4.9.72",
-      "date": "2026-10-25",
-      "title": "v1.4.9.72 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "settings toolloop ratelimit background",
-          "notes": [
-            "工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）",
-            "模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合",
-            "自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）"
-          ]
-        }
-      ],
-      "markdown": "- 工具循环：单轮并行执行上限（1..8，引擎真并发 + 时间线不撕裂）+ 任务轮次无上限（默认开，失控由循环检测兜底）+ 单轮调用数上限真接线（原设置页 dead 字段）\n- 模型限速友好（只针对有 RPM/TPM/日次数配额的厂商用户，默认关）：全局请求节流 + 每请求信息密度（工具输出 ×2 / 保留更多近轮 / 更晚压缩）+ 一键推荐组合\n- 自定义背景：导入自己的图片 + 专属优化（降采样解码不爆内存 / 亮度自适应纱罩保文字可读 / 一图一解码 / 失效诚实降级）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.72"
     }
   ]
 }
