@@ -1,38 +1,71 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-01T01:57:05Z",
+  "generatedAt": "2026-11-01T02:15:11Z",
   "latest": {
-    "versionName": "1.5.19",
-    "versionCode": 199,
-    "tag": "v1.5.19",
+    "versionName": "1.5.20",
+    "versionCode": 200,
+    "tag": "v1.5.20",
     "date": "2026-11-01",
-    "title": "v1.5.19 更新内容",
+    "title": "v1.5.20 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "修复",
+        "title": "batch8 redactor traceability",
         "notes": [
-          "MCP 工具清单改为有界并发聚合，为每台服务器设置独立的短超时预算；慢源或故障源不再串行拖住正常工具，保留稳定的服务器顺序、失败诊断和调用方取消传播（#488）。"
+          "敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循"
         ]
       },
       {
-        "title": "batch5 i18n labels",
+        "title": "修复文件选择与拍照结果",
         "notes": [
-          "模型设置卡 5 处硬编码标签接入 i18n 体系：Base URL / API Key / Providers… 表单标签与服务商对话框标题、密钥计数改走 stringResource（所在文件其余文本本就走资源，消除同屏不一致）"
+          "文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。",
+          "拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。"
         ]
       },
       {
-        "title": "修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内…",
+        "title": "修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的…",
         "notes": [
-          "修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内…"
+          "修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的…"
         ]
       }
     ],
-    "markdown": "## 修复\n\n- MCP 工具清单改为有界并发聚合，为每台服务器设置独立的短超时预算；慢源或故障源不再串行拖住正常工具，保留稳定的服务器顺序、失败诊断和调用方取消传播（#488）。\n\n---\n\n- 模型设置卡 5 处硬编码标签接入 i18n 体系：Base URL / API Key / Providers… 表单标签与服务商对话框标题、密钥计数改走 stringResource（所在文件其余文本本就走资源，消除同屏不一致）\n\n---\n\n修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内容；重复安装前置拒绝（不进确认门、不动任何文件）；GitHub token 供应器异常折叠为可读失败（不再击穿安装流程），协程取消照常传播。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.19"
+    "markdown": "- 敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循\n\n---\n\n# 修复文件选择与拍照结果\n\n- 文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。\n- 拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。\n\n---\n\n修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的问题。真实输入的草稿按字段保留，切换服务商不会串写凭证。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.20"
   },
   "history": [
+    {
+      "versionName": "1.5.20",
+      "versionCode": 200,
+      "tag": "v1.5.20",
+      "date": "2026-11-01",
+      "title": "v1.5.20 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "batch8 redactor traceability",
+          "notes": [
+            "敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循"
+          ]
+        },
+        {
+          "title": "修复文件选择与拍照结果",
+          "notes": [
+            "文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。",
+            "拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。"
+          ]
+        },
+        {
+          "title": "修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的…",
+          "notes": [
+            "修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的…"
+          ]
+        }
+      ],
+      "markdown": "- 敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循\n\n---\n\n# 修复文件选择与拍照结果\n\n- 文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。\n- 拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。\n\n---\n\n修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的问题。真实输入的草稿按字段保留，切换服务商不会串写凭证。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.20"
+    },
     {
       "versionName": "1.5.19",
       "versionCode": 199,
@@ -1378,29 +1411,6 @@
       ],
       "markdown": "## Agent 对话流视觉重做：紧凑气泡 + 卡片外操作行 + 全量 M3 化\n\n- 对话气泡头部大幅瘦身：「YOU / AGENT」角色标压成单行小字（去头像井、去 48px 溢出菜单行），流式回复与思考胶囊不再有大块留白\n- 消息操作改为气泡卡片外下方的图标行：用户气泡配「复制 + 编辑」两枚图标，Agent 回复结尾只有「复制」一枚 —— 「整理到记忆」人头图标随记忆系统重构全面退役\n- 新增「编辑消息」：点用户气泡下编辑图标可在对话框中修改原文，确认「重新发送」后以修改后的内容重新回答\n- 消息流全量去液态玻璃：Agent 回复、流式输出、思考胶囊、工具卡、任务状态卡、计划/规格卡统一改为 Material 3 实色容器（状态色收敛为卡片描边），滚动与流式更省性能\n- 气泡三点溢出菜单退役：原「复制全文 / 重生成 / 删除」等入口由卡片外图标行取代，界面更干净",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.75"
-    },
-    {
-      "versionName": "1.4.9.74",
-      "versionCode": 150,
-      "tag": "v1.4.9.74",
-      "date": "2026-10-25",
-      "title": "v1.4.9.74 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "终端会话边界与信号语义修复",
-          "notes": [
-            "Ctrl+Z 不再造成会话假死：挂起控制此前错发 SIGSTOP（不可捕获的硬停止，作业被冻结、shell 不回前台），现在发送正确的 SIGTSTP（作业控制语义：前台作业挂起、shell 收回终端回提示符，SIGCONT 可恢复）；Agent 的 TerminalSignal 工具同步支持 SIGTSTP",
-            "敲 exit 的会话不再永久泄漏：shell 自然退出后此前只迁移状态不回收资源（native PTY / VT 引擎 / 环形缓冲区全部滞留，死标签一直挂在会话簿）；现在 60 秒宽限期（留给读最终屏幕和事件尾窗）后自动回收，会话标签随之消失",
-            "终端标识查询应答（XTVERSION）：tmux 的终端探测、nvim 的环境识别此前只能超时放弃，现在按 xterm 规范应答 `DCS>|xterm(377)ST`",
-            "Ubuntu 会话色彩能力声明对齐：`COLORTERM=truecolor` 此前只在 Android 宿主会话注入，Ubuntu 会话里 ls / fzf / claude-cli 等按 256 色降级渲染；现在双模式同口径声明真彩色",
-            "清理零引用的设计稿代码约 350 行（process2 规格骨架、TerminalExecutionBackend 等四个并行抽象），减少「以为有两套实现」的误导"
-          ]
-        }
-      ],
-      "markdown": "## 终端会话边界与信号语义修复\n\n- Ctrl+Z 不再造成会话假死：挂起控制此前错发 SIGSTOP（不可捕获的硬停止，作业被冻结、shell 不回前台），现在发送正确的 SIGTSTP（作业控制语义：前台作业挂起、shell 收回终端回提示符，SIGCONT 可恢复）；Agent 的 TerminalSignal 工具同步支持 SIGTSTP\n- 敲 exit 的会话不再永久泄漏：shell 自然退出后此前只迁移状态不回收资源（native PTY / VT 引擎 / 环形缓冲区全部滞留，死标签一直挂在会话簿）；现在 60 秒宽限期（留给读最终屏幕和事件尾窗）后自动回收，会话标签随之消失\n- 终端标识查询应答（XTVERSION）：tmux 的终端探测、nvim 的环境识别此前只能超时放弃，现在按 xterm 规范应答 `DCS>|xterm(377)ST`\n- Ubuntu 会话色彩能力声明对齐：`COLORTERM=truecolor` 此前只在 Android 宿主会话注入，Ubuntu 会话里 ls / fzf / claude-cli 等按 256 色降级渲染；现在双模式同口径声明真彩色\n- 清理零引用的设计稿代码约 350 行（process2 规格骨架、TerminalExecutionBackend 等四个并行抽象），减少「以为有两套实现」的误导",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.74"
     }
   ]
 }
