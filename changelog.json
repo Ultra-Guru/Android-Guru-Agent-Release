@@ -1,21 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-10-31T19:24:38Z",
+  "generatedAt": "2026-11-01T00:01:59Z",
   "latest": {
-    "versionName": "1.5.15",
-    "versionCode": 195,
-    "tag": "v1.5.15",
-    "date": "2026-10-31",
-    "title": "v1.5.15 更新内容",
-    "notes": [
-      "例行版本更新与稳定性改进。"
-    ],
+    "versionName": "1.5.16",
+    "versionCode": 196,
+    "tag": "v1.5.16",
+    "date": "2026-11-01",
+    "title": "v1.5.16 更新内容",
+    "notes": [],
     "images": [],
-    "pr": [],
-    "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.15"
+    "pr": [
+      {
+        "title": "ubuntu tool surface consolidation",
+        "notes": [
+          "终端环境工具收敛：Ubuntu 安装 / 引导 / 能力查询三代旧入口（TerminalUbuntuInstall、TerminalLinuxBootstrap、TerminalLinuxCapabilities）已合并进 TerminalUbuntuEnsure 一键入口 —— Agent 拉起 Ubuntu 不再需要在三个入口间编排决策",
+          "全部引导提示与错误信息统一改指新入口：rootfs 未就绪、bootstrap 失败、创建会话被拒等场景下，Agent 按提示一键恢复即可",
+          "超时策略表与工具目录同步收敛（移除已下线工具的执行器预算条目与旧 id 别名），按项目补装工具链走 TerminalWorkspaceEnvironment ensure"
+        ]
+      }
+    ],
+    "markdown": "- 终端环境工具收敛：Ubuntu 安装 / 引导 / 能力查询三代旧入口（TerminalUbuntuInstall、TerminalLinuxBootstrap、TerminalLinuxCapabilities）已合并进 TerminalUbuntuEnsure 一键入口 —— Agent 拉起 Ubuntu 不再需要在三个入口间编排决策\n- 全部引导提示与错误信息统一改指新入口：rootfs 未就绪、bootstrap 失败、创建会话被拒等场景下，Agent 按提示一键恢复即可\n- 超时策略表与工具目录同步收敛（移除已下线工具的执行器预算条目与旧 id 别名），按项目补装工具链走 TerminalWorkspaceEnvironment ensure",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.16"
   },
   "history": [
+    {
+      "versionName": "1.5.16",
+      "versionCode": 196,
+      "tag": "v1.5.16",
+      "date": "2026-11-01",
+      "title": "v1.5.16 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "ubuntu tool surface consolidation",
+          "notes": [
+            "终端环境工具收敛：Ubuntu 安装 / 引导 / 能力查询三代旧入口（TerminalUbuntuInstall、TerminalLinuxBootstrap、TerminalLinuxCapabilities）已合并进 TerminalUbuntuEnsure 一键入口 —— Agent 拉起 Ubuntu 不再需要在三个入口间编排决策",
+            "全部引导提示与错误信息统一改指新入口：rootfs 未就绪、bootstrap 失败、创建会话被拒等场景下，Agent 按提示一键恢复即可",
+            "超时策略表与工具目录同步收敛（移除已下线工具的执行器预算条目与旧 id 别名），按项目补装工具链走 TerminalWorkspaceEnvironment ensure"
+          ]
+        }
+      ],
+      "markdown": "- 终端环境工具收敛：Ubuntu 安装 / 引导 / 能力查询三代旧入口（TerminalUbuntuInstall、TerminalLinuxBootstrap、TerminalLinuxCapabilities）已合并进 TerminalUbuntuEnsure 一键入口 —— Agent 拉起 Ubuntu 不再需要在三个入口间编排决策\n- 全部引导提示与错误信息统一改指新入口：rootfs 未就绪、bootstrap 失败、创建会话被拒等场景下，Agent 按提示一键恢复即可\n- 超时策略表与工具目录同步收敛（移除已下线工具的执行器预算条目与旧 id 别名），按项目补装工具链走 TerminalWorkspaceEnvironment ensure",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.16"
+    },
     {
       "versionName": "1.5.15",
       "versionCode": 195,
@@ -1367,35 +1395,6 @@
       ],
       "markdown": "## 知识库：程序化审计与补强（20 套全覆盖）\n\n- 新增 scripts/audit_knowledge_bases.py 程序化审计：索引指向完整性（真实解析器 findSection 语义）/ 索引-章节数量一致性（含「快速索引 · 续」多表合并）/ 每节标题词检索覆盖抽查 —— 审计失败退出码 1，可入 CI 或本地跑\n- 按审计结果补强 5 套库的索引缺口：all_rounder +27 条（速配卡/剧本/附录/结语全量入索引）、frontend +16 条（附录补遗全量）、full_stack +6 条、git +14 条、android +1 条、kotlin +1 条 —— 20 套库索引覆盖全部达到 100%\n- 修复 all_rounder 库「Gotlin」笔误（附录·与 Android/Kotlin 库的分工）\n\n---\n\n## 第二轮体系文档 + Project 面板收尾\n\n- 新增 docs/html-layout-analysis.md：HTML 布局分析能力全景 —— 三工具矩阵（HtmlAnalyzeLayout 静态 / BrowserAnalyzeLayout 动态 / HtmlCompareLayouts 对比）× 五层能力（解析与布局推断 / CSS 级联 / 视觉画像 / 组件模式识别 / 对比差异）× 动态采集 v2 可读性四查，含典型工作流与工程纪律\n- docs/knowledge-system.md 更新：检索面补跨库全局检索（searchAll/省略 kb）；维护纪律新增程序化审计条款（scripts/audit_knowledge_bases.py 三查口径与当前基线）与跨库检索条款；20 卷总表索引数对齐审计补强后基线（全 100% 覆盖）\n- GitHub Project「HTML预览布局分析引擎 + Agent模板知识库体系」第二轮任务状态同步（R2-PR1~8 全部 Done）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.71"
-    },
-    {
-      "versionName": "1.4.9.70",
-      "versionCode": 146,
-      "tag": "v1.4.9.70",
-      "date": "2026-10-25",
-      "title": "v1.4.9.70 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "HTML 布局分析：浏览器动态采集 v2",
-          "notes": [
-            "BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）",
-            "报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）",
-            "对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题"
-          ]
-        },
-        {
-          "title": "知识库：跨库全局检索 + 工具参数修复",
-          "notes": [
-            "KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏",
-            "修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）",
-            "KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf"
-          ]
-        }
-      ],
-      "markdown": "## HTML 布局分析：浏览器动态采集 v2\n\n- BrowserAnalyzeLayout 采集脚本扩展四项检测：文字截断（scrollWidth>clientWidth / scrollHeight>clientHeight，内容被裁切）、触屏小点击目标（a/button/input/role=button 等可交互元素 <44px）、动态颜色对比度采样（WCAG 相对亮度 vs 背景链 alpha 混合，大字 3.0 / 正文 4.5 双阈值）、暗色模式适配状态（prefers-color-scheme / meta color-scheme / body 背景亮度判定）\n- 报告新增「文字截断 / 触屏点击目标过小 / 低对比度文字（WCAG） / 暗色模式」四段渲染；旧采集载荷不渲染新段落（向后兼容）\n- 对比度背景链逐层混合半透明背景（最深 6 层），无背景时按暗色偏好兜底深色底 —— 解决「灰色文字叠在半透明卡片上」这类静态分析看不见的真实可读性问题\n\n---\n\n## 知识库：跨库全局检索 + 工具参数修复\n\n- KnowledgeBase 工具 search 动作支持省略 kb —— 跨库全局检索：每库取 top 3 命中、库间按相关度汇总排序、每条命中标注来源库 id（Agent 直接 read(kb=…, section=…) 精读），单库不刷屏\n- 修复工具层 kb 参数必填 bug：此前 kb 在动作分发前被强制校验，导致 action=list 不带 kb 也报错；现按动作区分必需性（list 无需 / search 可选 / must_read·index·read 必填）\n- KnowledgeBaseService 新增 searchAll（每库 perKb + 全局 total 双上限）；修复 KDoc 笔误 ustReadOf → mustReadOf",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.70"
     }
   ]
 }
