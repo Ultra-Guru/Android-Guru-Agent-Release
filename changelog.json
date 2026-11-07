@@ -1,35 +1,103 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T00:38:43Z",
+  "generatedAt": "2026-11-07T00:56:08Z",
   "latest": {
-    "versionName": "1.5.27",
-    "versionCode": 207,
-    "tag": "v1.5.27",
+    "versionName": "1.5.28",
+    "versionCode": 208,
+    "tag": "v1.5.28",
     "date": "2026-11-07",
-    "title": "v1.5.27 更新内容",
+    "title": "v1.5.28 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "Coding 流水输出 · 未闭合代码围栏渐进容错",
+        "title": "search tool capsule",
         "notes": [
-          "Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。",
-          "表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。"
+          "网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）",
+          "搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感",
+          "收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）",
+          "详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块"
         ]
       },
       {
-        "title": "流水思考交互",
+        "title": "terminal chroot maturity t99 spec",
         "notes": [
-          "思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。",
-          "设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。",
-          "收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。"
+          "T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活",
+          "六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6"
+        ]
+      },
+      {
+        "title": "agent task packages spec",
+        "notes": [
+          "Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）",
+          "分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）",
+          "反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）"
+        ]
+      },
+      {
+        "title": "glasslab darkbar liquid swipe",
+        "notes": [
+          "玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水",
+          "唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变",
+          "药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原",
+          "全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）",
+          "双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）",
+          "Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化"
         ]
       }
     ],
-    "markdown": "# Coding 流水输出 · 未闭合代码围栏渐进容错\n\n- Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。\n- 表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。\n\n---\n\n# 流水思考交互\n\n- 思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。\n- 设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。\n- 收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.27"
+    "markdown": "- 网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）\n- 搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感\n- 收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）\n- 详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块\n\n---\n\n- T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活\n- 六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6\n\n---\n\n- Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）\n- 分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）\n- 反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）\n\n---\n\n- 玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水\n- 唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变\n- 药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原\n- 全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）\n- 双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）\n- Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.28"
   },
   "history": [
+    {
+      "versionName": "1.5.28",
+      "versionCode": 208,
+      "tag": "v1.5.28",
+      "date": "2026-11-07",
+      "title": "v1.5.28 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "search tool capsule",
+          "notes": [
+            "网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）",
+            "搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感",
+            "收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）",
+            "详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块"
+          ]
+        },
+        {
+          "title": "terminal chroot maturity t99 spec",
+          "notes": [
+            "T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活",
+            "六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6"
+          ]
+        },
+        {
+          "title": "agent task packages spec",
+          "notes": [
+            "Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）",
+            "分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）",
+            "反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）"
+          ]
+        },
+        {
+          "title": "glasslab darkbar liquid swipe",
+          "notes": [
+            "玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水",
+            "唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变",
+            "药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原",
+            "全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）",
+            "双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）",
+            "Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化"
+          ]
+        }
+      ],
+      "markdown": "- 网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）\n- 搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感\n- 收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）\n- 详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块\n\n---\n\n- T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活\n- 六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6\n\n---\n\n- Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）\n- 分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）\n- 反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）\n\n---\n\n- 玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水\n- 唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变\n- 药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原\n- 全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）\n- 双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）\n- Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.28"
+    },
     {
       "versionName": "1.5.27",
       "versionCode": 207,
@@ -1440,31 +1508,6 @@
       ],
       "markdown": "- 「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据\n- 新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）\n- 回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.83"
-    },
-    {
-      "versionName": "1.4.9.82",
-      "versionCode": 158,
-      "tag": "v1.4.9.82",
-      "date": "2026-10-30",
-      "title": "v1.4.9.82 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "Agent 对话屏与任务页整域移除（Agent 模式移除 2/6）",
-          "notes": [
-            "**整目录删除**：`ui/screen/agent`（48 文件 —— 对话屏/历史/附件/流水渲染/模式指南/斜杠管线）、`ui/screen/tasks`（任务历史）、`loop/`（LOOP 循环调度）、附件双组件与 ViroPet 桌宠",
-            "**导航收口**：抽屉 Agent/Tasks 目的地移除；默认落地页 → Coding；返回栈语义同步",
-            "**全局状态迁移**：原由 AgentChatViewModel 兼职承载的网络监测/设置快照/GitHub 徽标 → 独立轻量 AppStatusViewModel",
-            "**DI 收口**：AgentConfig 组装、TaskRuntime、Skill 激活链 Provider 移除（Coding 引擎自建配置不受影响）",
-            "**服务收口**：LOOP 调度器随服务启停的接线移除",
-            "**备份域收口**：聊天会话备份/恢复（Agent 会话专属）移除；设置 + Vault 备份通道保持",
-            "**资产清理**：strings_loop 双语删除；338 个孤儿字符串键双语同步清理"
-          ]
-        }
-      ],
-      "markdown": "## Agent 对话屏与任务页整域移除（Agent 模式移除 2/6）\n\n- **整目录删除**：`ui/screen/agent`（48 文件 —— 对话屏/历史/附件/流水渲染/模式指南/斜杠管线）、`ui/screen/tasks`（任务历史）、`loop/`（LOOP 循环调度）、附件双组件与 ViroPet 桌宠\n- **导航收口**：抽屉 Agent/Tasks 目的地移除；默认落地页 → Coding；返回栈语义同步\n- **全局状态迁移**：原由 AgentChatViewModel 兼职承载的网络监测/设置快照/GitHub 徽标 → 独立轻量 AppStatusViewModel\n- **DI 收口**：AgentConfig 组装、TaskRuntime、Skill 激活链 Provider 移除（Coding 引擎自建配置不受影响）\n- **服务收口**：LOOP 调度器随服务启停的接线移除\n- **备份域收口**：聊天会话备份/恢复（Agent 会话专属）移除；设置 + Vault 备份通道保持\n- **资产清理**：strings_loop 双语删除；338 个孤儿字符串键双语同步清理",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.82"
     }
   ]
 }
