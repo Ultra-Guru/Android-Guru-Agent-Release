@@ -1,21 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T00:04:34Z",
+  "generatedAt": "2026-11-07T00:21:35Z",
   "latest": {
-    "versionName": "1.5.25",
-    "versionCode": 205,
-    "tag": "v1.5.25",
+    "versionName": "1.5.26",
+    "versionCode": 206,
+    "tag": "v1.5.26",
     "date": "2026-11-07",
-    "title": "v1.5.25 更新内容",
-    "notes": [
-      "例行版本更新与稳定性改进。"
-    ],
+    "title": "v1.5.26 更新内容",
+    "notes": [],
     "images": [],
-    "pr": [],
-    "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.25"
+    "pr": [
+      {
+        "title": "Coding 流水输出：发送即显示助手占位",
+        "notes": [
+          "发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。",
+          "纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。"
+        ]
+      }
+    ],
+    "markdown": "# Coding 流水输出：发送即显示助手占位\n\n- 发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。\n- 纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.26"
   },
   "history": [
+    {
+      "versionName": "1.5.26",
+      "versionCode": 206,
+      "tag": "v1.5.26",
+      "date": "2026-11-07",
+      "title": "v1.5.26 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "Coding 流水输出：发送即显示助手占位",
+          "notes": [
+            "发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。",
+            "纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。"
+          ]
+        }
+      ],
+      "markdown": "# Coding 流水输出：发送即显示助手占位\n\n- 发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。\n- 纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.26"
+    },
     {
       "versionName": "1.5.25",
       "versionCode": 205,
@@ -1425,27 +1451,6 @@
       ],
       "markdown": "- 模板行为运行时核心落地：activate → prepareTurn → processResponse → deactivate 完整业务闭环，模板切换从提示词注入升级为行为装配 + 六阶段管线执行\n- 每个阶段防御式包裹 + 执行轨迹留痕（耗时/结论/崩溃原因），单阶段崩溃不灭管线，聊天主流程永不被模板功能打挂\n- 内置模板激活时强制取出厂定义（与注册表自愈双保险）；自定义模板回落兜底行为（变量替换 + 通用净化）\n- 回包处理：契约校验 → 自动修复 → 内容缺口残留提示（补壳不算达标，缺内容引导追问）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.81"
-    },
-    {
-      "versionName": "1.4.9.80",
-      "versionCode": 156,
-      "tag": "v1.4.9.80",
-      "date": "2026-10-30",
-      "title": "v1.4.9.80 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template analyzer toolkit",
-          "notes": [
-            "模板行为运行时新增共享分析工具箱：文本度量（CJK 感知断句/词频/关键度打分）、编程语言探测（20 门语言打分制）、Markdown 结构扫描（标题/列表/代码块/占位符保真比对）",
-            "新增章节解析器：回包四通道标题识别、契约校验机械（缺失章节/寒暄/尾随废话/占位符泄漏/结论先行）、确定性修复（剥寒暄/补章节壳/编号归一）",
-            "以上能力是后续每个内置模板「代码化行为」的一手分析引擎"
-          ]
-        }
-      ],
-      "markdown": "- 模板行为运行时新增共享分析工具箱：文本度量（CJK 感知断句/词频/关键度打分）、编程语言探测（20 门语言打分制）、Markdown 结构扫描（标题/列表/代码块/占位符保真比对）\n- 新增章节解析器：回包四通道标题识别、契约校验机械（缺失章节/寒暄/尾随废话/占位符泄漏/结论先行）、确定性修复（剥寒暄/补章节壳/编号归一）\n- 以上能力是后续每个内置模板「代码化行为」的一手分析引擎",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.80"
     }
   ]
 }
