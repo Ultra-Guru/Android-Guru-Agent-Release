@@ -1,29 +1,55 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T08:48:58Z",
+  "generatedAt": "2026-11-07T09:05:35Z",
   "latest": {
-    "versionName": "1.5.32",
-    "versionCode": 212,
-    "tag": "v1.5.32",
+    "versionName": "1.5.33",
+    "versionCode": 213,
+    "tag": "v1.5.33",
     "date": "2026-11-07",
-    "title": "v1.5.32 更新内容",
+    "title": "v1.5.33 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "extension market wizard",
+        "title": "flow ui retry ring file capsules",
         "notes": [
-          "市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨",
-          "**APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）",
-          "**extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）",
-          "配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）"
+          "流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容",
+          "LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误",
+          "上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧",
+          "文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿",
+          "流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）",
+          "任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）"
         ]
       }
     ],
-    "markdown": "- 市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨\n- **APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）\n- **extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）\n- 配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.32"
+    "markdown": "- 流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容\n- LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误\n- 上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧\n- 文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿\n- 流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）\n- 任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.33"
   },
   "history": [
+    {
+      "versionName": "1.5.33",
+      "versionCode": 213,
+      "tag": "v1.5.33",
+      "date": "2026-11-07",
+      "title": "v1.5.33 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "flow ui retry ring file capsules",
+          "notes": [
+            "流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容",
+            "LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误",
+            "上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧",
+            "文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿",
+            "流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）",
+            "任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）"
+          ]
+        }
+      ],
+      "markdown": "- 流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容\n- LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误\n- 上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧\n- 文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿\n- 流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）\n- 任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.33"
+    },
     {
       "versionName": "1.5.32",
       "versionCode": 212,
@@ -1428,27 +1454,6 @@
       ],
       "markdown": "- 十个内置模板与十个代码行为的 1:1 装订表落地（目录完整性测试锁死：多一个少一个都红）\n- 全链路确定性冒烟：每个内置模板激活 → 代码行为绑定（不走兜底）→ 附录注入 → 同输入两次组装结果一致\n- 行为清单自洽校验：behaviorId 一致、纯载荷契约仅翻译使用、确定性分析必须走附录注入",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.88"
-    },
-    {
-      "versionName": "1.4.9.87",
-      "versionCode": 163,
-      "tag": "v1.4.9.87",
-      "date": "2026-10-30",
-      "title": "v1.4.9.87 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template behavior regex explain",
-          "notes": [
-            "「正则解释」模板代码化：内置真正的递归下降正则解析器（字面量/字符类/预定义类/锚点/捕获-非捕获-命名组/前瞻/量词含惰性/交替/反向引用），AST 逐段中文解释",
-            "从 AST 确定性推导「应匹配 / 不应匹配」样本（首分支/量词下限/类代表字符），不再靠猜",
-            "回溯风险三级分析：嵌套无界量词（灾难性）/ 相邻无界量词字符域重叠（高）/ 交替前缀重叠（中），附简化建议规则表（[0-9]→\\d、(a|b)→[ab]、连续 .* 合并、缺锚点提醒）"
-          ]
-        }
-      ],
-      "markdown": "- 「正则解释」模板代码化：内置真正的递归下降正则解析器（字面量/字符类/预定义类/锚点/捕获-非捕获-命名组/前瞻/量词含惰性/交替/反向引用），AST 逐段中文解释\n- 从 AST 确定性推导「应匹配 / 不应匹配」样本（首分支/量词下限/类代表字符），不再靠猜\n- 回溯风险三级分析：嵌套无界量词（灾难性）/ 相邻无界量词字符域重叠（高）/ 交替前缀重叠（中），附简化建议规则表（[0-9]→\\d、(a|b)→[ab]、连续 .* 合并、缺锚点提醒）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.87"
     }
   ]
 }
