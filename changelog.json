@@ -1,27 +1,63 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T00:21:35Z",
+  "generatedAt": "2026-11-07T00:38:43Z",
   "latest": {
-    "versionName": "1.5.26",
-    "versionCode": 206,
-    "tag": "v1.5.26",
+    "versionName": "1.5.27",
+    "versionCode": 207,
+    "tag": "v1.5.27",
     "date": "2026-11-07",
-    "title": "v1.5.26 更新内容",
+    "title": "v1.5.27 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "Coding 流水输出：发送即显示助手占位",
+        "title": "Coding 流水输出 · 未闭合代码围栏渐进容错",
         "notes": [
-          "发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。",
-          "纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。"
+          "Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。",
+          "表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。"
+        ]
+      },
+      {
+        "title": "流水思考交互",
+        "notes": [
+          "思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。",
+          "设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。",
+          "收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。"
         ]
       }
     ],
-    "markdown": "# Coding 流水输出：发送即显示助手占位\n\n- 发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。\n- 纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.26"
+    "markdown": "# Coding 流水输出 · 未闭合代码围栏渐进容错\n\n- Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。\n- 表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。\n\n---\n\n# 流水思考交互\n\n- 思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。\n- 设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。\n- 收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.27"
   },
   "history": [
+    {
+      "versionName": "1.5.27",
+      "versionCode": 207,
+      "tag": "v1.5.27",
+      "date": "2026-11-07",
+      "title": "v1.5.27 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "Coding 流水输出 · 未闭合代码围栏渐进容错",
+          "notes": [
+            "Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。",
+            "表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。"
+          ]
+        },
+        {
+          "title": "流水思考交互",
+          "notes": [
+            "思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。",
+            "设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。",
+            "收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。"
+          ]
+        }
+      ],
+      "markdown": "# Coding 流水输出 · 未闭合代码围栏渐进容错\n\n- Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。\n- 表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。\n\n---\n\n# 流水思考交互\n\n- 思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。\n- 设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。\n- 收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.27"
+    },
     {
       "versionName": "1.5.26",
       "versionCode": 206,
@@ -1429,28 +1465,6 @@
       ],
       "markdown": "## Agent 对话屏与任务页整域移除（Agent 模式移除 2/6）\n\n- **整目录删除**：`ui/screen/agent`（48 文件 —— 对话屏/历史/附件/流水渲染/模式指南/斜杠管线）、`ui/screen/tasks`（任务历史）、`loop/`（LOOP 循环调度）、附件双组件与 ViroPet 桌宠\n- **导航收口**：抽屉 Agent/Tasks 目的地移除；默认落地页 → Coding；返回栈语义同步\n- **全局状态迁移**：原由 AgentChatViewModel 兼职承载的网络监测/设置快照/GitHub 徽标 → 独立轻量 AppStatusViewModel\n- **DI 收口**：AgentConfig 组装、TaskRuntime、Skill 激活链 Provider 移除（Coding 引擎自建配置不受影响）\n- **服务收口**：LOOP 调度器随服务启停的接线移除\n- **备份域收口**：聊天会话备份/恢复（Agent 会话专属）移除；设置 + Vault 备份通道保持\n- **资产清理**：strings_loop 双语删除；338 个孤儿字符串键双语同步清理",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.82"
-    },
-    {
-      "versionName": "1.4.9.81",
-      "versionCode": 157,
-      "tag": "v1.4.9.81",
-      "date": "2026-10-30",
-      "title": "v1.4.9.81 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template runtime orchestrator",
-          "notes": [
-            "模板行为运行时核心落地：activate → prepareTurn → processResponse → deactivate 完整业务闭环，模板切换从提示词注入升级为行为装配 + 六阶段管线执行",
-            "每个阶段防御式包裹 + 执行轨迹留痕（耗时/结论/崩溃原因），单阶段崩溃不灭管线，聊天主流程永不被模板功能打挂",
-            "内置模板激活时强制取出厂定义（与注册表自愈双保险）；自定义模板回落兜底行为（变量替换 + 通用净化）",
-            "回包处理：契约校验 → 自动修复 → 内容缺口残留提示（补壳不算达标，缺内容引导追问）"
-          ]
-        }
-      ],
-      "markdown": "- 模板行为运行时核心落地：activate → prepareTurn → processResponse → deactivate 完整业务闭环，模板切换从提示词注入升级为行为装配 + 六阶段管线执行\n- 每个阶段防御式包裹 + 执行轨迹留痕（耗时/结论/崩溃原因），单阶段崩溃不灭管线，聊天主流程永不被模板功能打挂\n- 内置模板激活时强制取出厂定义（与注册表自愈双保险）；自定义模板回落兜底行为（变量替换 + 通用净化）\n- 回包处理：契约校验 → 自动修复 → 内容缺口残留提示（补壳不算达标，缺内容引导追问）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.81"
     }
   ]
 }
