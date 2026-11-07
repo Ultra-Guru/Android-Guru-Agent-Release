@@ -1,34 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T09:24:25Z",
+  "generatedAt": "2026-11-07T11:00:15Z",
   "latest": {
-    "versionName": "1.5.34",
-    "versionCode": 214,
-    "tag": "v1.5.34",
+    "versionName": "1.5.35",
+    "versionCode": 215,
+    "tag": "v1.5.35",
     "date": "2026-11-07",
-    "title": "v1.5.34 更新内容",
+    "title": "v1.5.35 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "coding stream interruption safety",
+        "title": "streaming pipeline p0",
         "notes": [
-          "弱网断线安全：Coding 流式回答遇到连接中断（连接重置 / 5xx / SSE 流被掐断）时**绝不再自动重发请求**——流式对话没有断点续传，自动重放会重复计费并重复执行工具副作用；现在立即明确报错，是否重发由你在界面手动决定",
-          "断线前已生成的部分回答**原样保留**在对话里，不再静默丢弃；服务端没有发出完成标记（[DONE]/finish_reason）就被掐断的流，不会再被当成「完整回答」写进对话历史"
-        ]
-      },
-      {
-        "title": "llm response body bound",
-        "notes": [
-          "非流式模型响应增加内存安全上限（8,000,000 字节）：异常或恶意端点返回超大响应体时，现在以明确的「模型响应过大」错误提示，而不是把内存撑爆后闪退",
-          "HTTP 错误响应体只读取前 200 字节（错误诊断足够），且连接确定性关闭，杜绝超长错误页拖垮进程与连接泄漏"
+          "修复任务积压时回复文字被吞的问题：引擎高水位会丢弃流式过程分片（保护内存的既有策略），但收尾事件携带的权威全文此前没有被 UI 回填——现在收束时统一按引擎全文仲裁回填，**任何情况下不丢字**",
+          "流式文本改走事件聚合器：分片先进缓冲、25ms 批量上屏（≤40Hz），消除逐字全列表拷贝；边界事件（工具开始/收束/取消）强制先冲文本保顺序，中止时已收到内容不丢"
         ]
       }
     ],
-    "markdown": "- 弱网断线安全：Coding 流式回答遇到连接中断（连接重置 / 5xx / SSE 流被掐断）时**绝不再自动重发请求**——流式对话没有断点续传，自动重放会重复计费并重复执行工具副作用；现在立即明确报错，是否重发由你在界面手动决定\n- 断线前已生成的部分回答**原样保留**在对话里，不再静默丢弃；服务端没有发出完成标记（[DONE]/finish_reason）就被掐断的流，不会再被当成「完整回答」写进对话历史\n\n---\n\n- 非流式模型响应增加内存安全上限（8,000,000 字节）：异常或恶意端点返回超大响应体时，现在以明确的「模型响应过大」错误提示，而不是把内存撑爆后闪退\n- HTTP 错误响应体只读取前 200 字节（错误诊断足够），且连接确定性关闭，杜绝超长错误页拖垮进程与连接泄漏",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.34"
+    "markdown": "- 修复任务积压时回复文字被吞的问题：引擎高水位会丢弃流式过程分片（保护内存的既有策略），但收尾事件携带的权威全文此前没有被 UI 回填——现在收束时统一按引擎全文仲裁回填，**任何情况下不丢字**\n- 流式文本改走事件聚合器：分片先进缓冲、25ms 批量上屏（≤40Hz），消除逐字全列表拷贝；边界事件（工具开始/收束/取消）强制先冲文本保顺序，中止时已收到内容不丢",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.35"
   },
   "history": [
+    {
+      "versionName": "1.5.35",
+      "versionCode": 215,
+      "tag": "v1.5.35",
+      "date": "2026-11-07",
+      "title": "v1.5.35 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "streaming pipeline p0",
+          "notes": [
+            "修复任务积压时回复文字被吞的问题：引擎高水位会丢弃流式过程分片（保护内存的既有策略），但收尾事件携带的权威全文此前没有被 UI 回填——现在收束时统一按引擎全文仲裁回填，**任何情况下不丢字**",
+            "流式文本改走事件聚合器：分片先进缓冲、25ms 批量上屏（≤40Hz），消除逐字全列表拷贝；边界事件（工具开始/收束/取消）强制先冲文本保顺序，中止时已收到内容不丢"
+          ]
+        }
+      ],
+      "markdown": "- 修复任务积压时回复文字被吞的问题：引擎高水位会丢弃流式过程分片（保护内存的既有策略），但收尾事件携带的权威全文此前没有被 UI 回填——现在收束时统一按引擎全文仲裁回填，**任何情况下不丢字**\n- 流式文本改走事件聚合器：分片先进缓冲、25ms 批量上屏（≤40Hz），消除逐字全列表拷贝；边界事件（工具开始/收束/取消）强制先冲文本保顺序，中止时已收到内容不丢",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.35"
+    },
     {
       "versionName": "1.5.34",
       "versionCode": 214,
@@ -1437,32 +1450,6 @@
       ],
       "markdown": "- 附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）\n- Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）\n- 存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区\n- 字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT\n- 红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.90"
-    },
-    {
-      "versionName": "1.4.9.89",
-      "versionCode": 165,
-      "tag": "v1.4.9.89",
-      "date": "2026-10-30",
-      "title": "v1.4.9.89 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "引擎域 Agent 模式核心移除（Agent 模式移除 3/6）",
-          "notes": [
-            "**模式档位收敛**：AgentMode 删 CHAT/AGENT/LOOP/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM 七个 Agent 屏/存量档位，只留编码工位三档 BUILD/PLAN/GOAL（Coding 功能零损失：深潜/标准/织造/信使四线与 Goal 驱动全部保留）",
-            "**整文件删除**：EngineSpecFlow.kt（SPEC 规格）、EnginePromptDelegates.kt（SPEC/Reflection 提示词包装）、assist/ 的 DecisionPointDetector/HumanAssistFlow/ReflectionFlow 三流（含三份测试）、EngineWorkstation.kt（双工位枚举 —— 纯 Coding 软件不再有工位分轨）",
-            "**事件协议收口**：AgentEvent 删 SpecGenerated/SpecAwaitingConfirmation/SpecConfirmed/ReflectionReview 与 ExecutionSpec 载荷；TaskRuntime 与 CodeStreamSession 的对应消费分支同步移除",
-            "**确认通道收口**：spec 确认 deferred/submitSpecConfirmation/abort 收尾三处删除（ConfirmationSink 只剩 PLAN 门；plan/AskUser 通道不动）",
-            "**提示词收口**：模式段（CHAT/AGENT/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM/LOOP）、身份行双工位分轨、CUSTOM 附加指令段、CHAT 攻略豁免门全部移除；恒为 CODING agent 身份行；任务路由的「引导切换 Coding 工位」改写分支删除（git 工具不可见时 GitHub 车道诚实省略）",
-            "**工具计划收口**：AGENT/LOOP 的 Code/Github 族前缀黑名单隔离（AGENT_EXCLUDED_TOOL_PREFIXES/filterOutCodingTools）删除；市场分级作用域隔离（mcpScopeIsolation）保留",
-            "**遗留字段过渡**：AgentConfig.reflectionRounds/customInstruction 字段保留（消费方在工具/设置域，PR 4/6、5/6 随消费方删除），引擎侧消费点已全部移除",
-            "**刻意保留**（grep 引用为准）：goal/ 整包（CodeGoalController/CodeViewModel/DI 实际消费 —— Coding 目标驱动模式在用）、EngineAskUserFlow 与 AskUser 通道（Coding 计划确认/权限门在用）、ModePresets.kt（设置域消费，PR 5/6 删）"
-          ]
-        }
-      ],
-      "markdown": "## 引擎域 Agent 模式核心移除（Agent 模式移除 3/6）\n\n- **模式档位收敛**：AgentMode 删 CHAT/AGENT/LOOP/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM 七个 Agent 屏/存量档位，只留编码工位三档 BUILD/PLAN/GOAL（Coding 功能零损失：深潜/标准/织造/信使四线与 Goal 驱动全部保留）\n- **整文件删除**：EngineSpecFlow.kt（SPEC 规格）、EnginePromptDelegates.kt（SPEC/Reflection 提示词包装）、assist/ 的 DecisionPointDetector/HumanAssistFlow/ReflectionFlow 三流（含三份测试）、EngineWorkstation.kt（双工位枚举 —— 纯 Coding 软件不再有工位分轨）\n- **事件协议收口**：AgentEvent 删 SpecGenerated/SpecAwaitingConfirmation/SpecConfirmed/ReflectionReview 与 ExecutionSpec 载荷；TaskRuntime 与 CodeStreamSession 的对应消费分支同步移除\n- **确认通道收口**：spec 确认 deferred/submitSpecConfirmation/abort 收尾三处删除（ConfirmationSink 只剩 PLAN 门；plan/AskUser 通道不动）\n- **提示词收口**：模式段（CHAT/AGENT/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM/LOOP）、身份行双工位分轨、CUSTOM 附加指令段、CHAT 攻略豁免门全部移除；恒为 CODING agent 身份行；任务路由的「引导切换 Coding 工位」改写分支删除（git 工具不可见时 GitHub 车道诚实省略）\n- **工具计划收口**：AGENT/LOOP 的 Code/Github 族前缀黑名单隔离（AGENT_EXCLUDED_TOOL_PREFIXES/filterOutCodingTools）删除；市场分级作用域隔离（mcpScopeIsolation）保留\n- **遗留字段过渡**：AgentConfig.reflectionRounds/customInstruction 字段保留（消费方在工具/设置域，PR 4/6、5/6 随消费方删除），引擎侧消费点已全部移除\n- **刻意保留**（grep 引用为准）：goal/ 整包（CodeGoalController/CodeViewModel/DI 实际消费 —— Coding 目标驱动模式在用）、EngineAskUserFlow 与 AskUser 通道（Coding 计划确认/权限门在用）、ModePresets.kt（设置域消费，PR 5/6 删）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.89"
     }
   ]
 }
