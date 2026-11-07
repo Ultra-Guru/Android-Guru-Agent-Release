@@ -1,55 +1,45 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T00:56:08Z",
+  "generatedAt": "2026-11-07T04:37:16Z",
   "latest": {
-    "versionName": "1.5.28",
-    "versionCode": 208,
-    "tag": "v1.5.28",
+    "versionName": "1.5.29",
+    "versionCode": 209,
+    "tag": "v1.5.29",
     "date": "2026-11-07",
-    "title": "v1.5.28 更新内容",
+    "title": "v1.5.29 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "search tool capsule",
+        "title": "browser task card",
         "notes": [
-          "网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）",
-          "搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感",
-          "收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）",
-          "详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块"
-        ]
-      },
-      {
-        "title": "terminal chroot maturity t99 spec",
-        "notes": [
-          "T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活",
-          "六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6"
-        ]
-      },
-      {
-        "title": "agent task packages spec",
-        "notes": [
-          "Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）",
-          "分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）",
-          "反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）"
-        ]
-      },
-      {
-        "title": "glasslab darkbar liquid swipe",
-        "notes": [
-          "玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水",
-          "唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变",
-          "药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原",
-          "全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）",
-          "双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）",
-          "Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化"
+          "**BrowserTask 流水任务卡**：任务执行期间步级进度（▶ 开始/✓ 完成/✗ 失败/⏸ 检查点）实时流入输出时间轴，最终结果一次性折叠返回——模型往返 N→1 之外，人也能实时看任务推进"
         ]
       }
     ],
-    "markdown": "- 网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）\n- 搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感\n- 收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）\n- 详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块\n\n---\n\n- T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活\n- 六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6\n\n---\n\n- Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）\n- 分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）\n- 反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）\n\n---\n\n- 玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水\n- 唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变\n- 药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原\n- 全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）\n- 双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）\n- Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.28"
+    "markdown": "- **BrowserTask 流水任务卡**：任务执行期间步级进度（▶ 开始/✓ 完成/✗ 失败/⏸ 检查点）实时流入输出时间轴，最终结果一次性折叠返回——模型往返 N→1 之外，人也能实时看任务推进",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.29"
   },
   "history": [
+    {
+      "versionName": "1.5.29",
+      "versionCode": 209,
+      "tag": "v1.5.29",
+      "date": "2026-11-07",
+      "title": "v1.5.29 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "browser task card",
+          "notes": [
+            "**BrowserTask 流水任务卡**：任务执行期间步级进度（▶ 开始/✓ 完成/✗ 失败/⏸ 检查点）实时流入输出时间轴，最终结果一次性折叠返回——模型往返 N→1 之外，人也能实时看任务推进"
+          ]
+        }
+      ],
+      "markdown": "- **BrowserTask 流水任务卡**：任务执行期间步级进度（▶ 开始/✓ 完成/✗ 失败/⏸ 检查点）实时流入输出时间轴，最终结果一次性折叠返回——模型往返 N→1 之外，人也能实时看任务推进",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.29"
+    },
     {
       "versionName": "1.5.28",
       "versionCode": 208,
@@ -1487,27 +1477,6 @@
       ],
       "markdown": "- 「提交信息生成」模板代码化：统一 diff 状态机解析（文件清单/增删统计/重命名/二进制/截断防御）先于大模型完成变更判读\n- 新增 conventional 类型打分（路径与形态证据投票）、破坏性变更三通道探测（公开符号删除/显式标记/契约文件）、scope 推导\n- 新增提交信息校验与确定性修复：首行格式/主题长度/正文折行/英文祈使语气/中文冗余后缀\n- 分析阶段直接产出可用草稿（type(scope): subject + 正文要点 + BREAKING footer），LLM 从核对润色开始而不是从零造句\n\n---\n\n- 「专业翻译」模板代码化：五大领域术语表（技术/医学/法律/金融/通用，约 190 条真实中英对照）先于大模型完成术语判定\n- 新增书写系统普查（CJK/拉丁/西里尔/阿拉伯/假名/谚文）与源语言猜测（功能词启发）、目标语言别名归一（17 种语言）\n- 译文质量三重校验：纯载荷契约（禁解释段）、结构保真比对（标题/列表/占位符/代码块差集）、术语一致性（规范译法 + 常见变体）\n- 修复管线：剥「以下是译文」前导与「翻译说明」尾部块\n\n---\n\n- 「内容总结」模板代码化：长度预算解析（上限/区间/左右/中文数字）、五类体裁画像、关键事实抽取（数字/百分比/日期/区间/倍数/否定句）\n- 抽取式草稿先行：句级打分选句 + bigram 去冗余 + 原文序输出，LLM 从核对改写开始\n- 输出五重校验：结论先行、要点 3-5 条、长度预算、关键事实覆盖率、否定语义保留（防「不支持」被总结成支持）\n\n---\n\n- 「重构方案」模板代码化：结构度量诊断（复杂度/重复/超长/嵌套/参数）按影响自动排序\n- 确定性步骤骨架：保护网永远第一步（无测试痕迹自动判定），其后提取重复、拆分函数、降嵌套、参数收敛，顺序与风险全部由代码决定\n- 风险税则表：每类步骤的风险等级 + 回滚方式 + 回滚成本；验证清单按代码形态确定性生成",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.84"
-    },
-    {
-      "versionName": "1.4.9.83",
-      "versionCode": 159,
-      "tag": "v1.4.9.83",
-      "date": "2026-10-30",
-      "title": "v1.4.9.83 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template behavior code review",
-          "notes": [
-            "「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据",
-            "新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）",
-            "回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）"
-          ]
-        }
-      ],
-      "markdown": "- 「代码审查」模板正式代码化：切换该模板即装配 90+ 条逐语言静态规则（13 张语言规则表）+ 结构度量管线，评审提示词自动携带确定性证据\n- 新增圈复杂度代理、重复块探测、参数/嵌套阈值检查与可维护性合成评分（0-100）\n- 回包契约升级：总体结论三档校验、问题清单严重度标记规范（🔴🟡🟢）与自动归一、评审摘要章节（严重度分布一眼可见）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.83"
     }
   ]
 }
