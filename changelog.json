@@ -1,31 +1,61 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T09:05:35Z",
+  "generatedAt": "2026-11-07T09:24:25Z",
   "latest": {
-    "versionName": "1.5.33",
-    "versionCode": 213,
-    "tag": "v1.5.33",
+    "versionName": "1.5.34",
+    "versionCode": 214,
+    "tag": "v1.5.34",
     "date": "2026-11-07",
-    "title": "v1.5.33 更新内容",
+    "title": "v1.5.34 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "flow ui retry ring file capsules",
+        "title": "coding stream interruption safety",
         "notes": [
-          "流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容",
-          "LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误",
-          "上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧",
-          "文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿",
-          "流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）",
-          "任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）"
+          "弱网断线安全：Coding 流式回答遇到连接中断（连接重置 / 5xx / SSE 流被掐断）时**绝不再自动重发请求**——流式对话没有断点续传，自动重放会重复计费并重复执行工具副作用；现在立即明确报错，是否重发由你在界面手动决定",
+          "断线前已生成的部分回答**原样保留**在对话里，不再静默丢弃；服务端没有发出完成标记（[DONE]/finish_reason）就被掐断的流，不会再被当成「完整回答」写进对话历史"
+        ]
+      },
+      {
+        "title": "llm response body bound",
+        "notes": [
+          "非流式模型响应增加内存安全上限（8,000,000 字节）：异常或恶意端点返回超大响应体时，现在以明确的「模型响应过大」错误提示，而不是把内存撑爆后闪退",
+          "HTTP 错误响应体只读取前 200 字节（错误诊断足够），且连接确定性关闭，杜绝超长错误页拖垮进程与连接泄漏"
         ]
       }
     ],
-    "markdown": "- 流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容\n- LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误\n- 上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧\n- 文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿\n- 流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）\n- 任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.33"
+    "markdown": "- 弱网断线安全：Coding 流式回答遇到连接中断（连接重置 / 5xx / SSE 流被掐断）时**绝不再自动重发请求**——流式对话没有断点续传，自动重放会重复计费并重复执行工具副作用；现在立即明确报错，是否重发由你在界面手动决定\n- 断线前已生成的部分回答**原样保留**在对话里，不再静默丢弃；服务端没有发出完成标记（[DONE]/finish_reason）就被掐断的流，不会再被当成「完整回答」写进对话历史\n\n---\n\n- 非流式模型响应增加内存安全上限（8,000,000 字节）：异常或恶意端点返回超大响应体时，现在以明确的「模型响应过大」错误提示，而不是把内存撑爆后闪退\n- HTTP 错误响应体只读取前 200 字节（错误诊断足够），且连接确定性关闭，杜绝超长错误页拖垮进程与连接泄漏",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.34"
   },
   "history": [
+    {
+      "versionName": "1.5.34",
+      "versionCode": 214,
+      "tag": "v1.5.34",
+      "date": "2026-11-07",
+      "title": "v1.5.34 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "coding stream interruption safety",
+          "notes": [
+            "弱网断线安全：Coding 流式回答遇到连接中断（连接重置 / 5xx / SSE 流被掐断）时**绝不再自动重发请求**——流式对话没有断点续传，自动重放会重复计费并重复执行工具副作用；现在立即明确报错，是否重发由你在界面手动决定",
+            "断线前已生成的部分回答**原样保留**在对话里，不再静默丢弃；服务端没有发出完成标记（[DONE]/finish_reason）就被掐断的流，不会再被当成「完整回答」写进对话历史"
+          ]
+        },
+        {
+          "title": "llm response body bound",
+          "notes": [
+            "非流式模型响应增加内存安全上限（8,000,000 字节）：异常或恶意端点返回超大响应体时，现在以明确的「模型响应过大」错误提示，而不是把内存撑爆后闪退",
+            "HTTP 错误响应体只读取前 200 字节（错误诊断足够），且连接确定性关闭，杜绝超长错误页拖垮进程与连接泄漏"
+          ]
+        }
+      ],
+      "markdown": "- 弱网断线安全：Coding 流式回答遇到连接中断（连接重置 / 5xx / SSE 流被掐断）时**绝不再自动重发请求**——流式对话没有断点续传，自动重放会重复计费并重复执行工具副作用；现在立即明确报错，是否重发由你在界面手动决定\n- 断线前已生成的部分回答**原样保留**在对话里，不再静默丢弃；服务端没有发出完成标记（[DONE]/finish_reason）就被掐断的流，不会再被当成「完整回答」写进对话历史\n\n---\n\n- 非流式模型响应增加内存安全上限（8,000,000 字节）：异常或恶意端点返回超大响应体时，现在以明确的「模型响应过大」错误提示，而不是把内存撑爆后闪退\n- HTTP 错误响应体只读取前 200 字节（错误诊断足够），且连接确定性关闭，杜绝超长错误页拖垮进程与连接泄漏",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.34"
+    },
     {
       "versionName": "1.5.33",
       "versionCode": 213,
@@ -1433,27 +1463,6 @@
       ],
       "markdown": "## 引擎域 Agent 模式核心移除（Agent 模式移除 3/6）\n\n- **模式档位收敛**：AgentMode 删 CHAT/AGENT/LOOP/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM 七个 Agent 屏/存量档位，只留编码工位三档 BUILD/PLAN/GOAL（Coding 功能零损失：深潜/标准/织造/信使四线与 Goal 驱动全部保留）\n- **整文件删除**：EngineSpecFlow.kt（SPEC 规格）、EnginePromptDelegates.kt（SPEC/Reflection 提示词包装）、assist/ 的 DecisionPointDetector/HumanAssistFlow/ReflectionFlow 三流（含三份测试）、EngineWorkstation.kt（双工位枚举 —— 纯 Coding 软件不再有工位分轨）\n- **事件协议收口**：AgentEvent 删 SpecGenerated/SpecAwaitingConfirmation/SpecConfirmed/ReflectionReview 与 ExecutionSpec 载荷；TaskRuntime 与 CodeStreamSession 的对应消费分支同步移除\n- **确认通道收口**：spec 确认 deferred/submitSpecConfirmation/abort 收尾三处删除（ConfirmationSink 只剩 PLAN 门；plan/AskUser 通道不动）\n- **提示词收口**：模式段（CHAT/AGENT/SPEC/REFLECTION/HUMAN_ASSIST/CUSTOM/LOOP）、身份行双工位分轨、CUSTOM 附加指令段、CHAT 攻略豁免门全部移除；恒为 CODING agent 身份行；任务路由的「引导切换 Coding 工位」改写分支删除（git 工具不可见时 GitHub 车道诚实省略）\n- **工具计划收口**：AGENT/LOOP 的 Code/Github 族前缀黑名单隔离（AGENT_EXCLUDED_TOOL_PREFIXES/filterOutCodingTools）删除；市场分级作用域隔离（mcpScopeIsolation）保留\n- **遗留字段过渡**：AgentConfig.reflectionRounds/customInstruction 字段保留（消费方在工具/设置域，PR 4/6、5/6 随消费方删除），引擎侧消费点已全部移除\n- **刻意保留**（grep 引用为准）：goal/ 整包（CodeGoalController/CodeViewModel/DI 实际消费 —— Coding 目标驱动模式在用）、EngineAskUserFlow 与 AskUser 通道（Coding 计划确认/权限门在用）、ModePresets.kt（设置域消费，PR 5/6 删）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.89"
-    },
-    {
-      "versionName": "1.4.9.88",
-      "versionCode": 164,
-      "tag": "v1.4.9.88",
-      "date": "2026-10-30",
-      "title": "v1.4.9.88 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template behavior catalog",
-          "notes": [
-            "十个内置模板与十个代码行为的 1:1 装订表落地（目录完整性测试锁死：多一个少一个都红）",
-            "全链路确定性冒烟：每个内置模板激活 → 代码行为绑定（不走兜底）→ 附录注入 → 同输入两次组装结果一致",
-            "行为清单自洽校验：behaviorId 一致、纯载荷契约仅翻译使用、确定性分析必须走附录注入"
-          ]
-        }
-      ],
-      "markdown": "- 十个内置模板与十个代码行为的 1:1 装订表落地（目录完整性测试锁死：多一个少一个都红）\n- 全链路确定性冒烟：每个内置模板激活 → 代码行为绑定（不走兜底）→ 附录注入 → 同输入两次组装结果一致\n- 行为清单自洽校验：behaviorId 一致、纯载荷契约仅翻译使用、确定性分析必须走附录注入",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.88"
     }
   ]
 }
