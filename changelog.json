@@ -1,117 +1,35 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-06T13:36:18Z",
+  "generatedAt": "2026-11-07T00:04:34Z",
   "latest": {
-    "versionName": "1.5.24",
-    "versionCode": 204,
-    "tag": "v1.5.24",
-    "date": "2026-11-06",
-    "title": "v1.5.24 更新内容",
-    "notes": [],
-    "images": [],
-    "pr": [
-      {
-        "title": "移除",
-        "notes": [
-          "完整移除 v1.5.11 引入的 Guru Web 工作台（工作区 / 两级规则 / 用户画像 / 记忆 / 游乐场 / 命令面板等全部 Web 端内容）——本应用专注 Android 端实际功能，Web 工作台不属于产品范围，相关文件（约 130 个）已全部清理，仓库恢复纯 Android 项目形态。"
-        ]
-      },
-      {
-        "title": "coding thinking refinement",
-        "notes": [
-          "Coding 思考逻辑完善：AUTO 档自适应信号在「新会话 / 恢复历史 / 切换工作区」三种会话边界全量重置——上一会话的错误史不再泄漏进新会话首次预检（此前旧任务的深水区失败会错误抬升新任务档位）",
-          "子代理完善：自定义子代理类型目录注入主代理上下文——主模型现在直接知道你配置了哪些自定义角色（key + 职责 + 工具白名单），按名委派 CodeTask 不再靠调用失败摸黑试错",
-          "模型配置导入的对称闭环：新增「导出配置」——当前服务商 + 全部模型档案一键导出为可读 JSON，可直接粘回导入弹窗原样恢复；API Key 永不包含在导出内容里（密钥脱敏，跨设备迁移后重填即可）"
-        ]
-      },
-      {
-        "title": "新增",
-        "notes": [
-          "用户画像（五维度长期特征）：跨会话稳定记录技术栈 / 编码风格 / 偏好 / 关注领域 / 工作习惯——记忆页新增「用户画像」分区，支持手动管理与置信度排序；编码会话可一键「AI 蒸馏」提炼画像条目；发送消息时置信度 Top-8 特征自动注入系统上下文（个性化基线，空画像零注入）。"
-        ]
-      },
-      {
-        "title": "extension model gate",
-        "notes": [
-          "市场完全重构 PR-A：统一扩展模型闸门落地（schema `apex-extension-v1`）—— OpenCode/Claude/DSH/Skill/MCP/APK 各生态安装语义收口到一条 **resolve（认路）→ inspect（看清）→ install（装）** 链，用户/模型只学一种 spec 语法（`mcp:{…}` / `mcp:import:<文件>` / `skill:<url>` / `claude:<name>@<mp>` / `npm:<pkg>` / `github:` / `apk:`）",
-          "**先看后装硬闸**：ExtensionInstall 必须回传 ExtensionResolve/Inspect 产出的 `manifest_hash`（sha-256 指纹）——跳过 inspect 直接装被 SecurityException 拒绝；显式传 manifest 原文时重算指纹比对（防中途换包）；指纹即凭证，模型无需回传大体积 manifest（resolve 缓存按指纹取回）",
-          "**确认门**：声明权限或含 postinstall 脚本的扩展需 `confirm=\"confirm\"` 显式令牌（模型代表用户确认过 inspect 报告）；BYPASS 权限模式不豁免；MCP register/import 语义分离（新增 vs 导入桌面 Claude/Cursor 配置，防重复覆盖）",
-          "七个新工具：ExtensionResolve / ExtensionInspect / ExtensionInstall（三步入 CORE 集）+ ExtensionList / ExtensionUninstall / ExtensionSync（声明式批量，默认 dry-run）/ ExtensionDoctor（账本一致性体检）；内置技能 extension-install / extension-troubleshoot（assets/skills 通道随包释放）",
-          "聚而不同：扩展实体落原生注册表（SkillRegistry 复用全管道+热激活闭环 / McpManager 经端口接入），新账本只记来源与指纹；runtime 双域声明（android/ubuntu，MCP runInSandbox→PRoot）为 PR-B 的 Node 系安装器铺路；旧入口 SkillInstall/McpConnect 双轨保留零破坏"
-        ]
-      },
-      {
-        "title": "kit request sanitizer",
-        "notes": [
-          "修复「停止后再继续直接 400 致命错误」：工具执行中点停止 → 硬取消绕过库引擎的中止补齐路径 → 会话留下无配对的 `Assistant.toolCalls` → 再次发消息/点「继续」时请求携带悬空 tool_calls，服务端拒绝（400 \"tool_calls must be followed by tool messages\"）→ 容错降级无工具重发仍 400（消息列表未动）→ 会话级报废",
-          "kit 三线（标准/织造/信使）模型客户端出站统一消毒（KitRequestSanitizer，与深潜线 buildMessages 逐请求修补同款纯函数）：悬空声明就地合成「结果未知」应答、游离应答回迁、孤儿/重复应答丢弃——无论库引擎内存态处于何种中断残局，出站请求的配对协议恒成立；无悬空零开销、幂等",
-          "织造/信使线的记忆加载归一化补齐（此前纯 load，与标准线 loadNormalized 同缺陷在重启恢复路径上复现）；标准线实现上收共享",
-          "修复「停止后提问卡残留」：宿主侧工具门挂起的提问收口（#395 同款）此前只接深潜线，kit 三线中止后「继续」按钮把答案投给已死任务——统一在四线路由门面（DualLogicCodeEngine.abort）前置收口，幂等"
-        ]
-      },
-      {
-        "title": "search channel prompt",
-        "notes": [
-          "网络搜索通道激活后模型侧真正「会调用」：按所选通道注入指名道姓的 system prompt 调用指引（内置=WebSearch/WebFetch、SearXNG=链首源优先、MCP=注册名 mcp__<server>__web_search 前缀可直检），禁止仅凭训练知识猜时效性事实",
-          "通道切换时序修正：先开新→智能停旧（BUILTIN↔SearXNG 同基建互切不再误关）→提示殿后；MCP 安装失败时旧通道原样保留不出现「双无」"
-        ]
-      },
-      {
-        "title": "browser runtime acl",
-        "notes": [
-          "**浏览器角色门禁（默认严格）**：browser_* 工具仅「浏览器自动化专家」角色可用——设置中心新增「浏览器工具仅限专家角色」（默认开）与「允许浏览器敏感操作」两开关；敏感四件套（execute_js/get_cookies/file_upload/clear_data）需敏感 tier 显式授权且逐会话弹确认",
-          "**异步导航协议 + BrowserTask 编排**：新增 BrowserTask（一次提交 navigate/wait_for/fill/click/extract 序列，运行时自主推进返回压缩结果，N 次模型往返→1 次）/BrowserNavigateAsync（立即返回句柄，模型与浏览器并行）/BrowserDocState（导航+就绪双状态）/BrowserDocEvents（增量事件游标）/BrowserDocControl（取消/释放）；同 tab 重复发起导航自动 SUPERSEDED，人工接管优先",
-          "**增量快照**：BrowserSnapshot 新增 mode=focused（只采集指定子树）/mode=diff（与上次快照做增量），不再反复传全页；快照返回 doc_id，动作可带 expected_doc_id 检测页面已变（STALE_DOCUMENT）",
-          "**MCP Host 收紧**：浏览器敏感四件套默认加入封禁清单（即使放行 BROWSER 分类也不经外部 AI 通道）；插件 manifest 新增 permissions 字段（三态 fail-closed，`browser` 与 `browser:sensitive` 分权，旧插件默认不授浏览器能力）"
-        ]
-      },
-      {
-        "title": "UI 修复三连：背景层/设置测试按钮/流式跟随",
-        "notes": [
-          "**自定义背景修复**：背景图层从 Surface 内部移至 Box 底层，内容层设为透明 —— 设置中导入的背景图现在实际可见，切换即时生效",
-          "**设置改进**：顶栏测试按钮移除，测试连接按钮移至模型配置卡最下方并显示连接信息（成功/失败状态 + 消息）；新增联网搜索（ToolsSection）和 JSON Schema（AdvancedSection）设置项",
-          "**流式跟随修复**：跟随不再自行中断 —— 程序化滚动改用时间戳窗口抑制（覆盖 snapshotFlow 异步竞态）、轻触不锁存阅读模式（位移 > 12px 才算拖拽）；跟随位置不再跑到输入栏下方 —— snapToLast 双步贴底（scrollToItem + scrollBy 强制到达 max scroll）、内容节流 200 → 50 字符"
-        ]
-      },
-      {
-        "title": "流水式输出UI · 设置开关 + 对齐 RikkaHub 视觉",
-        "notes": [
-          "设置 → 工作台 → Coding 工位新增「**流水式输出UI**」开关：开 = 模仿 RikkaHub 的聊天式流水输出，关 = 经典胶囊时间轴（原下拉选项改为开关，一眼可见、一键切换；旧设置值无缝兼容）",
-          "用户气泡对齐 RikkaHub：28dp 圆形头像 + 24dp 大圆角（靠头像侧顶角 6dp 收紧）+ primaryContainer 柔和容器色",
-          "助手回复改为 RikkaHub 默认形态：无气泡 Markdown 直铺 + 身份头行（Guru）+ 流式呼吸点",
-          "思考卡新增实时秒表标题：「思考中 · X.X 秒」流式呼吸 → 收束定格「思考了 X.X 秒」",
-          "工具聚合块升级：运行中标题呼吸动画；工具行运行中实时耗时（500ms 刷新）；收束折叠时尾部预览最近 2 次调用 + 「还有 N 次调用」计数（RikkaHub「默认只留最新两步」同款）"
-        ]
-      },
-      {
-        "title": "修复",
-        "notes": [
-          "备份/恢复结果反馈的成功色改用现有 `statusSuccess()` 明暗语义色，失败色统一经 `statusError()`，不再把固定绿色用于浅色玻璃背景（Refs #268；仅迁移这一处，不关闭整条设计债）。"
-        ]
-      },
-      {
-        "title": "修复",
-        "notes": [
-          "离线横幅与全局反馈的 WARNING 分支共用明暗警告容器/内容色配对：深色亮琥珀配深字、浅色深琥珀配白字；移除横幅次要文字透明度，以免降低可读性（Refs #269、#268）。仅收编警告场景，不关闭两项综合设计债；真机玻璃背景视觉验收仍待完成。"
-        ]
-      },
-      {
-        "title": "重构",
-        "notes": [
-          "模式与角色选择器的同职责弱描边共用 `selectorOutlineColor()` 语义入口：跟随当前 Material 主题的 `outlineVariant`，不改变原有 0.6 视觉强度（Refs #270）。连续动画透明度、disabled 状态和其它 alpha 魔数不在此切片；#270 保持开放。"
-        ]
-      },
-      {
-        "title": "另有 6 项合并内容",
-        "notes": [
-          "详见发布页完整清单（共 18 条 PR 片段）"
-        ]
-      }
+    "versionName": "1.5.25",
+    "versionCode": 205,
+    "tag": "v1.5.25",
+    "date": "2026-11-07",
+    "title": "v1.5.25 更新内容",
+    "notes": [
+      "例行版本更新与稳定性改进。"
     ],
-    "markdown": "# 移除\n\n- 完整移除 v1.5.11 引入的 Guru Web 工作台（工作区 / 两级规则 / 用户画像 / 记忆 / 游乐场 / 命令面板等全部 Web 端内容）——本应用专注 Android 端实际功能，Web 工作台不属于产品范围，相关文件（约 130 个）已全部清理，仓库恢复纯 Android 项目形态。\n\n---\n\n- Coding 思考逻辑完善：AUTO 档自适应信号在「新会话 / 恢复历史 / 切换工作区」三种会话边界全量重置——上一会话的错误史不再泄漏进新会话首次预检（此前旧任务的深水区失败会错误抬升新任务档位）\n- 子代理完善：自定义子代理类型目录注入主代理上下文——主模型现在直接知道你配置了哪些自定义角色（key + 职责 + 工具白名单），按名委派 CodeTask 不再靠调用失败摸黑试错\n- 模型配置导入的对称闭环：新增「导出配置」——当前服务商 + 全部模型档案一键导出为可读 JSON，可直接粘回导入弹窗原样恢复；API Key 永不包含在导出内容里（密钥脱敏，跨设备迁移后重填即可）\n\n---\n\n# 新增\n\n- 用户画像（五维度长期特征）：跨会话稳定记录技术栈 / 编码风格 / 偏好 / 关注领域 / 工作习惯——记忆页新增「用户画像」分区，支持手动管理与置信度排序；编码会话可一键「AI 蒸馏」提炼画像条目；发送消息时置信度 Top-8 特征自动注入系统上下文（个性化基线，空画像零注入）。\n\n---\n\n- 市场完全重构 PR-A：统一扩展模型闸门落地（schema `apex-extension-v1`）—— OpenCode/Claude/DSH/Skill/MCP/APK 各生态安装语义收口到一条 **resolve（认路）→ inspect（看清）→ install（装）** 链，用户/模型只学一种 spec 语法（`mcp:{…}` / `mcp:import:<文件>` / `skill:<url>` / `claude:<name>@<mp>` / `npm:<pkg>` / `github:` / `apk:`）\n- **先看后装硬闸**：ExtensionInstall 必须回传 ExtensionResolve/Inspect 产出的 `manifest_hash`（sha-256 指纹）——跳过 inspect 直接装被 SecurityException 拒绝；显式传 manifest 原文时重算指纹比对（防中途换包）；指纹即凭证，模型无需回传大体积 manifest（resolve 缓存按指纹取回）\n- **确认门**：声明权限或含 postinstall 脚本的扩展需 `confirm=\"confirm\"` 显式令牌（模型代表用户确认过 inspect 报告）；BYPASS 权限模式不豁免；MCP register/import 语义分离（新增 vs 导入桌面 Claude/Cursor 配置，防重复覆盖）\n- 七个新工具：ExtensionResolve / ExtensionInspect / ExtensionInstall（三步入 CORE 集）+ ExtensionList / ExtensionUninstall / ExtensionSync（声明式批量，默认 dry-run）/ ExtensionDoctor（账本一致性体检）；内置技能 extension-install / extension-troubleshoot（assets/skills 通道随包释放）\n- 聚而不同：扩展实体落原生注册表（SkillRegistry 复用全管道+热激活闭环 / McpManager 经端口接入），新账本只记来源与指纹；runtime 双域声明（android/ubuntu，MCP runInSandbox→PRoot）为 PR-B 的 Node 系安装器铺路；旧入口 SkillInstall/McpConnect 双轨保留零破坏\n\n---\n\n- 修复「停止后再继续直接 400 致命错误」：工具执行中点停止 → 硬取消绕过库引擎的中止补齐路径 → 会话留下无配对的 `Assistant.toolCalls` → 再次发消息/点「继续」时请求携带悬空 tool_calls，服务端拒绝（400 \"tool_calls must be followed by tool messages\"）→ 容错降级无工具重发仍 400（消息列表未动）→ 会话级报废\n- kit 三线（标准/织造/信使）模型客户端出站统一消毒（KitRequestSanitizer，与深潜线 buildMessages 逐请求修补同款纯函数）：悬空声明就地合成「结果未知」应答、游离应答回迁、孤儿/重复应答丢弃——无论库引擎内存态处于何种中断残局，出站请求的配对协议恒成立；无悬空零开销、幂等\n- 织造/信使线的记忆加载归一化补齐（此前纯 load，与标准线 loadNormalized 同缺陷在重启恢复路径上复现）；标准线实现上收共享\n- 修复「停止后提问卡残留」：宿主侧工具门挂起的提问收口（#395 同款）此前只接深潜线，kit 三线中止后「继续」按钮把答案投给已死任务——统一在四线路由门面（DualLogicCodeEngine.abort）前置收口，幂等\n\n---\n\n- 网络搜索通道激活后模型侧真正「会调用」：按所选通道注入指名道姓的 system prompt 调用指引（内置=WebSearch/WebFetch、SearXNG=链首源优先、MCP=注册名 mcp__<server>__web_search 前缀可直检），禁止仅凭训练知识猜时效性事实\n- 通道切换时序修正：先开新→智能停旧（BUILTIN↔SearXNG 同基建互切不再误关）→提示殿后；MCP 安装失败时旧通道原样保留不出现「双无」\n\n---\n\n- **浏览器角色门禁（默认严格）**：browser_* 工具仅「浏览器自动化专家」角色可用——设置中心新增「浏览器工具仅限专家角色」（默认开）与「允许浏览器敏感操作」两开关；敏感四件套（execute_js/get_cookies/file_upload/clear_data）需敏感 tier 显式授权且逐会话弹确认\n- **异步导航协议 + BrowserTask 编排**：新增 BrowserTask（一次提交 navigate/wait_for/fill/click/extract 序列，运行时自主推进返回压缩结果，N 次模型往返→1 次）/BrowserNavigateAsync（立即返回句柄，模型与浏览器并行）/BrowserDocState（导航+就绪双状态）/BrowserDocEvents（增量事件游标）/BrowserDocControl（取消/释放）；同 tab 重复发起导航自动 SUPERSEDED，人工接管优先\n- **增量快照**：BrowserSnapshot 新增 mode=focused（只采集指定子树）/mode=diff（与上次快照做增量），不再反复传全页；快照返回 doc_id，动作可带 expected_doc_id 检测页面已变（STALE_DOCUMENT）\n- **MCP Host 收紧**：浏览器敏感四件套默认加入封禁清单（即使放行 BROWSER 分类也不经外部 AI 通道）；插件 manifest 新增 permissions 字段（三态 fail-closed，`browser` 与 `browser:sensitive` 分权，旧插件默认不授浏览器能力）\n\n---\n\n## UI 修复三连：背景层/设置测试按钮/流式跟随\n\n- **自定义背景修复**：背景图层从 Surface 内部移至 Box 底层，内容层设为透明 —— 设置中导入的背景图现在实际可见，切换即时生效\n- **设置改进**：顶栏测试按钮移除，测试连接按钮移至模型配置卡最下方并显示连接信息（成功/失败状态 + 消息）；新增联网搜索（ToolsSection）和 JSON Schema（AdvancedSection）设置项\n- **流式跟随修复**：跟随不再自行中断 —— 程序化滚动改用时间戳窗口抑制（覆盖 snapshotFlow 异步竞态）、轻触不锁存阅读模式（位移 > 12px 才算拖拽）；跟随位置不再跑到输入栏下方 —— snapToLast 双步贴底（scrollToItem + scrollBy 强制到达 max scroll）、内容节流 200 → 50 字符\n\n---\n\n# 流水式输出UI · 设置开关 + 对齐 RikkaHub 视觉\n\n- 设置 → 工作台 → Coding 工位新增「**流水式输出UI**」开关：开 = 模仿 RikkaHub 的聊天式流水输出，关 = 经典胶囊时间轴（原下拉选项改为开关，一眼可见、一键切换；旧设置值无缝兼容）\n- 用户气泡对齐 RikkaHub：28dp 圆形头像 + 24dp 大圆角（靠头像侧顶角 6dp 收紧）+ primaryContainer 柔和容器色\n- 助手回复改为 RikkaHub 默认形态：无气泡 Markdown 直铺 + 身份头行（Guru）+ 流式呼吸点\n- 思考卡新增实时秒表标题：「思考中 · X.X 秒」流式呼吸 → 收束定格「思考了 X.X 秒」\n- 工具聚合块升级：运行中标题呼吸动画；工具行运行中实时耗时（500ms 刷新）；收束折叠时尾部预览最近 2 次调用 + 「还有 N 次调用」计数（RikkaHub「默认只留最新两步」同款）\n\n---\n\n# 修复\n\n- 备份/恢复结果反馈的成功色改用现有 `statusSuccess()` 明暗语义色，失败色统一经 `statusError()`，不再把固定绿色用于浅色玻璃背景（Refs #268；仅迁移这一处，不关闭整条设计债）。\n\n---\n\n# 修复\n\n- 离线横幅与全局反馈的 WARNING 分支共用明暗警告容器/内容色配对：深色亮琥珀配深字、浅色深琥珀配白字；移除横幅次要文字透明度，以免降低可读性（Refs #269、#268）。仅收编警告场景，不关闭两项综合设计债；真机玻璃背景视觉验收仍待完成。\n\n---\n\n# 重构\n\n- 模式与角色选择器的同职责弱描边共用 `selectorOutlineColor()` 语义入口：跟随当前 Material 主题的 `outlineVariant`，不改变原有 0.6 视觉强度（Refs #270）。连续动画透明度、disabled 状态和其它 alpha 魔数不在此切片；#270 保持开放。\n\n---\n\n# 修复\n\n- CI 门禁可靠性：#353 剩余子项清偿 —— KSP/Hilt 失败不再以 exit 0 放行、Kotlin daemon 崩溃单列硬失败；Gradle wrapper 由「每 job 覆盖生成」改为版本校验；check_code_quality.sh 的 xargs grep 补 -H；fetch_rootfs.sh 坏档自愈且计数变量归一；static-analysis 的 Maven 清单收敛为单一事实源并按内容哈希缓存（#353 ②⑤⑥⑧⑩）。\n\n---\n\n# 修复\n\n- APK 下载目录增加总量配额（1GB）：超配额按最久未用清理旧 APK，清不动则拒绝下载并提示手动清理，避免反复下载填满存储（#354 ⑦）。\n\n---\n\n# 清理\n\n- 删除 HubSource 实例级 JSON 取值四件套死代码（解析逻辑全部在 companion，实例级零调用）（#354 ⑤）。\n\n---\n\n# 修复\n\n- NotificationPost 工具新增渠道白名单：模型不能再让系统批量创建通知渠道（Android 只能由用户逐个删除），越界渠道在调用宿主前拒绝并回报可用清单（#354 ⑥）。\n\n---\n\n# 修复\n\n- MCP 未连接与 ClawHub 下载失败文案改中文并说明下一步：错误经 snackbar / 弹窗直达用户，不再出现英文裸句与孤立状态码（#354 ④）。\n\n---\n\n# 修复\n\n- 注入 prompt 与工具输出的时间戳固定为 Locale.US：泰语区域不再输出佛历年份（2026→2569），阿拉伯语区域不再输出阿拉伯-印度数字，模型与诊断报告读到的时间与设备区域无关（#479）。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.24"
+    "images": [],
+    "pr": [],
+    "markdown": "例行版本更新与稳定性改进。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.25"
   },
   "history": [
+    {
+      "versionName": "1.5.25",
+      "versionCode": 205,
+      "tag": "v1.5.25",
+      "date": "2026-11-07",
+      "title": "v1.5.25 更新内容",
+      "notes": [
+        "例行版本更新与稳定性改进。"
+      ],
+      "images": [],
+      "pr": [],
+      "markdown": "例行版本更新与稳定性改进。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.25"
+    },
     {
       "versionName": "1.5.24",
       "versionCode": 204,
@@ -1528,44 +1446,6 @@
       ],
       "markdown": "- 模板行为运行时新增共享分析工具箱：文本度量（CJK 感知断句/词频/关键度打分）、编程语言探测（20 门语言打分制）、Markdown 结构扫描（标题/列表/代码块/占位符保真比对）\n- 新增章节解析器：回包四通道标题识别、契约校验机械（缺失章节/寒暄/尾随废话/占位符泄漏/结论先行）、确定性修复（剥寒暄/补章节壳/编号归一）\n- 以上能力是后续每个内置模板「代码化行为」的一手分析引擎",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.80"
-    },
-    {
-      "versionName": "1.4.9.79",
-      "versionCode": 155,
-      "tag": "v1.4.9.79",
-      "date": "2026-10-30",
-      "title": "v1.4.9.79 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template runtime skeleton",
-          "notes": [
-            "模板系统升级第一步：新增「行为运行时」骨架 —— 模板不再只是一段提示词文本，而是一段可执行的 Kotlin 行为",
-            "新增六阶段管线契约（输入预处理 → 确定性分析 → 提示词组装 → 契约校验 → 格式修复 → 结构渲染），每个内置模板将拥有自己的行为实现",
-            "新增变量合并报告 / 输入形态探测 / 严重度分级 / 输出契约 / 执行轨迹等基础模型，为后续内置模板逐个代码化铺路"
-          ]
-        },
-        {
-          "title": "template builtin immutable",
-          "notes": [
-            "内置模板正式改为不可更改：保存通道对内置模板一刀切拒绝，定制请用「另存为副本」",
-            "磁盘防篡改自愈：外部篡改的内置模板在加载时自动回归出厂定义（使用统计保留）",
-            "「强制重播种」保留为显式还原通道，可一键重置内置模板的使用计数"
-          ]
-        },
-        {
-          "title": "前置重构：共享聊天组件抽离至 ui/chatkit（Agent 模式移除准备 1/6）",
-          "notes": [
-            "**中立包 ui/chatkit 建立**：把 Coding 屏与设置页/组件层共同消费的聊天 UI 组件从 ui/screen/agent 迁至中立包，为后续整目录删除 Agent 屏做零风险铺垫（纯移动 + 导入重写，零行为变化）",
-            "**迁出组件清单**：ModeSelector（含 AGENT_SCREEN_MODES / CODING_SCREEN_MODES）、RoleSelector、BrainMenuButton / ToolkitRingButton（ToolRef + ToolkitChipsRow）、ChatToolkitStore（OutputFormat / ChatRule）、PendingPipelineCommand、QuestionCard、PlanConfirmationCard、llmConfiguredFlow",
-            "**消费方导入全部改指 chatkit**：screen/code · screen/agent · settings · di · ui/component 五处消费域同步重写导入；同包免导入的 agent 屏文件补显式导入",
-            "**编译修复**：QuestionCard 迁移时 Backdrop 导入误指 ui.glass（应为 kyant backdrop 库）、clickable / OutlinedButton 两项 Compose 导入遗漏、AGENT_SCREEN_MODES 两处使用点缺显式导入、agentModeIcon / agentModeDescription 跨包可见性收正（internal → public）—— 以上全部随本 PR 一并修正"
-          ]
-        }
-      ],
-      "markdown": "- 模板系统升级第一步：新增「行为运行时」骨架 —— 模板不再只是一段提示词文本，而是一段可执行的 Kotlin 行为\n- 新增六阶段管线契约（输入预处理 → 确定性分析 → 提示词组装 → 契约校验 → 格式修复 → 结构渲染），每个内置模板将拥有自己的行为实现\n- 新增变量合并报告 / 输入形态探测 / 严重度分级 / 输出契约 / 执行轨迹等基础模型，为后续内置模板逐个代码化铺路\n\n---\n\n- 内置模板正式改为不可更改：保存通道对内置模板一刀切拒绝，定制请用「另存为副本」\n- 磁盘防篡改自愈：外部篡改的内置模板在加载时自动回归出厂定义（使用统计保留）\n- 「强制重播种」保留为显式还原通道，可一键重置内置模板的使用计数\n\n---\n\n## 前置重构：共享聊天组件抽离至 ui/chatkit（Agent 模式移除准备 1/6）\n\n- **中立包 ui/chatkit 建立**：把 Coding 屏与设置页/组件层共同消费的聊天 UI 组件从 ui/screen/agent 迁至中立包，为后续整目录删除 Agent 屏做零风险铺垫（纯移动 + 导入重写，零行为变化）\n- **迁出组件清单**：ModeSelector（含 AGENT_SCREEN_MODES / CODING_SCREEN_MODES）、RoleSelector、BrainMenuButton / ToolkitRingButton（ToolRef + ToolkitChipsRow）、ChatToolkitStore（OutputFormat / ChatRule）、PendingPipelineCommand、QuestionCard、PlanConfirmationCard、llmConfiguredFlow\n- **消费方导入全部改指 chatkit**：screen/code · screen/agent · settings · di · ui/component 五处消费域同步重写导入；同包免导入的 agent 屏文件补显式导入\n- **编译修复**：QuestionCard 迁移时 Backdrop 导入误指 ui.glass（应为 kyant backdrop 库）、clickable / OutlinedButton 两项 Compose 导入遗漏、AGENT_SCREEN_MODES 两处使用点缺显式导入、agentModeIcon / agentModeDescription 跨包可见性收正（internal → public）—— 以上全部随本 PR 一并修正",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.79"
     }
   ]
 }
