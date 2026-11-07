@@ -1,27 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T11:00:15Z",
+  "generatedAt": "2026-11-07T13:21:22Z",
   "latest": {
-    "versionName": "1.5.35",
-    "versionCode": 215,
-    "tag": "v1.5.35",
+    "versionName": "1.5.36",
+    "versionCode": 216,
+    "tag": "v1.5.36",
     "date": "2026-11-07",
-    "title": "v1.5.35 更新内容",
+    "title": "v1.5.36 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "streaming pipeline p0",
+        "title": "code repo map",
         "notes": [
-          "修复任务积压时回复文字被吞的问题：引擎高水位会丢弃流式过程分片（保护内存的既有策略），但收尾事件携带的权威全文此前没有被 UI 回填——现在收束时统一按引擎全文仲裁回填，**任何情况下不丢字**",
-          "流式文本改走事件聚合器：分片先进缓冲、25ms 批量上屏（≤40Hz），消除逐字全列表拷贝；边界事件（工具开始/收束/取消）强制先冲文本保顺序，中止时已收到内容不丢"
+          "新工具 CodeRepoMap：Aider repo-map 的 Kotlin 移植 —— 个性化 PageRank + token 预算二分，把整个工作区浓缩成约 1k token 的定义骨架地图（谁定义了什么、谁引用谁、任务相关文件最优先）",
+          "七语言族标签提取（Kotlin/Java/Python/JS-TS/Go/Rust/C 族）、Aider 全套边权乘数（提及 ×10、聊天引用 ×50、√ 抑制高频）、重要文件前置、mtime 会话缓存",
+          "探索/评审子代理白名单收录：先拿地图再下钻；别名 code_repo_map；特性文档 docs/repomap.md"
         ]
       }
     ],
-    "markdown": "- 修复任务积压时回复文字被吞的问题：引擎高水位会丢弃流式过程分片（保护内存的既有策略），但收尾事件携带的权威全文此前没有被 UI 回填——现在收束时统一按引擎全文仲裁回填，**任何情况下不丢字**\n- 流式文本改走事件聚合器：分片先进缓冲、25ms 批量上屏（≤40Hz），消除逐字全列表拷贝；边界事件（工具开始/收束/取消）强制先冲文本保顺序，中止时已收到内容不丢",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.35"
+    "markdown": "- 新工具 CodeRepoMap：Aider repo-map 的 Kotlin 移植 —— 个性化 PageRank + token 预算二分，把整个工作区浓缩成约 1k token 的定义骨架地图（谁定义了什么、谁引用谁、任务相关文件最优先）\n- 七语言族标签提取（Kotlin/Java/Python/JS-TS/Go/Rust/C 族）、Aider 全套边权乘数（提及 ×10、聊天引用 ×50、√ 抑制高频）、重要文件前置、mtime 会话缓存\n- 探索/评审子代理白名单收录：先拿地图再下钻；别名 code_repo_map；特性文档 docs/repomap.md",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.36"
   },
   "history": [
+    {
+      "versionName": "1.5.36",
+      "versionCode": 216,
+      "tag": "v1.5.36",
+      "date": "2026-11-07",
+      "title": "v1.5.36 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "code repo map",
+          "notes": [
+            "新工具 CodeRepoMap：Aider repo-map 的 Kotlin 移植 —— 个性化 PageRank + token 预算二分，把整个工作区浓缩成约 1k token 的定义骨架地图（谁定义了什么、谁引用谁、任务相关文件最优先）",
+            "七语言族标签提取（Kotlin/Java/Python/JS-TS/Go/Rust/C 族）、Aider 全套边权乘数（提及 ×10、聊天引用 ×50、√ 抑制高频）、重要文件前置、mtime 会话缓存",
+            "探索/评审子代理白名单收录：先拿地图再下钻；别名 code_repo_map；特性文档 docs/repomap.md"
+          ]
+        }
+      ],
+      "markdown": "- 新工具 CodeRepoMap：Aider repo-map 的 Kotlin 移植 —— 个性化 PageRank + token 预算二分，把整个工作区浓缩成约 1k token 的定义骨架地图（谁定义了什么、谁引用谁、任务相关文件最优先）\n- 七语言族标签提取（Kotlin/Java/Python/JS-TS/Go/Rust/C 族）、Aider 全套边权乘数（提及 ×10、聊天引用 ×50、√ 抑制高频）、重要文件前置、mtime 会话缓存\n- 探索/评审子代理白名单收录：先拿地图再下钻；别名 code_repo_map；特性文档 docs/repomap.md",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.36"
+    },
     {
       "versionName": "1.5.35",
       "versionCode": 215,
@@ -1427,29 +1449,6 @@
       ],
       "markdown": "## Coding 思考选择器重做:深度滑块 + 逻辑切换圆角收敛 + 文案全面重写\n\n- 思考深度七档改为滑块选择:拖动实时预览目标档(档名/预算徽标/说明跟随),松手即生效;自动档保留独立入口,拖滑块即切固定档\n- 思考逻辑触发胶囊从全圆改为 10dp 小圆角,与思考档位胶囊形成区分\n- 思考逻辑/思考程度全部说明文案重写:去掉「梭回合机」「勘合通行证」「收发匣」等自造词,改为描述真实行为(自动选档、并行工具、权限确认、会话压缩);中文环境不再混显英文长句\n- 审计确认:四条思考逻辑(深潜/标准/织造/信使)为四个真实引擎路由,档位切换真实下发迭代上限/输出预算/压缩阈值三参数并随档缩放,自动档预检与运行中升级真实生效",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.91"
-    },
-    {
-      "versionName": "1.4.9.90",
-      "versionCode": 166,
-      "tag": "v1.4.9.90",
-      "date": "2026-10-30",
-      "title": "v1.4.9.90 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "remove agent tools 4of6",
-          "notes": [
-            "附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）",
-            "Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）",
-            "存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区",
-            "字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT",
-            "红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）"
-          ]
-        }
-      ],
-      "markdown": "- 附件管线整域移除：`attachment/` 三件（清理 Worker / 图片转换 / 预拷贝）、`AttachmentModule` DI、`AttachButton` 组件、分享接收 `SharedIntake` + Manifest SEND intent-filter（消费方 Agent 输入区已删，载荷无人订阅）\n- Agent CUSTOM 模式预设工具删除：AgentModePresetList / AgentModePresetSelect + 别名 + 风险/注解/环检白名单口径同步收口（预设编辑器与 AgentSettings 字段由设置域 PR 收口）\n- 存储页附件沙箱区块移除（用量/清空入口），保留 Ubuntu / 会话历史 / 运行日志三区\n- 字符串双语清理：storage 附件 7 键 + chat 附件 4 键 + ViroPet 孤儿注释头；LogCategory 删 ATTACHMENT\n- 红线确认保留：AskUser / AskUserChoice（Coding 深潜线挂起提问 + 结构化提问卡在用）、AgentSettingGet/Set 等 v5 自主设置工具（模型自调配置）、AgentRole 模型路由绑定工具与角色数据模型（Coding 专家模板基座）、chatkit 全部组件（CodeScreen 消费）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.90"
     }
   ]
 }
