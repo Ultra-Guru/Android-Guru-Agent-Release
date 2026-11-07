@@ -1,38 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T08:03:26Z",
+  "generatedAt": "2026-11-07T08:48:58Z",
   "latest": {
-    "versionName": "1.5.31",
-    "versionCode": 211,
-    "tag": "v1.5.31",
+    "versionName": "1.5.32",
+    "versionCode": 212,
+    "tag": "v1.5.32",
     "date": "2026-11-07",
-    "title": "v1.5.31 更新内容",
+    "title": "v1.5.32 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "extension ecosystems",
+        "title": "extension market wizard",
         "notes": [
-          "市场完全重构 PR-B：三生态适配器接入统一扩展闸门 —— **OpenCode**（npm/本地 .ts/.js/github → PRoot Ubuntu 沙箱扩展目录，注册元数据）、**Claude**（name@marketplace 真读 marketplace.json 定位实体仓库 → zip 下载防穿越解压 → 复用 ClaudePluginImporter 全套映射 → FusionBundle + 资源技能，纯 android 域零 rootfs 依赖）、**DSH**（DeepSeek Harness：dsh-* npm 前缀强制 / github 源 → 沙箱安装 + dsh plugin add 语义模拟 profile.json）",
-          "Node 系安装器基座（NodeInstallPort 端口 + NodeFamilyInstaller）：ExecEngine + ProotCommandSpawner 同款接线（与 REA 命令链同 rootfs/home/能力门/PAT 语义）；**白名单命令构造**（npm 包名/仓库形态校验，用户输入永不进 shell 串）；tmp → 同父 rename 原子发布，失败零残留",
-          "**锁文件**（lock.json）：ExtensionSync 安装成功即钉版；后续 sync 源指纹 ≠ 锁 → 版本漂移默认跳过并如实报告（防 Agent 后续会话悄悄换版本），update=true 才重钉；ExtensionUninstall 联动清锁",
-          "ExtensionDoctor 增强：ubuntu 域 node/npm 就绪探针 + sync 锁计数；ExtensionInstall/Uninstall/Sync 输出同步域信息",
-          "旧入口内部转接：SkillInstall 非侵入改走统一闸门（账本/锁同源，id/schema/输出格式对模型零变化）；McpConnect 保持不动 —— 连接语义（#344 重连闭环）与安装职责不重叠，强行转接破坏重连语义"
-        ]
-      },
-      {
-        "title": "readme v3 beautify spec",
-        "notes": [
-          "README v3 美化方案 spec：四阶段改造 —— R1 数据治理（readme_facts.py 单一事实源 + 占位符校验进 CI，清偿 8 处口径冲突与 5 个死链）/ R2 素材激活（96 秒宣传片 details 内嵌 + 基准卡前置 + 真机截图墙声明 + viro-pet GIF 激活）/ R3 结构重组（1408 行瘦身至 ≤900，210 行深水内容下沉 docs/，可组合能力矩阵，双语精简版入口）/ R4 视觉升级（banner 双主题变体 + 章节头 SVG 视觉系统 + 徽章 43→≤28 收敛）",
-          "七个任务包实施分解（screenshots 包标注 device-required，唯一需仓库主人亲手采集项）",
-          "系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（展示层独立零耦合）/ 系列来源背景"
+          "市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨",
+          "**APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）",
+          "**extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）",
+          "配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）"
         ]
       }
     ],
-    "markdown": "- 市场完全重构 PR-B：三生态适配器接入统一扩展闸门 —— **OpenCode**（npm/本地 .ts/.js/github → PRoot Ubuntu 沙箱扩展目录，注册元数据）、**Claude**（name@marketplace 真读 marketplace.json 定位实体仓库 → zip 下载防穿越解压 → 复用 ClaudePluginImporter 全套映射 → FusionBundle + 资源技能，纯 android 域零 rootfs 依赖）、**DSH**（DeepSeek Harness：dsh-* npm 前缀强制 / github 源 → 沙箱安装 + dsh plugin add 语义模拟 profile.json）\n- Node 系安装器基座（NodeInstallPort 端口 + NodeFamilyInstaller）：ExecEngine + ProotCommandSpawner 同款接线（与 REA 命令链同 rootfs/home/能力门/PAT 语义）；**白名单命令构造**（npm 包名/仓库形态校验，用户输入永不进 shell 串）；tmp → 同父 rename 原子发布，失败零残留\n- **锁文件**（lock.json）：ExtensionSync 安装成功即钉版；后续 sync 源指纹 ≠ 锁 → 版本漂移默认跳过并如实报告（防 Agent 后续会话悄悄换版本），update=true 才重钉；ExtensionUninstall 联动清锁\n- ExtensionDoctor 增强：ubuntu 域 node/npm 就绪探针 + sync 锁计数；ExtensionInstall/Uninstall/Sync 输出同步域信息\n- 旧入口内部转接：SkillInstall 非侵入改走统一闸门（账本/锁同源，id/schema/输出格式对模型零变化）；McpConnect 保持不动 —— 连接语义（#344 重连闭环）与安装职责不重叠，强行转接破坏重连语义\n\n---\n\n- README v3 美化方案 spec：四阶段改造 —— R1 数据治理（readme_facts.py 单一事实源 + 占位符校验进 CI，清偿 8 处口径冲突与 5 个死链）/ R2 素材激活（96 秒宣传片 details 内嵌 + 基准卡前置 + 真机截图墙声明 + viro-pet GIF 激活）/ R3 结构重组（1408 行瘦身至 ≤900，210 行深水内容下沉 docs/，可组合能力矩阵，双语精简版入口）/ R4 视觉升级（banner 双主题变体 + 章节头 SVG 视觉系统 + 徽章 43→≤28 收敛）\n- 七个任务包实施分解（screenshots 包标注 device-required，唯一需仓库主人亲手采集项）\n- 系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（展示层独立零耦合）/ 系列来源背景",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.31"
+    "markdown": "- 市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨\n- **APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）\n- **extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）\n- 配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.32"
   },
   "history": [
+    {
+      "versionName": "1.5.32",
+      "versionCode": 212,
+      "tag": "v1.5.32",
+      "date": "2026-11-07",
+      "title": "v1.5.32 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "extension market wizard",
+          "notes": [
+            "市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨",
+            "**APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）",
+            "**extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）",
+            "配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）"
+          ]
+        }
+      ],
+      "markdown": "- 市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨\n- **APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）\n- **extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）\n- 配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.32"
+    },
     {
       "versionName": "1.5.31",
       "versionCode": 211,
@@ -1436,27 +1449,6 @@
       ],
       "markdown": "- 「正则解释」模板代码化：内置真正的递归下降正则解析器（字面量/字符类/预定义类/锚点/捕获-非捕获-命名组/前瞻/量词含惰性/交替/反向引用），AST 逐段中文解释\n- 从 AST 确定性推导「应匹配 / 不应匹配」样本（首分支/量词下限/类代表字符），不再靠猜\n- 回溯风险三级分析：嵌套无界量词（灾难性）/ 相邻无界量词字符域重叠（高）/ 交替前缀重叠（中），附简化建议规则表（[0-9]→\\d、(a|b)→[ab]、连续 .* 合并、缺锚点提醒）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.87"
-    },
-    {
-      "versionName": "1.4.9.86",
-      "versionCode": 162,
-      "tag": "v1.4.9.86",
-      "date": "2026-10-30",
-      "title": "v1.4.9.86 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template behavior tech doc",
-          "notes": [
-            "「技术文档」模板代码化：受众三档归一（新人上手/团队内传/专家深读）自动校准大纲与语言深度",
-            "五段式大纲骨架（概述/背景/核心概念/使用示例/FAQ）+ 受众微调章节（新人加术语表、专家加设计取舍）",
-            "代码素材提取（围栏块优先/签名行兜底）、主题触发追加章节（迁移/部署/性能/安全/API/排障六类）、可读性写作纪律（句长/术语密度）"
-          ]
-        }
-      ],
-      "markdown": "- 「技术文档」模板代码化：受众三档归一（新人上手/团队内传/专家深读）自动校准大纲与语言深度\n- 五段式大纲骨架（概述/背景/核心概念/使用示例/FAQ）+ 受众微调章节（新人加术语表、专家加设计取舍）\n- 代码素材提取（围栏块优先/签名行兜底）、主题触发追加章节（迁移/部署/性能/安全/API/排障六类）、可读性写作纪律（句长/术语密度）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.86"
     }
   ]
 }
