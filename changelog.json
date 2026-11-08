@@ -1,29 +1,53 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-08T03:47:37Z",
+  "generatedAt": "2026-11-08T04:04:58Z",
   "latest": {
-    "versionName": "1.5.39",
-    "versionCode": 219,
-    "tag": "v1.5.39",
+    "versionName": "1.5.40",
+    "versionCode": 220,
+    "tag": "v1.5.40",
     "date": "2026-11-08",
-    "title": "v1.5.39 更新内容",
+    "title": "v1.5.40 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "plugin host 2 core model",
+        "title": "plugin host 2 worker runtime",
         "notes": [
-          "Native Plugin Host 2.0 开工：新增统一插件核心模型（生态/ABI/能力槽位/运行时种类/14 态生命周期状态机），Claude、OpenCode V1/V2、DSH、MCP、功能性、APK 六大生态首次有了同一张运行时描述符",
-          "新增安装前兼容性分析引擎：A–F 五级评级 + 逐能力原因说明，「能安装」不再冒充「能运行」—— OpenCode 插件当前如实评为 D（能力桥 Phase 4 落地），TUI/GUI-only 插件评 F",
-          "新增生态能力支持矩阵（Phase 0 审计基线）：Claude hooks/.mcp.json/.lsp.json 标记待实现，skills/commands 维持已支持，评级随各阶段落地演进",
-          "架构文档 docs/plugin-host-2.0.md：审计结论 + 目标架构 + 六阶段路线图"
+          "Native Plugin Host 2.0 Phase 2 落地：插件 Worker 运行时 —— 持久化 node/bun Worker 进程 + 换行 JSON IPC 协议（STDOUT 纯协议、日志走 STDERR），工具热调用复用 Worker，不再每次调用冷启动 node",
+          "Worker 崩溃自动恢复：Supervisor 窗口计数重启策略（超上限 GaveUp 如实报告），重启后自动重放握手与模块加载；用户主动停止不误触发重启",
+          "错误隔离三重保障：插件工具抛异常进程不死；进程死亡时在途请求失败返回而非悬挂；Worker 致命错误带 fatal 原因可诊断（stderr 环形缓冲）",
+          "Node 与 Bun 运行时分离探测、分离启动命令 —— 探测失败如实报缺失，禁止互相冒充（TypeScript 入口在 node 下明确拒绝执行）",
+          "真实 node 端到端测试 19 项（协议编解码 + 全链路 IPC + 崩溃恢复），node 缺失环境如实标记 skipped 而非假通过"
         ]
       }
     ],
-    "markdown": "- Native Plugin Host 2.0 开工：新增统一插件核心模型（生态/ABI/能力槽位/运行时种类/14 态生命周期状态机），Claude、OpenCode V1/V2、DSH、MCP、功能性、APK 六大生态首次有了同一张运行时描述符\n- 新增安装前兼容性分析引擎：A–F 五级评级 + 逐能力原因说明，「能安装」不再冒充「能运行」—— OpenCode 插件当前如实评为 D（能力桥 Phase 4 落地），TUI/GUI-only 插件评 F\n- 新增生态能力支持矩阵（Phase 0 审计基线）：Claude hooks/.mcp.json/.lsp.json 标记待实现，skills/commands 维持已支持，评级随各阶段落地演进\n- 架构文档 docs/plugin-host-2.0.md：审计结论 + 目标架构 + 六阶段路线图",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.39"
+    "markdown": "- Native Plugin Host 2.0 Phase 2 落地：插件 Worker 运行时 —— 持久化 node/bun Worker 进程 + 换行 JSON IPC 协议（STDOUT 纯协议、日志走 STDERR），工具热调用复用 Worker，不再每次调用冷启动 node\n- Worker 崩溃自动恢复：Supervisor 窗口计数重启策略（超上限 GaveUp 如实报告），重启后自动重放握手与模块加载；用户主动停止不误触发重启\n- 错误隔离三重保障：插件工具抛异常进程不死；进程死亡时在途请求失败返回而非悬挂；Worker 致命错误带 fatal 原因可诊断（stderr 环形缓冲）\n- Node 与 Bun 运行时分离探测、分离启动命令 —— 探测失败如实报缺失，禁止互相冒充（TypeScript 入口在 node 下明确拒绝执行）\n- 真实 node 端到端测试 19 项（协议编解码 + 全链路 IPC + 崩溃恢复），node 缺失环境如实标记 skipped 而非假通过",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.40"
   },
   "history": [
+    {
+      "versionName": "1.5.40",
+      "versionCode": 220,
+      "tag": "v1.5.40",
+      "date": "2026-11-08",
+      "title": "v1.5.40 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "plugin host 2 worker runtime",
+          "notes": [
+            "Native Plugin Host 2.0 Phase 2 落地：插件 Worker 运行时 —— 持久化 node/bun Worker 进程 + 换行 JSON IPC 协议（STDOUT 纯协议、日志走 STDERR），工具热调用复用 Worker，不再每次调用冷启动 node",
+            "Worker 崩溃自动恢复：Supervisor 窗口计数重启策略（超上限 GaveUp 如实报告），重启后自动重放握手与模块加载；用户主动停止不误触发重启",
+            "错误隔离三重保障：插件工具抛异常进程不死；进程死亡时在途请求失败返回而非悬挂；Worker 致命错误带 fatal 原因可诊断（stderr 环形缓冲）",
+            "Node 与 Bun 运行时分离探测、分离启动命令 —— 探测失败如实报缺失，禁止互相冒充（TypeScript 入口在 node 下明确拒绝执行）",
+            "真实 node 端到端测试 19 项（协议编解码 + 全链路 IPC + 崩溃恢复），node 缺失环境如实标记 skipped 而非假通过"
+          ]
+        }
+      ],
+      "markdown": "- Native Plugin Host 2.0 Phase 2 落地：插件 Worker 运行时 —— 持久化 node/bun Worker 进程 + 换行 JSON IPC 协议（STDOUT 纯协议、日志走 STDERR），工具热调用复用 Worker，不再每次调用冷启动 node\n- Worker 崩溃自动恢复：Supervisor 窗口计数重启策略（超上限 GaveUp 如实报告），重启后自动重放握手与模块加载；用户主动停止不误触发重启\n- 错误隔离三重保障：插件工具抛异常进程不死；进程死亡时在途请求失败返回而非悬挂；Worker 致命错误带 fatal 原因可诊断（stderr 环形缓冲）\n- Node 与 Bun 运行时分离探测、分离启动命令 —— 探测失败如实报缺失，禁止互相冒充（TypeScript 入口在 node 下明确拒绝执行）\n- 真实 node 端到端测试 19 项（协议编解码 + 全链路 IPC + 崩溃恢复），node 缺失环境如实标记 skipped 而非假通过",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.40"
+    },
     {
       "versionName": "1.5.39",
       "versionCode": 219,
@@ -1486,31 +1510,6 @@
       ],
       "markdown": "- 「专业翻译」第二层确定性引擎：译文质检器七族检查（数字保真/标点宽度家族/括号引号配对/段落对齐/长度比异常/漏译段探测/空白卫生）+ 百分制得分 + 标点宽度确定性修复（代码块逐字保留）\n- 「内容总结」结构构建器：中英混合安全切句（缩写/小数/单字母缩写防误切）、术语显著度（标题加权+中英停用词）、四因子句打分、三元组 Jaccard 冗余聚类、要点预算分配、结构化大纲直出 + 要点重叠回包检测\n- 「提交信息生成」规范体系库：四种风格全规则代码化（conventional/gitmoji/自由/内核）、十二类型知识库（中英动词对+emoji 映射）、风格感知校验/修复、主题草稿合成、footer 规范、风格互转\n- 三行为 behaviorVersion 升 2：分析/校验/修复/渲染全阶段接线，回包机器摘要新增质检得分与大纲覆盖率等 8 项指标\n\n---\n\n- README 重定位：Hero 从「自主智能体（8 种执行模式）」改为「AI 编码工作台（四条思考逻辑线）」，标注 Agent 聊天模式已拆分至 Theocracy 仓库；badge（8 modes→4 thinking lines）、架构图（AgentChat 节点→Code 屏 / agent-engine 节点→共享引擎协议）、双层思考表（删 Agent 六档行）、应用界面表（Agent 屏→Coding 屏 + 终端 Ubuntu 单后端标注）、模块表（agent-engine 描述对齐共享基座）同步修正\n- Agent 模式专属文档删除 7 篇：agent-modes.md / agent-roles.md / goal-mode.md / loop-mode.md / agent-execution-overhaul.md / agent-ui-audit.md / agent-life-skills-and-memory.md\n- 保留文档死链清理：tool-system-v4 / hub-ecosystem 引用行删除；pr-body / scope-isolation / ui-quality-audit / operit-rikkahub-comparison / chat-memory-v2 历史提及改「已随 Agent 模式移除」标注；thinking-levels.md 头部 Agent 六档段落改拆分说明\n- 系列收口：Agent 模式移除 6-PR 系列（#600 对话屏 / #616 引擎域 / #617 工具域 / #618 设置域 / #635 AndroidShell 收敛 / 本 PR 文档收尾）全部落地 —— 主仓库成为纯 Coding 模式软件，Coding 功能零损失",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.95"
-    },
-    {
-      "versionName": "1.4.9.94",
-      "versionCode": 170,
-      "tag": "v1.4.9.94",
-      "date": "2026-10-31",
-      "title": "v1.4.9.94 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "remove android shell",
-          "notes": [
-            "后端收敛：生产注册表仅剩 linux-ubuntu（TerminalModule DI 移除 LocalShellBackend 装配）；LocalShellBackend 类移入测试源集作为朴素 shell 夹具（argv/env golden 形态保留，契约/IPC/端到端测试继续可用），androidTest 同步复制",
-            "路由与契约：TerminalRuntime.create() 默认 backendId \"local\"→\"linux-ubuntu\"、shell 参数随 shellHint 一并移除（TerminalCreateTool schema/解析同步收敛，backend 枚举仅 linux-ubuntu）；BackendRuntimeType 枚举移除 ANDROID_LOCAL；workspaceId 仅 LINUX 后端的死守卫移除（全后端皆 LINUX）；BackendStatus/CreateResult 缺省值与 TerminalSdk/TerminalService/TerminalIpcController 默认后端全部对齐 linux-ubuntu；LegacyTerminalManager 兼容层（唯一 shell 位置消费者）删除",
-            "UI 收口：TerminalScreen 四处「先用 Android / Android 会话」入口移除（空态覆盖层统一「重试/安装 Ubuntu」引导）；会话标签回落标签统一 Ubuntu；EnvironmentCenterSheet Android 本地 Shell 卡删除（三卡→双卡）；TerminalViewModel 本地 mksh profile 注入与 init 自动降级本地会话移除，restartActiveSession 一律回 linux-ubuntu",
-            "降级路径收口：TerminalDepCenter 依赖安装会话路由移除 local 降级（Ubuntu 不可用如实报错引导安装）；EnvironmentProvisioner.sessionForApt 移除 local 兜底（apt 只在 Ubuntu 可用）",
-            "SessionRegistry：BACKEND_LOCAL/BACKEND_AGENT 常量删除，无创建方记录的会话回落 linux-ubuntu，inferRuntimeType 未知 shell → UNKNOWN",
-            "字符串双语清理：term_use_android_first / term_new_android_session / term_tab_android / term_android_shell_* / term_notice_fallback_android / term_notice_fallback_session / term_builtin 八键（values/ 与 values-zh/ 镜像同步）",
-            "测试同步：ExecutionBackendGoldenTest 删除（golden 对象已是测试夹具）；TerminalRuntimeBackendTest 语义重排（显式 local 路由 + 默认 linux-ubuntu + workspace 死守卫用例删除）；契约/压力/控制面/观察/协议/端到端/IPC 测试构造补夹具注册表；UbuntuTerminalRuntimeWiringTest W4 更名夹具语义"
-          ]
-        }
-      ],
-      "markdown": "- 后端收敛：生产注册表仅剩 linux-ubuntu（TerminalModule DI 移除 LocalShellBackend 装配）；LocalShellBackend 类移入测试源集作为朴素 shell 夹具（argv/env golden 形态保留，契约/IPC/端到端测试继续可用），androidTest 同步复制\n- 路由与契约：TerminalRuntime.create() 默认 backendId \"local\"→\"linux-ubuntu\"、shell 参数随 shellHint 一并移除（TerminalCreateTool schema/解析同步收敛，backend 枚举仅 linux-ubuntu）；BackendRuntimeType 枚举移除 ANDROID_LOCAL；workspaceId 仅 LINUX 后端的死守卫移除（全后端皆 LINUX）；BackendStatus/CreateResult 缺省值与 TerminalSdk/TerminalService/TerminalIpcController 默认后端全部对齐 linux-ubuntu；LegacyTerminalManager 兼容层（唯一 shell 位置消费者）删除\n- UI 收口：TerminalScreen 四处「先用 Android / Android 会话」入口移除（空态覆盖层统一「重试/安装 Ubuntu」引导）；会话标签回落标签统一 Ubuntu；EnvironmentCenterSheet Android 本地 Shell 卡删除（三卡→双卡）；TerminalViewModel 本地 mksh profile 注入与 init 自动降级本地会话移除，restartActiveSession 一律回 linux-ubuntu\n- 降级路径收口：TerminalDepCenter 依赖安装会话路由移除 local 降级（Ubuntu 不可用如实报错引导安装）；EnvironmentProvisioner.sessionForApt 移除 local 兜底（apt 只在 Ubuntu 可用）\n- SessionRegistry：BACKEND_LOCAL/BACKEND_AGENT 常量删除，无创建方记录的会话回落 linux-ubuntu，inferRuntimeType 未知 shell → UNKNOWN\n- 字符串双语清理：term_use_android_first / term_new_android_session / term_tab_android / term_android_shell_* / term_notice_fallback_android / term_notice_fallback_session / term_builtin 八键（values/ 与 values-zh/ 镜像同步）\n- 测试同步：ExecutionBackendGoldenTest 删除（golden 对象已是测试夹具）；TerminalRuntimeBackendTest 语义重排（显式 local 路由 + 默认 linux-ubuntu + workspace 死守卫用例删除）；契约/压力/控制面/观察/协议/端到端/IPC 测试构造补夹具注册表；UbuntuTerminalRuntimeWiringTest W4 更名夹具语义",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.94"
     }
   ]
 }
