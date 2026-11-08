@@ -1,28 +1,161 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-07T13:21:22Z",
+  "generatedAt": "2026-11-08T03:05:49Z",
   "latest": {
-    "versionName": "1.5.36",
-    "versionCode": 216,
-    "tag": "v1.5.36",
-    "date": "2026-11-07",
-    "title": "v1.5.36 更新内容",
+    "versionName": "1.5.37",
+    "versionCode": 217,
+    "tag": "v1.5.37",
+    "date": "2026-11-08",
+    "title": "v1.5.37 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "code repo map",
+        "title": "s01 release signing hardening",
         "notes": [
-          "新工具 CodeRepoMap：Aider repo-map 的 Kotlin 移植 —— 个性化 PageRank + token 预算二分，把整个工作区浓缩成约 1k token 的定义骨架地图（谁定义了什么、谁引用谁、任务相关文件最优先）",
-          "七语言族标签提取（Kotlin/Java/Python/JS-TS/Go/Rust/C 族）、Aider 全套边权乘数（提及 ×10、聊天引用 ×50、√ 抑制高频）、重要文件前置、mtime 会话缓存",
-          "探索/评审子代理白名单收录：先拿地图再下钻；别名 code_repo_map；特性文档 docs/repomap.md"
+          "安全加固：发布签名私钥与默认口令移出公开仓库，签名凭据改为构建时注入（本地环境变量 / CI secrets），仓库不再携带任何密钥材料",
+          "门禁升级：秘密扫描新增二进制密钥库入库拦截（文件名后缀 + JKS 文件头双通道），发布构建新增凭据完整性校验，缺失即明确失败、不再回退默认口令",
+          "⚠️ 用户可见影响：下一次发布起 APK 将改用新的签名证书 —— 已安装用户无法直接覆盖升级，需先卸载旧版再安装新版（应用数据会被清除，请提前备份聊天记录与设置）；增量更新链与插件市场将随新签名一并切换"
+        ]
+      },
+      {
+        "title": "s05 backup credential exclusions",
+        "notes": [
+          "安全加固：云备份与设备迁移不再导出逆向 MCP Host 的访问令牌与 PulseMCP 合作凭据（此前随系统备份/换机迁移可被带出设备）",
+          "新增静态门禁：凭据类偏好存储必须列入备份排除表，漏配直接在 CI 拦截，防止后续新增凭据存储时再次遗漏"
+        ]
+      },
+      {
+        "title": "s11 userquestion race guard",
+        "notes": [
+          "安全加固：修复提问竞态 —— 前一个已超时/已取消问题的迟到回答不再被误注入当前问题，Agent 不会拿着错配的确认执行操作；错配回答会留审计日志便于追溯"
+        ]
+      },
+      {
+        "title": "s03 permission default risk gates",
+        "notes": [
+          "安全加固：新装机默认权限档恢复为「标准」—— 写文件、git 提交、删除等副作用与高危操作执行前需确认；此前默认即为「全自动」（工具/命令直接执行）",
+          "存量用户档位保持不变，不会再被静默迁移；想用全自动需在 设置 → 工具权限 显式开启，且开启前有后果说明确认弹窗，可随时切回",
+          "修复静默提权问题：此前升级会把停留在标准档的老用户一次性翻成全自动档，该迁移路径已移除"
+        ]
+      },
+      {
+        "title": "s04 mcp host exposure narrowing",
+        "notes": [
+          "安全加固：逆向 MCP Host 默认只监听本机回环地址 —— 局域网设备默认无法连接；PC 控制需在设置中显式开启「允许局域网访问」，开启后界面常驻明文传输风险警示",
+          "安全修复：GET / DELETE 等全部 HTTP 方法统一先过令牌鉴权 —— 此前未带令牌的 DELETE 可直接删除已连接会话",
+          "暴露面收窄：删除/卸载等高危工具永不再暴露给外部 AI；写文件、git 提交等副作用工具默认不暴露（需独立开关显式开启），只读工具不受影响",
+          "启用 MCP Host 前新增确认弹窗（列明端口、鉴权与暴露口径）；对外上报的版本号与 App 版本对齐"
+        ]
+      },
+      {
+        "title": "codetodo dual shape streaming todos",
+        "notes": [
+          "修复 CodeTodo 工具调用失败（invalid argument: 'todos': expected string）：模型发内联 JSON 数组时被旧 schema（声明为 string）在执行前就拒绝、白费一轮重试——现在 todos 声明为数组，内联数组与字符串编码两种形态都直收；ShortcutDefine / ShortcutRun / ToolBatchRun / JsonTransform 等同款复合参数一并修正",
+          "任务清单在流水式输出过程中实时出现：todos 条目随参数生成逐条落到面板（不再等工具执行完成），胶囊头行同步显示「N 项」计数；条目数不再有 50 条硬上限，长清单在面板内滚动浏览"
+        ]
+      },
+      {
+        "title": "extension runtime",
+        "notes": [
+          "生产能力级别增强 PR-D（运行时生产化）：**ExtensionRun** 工具上线 —— 运行已安装的 ubuntu 域扩展（OpenCode/DSH 插件）执行桥不再只装不跑：账本寻址 → runtime=ubuntu 校验 → 读安装期 profile 元数据（entryHint/runtime=node）→ `node <entry> [args]` 白名单执行（CATALOG 渐进披露）",
+          "**安全边界（诚实声明）**：entry 经 ExtensionDirLayout 新增 `profileFile`/`pkgFile` canonical 归属校验（防 bind 挂载/符号链接下的 startsWith 失效与 profile 篡改，单测覆盖逃逸拒绝）；argv 直透不经 shell，但 description 如实声明「下游脚本如何处理 argv 属于脚本自身行为」；超时强杀下沉在 ExecEngine 进程层（proot --kill-on-exit），非协程假超时",
+          "OpenCode/DSH 适配器 install 的 profile 元数据补 `runtime: \"node\"` 并改走规范化归属校验写入",
+          "**NotifySend** 工具：系统通知栏推送（长任务收尾提醒）—— Android 13+ POST_NOTIFICATIONS 运行时权限诚实上报（未授权返回 notifications_disabled 并引导开启，不假装投递成功；复用 ApexNotifications.canPost 既有判定）",
+          "**CapabilityReport 集成统一扩展快照**：能力自省尾部新增扩展行（账本数/锁数/适配器面/已装样例，fail-silent 与 GitHub 行同款）",
+          "过时文案修正：市场 Plugins 页「agent tool bridge is under construction」→ 已建成语义（插件工具已注册进 Agent 工具面 + 死亡降级宿主直调），两语言"
+        ]
+      },
+      {
+        "title": "playground plugin arcade 17 games",
+        "notes": [
+          "游乐场内置游戏扩至十七款：第二批四款（裁纸刀 / 瀑布打包 / 手风琴调音 / 赝品画廊）+ 第三批三款（河流猎人 / 弹球引流 / 代码洪水），全部模仿 pretext 官网 demo 的同一设计语言与契约",
+          "诚实工程：每个 game.json 的 apis 字段只写真实调用的测量 API；rich-note（富文本内联）因 vendored 0.0.9 缺 rich-inline 导出如实缺席，文档注明升级后再补",
+          "文档同步：docs/playground-plugin-arcade.md 与 playground/README.md 更新为十七款速查（分批表格 + pretext 锚点对照）"
         ]
       }
     ],
-    "markdown": "- 新工具 CodeRepoMap：Aider repo-map 的 Kotlin 移植 —— 个性化 PageRank + token 预算二分，把整个工作区浓缩成约 1k token 的定义骨架地图（谁定义了什么、谁引用谁、任务相关文件最优先）\n- 七语言族标签提取（Kotlin/Java/Python/JS-TS/Go/Rust/C 族）、Aider 全套边权乘数（提及 ×10、聊天引用 ×50、√ 抑制高频）、重要文件前置、mtime 会话缓存\n- 探索/评审子代理白名单收录：先拿地图再下钻；别名 code_repo_map；特性文档 docs/repomap.md",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.36"
+    "markdown": "- 安全加固：发布签名私钥与默认口令移出公开仓库，签名凭据改为构建时注入（本地环境变量 / CI secrets），仓库不再携带任何密钥材料\n- 门禁升级：秘密扫描新增二进制密钥库入库拦截（文件名后缀 + JKS 文件头双通道），发布构建新增凭据完整性校验，缺失即明确失败、不再回退默认口令\n- ⚠️ 用户可见影响：下一次发布起 APK 将改用新的签名证书 —— 已安装用户无法直接覆盖升级，需先卸载旧版再安装新版（应用数据会被清除，请提前备份聊天记录与设置）；增量更新链与插件市场将随新签名一并切换\n\n---\n\n- 安全加固：云备份与设备迁移不再导出逆向 MCP Host 的访问令牌与 PulseMCP 合作凭据（此前随系统备份/换机迁移可被带出设备）\n- 新增静态门禁：凭据类偏好存储必须列入备份排除表，漏配直接在 CI 拦截，防止后续新增凭据存储时再次遗漏\n\n---\n\n- 安全加固：修复提问竞态 —— 前一个已超时/已取消问题的迟到回答不再被误注入当前问题，Agent 不会拿着错配的确认执行操作；错配回答会留审计日志便于追溯\n\n---\n\n- 安全加固：新装机默认权限档恢复为「标准」—— 写文件、git 提交、删除等副作用与高危操作执行前需确认；此前默认即为「全自动」（工具/命令直接执行）\n- 存量用户档位保持不变，不会再被静默迁移；想用全自动需在 设置 → 工具权限 显式开启，且开启前有后果说明确认弹窗，可随时切回\n- 修复静默提权问题：此前升级会把停留在标准档的老用户一次性翻成全自动档，该迁移路径已移除\n\n---\n\n- 安全加固：逆向 MCP Host 默认只监听本机回环地址 —— 局域网设备默认无法连接；PC 控制需在设置中显式开启「允许局域网访问」，开启后界面常驻明文传输风险警示\n- 安全修复：GET / DELETE 等全部 HTTP 方法统一先过令牌鉴权 —— 此前未带令牌的 DELETE 可直接删除已连接会话\n- 暴露面收窄：删除/卸载等高危工具永不再暴露给外部 AI；写文件、git 提交等副作用工具默认不暴露（需独立开关显式开启），只读工具不受影响\n- 启用 MCP Host 前新增确认弹窗（列明端口、鉴权与暴露口径）；对外上报的版本号与 App 版本对齐\n\n---\n\n- 修复 CodeTodo 工具调用失败（invalid argument: 'todos': expected string）：模型发内联 JSON 数组时被旧 schema（声明为 string）在执行前就拒绝、白费一轮重试——现在 todos 声明为数组，内联数组与字符串编码两种形态都直收；ShortcutDefine / ShortcutRun / ToolBatchRun / JsonTransform 等同款复合参数一并修正\n- 任务清单在流水式输出过程中实时出现：todos 条目随参数生成逐条落到面板（不再等工具执行完成），胶囊头行同步显示「N 项」计数；条目数不再有 50 条硬上限，长清单在面板内滚动浏览\n\n---\n\n- 生产能力级别增强 PR-D（运行时生产化）：**ExtensionRun** 工具上线 —— 运行已安装的 ubuntu 域扩展（OpenCode/DSH 插件）执行桥不再只装不跑：账本寻址 → runtime=ubuntu 校验 → 读安装期 profile 元数据（entryHint/runtime=node）→ `node <entry> [args]` 白名单执行（CATALOG 渐进披露）\n- **安全边界（诚实声明）**：entry 经 ExtensionDirLayout 新增 `profileFile`/`pkgFile` canonical 归属校验（防 bind 挂载/符号链接下的 startsWith 失效与 profile 篡改，单测覆盖逃逸拒绝）；argv 直透不经 shell，但 description 如实声明「下游脚本如何处理 argv 属于脚本自身行为」；超时强杀下沉在 ExecEngine 进程层（proot --kill-on-exit），非协程假超时\n- OpenCode/DSH 适配器 install 的 profile 元数据补 `runtime: \"node\"` 并改走规范化归属校验写入\n- **NotifySend** 工具：系统通知栏推送（长任务收尾提醒）—— Android 13+ POST_NOTIFICATIONS 运行时权限诚实上报（未授权返回 notifications_disabled 并引导开启，不假装投递成功；复用 ApexNotifications.canPost 既有判定）\n- **CapabilityReport 集成统一扩展快照**：能力自省尾部新增扩展行（账本数/锁数/适配器面/已装样例，fail-silent 与 GitHub 行同款）\n- 过时文案修正：市场 Plugins 页「agent tool bridge is under construction」→ 已建成语义（插件工具已注册进 Agent 工具面 + 死亡降级宿主直调），两语言\n\n---\n\n- 游乐场内置游戏扩至十七款：第二批四款（裁纸刀 / 瀑布打包 / 手风琴调音 / 赝品画廊）+ 第三批三款（河流猎人 / 弹球引流 / 代码洪水），全部模仿 pretext 官网 demo 的同一设计语言与契约\n- 诚实工程：每个 game.json 的 apis 字段只写真实调用的测量 API；rich-note（富文本内联）因 vendored 0.0.9 缺 rich-inline 导出如实缺席，文档注明升级后再补\n- 文档同步：docs/playground-plugin-arcade.md 与 playground/README.md 更新为十七款速查（分批表格 + pretext 锚点对照）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.37"
   },
   "history": [
+    {
+      "versionName": "1.5.37",
+      "versionCode": 217,
+      "tag": "v1.5.37",
+      "date": "2026-11-08",
+      "title": "v1.5.37 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "s01 release signing hardening",
+          "notes": [
+            "安全加固：发布签名私钥与默认口令移出公开仓库，签名凭据改为构建时注入（本地环境变量 / CI secrets），仓库不再携带任何密钥材料",
+            "门禁升级：秘密扫描新增二进制密钥库入库拦截（文件名后缀 + JKS 文件头双通道），发布构建新增凭据完整性校验，缺失即明确失败、不再回退默认口令",
+            "⚠️ 用户可见影响：下一次发布起 APK 将改用新的签名证书 —— 已安装用户无法直接覆盖升级，需先卸载旧版再安装新版（应用数据会被清除，请提前备份聊天记录与设置）；增量更新链与插件市场将随新签名一并切换"
+          ]
+        },
+        {
+          "title": "s05 backup credential exclusions",
+          "notes": [
+            "安全加固：云备份与设备迁移不再导出逆向 MCP Host 的访问令牌与 PulseMCP 合作凭据（此前随系统备份/换机迁移可被带出设备）",
+            "新增静态门禁：凭据类偏好存储必须列入备份排除表，漏配直接在 CI 拦截，防止后续新增凭据存储时再次遗漏"
+          ]
+        },
+        {
+          "title": "s11 userquestion race guard",
+          "notes": [
+            "安全加固：修复提问竞态 —— 前一个已超时/已取消问题的迟到回答不再被误注入当前问题，Agent 不会拿着错配的确认执行操作；错配回答会留审计日志便于追溯"
+          ]
+        },
+        {
+          "title": "s03 permission default risk gates",
+          "notes": [
+            "安全加固：新装机默认权限档恢复为「标准」—— 写文件、git 提交、删除等副作用与高危操作执行前需确认；此前默认即为「全自动」（工具/命令直接执行）",
+            "存量用户档位保持不变，不会再被静默迁移；想用全自动需在 设置 → 工具权限 显式开启，且开启前有后果说明确认弹窗，可随时切回",
+            "修复静默提权问题：此前升级会把停留在标准档的老用户一次性翻成全自动档，该迁移路径已移除"
+          ]
+        },
+        {
+          "title": "s04 mcp host exposure narrowing",
+          "notes": [
+            "安全加固：逆向 MCP Host 默认只监听本机回环地址 —— 局域网设备默认无法连接；PC 控制需在设置中显式开启「允许局域网访问」，开启后界面常驻明文传输风险警示",
+            "安全修复：GET / DELETE 等全部 HTTP 方法统一先过令牌鉴权 —— 此前未带令牌的 DELETE 可直接删除已连接会话",
+            "暴露面收窄：删除/卸载等高危工具永不再暴露给外部 AI；写文件、git 提交等副作用工具默认不暴露（需独立开关显式开启），只读工具不受影响",
+            "启用 MCP Host 前新增确认弹窗（列明端口、鉴权与暴露口径）；对外上报的版本号与 App 版本对齐"
+          ]
+        },
+        {
+          "title": "codetodo dual shape streaming todos",
+          "notes": [
+            "修复 CodeTodo 工具调用失败（invalid argument: 'todos': expected string）：模型发内联 JSON 数组时被旧 schema（声明为 string）在执行前就拒绝、白费一轮重试——现在 todos 声明为数组，内联数组与字符串编码两种形态都直收；ShortcutDefine / ShortcutRun / ToolBatchRun / JsonTransform 等同款复合参数一并修正",
+            "任务清单在流水式输出过程中实时出现：todos 条目随参数生成逐条落到面板（不再等工具执行完成），胶囊头行同步显示「N 项」计数；条目数不再有 50 条硬上限，长清单在面板内滚动浏览"
+          ]
+        },
+        {
+          "title": "extension runtime",
+          "notes": [
+            "生产能力级别增强 PR-D（运行时生产化）：**ExtensionRun** 工具上线 —— 运行已安装的 ubuntu 域扩展（OpenCode/DSH 插件）执行桥不再只装不跑：账本寻址 → runtime=ubuntu 校验 → 读安装期 profile 元数据（entryHint/runtime=node）→ `node <entry> [args]` 白名单执行（CATALOG 渐进披露）",
+            "**安全边界（诚实声明）**：entry 经 ExtensionDirLayout 新增 `profileFile`/`pkgFile` canonical 归属校验（防 bind 挂载/符号链接下的 startsWith 失效与 profile 篡改，单测覆盖逃逸拒绝）；argv 直透不经 shell，但 description 如实声明「下游脚本如何处理 argv 属于脚本自身行为」；超时强杀下沉在 ExecEngine 进程层（proot --kill-on-exit），非协程假超时",
+            "OpenCode/DSH 适配器 install 的 profile 元数据补 `runtime: \"node\"` 并改走规范化归属校验写入",
+            "**NotifySend** 工具：系统通知栏推送（长任务收尾提醒）—— Android 13+ POST_NOTIFICATIONS 运行时权限诚实上报（未授权返回 notifications_disabled 并引导开启，不假装投递成功；复用 ApexNotifications.canPost 既有判定）",
+            "**CapabilityReport 集成统一扩展快照**：能力自省尾部新增扩展行（账本数/锁数/适配器面/已装样例，fail-silent 与 GitHub 行同款）",
+            "过时文案修正：市场 Plugins 页「agent tool bridge is under construction」→ 已建成语义（插件工具已注册进 Agent 工具面 + 死亡降级宿主直调），两语言"
+          ]
+        },
+        {
+          "title": "playground plugin arcade 17 games",
+          "notes": [
+            "游乐场内置游戏扩至十七款：第二批四款（裁纸刀 / 瀑布打包 / 手风琴调音 / 赝品画廊）+ 第三批三款（河流猎人 / 弹球引流 / 代码洪水），全部模仿 pretext 官网 demo 的同一设计语言与契约",
+            "诚实工程：每个 game.json 的 apis 字段只写真实调用的测量 API；rich-note（富文本内联）因 vendored 0.0.9 缺 rich-inline 导出如实缺席，文档注明升级后再补",
+            "文档同步：docs/playground-plugin-arcade.md 与 playground/README.md 更新为十七款速查（分批表格 + pretext 锚点对照）"
+          ]
+        }
+      ],
+      "markdown": "- 安全加固：发布签名私钥与默认口令移出公开仓库，签名凭据改为构建时注入（本地环境变量 / CI secrets），仓库不再携带任何密钥材料\n- 门禁升级：秘密扫描新增二进制密钥库入库拦截（文件名后缀 + JKS 文件头双通道），发布构建新增凭据完整性校验，缺失即明确失败、不再回退默认口令\n- ⚠️ 用户可见影响：下一次发布起 APK 将改用新的签名证书 —— 已安装用户无法直接覆盖升级，需先卸载旧版再安装新版（应用数据会被清除，请提前备份聊天记录与设置）；增量更新链与插件市场将随新签名一并切换\n\n---\n\n- 安全加固：云备份与设备迁移不再导出逆向 MCP Host 的访问令牌与 PulseMCP 合作凭据（此前随系统备份/换机迁移可被带出设备）\n- 新增静态门禁：凭据类偏好存储必须列入备份排除表，漏配直接在 CI 拦截，防止后续新增凭据存储时再次遗漏\n\n---\n\n- 安全加固：修复提问竞态 —— 前一个已超时/已取消问题的迟到回答不再被误注入当前问题，Agent 不会拿着错配的确认执行操作；错配回答会留审计日志便于追溯\n\n---\n\n- 安全加固：新装机默认权限档恢复为「标准」—— 写文件、git 提交、删除等副作用与高危操作执行前需确认；此前默认即为「全自动」（工具/命令直接执行）\n- 存量用户档位保持不变，不会再被静默迁移；想用全自动需在 设置 → 工具权限 显式开启，且开启前有后果说明确认弹窗，可随时切回\n- 修复静默提权问题：此前升级会把停留在标准档的老用户一次性翻成全自动档，该迁移路径已移除\n\n---\n\n- 安全加固：逆向 MCP Host 默认只监听本机回环地址 —— 局域网设备默认无法连接；PC 控制需在设置中显式开启「允许局域网访问」，开启后界面常驻明文传输风险警示\n- 安全修复：GET / DELETE 等全部 HTTP 方法统一先过令牌鉴权 —— 此前未带令牌的 DELETE 可直接删除已连接会话\n- 暴露面收窄：删除/卸载等高危工具永不再暴露给外部 AI；写文件、git 提交等副作用工具默认不暴露（需独立开关显式开启），只读工具不受影响\n- 启用 MCP Host 前新增确认弹窗（列明端口、鉴权与暴露口径）；对外上报的版本号与 App 版本对齐\n\n---\n\n- 修复 CodeTodo 工具调用失败（invalid argument: 'todos': expected string）：模型发内联 JSON 数组时被旧 schema（声明为 string）在执行前就拒绝、白费一轮重试——现在 todos 声明为数组，内联数组与字符串编码两种形态都直收；ShortcutDefine / ShortcutRun / ToolBatchRun / JsonTransform 等同款复合参数一并修正\n- 任务清单在流水式输出过程中实时出现：todos 条目随参数生成逐条落到面板（不再等工具执行完成），胶囊头行同步显示「N 项」计数；条目数不再有 50 条硬上限，长清单在面板内滚动浏览\n\n---\n\n- 生产能力级别增强 PR-D（运行时生产化）：**ExtensionRun** 工具上线 —— 运行已安装的 ubuntu 域扩展（OpenCode/DSH 插件）执行桥不再只装不跑：账本寻址 → runtime=ubuntu 校验 → 读安装期 profile 元数据（entryHint/runtime=node）→ `node <entry> [args]` 白名单执行（CATALOG 渐进披露）\n- **安全边界（诚实声明）**：entry 经 ExtensionDirLayout 新增 `profileFile`/`pkgFile` canonical 归属校验（防 bind 挂载/符号链接下的 startsWith 失效与 profile 篡改，单测覆盖逃逸拒绝）；argv 直透不经 shell，但 description 如实声明「下游脚本如何处理 argv 属于脚本自身行为」；超时强杀下沉在 ExecEngine 进程层（proot --kill-on-exit），非协程假超时\n- OpenCode/DSH 适配器 install 的 profile 元数据补 `runtime: \"node\"` 并改走规范化归属校验写入\n- **NotifySend** 工具：系统通知栏推送（长任务收尾提醒）—— Android 13+ POST_NOTIFICATIONS 运行时权限诚实上报（未授权返回 notifications_disabled 并引导开启，不假装投递成功；复用 ApexNotifications.canPost 既有判定）\n- **CapabilityReport 集成统一扩展快照**：能力自省尾部新增扩展行（账本数/锁数/适配器面/已装样例，fail-silent 与 GitHub 行同款）\n- 过时文案修正：市场 Plugins 页「agent tool bridge is under construction」→ 已建成语义（插件工具已注册进 Agent 工具面 + 死亡降级宿主直调），两语言\n\n---\n\n- 游乐场内置游戏扩至十七款：第二批四款（裁纸刀 / 瀑布打包 / 手风琴调音 / 赝品画廊）+ 第三批三款（河流猎人 / 弹球引流 / 代码洪水），全部模仿 pretext 官网 demo 的同一设计语言与契约\n- 诚实工程：每个 game.json 的 apis 字段只写真实调用的测量 API；rich-note（富文本内联）因 vendored 0.0.9 缺 rich-inline 导出如实缺席，文档注明升级后再补\n- 文档同步：docs/playground-plugin-arcade.md 与 playground/README.md 更新为十七款速查（分批表格 + pretext 锚点对照）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.37"
+    },
     {
       "versionName": "1.5.36",
       "versionCode": 216,
@@ -1427,28 +1560,6 @@
       ],
       "markdown": "## Coding 新增会话上下文查看:看清模型到底收到了什么\n\n- Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容\n- 深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容\n\n---\n\n- 设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）\n- 迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用\n- AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）\n- 字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正\n- 红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.92"
-    },
-    {
-      "versionName": "1.4.9.91",
-      "versionCode": 167,
-      "tag": "v1.4.9.91",
-      "date": "2026-10-30",
-      "title": "v1.4.9.91 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "Coding 思考选择器重做:深度滑块 + 逻辑切换圆角收敛 + 文案全面重写",
-          "notes": [
-            "思考深度七档改为滑块选择:拖动实时预览目标档(档名/预算徽标/说明跟随),松手即生效;自动档保留独立入口,拖滑块即切固定档",
-            "思考逻辑触发胶囊从全圆改为 10dp 小圆角,与思考档位胶囊形成区分",
-            "思考逻辑/思考程度全部说明文案重写:去掉「梭回合机」「勘合通行证」「收发匣」等自造词,改为描述真实行为(自动选档、并行工具、权限确认、会话压缩);中文环境不再混显英文长句",
-            "审计确认:四条思考逻辑(深潜/标准/织造/信使)为四个真实引擎路由,档位切换真实下发迭代上限/输出预算/压缩阈值三参数并随档缩放,自动档预检与运行中升级真实生效"
-          ]
-        }
-      ],
-      "markdown": "## Coding 思考选择器重做:深度滑块 + 逻辑切换圆角收敛 + 文案全面重写\n\n- 思考深度七档改为滑块选择:拖动实时预览目标档(档名/预算徽标/说明跟随),松手即生效;自动档保留独立入口,拖滑块即切固定档\n- 思考逻辑触发胶囊从全圆改为 10dp 小圆角,与思考档位胶囊形成区分\n- 思考逻辑/思考程度全部说明文案重写:去掉「梭回合机」「勘合通行证」「收发匣」等自造词,改为描述真实行为(自动选档、并行工具、权限确认、会话压缩);中文环境不再混显英文长句\n- 审计确认:四条思考逻辑(深潜/标准/织造/信使)为四个真实引擎路由,档位切换真实下发迭代上限/输出预算/压缩阈值三参数并随档缩放,自动档预检与运行中升级真实生效",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.91"
     }
   ]
 }
