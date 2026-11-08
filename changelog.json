@@ -1,30 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-08T05:08:28Z",
+  "generatedAt": "2026-11-08T05:37:21Z",
   "latest": {
-    "versionName": "1.5.43",
-    "versionCode": 223,
-    "tag": "v1.5.43",
+    "versionName": "1.5.44",
+    "versionCode": 224,
+    "tag": "v1.5.44",
     "date": "2026-11-08",
-    "title": "v1.5.43 更新内容",
+    "title": "v1.5.44 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "plugin host 2 claude compat",
+        "title": "plugin host 2 app wiring",
         "notes": [
-          "Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定",
-          "宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造",
-          "插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删",
-          ".lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持",
-          "prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行"
+          "Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）",
+          "新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略",
+          "PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状",
+          "诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论"
         ]
       }
     ],
-    "markdown": "- Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定\n- 宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造\n- 插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删\n- .lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持\n- prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.43"
+    "markdown": "- Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）\n- 新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略\n- PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状\n- 诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.44"
   },
   "history": [
+    {
+      "versionName": "1.5.44",
+      "versionCode": 224,
+      "tag": "v1.5.44",
+      "date": "2026-11-08",
+      "title": "v1.5.44 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "plugin host 2 app wiring",
+          "notes": [
+            "Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）",
+            "新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略",
+            "PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状",
+            "诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论"
+          ]
+        }
+      ],
+      "markdown": "- Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）\n- 新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略\n- PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状\n- 诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.44"
+    },
     {
       "versionName": "1.5.43",
       "versionCode": 223,
@@ -1483,28 +1504,6 @@
       ],
       "markdown": "- 记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮\n- 新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图\n- 经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景\n- 知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.99"
-    },
-    {
-      "versionName": "1.4.9.98",
-      "versionCode": 174,
-      "tag": "v1.4.9.98",
-      "date": "2026-10-31",
-      "title": "v1.4.9.98 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template runtime finalize",
-          "notes": [
-            "端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）",
-            "深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言",
-            "docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵",
-            "README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目"
-          ]
-        }
-      ],
-      "markdown": "- 端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）\n- 深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言\n- docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵\n- README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.98"
     }
   ]
 }
