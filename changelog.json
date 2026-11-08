@@ -1,29 +1,57 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-08T05:37:21Z",
+  "generatedAt": "2026-11-08T06:30:52Z",
   "latest": {
-    "versionName": "1.5.44",
-    "versionCode": 224,
-    "tag": "v1.5.44",
+    "versionName": "1.5.45",
+    "versionCode": 225,
+    "tag": "v1.5.45",
     "date": "2026-11-08",
-    "title": "v1.5.44 更新内容",
+    "title": "v1.5.45 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "plugin host 2 app wiring",
+        "title": "dsh native host",
         "notes": [
-          "Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）",
-          "新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略",
-          "PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状",
-          "诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论"
+          "DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具",
+          "shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）",
+          "**平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）",
+          "**版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）",
+          "`DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes",
+          "Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）",
+          "测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围"
         ]
       }
     ],
-    "markdown": "- Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）\n- 新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略\n- PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状\n- 诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.44"
+    "markdown": "- DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具\n- shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）\n- **平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）\n- **版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）\n- `DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes\n- Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）\n- 测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.45"
   },
   "history": [
+    {
+      "versionName": "1.5.45",
+      "versionCode": 225,
+      "tag": "v1.5.45",
+      "date": "2026-11-08",
+      "title": "v1.5.45 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "dsh native host",
+          "notes": [
+            "DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具",
+            "shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）",
+            "**平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）",
+            "**版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）",
+            "`DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes",
+            "Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）",
+            "测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围"
+          ]
+        }
+      ],
+      "markdown": "- DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具\n- shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）\n- **平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）\n- **版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）\n- `DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes\n- Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）\n- 测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.45"
+    },
     {
       "versionName": "1.5.44",
       "versionCode": 224,
@@ -1482,28 +1510,6 @@
       ],
       "markdown": "- AskUser 工具参数 JSON 解析失败不再被空 catch 静默吞掉 —— AppLogger（ENGINE 类别）留痕后按空参数继续，模型输出非合法 JSON 时日志有据可查\n\n---\n\n- PTY 旧 String JNI 通道整链移除：NativePty 的 nativeWrite/nativeWriteRaw/nativeRead 三个 @Deprecated external fun + jni_bridge.cpp 对应三个 JNIEXPORT + PtyEngine/PtySession 的 writeLine/read 死链 + 孤儿头文件 ansi_filter.h（生产自 P70 起一律走 nativeWriteBytes/nativeReadBytes 字节通道，旧行为缺陷：双换行/NUL 截断/无法区分 idle 与 EOF）\n\n---\n\n- ToolMetadata.meta 移除 block 参数的空默认值 —— 全部调用方本就显式传 block，默认值从未被使用；改为必传可在编译期杜绝「空元数据」误用\n\n---\n\n- 4 处绕过统一日志框架的调试输出收口到 AppLogger：InputManagerImpl 未映射键告警与 RealVirtualTerminal 引擎关闭失败（System.err → warn）、DefaultPrivilegeManager Shizuku 监听注册失败与 ApexAccessibilityService 遍历子节点失败（Log.d → debug，语义不变）—— release 构建不再向 stderr/logcat 泄内部状态，日志查看器可按类别统一筛选\n- platform:terminal 新增 core:logging 依赖（纯 JVM 模块，「纯 JVM 库」边界不变），TERMINAL_SDK_BOUNDARY 依赖图同步\n\n---\n\n- 两处只定义不消费的 SessionStateChanged 死事件移除：TerminalControlEvent（TerminalControllerImpl 从未发射）与 TerminalApiEvent（TerminalApi 零实例化）—— 契约测试同步从 4 型收窄为 3 型，防止后来人误以为事件面可用\n\n---\n\n- 两个从未注册的 Legacy 终端工具删除：LegacySignalTool / LegacyCloseTool（80+72 行 —— ToolModule 只登记过 Exec/Send/Read/List 四个别名，Signal/Close 是纯死代码），幂等表死条目、LEGACY_ALIAS_IDS 死 id、两条指向不存在工具的别 名映射（terminal_signal/terminal_close）与 ToolRegistrationGuide 引用同步收口\n- LegacyListTool 的 Input(dummy) 占位空壳移除：execute() 改无参、schema 里的 dummy 占位属性一并删除（工具本就不接收参数）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.100"
-    },
-    {
-      "versionName": "1.4.9.99",
-      "versionCode": 175,
-      "tag": "v1.4.9.99",
-      "date": "2026-10-31",
-      "title": "v1.4.9.99 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "memory page v3",
-          "notes": [
-            "记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮",
-            "新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图",
-            "经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景",
-            "知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空"
-          ]
-        }
-      ],
-      "markdown": "- 记忆页列表重构为一整支单列滚动列表：分区全部扁平化，新增顶部导航芯片一键直达聊天记忆 / 知识图谱 / 经历 / 宏技能，当前分区随滚动高亮\n- 新增下拉刷新与「上次刷新」时间行，概览六卡全部可点直达对应分区或切换图谱视图\n- 经历分区新增状态过滤芯片（进行中 / 成功 / 失败 / 放弃，带计数）与终态徽章、用时、应用包元数据；宏技能卡可展开查看目标 / 动作序列 / 溯源情景\n- 知识图谱实体超量自动折叠（显示全部 / 收起）；搜索命中词加粗高亮 + 命中摘要 + 一键清空",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.99"
     }
   ]
 }
