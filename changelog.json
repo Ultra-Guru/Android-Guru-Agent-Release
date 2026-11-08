@@ -1,84 +1,81 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-08T03:05:49Z",
+  "generatedAt": "2026-11-08T03:32:46Z",
   "latest": {
-    "versionName": "1.5.37",
-    "versionCode": 217,
-    "tag": "v1.5.37",
+    "versionName": "1.5.38",
+    "versionCode": 218,
+    "tag": "v1.5.38",
     "date": "2026-11-08",
-    "title": "v1.5.37 更新内容",
+    "title": "v1.5.38 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "s01 release signing hardening",
+        "title": "extension hardening",
         "notes": [
-          "安全加固：发布签名私钥与默认口令移出公开仓库，签名凭据改为构建时注入（本地环境变量 / CI secrets），仓库不再携带任何密钥材料",
-          "门禁升级：秘密扫描新增二进制密钥库入库拦截（文件名后缀 + JKS 文件头双通道），发布构建新增凭据完整性校验，缺失即明确失败、不再回退默认口令",
-          "⚠️ 用户可见影响：下一次发布起 APK 将改用新的签名证书 —— 已安装用户无法直接覆盖升级，需先卸载旧版再安装新版（应用数据会被清除，请提前备份聊天记录与设置）；增量更新链与插件市场将随新签名一并切换"
+          "生产能力级别增强 PR-E（生产化加固）：**扩展声明式清单启动自动同步** —— 设置项 `extensionAutoSync`（AgentSettingSet 可改）开启且 `<filesDir>/extensions/extensions.json` 存在时，进程启动评估全部 spec：与锁文件比对版本漂移、失败收集 —— **只评估不安装**（防 Agent 后续会话悄悄换版本），漂移/失败经系统通知提醒（权限未授权静默，lastSync 可查）",
+          "**最近同步报告持久化**（lastSync.json 原子写）：ExtensionSync 安装/评估后落最近一次结果（ok/漂移/失败清单）；ExtensionDoctor 输出追加 last sync 摘要 —— 生产状态随时可查",
+          "ExtensionAutoSyncRunner 纯 JVM 评估核（core 层零 Android 依赖）：resolve → 锁漂移比对 → 三分类报告（ok/fresh/drift/failed）；app 层 ExtensionAutoSync 薄包装（设置门 + 清单读取 + 通知），@Provides 副作用启动同 SkillModule 惯例（失败只记日志不阻断启动）",
+          "向导安装失败后按钮转「重试」（hash 仍有效，一键重发）；JVM 测试（漂移/失败报告 + lastSync 落盘重载 + 空清单零报告）"
         ]
       },
       {
-        "title": "s05 backup credential exclusions",
+        "title": "git audit p0",
         "notes": [
-          "安全加固：云备份与设备迁移不再导出逆向 MCP Host 的访问令牌与 PulseMCP 合作凭据（此前随系统备份/换机迁移可被带出设备）",
-          "新增静态门禁：凭据类偏好存储必须列入备份排除表，漏配直接在 CI 拦截，防止后续新增凭据存储时再次遗漏"
-        ]
-      },
-      {
-        "title": "s11 userquestion race guard",
-        "notes": [
-          "安全加固：修复提问竞态 —— 前一个已超时/已取消问题的迟到回答不再被误注入当前问题，Agent 不会拿着错配的确认执行操作；错配回答会留审计日志便于追溯"
-        ]
-      },
-      {
-        "title": "s03 permission default risk gates",
-        "notes": [
-          "安全加固：新装机默认权限档恢复为「标准」—— 写文件、git 提交、删除等副作用与高危操作执行前需确认；此前默认即为「全自动」（工具/命令直接执行）",
-          "存量用户档位保持不变，不会再被静默迁移；想用全自动需在 设置 → 工具权限 显式开启，且开启前有后果说明确认弹窗，可随时切回",
-          "修复静默提权问题：此前升级会把停留在标准档的老用户一次性翻成全自动档，该迁移路径已移除"
-        ]
-      },
-      {
-        "title": "s04 mcp host exposure narrowing",
-        "notes": [
-          "安全加固：逆向 MCP Host 默认只监听本机回环地址 —— 局域网设备默认无法连接；PC 控制需在设置中显式开启「允许局域网访问」，开启后界面常驻明文传输风险警示",
-          "安全修复：GET / DELETE 等全部 HTTP 方法统一先过令牌鉴权 —— 此前未带令牌的 DELETE 可直接删除已连接会话",
-          "暴露面收窄：删除/卸载等高危工具永不再暴露给外部 AI；写文件、git 提交等副作用工具默认不暴露（需独立开关显式开启），只读工具不受影响",
-          "启用 MCP Host 前新增确认弹窗（列明端口、鉴权与暴露口径）；对外上报的版本号与 App 版本对齐"
-        ]
-      },
-      {
-        "title": "codetodo dual shape streaming todos",
-        "notes": [
-          "修复 CodeTodo 工具调用失败（invalid argument: 'todos': expected string）：模型发内联 JSON 数组时被旧 schema（声明为 string）在执行前就拒绝、白费一轮重试——现在 todos 声明为数组，内联数组与字符串编码两种形态都直收；ShortcutDefine / ShortcutRun / ToolBatchRun / JsonTransform 等同款复合参数一并修正",
-          "任务清单在流水式输出过程中实时出现：todos 条目随参数生成逐条落到面板（不再等工具执行完成），胶囊头行同步显示「N 项」计数；条目数不再有 50 条硬上限，长清单在面板内滚动浏览"
-        ]
-      },
-      {
-        "title": "extension runtime",
-        "notes": [
-          "生产能力级别增强 PR-D（运行时生产化）：**ExtensionRun** 工具上线 —— 运行已安装的 ubuntu 域扩展（OpenCode/DSH 插件）执行桥不再只装不跑：账本寻址 → runtime=ubuntu 校验 → 读安装期 profile 元数据（entryHint/runtime=node）→ `node <entry> [args]` 白名单执行（CATALOG 渐进披露）",
-          "**安全边界（诚实声明）**：entry 经 ExtensionDirLayout 新增 `profileFile`/`pkgFile` canonical 归属校验（防 bind 挂载/符号链接下的 startsWith 失效与 profile 篡改，单测覆盖逃逸拒绝）；argv 直透不经 shell，但 description 如实声明「下游脚本如何处理 argv 属于脚本自身行为」；超时强杀下沉在 ExecEngine 进程层（proot --kill-on-exit），非协程假超时",
-          "OpenCode/DSH 适配器 install 的 profile 元数据补 `runtime: \"node\"` 并改走规范化归属校验写入",
-          "**NotifySend** 工具：系统通知栏推送（长任务收尾提醒）—— Android 13+ POST_NOTIFICATIONS 运行时权限诚实上报（未授权返回 notifications_disabled 并引导开启，不假装投递成功；复用 ApexNotifications.canPost 既有判定）",
-          "**CapabilityReport 集成统一扩展快照**：能力自省尾部新增扩展行（账本数/锁数/适配器面/已装样例，fail-silent 与 GitHub 行同款）",
-          "过时文案修正：市场 Plugins 页「agent tool bridge is under construction」→ 已建成语义（插件工具已注册进 Agent 工具面 + 死亡降级宿主直调），两语言"
-        ]
-      },
-      {
-        "title": "playground plugin arcade 17 games",
-        "notes": [
-          "游乐场内置游戏扩至十七款：第二批四款（裁纸刀 / 瀑布打包 / 手风琴调音 / 赝品画廊）+ 第三批三款（河流猎人 / 弹球引流 / 代码洪水），全部模仿 pretext 官网 demo 的同一设计语言与契约",
-          "诚实工程：每个 game.json 的 apis 字段只写真实调用的测量 API；rich-note（富文本内联）因 vendored 0.0.9 缺 rich-inline 导出如实缺席，文档注明升级后再补",
-          "文档同步：docs/playground-plugin-arcade.md 与 playground/README.md 更新为十七款速查（分批表格 + pretext 锚点对照）"
+          "**Git 审计 P0 安全热修**（基线 main@aa104f6，46 项问题中的 P0 批次）——凭据外传链根修：GitHub PAT 不再注入任何进程 env（旧实现把 GH_TOKEN 写进整个 `sh -c` 进程，`git pull && curl` 复合命令与恶意仓库 hooks 可直接读走），改为一次性 GIT_ASKPASS 脚本（写入沙箱 /tmp、只应答 github.com 的凭据提示、命令结束即删、终端通道 30 分钟惰性清扫兜底）——终端里 gh 命令因此失去认证（引导走 GitHub 工具族）",
+          "`CodeGitRun` 命令级门禁（GitCommandPolicy，解析后 argv 纯函数分类）：`-c`/`git config` 配置逃逸**硬拒绝**（credential.helper/hooksPath 可执行任意程序）、交互式检测改 argv 位置无关（旧 startsWith 被 `add  -p` 双空格/Tab 击穿）、`git -C` 词法校验必须落在工作区内、clone/push 远程 URL 仅 https + github.com 白名单（file://、ext::、userinfo 内嵌凭据全拒）、引号未闭合严格拒绝",
+          "权限门/风险门按命令分类：DESTRUCTIVE（reset --hard / push --force / clean -f 等）与 OUTBOUND（push/pull/fetch/clone）在任何权限档**逐次确认**（含 BYPASS，不提供会话级放行、拒绝不写会话状态）；READ 命令各模式直通（DENY 规则仍优先）；LOCAL_WRITE 保持原有确认面",
+          "终端命令级高危表补 git 破坏性形态（TerminalExec 自由命令通道兜底防线，此前零 git 覆盖）",
+          "MCP 令牌桥白名单（fail-closed）：`${GITHUB_TOKEN}` 占位符仅官方 github-official 预置（serverName + URL host 双校验）可解析——恶意市场配置借占位符窃取 PAT 的通路关闭；第三方含占位符配置升级后连接将被拒绝并给出指引",
+          "GitHub API host 锁：分页 Link 跟随仅 https + api.github.com（Bearer 头不再可能发往任意主机/明文 http）；OkHttp 改 enqueue + invokeOnCancellation（协程取消毫秒级打断在途请求，旧同步 execute 叠加重试最长挂 3 分钟）；**POST/PUT 不再自动重试**（旧实现 429/5xx 重发会重复建 Issue/PR/提交）",
+          "私有仓写防线统一：REST（GithubWriteFile）与内置 MCP（create_or_update_file）共用 GithubWriteGuard（可见性探针 + confirm_private_write，fail-closed）——旧版 MCP 通路可绕过 #273/#274 防线",
+          "GitHub Token 存储.fail-closed：加密存储初始化失败不再静默降级明文落盘（改纯内存、重启重连），启动时自动把历史明文残留迁回加密存储并删除；token 保存 trim；data_extraction_rules 补 file domain 排除（logs/ 审计日志、crash/、mcp_config/、rootfs/）",
+          "GitHub 写工具显式风险元数据：GithubWriteFile / GithubCreateIssue / GithubCreatePullRequest = HIGH + openWorld + 非幂等 + sensitiveAction（BYPASS 档也保持逐次确认）",
+          "新增回归测试：GitCommandPolicy 分类矩阵、GitRunTool 策略集成、注入器/凭据签发器、API 白名单与幂等重试、MCP 令牌桥、双门禁 git 行为、终端高危表 git 模式"
         ]
       }
     ],
-    "markdown": "- 安全加固：发布签名私钥与默认口令移出公开仓库，签名凭据改为构建时注入（本地环境变量 / CI secrets），仓库不再携带任何密钥材料\n- 门禁升级：秘密扫描新增二进制密钥库入库拦截（文件名后缀 + JKS 文件头双通道），发布构建新增凭据完整性校验，缺失即明确失败、不再回退默认口令\n- ⚠️ 用户可见影响：下一次发布起 APK 将改用新的签名证书 —— 已安装用户无法直接覆盖升级，需先卸载旧版再安装新版（应用数据会被清除，请提前备份聊天记录与设置）；增量更新链与插件市场将随新签名一并切换\n\n---\n\n- 安全加固：云备份与设备迁移不再导出逆向 MCP Host 的访问令牌与 PulseMCP 合作凭据（此前随系统备份/换机迁移可被带出设备）\n- 新增静态门禁：凭据类偏好存储必须列入备份排除表，漏配直接在 CI 拦截，防止后续新增凭据存储时再次遗漏\n\n---\n\n- 安全加固：修复提问竞态 —— 前一个已超时/已取消问题的迟到回答不再被误注入当前问题，Agent 不会拿着错配的确认执行操作；错配回答会留审计日志便于追溯\n\n---\n\n- 安全加固：新装机默认权限档恢复为「标准」—— 写文件、git 提交、删除等副作用与高危操作执行前需确认；此前默认即为「全自动」（工具/命令直接执行）\n- 存量用户档位保持不变，不会再被静默迁移；想用全自动需在 设置 → 工具权限 显式开启，且开启前有后果说明确认弹窗，可随时切回\n- 修复静默提权问题：此前升级会把停留在标准档的老用户一次性翻成全自动档，该迁移路径已移除\n\n---\n\n- 安全加固：逆向 MCP Host 默认只监听本机回环地址 —— 局域网设备默认无法连接；PC 控制需在设置中显式开启「允许局域网访问」，开启后界面常驻明文传输风险警示\n- 安全修复：GET / DELETE 等全部 HTTP 方法统一先过令牌鉴权 —— 此前未带令牌的 DELETE 可直接删除已连接会话\n- 暴露面收窄：删除/卸载等高危工具永不再暴露给外部 AI；写文件、git 提交等副作用工具默认不暴露（需独立开关显式开启），只读工具不受影响\n- 启用 MCP Host 前新增确认弹窗（列明端口、鉴权与暴露口径）；对外上报的版本号与 App 版本对齐\n\n---\n\n- 修复 CodeTodo 工具调用失败（invalid argument: 'todos': expected string）：模型发内联 JSON 数组时被旧 schema（声明为 string）在执行前就拒绝、白费一轮重试——现在 todos 声明为数组，内联数组与字符串编码两种形态都直收；ShortcutDefine / ShortcutRun / ToolBatchRun / JsonTransform 等同款复合参数一并修正\n- 任务清单在流水式输出过程中实时出现：todos 条目随参数生成逐条落到面板（不再等工具执行完成），胶囊头行同步显示「N 项」计数；条目数不再有 50 条硬上限，长清单在面板内滚动浏览\n\n---\n\n- 生产能力级别增强 PR-D（运行时生产化）：**ExtensionRun** 工具上线 —— 运行已安装的 ubuntu 域扩展（OpenCode/DSH 插件）执行桥不再只装不跑：账本寻址 → runtime=ubuntu 校验 → 读安装期 profile 元数据（entryHint/runtime=node）→ `node <entry> [args]` 白名单执行（CATALOG 渐进披露）\n- **安全边界（诚实声明）**：entry 经 ExtensionDirLayout 新增 `profileFile`/`pkgFile` canonical 归属校验（防 bind 挂载/符号链接下的 startsWith 失效与 profile 篡改，单测覆盖逃逸拒绝）；argv 直透不经 shell，但 description 如实声明「下游脚本如何处理 argv 属于脚本自身行为」；超时强杀下沉在 ExecEngine 进程层（proot --kill-on-exit），非协程假超时\n- OpenCode/DSH 适配器 install 的 profile 元数据补 `runtime: \"node\"` 并改走规范化归属校验写入\n- **NotifySend** 工具：系统通知栏推送（长任务收尾提醒）—— Android 13+ POST_NOTIFICATIONS 运行时权限诚实上报（未授权返回 notifications_disabled 并引导开启，不假装投递成功；复用 ApexNotifications.canPost 既有判定）\n- **CapabilityReport 集成统一扩展快照**：能力自省尾部新增扩展行（账本数/锁数/适配器面/已装样例，fail-silent 与 GitHub 行同款）\n- 过时文案修正：市场 Plugins 页「agent tool bridge is under construction」→ 已建成语义（插件工具已注册进 Agent 工具面 + 死亡降级宿主直调），两语言\n\n---\n\n- 游乐场内置游戏扩至十七款：第二批四款（裁纸刀 / 瀑布打包 / 手风琴调音 / 赝品画廊）+ 第三批三款（河流猎人 / 弹球引流 / 代码洪水），全部模仿 pretext 官网 demo 的同一设计语言与契约\n- 诚实工程：每个 game.json 的 apis 字段只写真实调用的测量 API；rich-note（富文本内联）因 vendored 0.0.9 缺 rich-inline 导出如实缺席，文档注明升级后再补\n- 文档同步：docs/playground-plugin-arcade.md 与 playground/README.md 更新为十七款速查（分批表格 + pretext 锚点对照）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.37"
+    "markdown": "- 生产能力级别增强 PR-E（生产化加固）：**扩展声明式清单启动自动同步** —— 设置项 `extensionAutoSync`（AgentSettingSet 可改）开启且 `<filesDir>/extensions/extensions.json` 存在时，进程启动评估全部 spec：与锁文件比对版本漂移、失败收集 —— **只评估不安装**（防 Agent 后续会话悄悄换版本），漂移/失败经系统通知提醒（权限未授权静默，lastSync 可查）\n- **最近同步报告持久化**（lastSync.json 原子写）：ExtensionSync 安装/评估后落最近一次结果（ok/漂移/失败清单）；ExtensionDoctor 输出追加 last sync 摘要 —— 生产状态随时可查\n- ExtensionAutoSyncRunner 纯 JVM 评估核（core 层零 Android 依赖）：resolve → 锁漂移比对 → 三分类报告（ok/fresh/drift/failed）；app 层 ExtensionAutoSync 薄包装（设置门 + 清单读取 + 通知），@Provides 副作用启动同 SkillModule 惯例（失败只记日志不阻断启动）\n- 向导安装失败后按钮转「重试」（hash 仍有效，一键重发）；JVM 测试（漂移/失败报告 + lastSync 落盘重载 + 空清单零报告）\n\n---\n\n- **Git 审计 P0 安全热修**（基线 main@aa104f6，46 项问题中的 P0 批次）——凭据外传链根修：GitHub PAT 不再注入任何进程 env（旧实现把 GH_TOKEN 写进整个 `sh -c` 进程，`git pull && curl` 复合命令与恶意仓库 hooks 可直接读走），改为一次性 GIT_ASKPASS 脚本（写入沙箱 /tmp、只应答 github.com 的凭据提示、命令结束即删、终端通道 30 分钟惰性清扫兜底）——终端里 gh 命令因此失去认证（引导走 GitHub 工具族）\n- `CodeGitRun` 命令级门禁（GitCommandPolicy，解析后 argv 纯函数分类）：`-c`/`git config` 配置逃逸**硬拒绝**（credential.helper/hooksPath 可执行任意程序）、交互式检测改 argv 位置无关（旧 startsWith 被 `add  -p` 双空格/Tab 击穿）、`git -C` 词法校验必须落在工作区内、clone/push 远程 URL 仅 https + github.com 白名单（file://、ext::、userinfo 内嵌凭据全拒）、引号未闭合严格拒绝\n- 权限门/风险门按命令分类：DESTRUCTIVE（reset --hard / push --force / clean -f 等）与 OUTBOUND（push/pull/fetch/clone）在任何权限档**逐次确认**（含 BYPASS，不提供会话级放行、拒绝不写会话状态）；READ 命令各模式直通（DENY 规则仍优先）；LOCAL_WRITE 保持原有确认面\n- 终端命令级高危表补 git 破坏性形态（TerminalExec 自由命令通道兜底防线，此前零 git 覆盖）\n- MCP 令牌桥白名单（fail-closed）：`${GITHUB_TOKEN}` 占位符仅官方 github-official 预置（serverName + URL host 双校验）可解析——恶意市场配置借占位符窃取 PAT 的通路关闭；第三方含占位符配置升级后连接将被拒绝并给出指引\n- GitHub API host 锁：分页 Link 跟随仅 https + api.github.com（Bearer 头不再可能发往任意主机/明文 http）；OkHttp 改 enqueue + invokeOnCancellation（协程取消毫秒级打断在途请求，旧同步 execute 叠加重试最长挂 3 分钟）；**POST/PUT 不再自动重试**（旧实现 429/5xx 重发会重复建 Issue/PR/提交）\n- 私有仓写防线统一：REST（GithubWriteFile）与内置 MCP（create_or_update_file）共用 GithubWriteGuard（可见性探针 + confirm_private_write，fail-closed）——旧版 MCP 通路可绕过 #273/#274 防线\n- GitHub Token 存储.fail-closed：加密存储初始化失败不再静默降级明文落盘（改纯内存、重启重连），启动时自动把历史明文残留迁回加密存储并删除；token 保存 trim；data_extraction_rules 补 file domain 排除（logs/ 审计日志、crash/、mcp_config/、rootfs/）\n- GitHub 写工具显式风险元数据：GithubWriteFile / GithubCreateIssue / GithubCreatePullRequest = HIGH + openWorld + 非幂等 + sensitiveAction（BYPASS 档也保持逐次确认）\n- 新增回归测试：GitCommandPolicy 分类矩阵、GitRunTool 策略集成、注入器/凭据签发器、API 白名单与幂等重试、MCP 令牌桥、双门禁 git 行为、终端高危表 git 模式",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.38"
   },
   "history": [
+    {
+      "versionName": "1.5.38",
+      "versionCode": 218,
+      "tag": "v1.5.38",
+      "date": "2026-11-08",
+      "title": "v1.5.38 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "extension hardening",
+          "notes": [
+            "生产能力级别增强 PR-E（生产化加固）：**扩展声明式清单启动自动同步** —— 设置项 `extensionAutoSync`（AgentSettingSet 可改）开启且 `<filesDir>/extensions/extensions.json` 存在时，进程启动评估全部 spec：与锁文件比对版本漂移、失败收集 —— **只评估不安装**（防 Agent 后续会话悄悄换版本），漂移/失败经系统通知提醒（权限未授权静默，lastSync 可查）",
+            "**最近同步报告持久化**（lastSync.json 原子写）：ExtensionSync 安装/评估后落最近一次结果（ok/漂移/失败清单）；ExtensionDoctor 输出追加 last sync 摘要 —— 生产状态随时可查",
+            "ExtensionAutoSyncRunner 纯 JVM 评估核（core 层零 Android 依赖）：resolve → 锁漂移比对 → 三分类报告（ok/fresh/drift/failed）；app 层 ExtensionAutoSync 薄包装（设置门 + 清单读取 + 通知），@Provides 副作用启动同 SkillModule 惯例（失败只记日志不阻断启动）",
+            "向导安装失败后按钮转「重试」（hash 仍有效，一键重发）；JVM 测试（漂移/失败报告 + lastSync 落盘重载 + 空清单零报告）"
+          ]
+        },
+        {
+          "title": "git audit p0",
+          "notes": [
+            "**Git 审计 P0 安全热修**（基线 main@aa104f6，46 项问题中的 P0 批次）——凭据外传链根修：GitHub PAT 不再注入任何进程 env（旧实现把 GH_TOKEN 写进整个 `sh -c` 进程，`git pull && curl` 复合命令与恶意仓库 hooks 可直接读走），改为一次性 GIT_ASKPASS 脚本（写入沙箱 /tmp、只应答 github.com 的凭据提示、命令结束即删、终端通道 30 分钟惰性清扫兜底）——终端里 gh 命令因此失去认证（引导走 GitHub 工具族）",
+            "`CodeGitRun` 命令级门禁（GitCommandPolicy，解析后 argv 纯函数分类）：`-c`/`git config` 配置逃逸**硬拒绝**（credential.helper/hooksPath 可执行任意程序）、交互式检测改 argv 位置无关（旧 startsWith 被 `add  -p` 双空格/Tab 击穿）、`git -C` 词法校验必须落在工作区内、clone/push 远程 URL 仅 https + github.com 白名单（file://、ext::、userinfo 内嵌凭据全拒）、引号未闭合严格拒绝",
+            "权限门/风险门按命令分类：DESTRUCTIVE（reset --hard / push --force / clean -f 等）与 OUTBOUND（push/pull/fetch/clone）在任何权限档**逐次确认**（含 BYPASS，不提供会话级放行、拒绝不写会话状态）；READ 命令各模式直通（DENY 规则仍优先）；LOCAL_WRITE 保持原有确认面",
+            "终端命令级高危表补 git 破坏性形态（TerminalExec 自由命令通道兜底防线，此前零 git 覆盖）",
+            "MCP 令牌桥白名单（fail-closed）：`${GITHUB_TOKEN}` 占位符仅官方 github-official 预置（serverName + URL host 双校验）可解析——恶意市场配置借占位符窃取 PAT 的通路关闭；第三方含占位符配置升级后连接将被拒绝并给出指引",
+            "GitHub API host 锁：分页 Link 跟随仅 https + api.github.com（Bearer 头不再可能发往任意主机/明文 http）；OkHttp 改 enqueue + invokeOnCancellation（协程取消毫秒级打断在途请求，旧同步 execute 叠加重试最长挂 3 分钟）；**POST/PUT 不再自动重试**（旧实现 429/5xx 重发会重复建 Issue/PR/提交）",
+            "私有仓写防线统一：REST（GithubWriteFile）与内置 MCP（create_or_update_file）共用 GithubWriteGuard（可见性探针 + confirm_private_write，fail-closed）——旧版 MCP 通路可绕过 #273/#274 防线",
+            "GitHub Token 存储.fail-closed：加密存储初始化失败不再静默降级明文落盘（改纯内存、重启重连），启动时自动把历史明文残留迁回加密存储并删除；token 保存 trim；data_extraction_rules 补 file domain 排除（logs/ 审计日志、crash/、mcp_config/、rootfs/）",
+            "GitHub 写工具显式风险元数据：GithubWriteFile / GithubCreateIssue / GithubCreatePullRequest = HIGH + openWorld + 非幂等 + sensitiveAction（BYPASS 档也保持逐次确认）",
+            "新增回归测试：GitCommandPolicy 分类矩阵、GitRunTool 策略集成、注入器/凭据签发器、API 白名单与幂等重试、MCP 令牌桥、双门禁 git 行为、终端高危表 git 模式"
+          ]
+        }
+      ],
+      "markdown": "- 生产能力级别增强 PR-E（生产化加固）：**扩展声明式清单启动自动同步** —— 设置项 `extensionAutoSync`（AgentSettingSet 可改）开启且 `<filesDir>/extensions/extensions.json` 存在时，进程启动评估全部 spec：与锁文件比对版本漂移、失败收集 —— **只评估不安装**（防 Agent 后续会话悄悄换版本），漂移/失败经系统通知提醒（权限未授权静默，lastSync 可查）\n- **最近同步报告持久化**（lastSync.json 原子写）：ExtensionSync 安装/评估后落最近一次结果（ok/漂移/失败清单）；ExtensionDoctor 输出追加 last sync 摘要 —— 生产状态随时可查\n- ExtensionAutoSyncRunner 纯 JVM 评估核（core 层零 Android 依赖）：resolve → 锁漂移比对 → 三分类报告（ok/fresh/drift/failed）；app 层 ExtensionAutoSync 薄包装（设置门 + 清单读取 + 通知），@Provides 副作用启动同 SkillModule 惯例（失败只记日志不阻断启动）\n- 向导安装失败后按钮转「重试」（hash 仍有效，一键重发）；JVM 测试（漂移/失败报告 + lastSync 落盘重载 + 空清单零报告）\n\n---\n\n- **Git 审计 P0 安全热修**（基线 main@aa104f6，46 项问题中的 P0 批次）——凭据外传链根修：GitHub PAT 不再注入任何进程 env（旧实现把 GH_TOKEN 写进整个 `sh -c` 进程，`git pull && curl` 复合命令与恶意仓库 hooks 可直接读走），改为一次性 GIT_ASKPASS 脚本（写入沙箱 /tmp、只应答 github.com 的凭据提示、命令结束即删、终端通道 30 分钟惰性清扫兜底）——终端里 gh 命令因此失去认证（引导走 GitHub 工具族）\n- `CodeGitRun` 命令级门禁（GitCommandPolicy，解析后 argv 纯函数分类）：`-c`/`git config` 配置逃逸**硬拒绝**（credential.helper/hooksPath 可执行任意程序）、交互式检测改 argv 位置无关（旧 startsWith 被 `add  -p` 双空格/Tab 击穿）、`git -C` 词法校验必须落在工作区内、clone/push 远程 URL 仅 https + github.com 白名单（file://、ext::、userinfo 内嵌凭据全拒）、引号未闭合严格拒绝\n- 权限门/风险门按命令分类：DESTRUCTIVE（reset --hard / push --force / clean -f 等）与 OUTBOUND（push/pull/fetch/clone）在任何权限档**逐次确认**（含 BYPASS，不提供会话级放行、拒绝不写会话状态）；READ 命令各模式直通（DENY 规则仍优先）；LOCAL_WRITE 保持原有确认面\n- 终端命令级高危表补 git 破坏性形态（TerminalExec 自由命令通道兜底防线，此前零 git 覆盖）\n- MCP 令牌桥白名单（fail-closed）：`${GITHUB_TOKEN}` 占位符仅官方 github-official 预置（serverName + URL host 双校验）可解析——恶意市场配置借占位符窃取 PAT 的通路关闭；第三方含占位符配置升级后连接将被拒绝并给出指引\n- GitHub API host 锁：分页 Link 跟随仅 https + api.github.com（Bearer 头不再可能发往任意主机/明文 http）；OkHttp 改 enqueue + invokeOnCancellation（协程取消毫秒级打断在途请求，旧同步 execute 叠加重试最长挂 3 分钟）；**POST/PUT 不再自动重试**（旧实现 429/5xx 重发会重复建 Issue/PR/提交）\n- 私有仓写防线统一：REST（GithubWriteFile）与内置 MCP（create_or_update_file）共用 GithubWriteGuard（可见性探针 + confirm_private_write，fail-closed）——旧版 MCP 通路可绕过 #273/#274 防线\n- GitHub Token 存储.fail-closed：加密存储初始化失败不再静默降级明文落盘（改纯内存、重启重连），启动时自动把历史明文残留迁回加密存储并删除；token 保存 trim；data_extraction_rules 补 file domain 排除（logs/ 审计日志、crash/、mcp_config/、rootfs/）\n- GitHub 写工具显式风险元数据：GithubWriteFile / GithubCreateIssue / GithubCreatePullRequest = HIGH + openWorld + 非幂等 + sensitiveAction（BYPASS 档也保持逐次确认）\n- 新增回归测试：GitCommandPolicy 分类矩阵、GitRunTool 策略集成、注入器/凭据签发器、API 白名单与幂等重试、MCP 令牌桥、双门禁 git 行为、终端高危表 git 模式",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.38"
+    },
     {
       "versionName": "1.5.37",
       "versionCode": 217,
@@ -1530,36 +1527,6 @@
       ],
       "markdown": "- 「模板工坊」真正能用上代码化模板：内置模板点「使用」即走六阶段管线（预处理 → 确定性分析 → 提示词组装 → 回包校验 → 修复 → 结构渲染）\n- 内置模板卡片收起「编辑/删除」入口 —— 与注册表「内置不可更改」语义对齐，定制走「另存为副本」\n- 新增「使用模板」对话框：变量表单 + 行为能力徽标预览 + 生成结果（提示词 + 确定性分析注入说明）+ 一键复制到聊天\n- TemplateModule 运行时 DI 接线：TemplateRuntime 单例绑定十行为目录，自定义模板自动回落兜底行为\n- 新增 7 个双语字符串键（中英 1:1 镜像对齐）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.93"
-    },
-    {
-      "versionName": "1.4.9.92",
-      "versionCode": 168,
-      "tag": "v1.4.9.92",
-      "date": "2026-10-30",
-      "title": "v1.4.9.92 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "Coding 新增会话上下文查看:看清模型到底收到了什么",
-          "notes": [
-            "Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容",
-            "深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容"
-          ]
-        },
-        {
-          "title": "remove agent settings 5of6",
-          "notes": [
-            "设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）",
-            "迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用",
-            "AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）",
-            "字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正",
-            "红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留"
-          ]
-        }
-      ],
-      "markdown": "## Coding 新增会话上下文查看:看清模型到底收到了什么\n\n- Coding 屏顶栏新增「查看上下文」入口,底部弹层展示当前逻辑线的完整会话消息序列(角色徽标 + 全文,可选中复制)、全局规则与会话附加注入段、token 用量与消息条数,支持一键复制全部内容\n- 深潜线全量导出(纯工具调用回合以工具名单括注呈现);标准/织造/信使三条线的引擎未开放消息导出,如实显示用量统计与降级说明,不假装有内容\n\n---\n\n- 设置中心「Agent 配置」大分类移除：Agent 执行分区（默认模式/思考档位/迭代上限/重试与循环防护/高级行为）、角色管理分区（内置全能角色 + activeRoleId 激活链路）、模式预设编辑器（ModePresetEditorSection）、LOOP 循环默认值分区整删；分类收敛为「工作台」（Coding/子代理/权限/规则/钩子/压缩/视觉/目标/GitHub/记忆十叶）\n- 迁移保功能：Keep Alive 开关迁入「终端 → 后台服务」（服务本体是终端运行时宿主）；聊天记忆摄取开关迁入「工作台 → 记忆」；单轮并行执行上限迁入「工作台 → Coding」；Coding 专家角色编辑器（AgentRoleEditorDialog + 另存为副本）独立成文件供模板工坊 Coding 页签复用\n- AgentSettings 字段收敛：defaultMode/thinkLevel/thinkingLevelOverride/forceDeepThinking/maxIterations/重试与循环防护/反思规划/CUSTOM 预设/角色激活/任务总结卡/LOOP 与 goalAutoResume 等 Agent 聊天专属字段删除（存量 JSON 由 ignoreUnknownKeys 静默吞掉，升级零迁移）；AgentConfig 引擎侧遗留字段（reflectionRounds/customInstruction）随最后消费方删除；AgentSettingSet 工具白名单同步收敛（GOAL 执行模式合法值补全）\n- 字符串双语清理：settings_nav Agent 13 键、模式/思考/重试循环/高级行为 ~40 键、mode_presets 25 键、LOOP 默认值 10 键、chat 模式描述 7 键、任务总结卡 2 键（values/ 与 values-zh/ 镜像同步）；限速一键组合与记忆隐私文案同步修正\n- 红线确认保留：Coding 全部设置（思考逻辑/档位/执行模式/工具面/读守卫/规则）、通用设置（模型/主题/权限/备份/更新/通知/语言）、Terminal 设置（Ubuntu 运行时宿主）、记忆/市场/技能/MCP/GitHub/视觉/子代理设置全保留",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.92"
     }
   ]
 }
