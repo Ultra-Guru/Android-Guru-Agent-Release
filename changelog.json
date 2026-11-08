@@ -1,32 +1,53 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-08T04:51:59Z",
+  "generatedAt": "2026-11-08T05:08:28Z",
   "latest": {
-    "versionName": "1.5.42",
-    "versionCode": 222,
-    "tag": "v1.5.42",
+    "versionName": "1.5.43",
+    "versionCode": 223,
+    "tag": "v1.5.43",
     "date": "2026-11-08",
-    "title": "v1.5.42 更新内容",
+    "title": "v1.5.43 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "plugin host 2 opencode loader",
+        "title": "plugin host 2 claude compat",
         "notes": [
-          "Native Plugin Host 2.0 Phase 4 落地：OpenCode 插件真正可运行 —— 官方 V2 形状（Plugin.define + setup(ctx)）经上下文桥加载，ctx.tool.transform 注册的工具一等注册进 ToolRegistry，Agent 可直接调用",
-          "V1/V2 ABI 分立探测：按 SDK 依赖声明（@opencode/plugin vs @opencode-ai/plugin）+ 导出形状判定，入口解析遵循官方 exports map → main → module 优先级，不按包名瞎猜",
-          "官方 ctx 上下文桥：ctx.storage（插件目录 JSON 持久化）、ctx.options、ctx.location、ctx.app 完整注入；ctx.$ / generate / model 等未支持能力调用即抛描述性错误，不静默假装",
-          "宿主事件 → 插件钩子转发：tool.execute.before/after、session.prompt 按官方映射表转发，无映射的事件如实跳过不伪造",
-          "V1 遗留插件兼容：具名异步导出返回 hook map 的官方 V1 形状经兼容层分发",
-          "SDK 垫片按需落盘：插件未安装 @opencode/plugin 时提供与官方客户端行为等价的最小实现，真实包已装时不介入",
-          "端到端测试用官方形状 fixture + 真实 node 锁定全链路（加载→工具注册→引擎调用→存储/选项生效→钩子触发→停止清理）"
+          "Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定",
+          "宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造",
+          "插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删",
+          ".lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持",
+          "prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行"
         ]
       }
     ],
-    "markdown": "- Native Plugin Host 2.0 Phase 4 落地：OpenCode 插件真正可运行 —— 官方 V2 形状（Plugin.define + setup(ctx)）经上下文桥加载，ctx.tool.transform 注册的工具一等注册进 ToolRegistry，Agent 可直接调用\n- V1/V2 ABI 分立探测：按 SDK 依赖声明（@opencode/plugin vs @opencode-ai/plugin）+ 导出形状判定，入口解析遵循官方 exports map → main → module 优先级，不按包名瞎猜\n- 官方 ctx 上下文桥：ctx.storage（插件目录 JSON 持久化）、ctx.options、ctx.location、ctx.app 完整注入；ctx.$ / generate / model 等未支持能力调用即抛描述性错误，不静默假装\n- 宿主事件 → 插件钩子转发：tool.execute.before/after、session.prompt 按官方映射表转发，无映射的事件如实跳过不伪造\n- V1 遗留插件兼容：具名异步导出返回 hook map 的官方 V1 形状经兼容层分发\n- SDK 垫片按需落盘：插件未安装 @opencode/plugin 时提供与官方客户端行为等价的最小实现，真实包已装时不介入\n- 端到端测试用官方形状 fixture + 真实 node 锁定全链路（加载→工具注册→引擎调用→存储/选项生效→钩子触发→停止清理）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.42"
+    "markdown": "- Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定\n- 宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造\n- 插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删\n- .lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持\n- prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.43"
   },
   "history": [
+    {
+      "versionName": "1.5.43",
+      "versionCode": 223,
+      "tag": "v1.5.43",
+      "date": "2026-11-08",
+      "title": "v1.5.43 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "plugin host 2 claude compat",
+          "notes": [
+            "Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定",
+            "宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造",
+            "插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删",
+            ".lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持",
+            "prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行"
+          ]
+        }
+      ],
+      "markdown": "- Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定\n- 宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造\n- 插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删\n- .lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持\n- prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.43"
+    },
     {
       "versionName": "1.5.42",
       "versionCode": 222,
@@ -1484,29 +1505,6 @@
       ],
       "markdown": "- 端到端收官测试：十行为 behaviorVersion ≥ 2 深度接线锁（深化模块必须真实接线而非死代码）、十模板全链路附录专属信号断言（术语/要点预算/风格规范/安全序/分诊/横切必查/TC 编号/句长预算/方言/附录注入）、内置不可更改端到端（save/delete 拒绝 + 落盘篡改自愈）\n- 深化模块规则目录锁死：翻译质检 17 规则 / 重构风险 8 规则 / BUG 分诊 7 规则 / API 约定 9 规则 / 八框架规范 / 四文档类型 / 五正则方言\n- docs/template-runtime.md：六阶段管线全解、20 个 PR 分层落点表、十行为 × 双层引擎全景表、不可更改六重防线、并发与防御纪律、验收矩阵\n- README：特性清单接入「模板行为运行时」（切换模板 = 装配管线而非注入提示词）+ 文档索引表新增条目",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.98"
-    },
-    {
-      "versionName": "1.4.9.97",
-      "versionCode": 173,
-      "tag": "v1.4.9.97",
-      "date": "2026-10-31",
-      "title": "v1.4.9.97 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "template deepen quality domain",
-          "notes": [
-            "「测试用例」框架套件：八套框架规范（JUnit4/5、kotlin.test、Kotest、MockK、pytest、Jest、go test——注解/断言库/生命周期/参数化/mock 全给齐）、四风格命名规则、断言语义映射、TC 编号骨架生成（arrange-act-assert 三段）、覆盖矩阵 + 回包测试代码六类反模式门禁（无断言/循环内断言/裸捕获/魔法 sleep/一测多行为/过宽异常）",
-            "「技术文档」风格指南：句长预算与虚词检查、四型文档模板（概念/指南/API/排障）与内容纪律、示例三查（语言标注/占位符/长度）、术语先用后定义检测、可读性四因子评分（句长/示例占比/章节均衡/层级规范）、文档 lint（跳级/重复标题/空章节/引用残缺）",
-            "「正则解释」工具箱：方言探测（PCRE/Python/Java/JS/POSIX）、灾难性构造优化重写（嵌套量词占有化/歧义交替去重/无界量词收敛/字符类简化/双重否定）、锚点与结构画像、AST 静态样例推导 + Kotlin/Python/JS 三语言测试片段生成",
-            "「代码审查」第三层启发器：命名质量（无意义短名/布尔前缀/同概念双命名）、注释质量（陈旧标记/注释掉的代码/零注释/注释过密）、跨函数坏味道（魔法数字簇/高扇出/God-file）、层次纪律（UI 直连存储/纯逻辑引平台框架）",
-            "四行为 behaviorVersion 升 2，全部接线 ANALYZE/VALIDATE/RENDER 三阶段"
-          ]
-        }
-      ],
-      "markdown": "- 「测试用例」框架套件：八套框架规范（JUnit4/5、kotlin.test、Kotest、MockK、pytest、Jest、go test——注解/断言库/生命周期/参数化/mock 全给齐）、四风格命名规则、断言语义映射、TC 编号骨架生成（arrange-act-assert 三段）、覆盖矩阵 + 回包测试代码六类反模式门禁（无断言/循环内断言/裸捕获/魔法 sleep/一测多行为/过宽异常）\n- 「技术文档」风格指南：句长预算与虚词检查、四型文档模板（概念/指南/API/排障）与内容纪律、示例三查（语言标注/占位符/长度）、术语先用后定义检测、可读性四因子评分（句长/示例占比/章节均衡/层级规范）、文档 lint（跳级/重复标题/空章节/引用残缺）\n- 「正则解释」工具箱：方言探测（PCRE/Python/Java/JS/POSIX）、灾难性构造优化重写（嵌套量词占有化/歧义交替去重/无界量词收敛/字符类简化/双重否定）、锚点与结构画像、AST 静态样例推导 + Kotlin/Python/JS 三语言测试片段生成\n- 「代码审查」第三层启发器：命名质量（无意义短名/布尔前缀/同概念双命名）、注释质量（陈旧标记/注释掉的代码/零注释/注释过密）、跨函数坏味道（魔法数字簇/高扇出/God-file）、层次纪律（UI 直连存储/纯逻辑引平台框架）\n- 四行为 behaviorVersion 升 2，全部接线 ANALYZE/VALIDATE/RENDER 三阶段",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.97"
     }
   ]
 }
