@@ -1,27 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-13T16:56:10Z",
+  "generatedAt": "2026-11-13T17:16:41Z",
   "latest": {
-    "versionName": "1.5.48",
-    "versionCode": 228,
-    "tag": "v1.5.48",
+    "versionName": "1.5.49",
+    "versionCode": 229,
+    "tag": "v1.5.49",
     "date": "2026-11-13",
-    "title": "v1.5.48 更新内容",
+    "title": "v1.5.49 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "t99 su auth",
+        "title": "t99 smoke telemetry",
         "notes": [
-          "让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。",
-          "明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。"
+          "新增显式工具 `TerminalPRootSmoke`（非只读）在 PRoot 已 READY 时运行一次 5 秒上限的 `/bin/true` 冒烟探针，结果缓存 10 分钟；`TerminalBackends` 保持纯只读发现，不执行也不显示探针结果。超时或 SIGTRAP/SIGSYS 只提示 ptrace 限制**可能**存在，建议用户在已获 Root 授权时显式选择 chroot，绝不自动切换。",
+          "环境摘要新增 `chroot_ready` 可见性旗标：后端 Ready 为 on（仅 stat/cache 可用性，不代表 su 已授权）、确实找不到 su 为 off；rootfs 未就绪/明确授权拒绝/其它异常则省略（unknown、fail-open），不将旗标设为任何工具的必需前提。",
+          "探针在取消时强杀子进程，rootfs 生命周期变化会失效缓存；`RiskAwareToolGate` 的默认确认面为唯一运行门禁，真实 Android/OEM ptrace/Root 行为仍需真机验证。"
         ]
       }
     ],
-    "markdown": "- 让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。\n- 明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.48"
+    "markdown": "- 新增显式工具 `TerminalPRootSmoke`（非只读）在 PRoot 已 READY 时运行一次 5 秒上限的 `/bin/true` 冒烟探针，结果缓存 10 分钟；`TerminalBackends` 保持纯只读发现，不执行也不显示探针结果。超时或 SIGTRAP/SIGSYS 只提示 ptrace 限制**可能**存在，建议用户在已获 Root 授权时显式选择 chroot，绝不自动切换。\n- 环境摘要新增 `chroot_ready` 可见性旗标：后端 Ready 为 on（仅 stat/cache 可用性，不代表 su 已授权）、确实找不到 su 为 off；rootfs 未就绪/明确授权拒绝/其它异常则省略（unknown、fail-open），不将旗标设为任何工具的必需前提。\n- 探针在取消时强杀子进程，rootfs 生命周期变化会失效缓存；`RiskAwareToolGate` 的默认确认面为唯一运行门禁，真实 Android/OEM ptrace/Root 行为仍需真机验证。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.49"
   },
   "history": [
+    {
+      "versionName": "1.5.49",
+      "versionCode": 229,
+      "tag": "v1.5.49",
+      "date": "2026-11-13",
+      "title": "v1.5.49 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "t99 smoke telemetry",
+          "notes": [
+            "新增显式工具 `TerminalPRootSmoke`（非只读）在 PRoot 已 READY 时运行一次 5 秒上限的 `/bin/true` 冒烟探针，结果缓存 10 分钟；`TerminalBackends` 保持纯只读发现，不执行也不显示探针结果。超时或 SIGTRAP/SIGSYS 只提示 ptrace 限制**可能**存在，建议用户在已获 Root 授权时显式选择 chroot，绝不自动切换。",
+            "环境摘要新增 `chroot_ready` 可见性旗标：后端 Ready 为 on（仅 stat/cache 可用性，不代表 su 已授权）、确实找不到 su 为 off；rootfs 未就绪/明确授权拒绝/其它异常则省略（unknown、fail-open），不将旗标设为任何工具的必需前提。",
+            "探针在取消时强杀子进程，rootfs 生命周期变化会失效缓存；`RiskAwareToolGate` 的默认确认面为唯一运行门禁，真实 Android/OEM ptrace/Root 行为仍需真机验证。"
+          ]
+        }
+      ],
+      "markdown": "- 新增显式工具 `TerminalPRootSmoke`（非只读）在 PRoot 已 READY 时运行一次 5 秒上限的 `/bin/true` 冒烟探针，结果缓存 10 分钟；`TerminalBackends` 保持纯只读发现，不执行也不显示探针结果。超时或 SIGTRAP/SIGSYS 只提示 ptrace 限制**可能**存在，建议用户在已获 Root 授权时显式选择 chroot，绝不自动切换。\n- 环境摘要新增 `chroot_ready` 可见性旗标：后端 Ready 为 on（仅 stat/cache 可用性，不代表 su 已授权）、确实找不到 su 为 off；rootfs 未就绪/明确授权拒绝/其它异常则省略（unknown、fail-open），不将旗标设为任何工具的必需前提。\n- 探针在取消时强杀子进程，rootfs 生命周期变化会失效缓存；`RiskAwareToolGate` 的默认确认面为唯一运行门禁，真实 Android/OEM ptrace/Root 行为仍需真机验证。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.49"
+    },
     {
       "versionName": "1.5.48",
       "versionCode": 228,
@@ -1370,35 +1392,6 @@
       ],
       "markdown": "- 全新「工具聚合中心」取代旧市场顶层：融合面板置顶——把技能、MCP、工具、插件融合成一个聚合，一键新建或导入 Claude 插件包；「我的聚合」横滑卡片集中管理激活/停用/安装成员/编辑\n- 原市场的五类成员（插件/技能/MCP/连接器/集成）收编为成员体系：「添加成员 / 我的成员」两档段控 + Agent/Coding 工位分级，安装与管理机器全部保留\n- 抽屉入口更名「工具聚合中心」，老用户导航位置与聚合包数据零迁移\n- Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记\n- Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记\n- 聚合包新增策略路由（因果规则）：互斥组（打架的技能同时最多激活一个，宿主强制执行）、包级同时激活上限、常驻成员（免淘汰）、每技能触发条件（场景描述 + 自动装备关键词双轨）；组合器新增完整策略编辑段；Superpowers 包随包示范\n\n---\n\n- 角色经验卡：每次任务结束自动提炼一条结构化经验（场景 / 工具序列 / 结果 / 下次注意），确定性规则引擎生成而非提示词发挥；同类任务开工时检索注入 top-3 相关经验（含 hitCount 强化信号，被复用的经验更易再次命中），跨会话越用越准\n- 模板工坊点击任意角色模板打开详情面板：查看该角色的经验卡列表（可单删 / 清空）+ 激活入口；行点击从「直接激活」升级为「先看再激活」\n- Git 角色专属技能（9 套，默认全开）：git-advanced-workflows / git-advanced / git-workflows / github-actions-advanced / sync-repos / relay-merge / gh-cherry-pick / github-multi-repo / github-release-management —— 每套为阶段化 runbook（命令模板 + 逐阶段验证 + 安全护栏），上游社区仓库逐一标注；模板工坊 → Git 角色详情可逐个开关，下轮请求即生效\n- 输入框 GitHub 图标新增「GitHub MCP 配置」：内置 GitHub MCP（进程内 7 工具）与官方远程 GitHub MCP（api.githubcopilot.com 全量工具面）双服务器启停 + 连接态同屏管理；官方服务器支持工具集订阅（repos / issues / pull_requests / actions 等 10 集，全选 = 服务器默认），勾选即重连生效；PAT 经令牌桥零落盘\n\n---\n\n- 修复收尾回答的落位：agent 最终回答现在出现在全部工具调用记录**之后**（时间轴末尾），不再悬在中间过程上方 —— 旧实现把最终回答原位拼进了工具调用前建立的旧气泡\n- 流式输出时可自由上滑回看历史，不再被强制吸底拽回\n- 上滑后底部出现「回到底部」箭头按钮，点击即恢复自动跟随；手动滑回最底部也会自动恢复跟踪\n- 版本号升级到 1.5（v1.4.9 档期 CI 自动追加序号已到 .102，1.5 起档期归零）\n\n---\n\n- 新增内置聚合包「Toolwright · 工具创造者」：两个元能力技能——CreateSkill（把重复流程沉淀为技能：SkillCreate 一行创建、PascalCase 命名规范、正文写法与验证闭环）与 CreateMcp（MCP 工具源接入：远程/沙箱形态选型、配置模板、启动失败三查）；激活后技能在市场与斜杠菜单独立可见可单独卸载\n- 修复本地 MCP 启动失败的头号根因：沙箱内 npx 首次拉包直连 npmjs.org 国内大面积超时——现默认注入 npmmirror 镜像源（npm 官方 env 机制，已缓存包零影响，用户自配 registry 优先）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5"
-    },
-    {
-      "versionName": "1.4.9.103",
-      "versionCode": 179,
-      "tag": "v1.4.9.103",
-      "date": "2026-10-31",
-      "title": "v1.4.9.103 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "batch3 parse perf i18n",
-          "notes": [
-            "稳定性：diff 解析器行号字段改用安全数值转换，病态超长行号不再中断解析",
-            "稳定性：模型配置导入超大数字按原字符串保留，不再让整个导入失败",
-            "性能：模板扫描的占位符与标题归一化正则预编译，消除逐次调用重编译开销",
-            "规范：系统时间工具输出固定 Locale，避免本地化数字/时区缩写破坏 Agent 解析"
-          ]
-        },
-        {
-          "title": "logs and darkbar",
-          "notes": [
-            "日志系统大增强：新增常驻 logcat 采集（本进程系统/三方库日志全面进入日志中枢）；崩溃文件自动附崩溃前 300 行 logcat 快照 + 下次启动回捞系统 crash buffer（native 崩溃兜底建档）；新增主线程 ANR 看门狗（无响应 ≥5s 转储堆栈，恢复时留痕）；Agent 每个任务自动成为日志会话段（日志页可按单次任务浏览/导出全过程）；工具输出带 2KB 真实摘录（含 shell/终端命令的 exit code 与 stdout）；用户终端命令提交进日志中枢（新增「终端」分类）",
-            "玻璃实验室新增「酷安式深色栏」：底部深色玻璃胶囊 Dock（约 94% 屏宽，kyant0 backdrop 实时采样），4 个常规项（图标+文字，浅色药丸选中态）+ 中央凸出品牌色发布按钮；白天实验室中深色栏压在浅色滚动内容上 —— 酷安标志性形态的液态玻璃复刻"
-          ]
-        }
-      ],
-      "markdown": "- 稳定性：diff 解析器行号字段改用安全数值转换，病态超长行号不再中断解析\n- 稳定性：模型配置导入超大数字按原字符串保留，不再让整个导入失败\n- 性能：模板扫描的占位符与标题归一化正则预编译，消除逐次调用重编译开销\n- 规范：系统时间工具输出固定 Locale，避免本地化数字/时区缩写破坏 Agent 解析\n\n---\n\n- 日志系统大增强：新增常驻 logcat 采集（本进程系统/三方库日志全面进入日志中枢）；崩溃文件自动附崩溃前 300 行 logcat 快照 + 下次启动回捞系统 crash buffer（native 崩溃兜底建档）；新增主线程 ANR 看门狗（无响应 ≥5s 转储堆栈，恢复时留痕）；Agent 每个任务自动成为日志会话段（日志页可按单次任务浏览/导出全过程）；工具输出带 2KB 真实摘录（含 shell/终端命令的 exit code 与 stdout）；用户终端命令提交进日志中枢（新增「终端」分类）\n- 玻璃实验室新增「酷安式深色栏」：底部深色玻璃胶囊 Dock（约 94% 屏宽，kyant0 backdrop 实时采样），4 个常规项（图标+文字，浅色药丸选中态）+ 中央凸出品牌色发布按钮；白天实验室中深色栏压在浅色滚动内容上 —— 酷安标志性形态的液态玻璃复刻",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.103"
     }
   ]
 }
