@@ -1,32 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-08T06:30:52Z",
+  "generatedAt": "2026-11-13T12:41:52Z",
   "latest": {
-    "versionName": "1.5.45",
-    "versionCode": 225,
-    "tag": "v1.5.45",
-    "date": "2026-11-08",
-    "title": "v1.5.45 更新内容",
+    "versionName": "1.5.46",
+    "versionCode": 226,
+    "tag": "v1.5.46",
+    "date": "2026-11-13",
+    "title": "v1.5.46 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "dsh native host",
+        "title": "websearch server tool gating",
         "notes": [
-          "DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具",
-          "shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）",
-          "**平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）",
-          "**版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）",
-          "`DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes",
-          "Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）",
-          "测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围"
+          "修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止",
+          "协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误",
+          "引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛",
+          "非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算"
         ]
       }
     ],
-    "markdown": "- DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具\n- shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）\n- **平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）\n- **版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）\n- `DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes\n- Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）\n- 测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.45"
+    "markdown": "- 修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止\n- 协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误\n- 引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛\n- 非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.46"
   },
   "history": [
+    {
+      "versionName": "1.5.46",
+      "versionCode": 226,
+      "tag": "v1.5.46",
+      "date": "2026-11-13",
+      "title": "v1.5.46 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "websearch server tool gating",
+          "notes": [
+            "修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止",
+            "协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误",
+            "引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛",
+            "非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算"
+          ]
+        }
+      ],
+      "markdown": "- 修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止\n- 协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误\n- 引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛\n- 非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.46"
+    },
     {
       "versionName": "1.5.45",
       "versionCode": 225,
@@ -1459,57 +1478,6 @@
       ],
       "markdown": "- Coding 工位输出展示双档：流式（Rikka 风格实时逐字渲染，默认，既有行为）与完整（生成中静默 + 加载进度卡，收束后一次性渲染完整时间轴）两档可切换\n- 设置中心 → Coding 工位新增「输出方式」下拉（AgentSettings.codeOutputMode 持久化，随 AgentSettings JSON 落盘，重启恢复）\n- 切换语义按规格书「只影响下一条消息或完成后的消息」：档位在每轮 run 开始时捕获（CodeViewModel.captureRunOutputMode），运行中改设置不打断当前轮展示\n- 完整档加载进度卡（CompleteModeGeneratingCard）：三枚呼吸圆点 + 已用时跳秒 + 本轮工具计数 / 失败计数 + 骨架占位条——静默不等于黑箱\n- 完整档收束即整段揭示：切片解除后时间轴一次性渲染，锚定收尾动画滚动一次到底；错误态走 ErrorBar 通道两档统一，切换不丢任何会话数据（切片是纯派生视图）\n\n---\n\n- T81 超时控制器隔离测试转虚拟时间驱动（runTest + StandardTestDispatcher 共享调度器）—— issue #276 测试纪律方向落地，runBlocking 存量 −2\n- 「cancelled timer sends no signals」假阴根除：真实 delay(2)ms 对 5ms 定时器在 CI 高负载下偶发超线（已实际击中 PR #672 的编译门），虚拟时间轴上挂起-取消零竞态\n- 「TERM→KILL 宽限链」同步虚拟化：消除每次 200ms 真实等待，runner 冻结场景不再假阴\n\n---\n\n- TerminalSdk 门面类删除（385 行）：零实例化点的 ATR 2.0「冻结公共 API」适配层 —— 生产路径一直是 TerminalRuntime + terminal.* 工具直连，门面从未接入；删除后 TerminalApi.kt 的冻结契约类型（TerminalSize / TerminalCapabilities / TerminalApiVersion 等被 Linux 运行时与 IPC 引用的活类型）保留不动\n\n---\n\n- LegacyTerminalManager 兼容门面删除（163 行 + DI 提供者）：ATR 2.0 Spec §4.1 的 settle-time 时代兼容层，DI 装配但零注入方；迁移时间线自述 Phase 5「保留一版后移除」到期执行\n\n---\n\n- ToolRegistrationGuide 迁移指南对象删除：ATR 2.0 Phase 3 时代的装配指南（newTools/legacyTools/TOOL_SPEC_MAP），零外部引用 —— 真实装配在 app 层 ToolModule.kt，指南与实际注册表早已漂移（如 Signal/Close 条目与 #585 删除同步过期），保留只会误导后来人\n\n---\n\n- 5 个热点路径文件的正则全部提级预编译：计划解析国栏提取（EngineResponseParsers，每条 LLM 响应一次）、任务文件 id 防穿越校验（FileTaskStore，每次任务访问）、工作区 id 清洗（CodeConversationMemory / CodeStreamCheckpoint）、GitOpParser 全部 13 处解析正则（status/commit/log/branch 五类可视化卡解析逐次编译 → 对象级 private val 一次编译）\n\n---\n\n- 三处 ACTION_VIEW 外链出口统一 scheme 白名单（http/https）：更新日志弹窗与关于页的外链函数、FileOpener.openUrl（Markdown 链接/视频卡出口）—— 非 http(s) scheme（如 javascript:、file:、自定义 scheme）一律拒绝打开，防 intent 重定向；URL 源自外部内容（changelog.json / Markdown 渲染）的路径不再裸传系统\n\n---\n\n- 调用溯源三分类（skill / mcp / builtin）端到端打通：引擎事件携带权威分类（注册表元数据打标，技能 id / MCP 服务器名随事件下发），技能工具不再被误标成「MCP 自定义工具」——两档共用（星芒技能胶囊、拼图 MCP 胶囊、详情页溯源行）\n- 完整档新增工具调用聚合：收束后的连续工具胶囊段折叠为聚合卡（「已调用 N 个工具」+ 内置 / 技能 / MCP 三分类摘要 + 可展开调用明细，明细胶囊仍可进详情页看 diff / 终端全文）；聚合为纯派生视图，切回流式档即还原平铺\n- 完整档加载进度卡升级：实时工具使用聚合计数（总数 / 技能 / MCP / 失败，run 粒度归零）——静默不等于黑箱，「用了哪些能力生态」一眼可辨\n- 运行统计收尾卡新增「技能 N」「MCP N」chips；检查点持久化同步收录溯源（缺省值 + ignoreUnknownKeys 双向兼容旧档）\n\n---\n\n- 安全加固：XML 诊断解析器补齐 XXE 七项纵深防御（禁外部实体/DTD/XInclude），与 XML 提取工具同标准\n- 稳定性：分享文本超长（>20万字符）提前拒绝并给出分段/落盘建议，防 TransactionTooLargeException\n- 修复：terminal 流式预览 drainLocked 截断分支 StringBuilder.take 返回 CharSequence 导致编译失败（080e6bd4 引入），补 toString 对齐 String? 签名\n\n---\n\n- 稳定性：Git 命令超时/取消后先关流再强杀进程，drain 线程即时退出，修复 git 子进程（ssh/gpg）持有管道时的线程泄漏\n\n---\n\n- 稳定性：更新日志弹窗与关于页打开外部链接补 NEW_TASK 标记，非 Activity 上下文调用时不再静默失效\n\n---\n\n- 修复 Bing 搜索结果链接解码：/ck/ 重定向链接缺少 u 参数时不再被误当 base64 解码，避免点击搜索结果跳转到错误地址\n\n---\n\n- 修复 6 处系统服务不安全强转：手电筒/网络信息/保险库粘贴/终端历史复制/电池豁免在极端 ROM（getSystemService 返回 null）下不再崩溃，统一降级为明确报文或跳过\n\n---\n\n- 修复 MCP stdio 传输层资源回收：会话关闭时显式关闭 stdout reader，多次重连 MCP 服务器后不再累积字符缓冲内存\n\n---\n\n- 修复 17 处 String.format 未指定 Locale：市场耗时「%.0fms」在土耳其语等区域不再显示逗号小数点；十六进制 ID 与 JSON Unicode 转义统一 Locale.ROOT，Fusion 反馈文案统一 Locale.US\n\n---\n\n- 深链工具（DeepLink）新增危险 scheme 边界拦截：javascript/data/file/content/intent 等执行与本地穿透类 URI 直接拒绝并返回明确报错，http(s) 与 market:// 等合法深链不受影响\n\n---\n\n- Shizuku 命令等待支持协程取消：waitFor 包裹 runInterruptible，工具策略超时/用户中断不再钉死 IO 线程到全程超时，取消异常按结构化并发纪律向上传播\n\n---\n\n- 更新下载入口新增 scheme 校验：仅接受 http/https 下载源，被篡改的更新清单注入本地路径或非网络 URI 时拒绝入队并留痕日志",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.101"
-    },
-    {
-      "versionName": "1.4.9.100",
-      "versionCode": 176,
-      "tag": "v1.4.9.100",
-      "date": "2026-10-31",
-      "title": "v1.4.9.100 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "askuser json parse log",
-          "notes": [
-            "AskUser 工具参数 JSON 解析失败不再被空 catch 静默吞掉 —— AppLogger（ENGINE 类别）留痕后按空参数继续，模型输出非合法 JSON 时日志有据可查"
-          ]
-        },
-        {
-          "title": "legacy jni channel removal",
-          "notes": [
-            "PTY 旧 String JNI 通道整链移除：NativePty 的 nativeWrite/nativeWriteRaw/nativeRead 三个 @Deprecated external fun + jni_bridge.cpp 对应三个 JNIEXPORT + PtyEngine/PtySession 的 writeLine/read 死链 + 孤儿头文件 ansi_filter.h（生产自 P70 起一律走 nativeWriteBytes/nativeReadBytes 字节通道，旧行为缺陷：双换行/NUL 截断/无法区分 idle 与 EOF）"
-          ]
-        },
-        {
-          "title": "meta default block",
-          "notes": [
-            "ToolMetadata.meta 移除 block 参数的空默认值 —— 全部调用方本就显式传 block，默认值从未被使用；改为必传可在编译期杜绝「空元数据」误用"
-          ]
-        },
-        {
-          "title": "debug output applogger",
-          "notes": [
-            "4 处绕过统一日志框架的调试输出收口到 AppLogger：InputManagerImpl 未映射键告警与 RealVirtualTerminal 引擎关闭失败（System.err → warn）、DefaultPrivilegeManager Shizuku 监听注册失败与 ApexAccessibilityService 遍历子节点失败（Log.d → debug，语义不变）—— release 构建不再向 stderr/logcat 泄内部状态，日志查看器可按类别统一筛选",
-            "platform:terminal 新增 core:logging 依赖（纯 JVM 模块，「纯 JVM 库」边界不变），TERMINAL_SDK_BOUNDARY 依赖图同步"
-          ]
-        },
-        {
-          "title": "dead session state event",
-          "notes": [
-            "两处只定义不消费的 SessionStateChanged 死事件移除：TerminalControlEvent（TerminalControllerImpl 从未发射）与 TerminalApiEvent（TerminalApi 零实例化）—— 契约测试同步从 4 型收窄为 3 型，防止后来人误以为事件面可用"
-          ]
-        },
-        {
-          "title": "legacy signal close tools removal",
-          "notes": [
-            "两个从未注册的 Legacy 终端工具删除：LegacySignalTool / LegacyCloseTool（80+72 行 —— ToolModule 只登记过 Exec/Send/Read/List 四个别名，Signal/Close 是纯死代码），幂等表死条目、LEGACY_ALIAS_IDS 死 id、两条指向不存在工具的别 名映射（terminal_signal/terminal_close）与 ToolRegistrationGuide 引用同步收口",
-            "LegacyListTool 的 Input(dummy) 占位空壳移除：execute() 改无参、schema 里的 dummy 占位属性一并删除（工具本就不接收参数）"
-          ]
-        }
-      ],
-      "markdown": "- AskUser 工具参数 JSON 解析失败不再被空 catch 静默吞掉 —— AppLogger（ENGINE 类别）留痕后按空参数继续，模型输出非合法 JSON 时日志有据可查\n\n---\n\n- PTY 旧 String JNI 通道整链移除：NativePty 的 nativeWrite/nativeWriteRaw/nativeRead 三个 @Deprecated external fun + jni_bridge.cpp 对应三个 JNIEXPORT + PtyEngine/PtySession 的 writeLine/read 死链 + 孤儿头文件 ansi_filter.h（生产自 P70 起一律走 nativeWriteBytes/nativeReadBytes 字节通道，旧行为缺陷：双换行/NUL 截断/无法区分 idle 与 EOF）\n\n---\n\n- ToolMetadata.meta 移除 block 参数的空默认值 —— 全部调用方本就显式传 block，默认值从未被使用；改为必传可在编译期杜绝「空元数据」误用\n\n---\n\n- 4 处绕过统一日志框架的调试输出收口到 AppLogger：InputManagerImpl 未映射键告警与 RealVirtualTerminal 引擎关闭失败（System.err → warn）、DefaultPrivilegeManager Shizuku 监听注册失败与 ApexAccessibilityService 遍历子节点失败（Log.d → debug，语义不变）—— release 构建不再向 stderr/logcat 泄内部状态，日志查看器可按类别统一筛选\n- platform:terminal 新增 core:logging 依赖（纯 JVM 模块，「纯 JVM 库」边界不变），TERMINAL_SDK_BOUNDARY 依赖图同步\n\n---\n\n- 两处只定义不消费的 SessionStateChanged 死事件移除：TerminalControlEvent（TerminalControllerImpl 从未发射）与 TerminalApiEvent（TerminalApi 零实例化）—— 契约测试同步从 4 型收窄为 3 型，防止后来人误以为事件面可用\n\n---\n\n- 两个从未注册的 Legacy 终端工具删除：LegacySignalTool / LegacyCloseTool（80+72 行 —— ToolModule 只登记过 Exec/Send/Read/List 四个别名，Signal/Close 是纯死代码），幂等表死条目、LEGACY_ALIAS_IDS 死 id、两条指向不存在工具的别 名映射（terminal_signal/terminal_close）与 ToolRegistrationGuide 引用同步收口\n- LegacyListTool 的 Input(dummy) 占位空壳移除：execute() 改无参、schema 里的 dummy 占位属性一并删除（工具本就不接收参数）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.100"
     }
   ]
 }
