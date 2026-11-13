@@ -1,37 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-13T12:57:28Z",
+  "generatedAt": "2026-11-13T16:56:10Z",
   "latest": {
-    "versionName": "1.5.47",
-    "versionCode": 227,
-    "tag": "v1.5.47",
+    "versionName": "1.5.48",
+    "versionCode": 228,
+    "tag": "v1.5.48",
     "date": "2026-11-13",
-    "title": "v1.5.47 更新内容",
+    "title": "v1.5.48 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "native text kernel jni symbols",
+        "title": "t99 su auth",
         "notes": [
-          "修复 libcode_native.so JNI 符号名错绑：导出符号曾以 CodeNativeBridge 结尾，而 Kotlin 声明类是 NativeTextKernel —— 编译期无感，运行期每次调用 UnsatisfiedLinkError 刷 E 级 logcat 后静默回退纯 Kotlin（加速核从未生效，还倒贴 JNI 查找 + 异常构造成本），现已按 JNI 静态绑定规则对齐，标准线文本加速核真正启用",
-          "同步修正 JNI 第二形参 jclass → jobject（external fun 为实例方法，jclass 是静态方法绑定的形参类型）",
-          "新增源级 JNI 符号契约单测（core:code-native 首个进 CI 的测试）：Kotlin external 声明 ↔ .cpp 导出符号双向核对 + 实例方法 jobject 形参校验，符号漂移在 CI 就地翻红，不再等真机 logcat 暴露"
-        ]
-      },
-      {
-        "title": "s02 update trust anchor",
-        "notes": [
-          "**安全修复（更新链离线信任锚）**：App 内更新检查不再「信任拉到的清单本身」—— version.json / patches.json 全量携带发布者数字签名（ECDSA P-256），由 App 内置的发布者公钥逐字节验证；镜像加速节点、CDN、任何中间环节对下载地址 / 校验指纹 / 版本号改动一个字节都会被拒绝，且界面明确告知拒绝原因（不再静默失败）",
-          "**无签名 / 无指纹 fail-closed**：过渡期（至 2027-03-01）兼容存量发布仓库的无签名清单，到期后一律拒绝；此前「清单缺指纹就跳过校验直接放行」的三处分支全部移除，指纹缺失即拒绝下载",
-          "**热更新前增加确认与回滚**：热更内容按代码对待 —— 注入生效前弹出变更清单确认框（目标版本 + 全部文件路径，可取消）；应用后可一键回滚到上一版热更内容（技能与目录原样恢复）",
-          "检查更新的镜像回退行为不变：单镜像故障 / 被劫持自动降级下一节点，全链失败才报错；被劫持镜像返回的伪造内容绝不会被采用"
+          "让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。",
+          "明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。"
         ]
       }
     ],
-    "markdown": "- 修复 libcode_native.so JNI 符号名错绑：导出符号曾以 CodeNativeBridge 结尾，而 Kotlin 声明类是 NativeTextKernel —— 编译期无感，运行期每次调用 UnsatisfiedLinkError 刷 E 级 logcat 后静默回退纯 Kotlin（加速核从未生效，还倒贴 JNI 查找 + 异常构造成本），现已按 JNI 静态绑定规则对齐，标准线文本加速核真正启用\n- 同步修正 JNI 第二形参 jclass → jobject（external fun 为实例方法，jclass 是静态方法绑定的形参类型）\n- 新增源级 JNI 符号契约单测（core:code-native 首个进 CI 的测试）：Kotlin external 声明 ↔ .cpp 导出符号双向核对 + 实例方法 jobject 形参校验，符号漂移在 CI 就地翻红，不再等真机 logcat 暴露\n\n---\n\n- **安全修复（更新链离线信任锚）**：App 内更新检查不再「信任拉到的清单本身」—— version.json / patches.json 全量携带发布者数字签名（ECDSA P-256），由 App 内置的发布者公钥逐字节验证；镜像加速节点、CDN、任何中间环节对下载地址 / 校验指纹 / 版本号改动一个字节都会被拒绝，且界面明确告知拒绝原因（不再静默失败）\n- **无签名 / 无指纹 fail-closed**：过渡期（至 2027-03-01）兼容存量发布仓库的无签名清单，到期后一律拒绝；此前「清单缺指纹就跳过校验直接放行」的三处分支全部移除，指纹缺失即拒绝下载\n- **热更新前增加确认与回滚**：热更内容按代码对待 —— 注入生效前弹出变更清单确认框（目标版本 + 全部文件路径，可取消）；应用后可一键回滚到上一版热更内容（技能与目录原样恢复）\n- 检查更新的镜像回退行为不变：单镜像故障 / 被劫持自动降级下一节点，全链失败才报错；被劫持镜像返回的伪造内容绝不会被采用",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.47"
+    "markdown": "- 让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。\n- 明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.48"
   },
   "history": [
+    {
+      "versionName": "1.5.48",
+      "versionCode": 228,
+      "tag": "v1.5.48",
+      "date": "2026-11-13",
+      "title": "v1.5.48 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "t99 su auth",
+          "notes": [
+            "让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。",
+            "明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。"
+          ]
+        }
+      ],
+      "markdown": "- 让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。\n- 明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.48"
+    },
     {
       "versionName": "1.5.47",
       "versionCode": 227,
@@ -1389,31 +1399,6 @@
       ],
       "markdown": "- 稳定性：diff 解析器行号字段改用安全数值转换，病态超长行号不再中断解析\n- 稳定性：模型配置导入超大数字按原字符串保留，不再让整个导入失败\n- 性能：模板扫描的占位符与标题归一化正则预编译，消除逐次调用重编译开销\n- 规范：系统时间工具输出固定 Locale，避免本地化数字/时区缩写破坏 Agent 解析\n\n---\n\n- 日志系统大增强：新增常驻 logcat 采集（本进程系统/三方库日志全面进入日志中枢）；崩溃文件自动附崩溃前 300 行 logcat 快照 + 下次启动回捞系统 crash buffer（native 崩溃兜底建档）；新增主线程 ANR 看门狗（无响应 ≥5s 转储堆栈，恢复时留痕）；Agent 每个任务自动成为日志会话段（日志页可按单次任务浏览/导出全过程）；工具输出带 2KB 真实摘录（含 shell/终端命令的 exit code 与 stdout）；用户终端命令提交进日志中枢（新增「终端」分类）\n- 玻璃实验室新增「酷安式深色栏」：底部深色玻璃胶囊 Dock（约 94% 屏宽，kyant0 backdrop 实时采样），4 个常规项（图标+文字，浅色药丸选中态）+ 中央凸出品牌色发布按钮；白天实验室中深色栏压在浅色滚动内容上 —— 酷安标志性形态的液态玻璃复刻",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.103"
-    },
-    {
-      "versionName": "1.4.9.102",
-      "versionCode": 178,
-      "tag": "v1.4.9.102",
-      "date": "2026-10-31",
-      "title": "v1.4.9.102 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "batch2 summary fixes",
-          "notes": [
-            "稳定性：长任务导出分享面板补 NEW_TASK 标记，非 Activity 上下文不再抛 AndroidRuntimeException"
-          ]
-        },
-        {
-          "title": "terminal exec compile fix",
-          "notes": [
-            "修复：终端执行工具近期更新引入的编译类型错误（StringBuilder.take 返回类型对齐），恢复主分支可构建"
-          ]
-        }
-      ],
-      "markdown": "- 稳定性：长任务导出分享面板补 NEW_TASK 标记，非 Activity 上下文不再抛 AndroidRuntimeException\n\n---\n\n- 修复：终端执行工具近期更新引入的编译类型错误（StringBuilder.take 返回类型对齐），恢复主分支可构建",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.4.9.102"
     }
   ]
 }
