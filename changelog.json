@@ -1,21 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-14T09:33:01Z",
+  "generatedAt": "2026-11-14T10:52:52Z",
   "latest": {
-    "versionName": "1.5.57",
-    "versionCode": 237,
-    "tag": "v1.5.57",
+    "versionName": "1.5.58",
+    "versionCode": 238,
+    "tag": "v1.5.58",
     "date": "2026-11-14",
-    "title": "v1.5.57 更新内容",
-    "notes": [
-      "例行版本更新与稳定性改进。"
-    ],
+    "title": "v1.5.58 更新内容",
+    "notes": [],
     "images": [],
-    "pr": [],
-    "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.57"
+    "pr": [
+      {
+        "title": "rikka thinking card polish",
+        "notes": [
+          "Rikka 思考卡精简为纯计时状态卡：流式显示「思考中 · X 秒」（标题呼吸），收束定格「思考了 X 秒」；不再展示思考详细过程，正文 / 打字机揭示 / 首句预览一并移除",
+          "移除思考卡「直接看回答」入口与整卡点击——点击不再出现深色闪变（涟漪黑影），卡片纯只读",
+          "移除设置页「默认收起思考过程」开关（随展开态一起失效；经典胶囊风格的思考折叠卡不受影响）"
+        ]
+      }
+    ],
+    "markdown": "- Rikka 思考卡精简为纯计时状态卡：流式显示「思考中 · X 秒」（标题呼吸），收束定格「思考了 X 秒」；不再展示思考详细过程，正文 / 打字机揭示 / 首句预览一并移除\n- 移除思考卡「直接看回答」入口与整卡点击——点击不再出现深色闪变（涟漪黑影），卡片纯只读\n- 移除设置页「默认收起思考过程」开关（随展开态一起失效；经典胶囊风格的思考折叠卡不受影响）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.58"
   },
   "history": [
+    {
+      "versionName": "1.5.58",
+      "versionCode": 238,
+      "tag": "v1.5.58",
+      "date": "2026-11-14",
+      "title": "v1.5.58 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "rikka thinking card polish",
+          "notes": [
+            "Rikka 思考卡精简为纯计时状态卡：流式显示「思考中 · X 秒」（标题呼吸），收束定格「思考了 X 秒」；不再展示思考详细过程，正文 / 打字机揭示 / 首句预览一并移除",
+            "移除思考卡「直接看回答」入口与整卡点击——点击不再出现深色闪变（涟漪黑影），卡片纯只读",
+            "移除设置页「默认收起思考过程」开关（随展开态一起失效；经典胶囊风格的思考折叠卡不受影响）"
+          ]
+        }
+      ],
+      "markdown": "- Rikka 思考卡精简为纯计时状态卡：流式显示「思考中 · X 秒」（标题呼吸），收束定格「思考了 X 秒」；不再展示思考详细过程，正文 / 打字机揭示 / 首句预览一并移除\n- 移除思考卡「直接看回答」入口与整卡点击——点击不再出现深色闪变（涟漪黑影），卡片纯只读\n- 移除设置页「默认收起思考过程」开关（随展开态一起失效；经典胶囊风格的思考折叠卡不受影响）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.58"
+    },
     {
       "versionName": "1.5.57",
       "versionCode": 237,
@@ -1278,20 +1306,6 @@
       ],
       "markdown": "# 修复\n\n- Coding 提问弹窗新增取消入口：返回键/点击外部/取消按钮均可退出，并真实唤醒引擎等待（#509）。\n- 取消不再被当作「用户已回答」：引擎侧区分作答/取消/超时三态，空答案不再伪造肯定回复（#509）。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.9"
-    },
-    {
-      "versionName": "1.5.8",
-      "versionCode": 188,
-      "tag": "v1.5.8",
-      "date": "2026-10-31",
-      "title": "v1.5.8 更新内容",
-      "notes": [
-        "例行版本更新与稳定性改进。"
-      ],
-      "images": [],
-      "pr": [],
-      "markdown": "例行版本更新与稳定性改进。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.8"
     }
   ]
 }
