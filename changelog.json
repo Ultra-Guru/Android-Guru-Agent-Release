@@ -1,28 +1,63 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-13T17:16:41Z",
+  "generatedAt": "2026-11-14T00:16:56Z",
   "latest": {
-    "versionName": "1.5.49",
-    "versionCode": 229,
-    "tag": "v1.5.49",
-    "date": "2026-11-13",
-    "title": "v1.5.49 更新内容",
+    "versionName": "1.5.50",
+    "versionCode": 230,
+    "tag": "v1.5.50",
+    "date": "2026-11-14",
+    "title": "v1.5.50 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "t99 smoke telemetry",
+        "title": "memory p0 unification",
         "notes": [
-          "新增显式工具 `TerminalPRootSmoke`（非只读）在 PRoot 已 READY 时运行一次 5 秒上限的 `/bin/true` 冒烟探针，结果缓存 10 分钟；`TerminalBackends` 保持纯只读发现，不执行也不显示探针结果。超时或 SIGTRAP/SIGSYS 只提示 ptrace 限制**可能**存在，建议用户在已获 Root 授权时显式选择 chroot，绝不自动切换。",
-          "环境摘要新增 `chroot_ready` 可见性旗标：后端 Ready 为 on（仅 stat/cache 可用性，不代表 su 已授权）、确实找不到 su 为 off；rootfs 未就绪/明确授权拒绝/其它异常则省略（unknown、fail-open），不将旗标设为任何工具的必需前提。",
-          "探针在取消时强杀子进程，rootfs 生命周期变化会失效缓存；`RiskAwareToolGate` 的默认确认面为唯一运行门禁，真实 Android/OEM ptrace/Root 行为仍需真机验证。"
+          "记忆系统 P0 止血批（全景重构方案 v2）：修复 5 个公开缺陷 + 四线记忆统一 + 写回闭环 + 四因子召回 + 逐条纠正面",
+          "#851 维护调度修正：去掉与充电互斥的 `requiresDeviceIdle` 与不必要的 WiFi 约束（维护纯本地工作），改为「充电 + 电量不低」；每次冷启动追加一次性兜底维护（Worker 内电量门自适应：充电中或电量 > 50% 才执行）—— CS-Mem 自动维护从「真机从未运行」变为可靠触达",
+          "#822 冷启动解耦：MemKit 单例解析 + 全量旧存储迁移整体挪到 IO 协程（MemoryKitInitializer），Application.onCreate 主线程不再触发 runBlocking 链（冷启动卡顿 + StrictMode 磁盘违例根除）",
+          "#821 迁移列错位修正：旧 cs-mem episodes 迁移改按列名取值（started_at 不再错读 finished_at），字段值契约测试锁死列名映射",
+          "#841 写入面双层钳制：Agent 工具（MemoryConsolidateExperience / MemorySaveFact / MemoryGraph）与内置 memory MCP transport 同口径限流（教训 ≤32 / 实体 ≤64 / 关系 ≤128 / 观察 ≤32、单条 2KB 截断带标记），模型幻觉式刷写在两个写入面都被拦下且越限计数显式回报",
+          "#836 备份排除补全：memory_kit（认知记忆库本体）与 anr（看门狗堆栈转储）加入云备份/换机迁移排除，Android 11- 的 legacy 备份通道补齐全部 file domain 排除（与 12+ 对齐）",
+          "四线记忆统一（MemoryAwareCodeEngine）：标准 / 织造 / 信使三条 kit 线补齐「入口召回注入 + 工具轨迹入账 + 任务终局沉淀」闭环（此前仅深潜线有），四个 kit 库零改动（extras 通道复用），换逻辑线不丢长期记忆",
+          "四因子召回：0.45 重要性 + 0.30 新近度（14 天半衰）+ 0.10 频率 + 0.15 关键词加权评分，1 小时访问冷却防「越召回越新鲜」正反馈，token 硬截断整行装配（不再把最后一条记忆切成半句）",
+          "MemoryForget 第 8 个记忆工具：逐条纠正（按内容或 id 删事实 / 删实体级联关系 / 删指定观察），歧义匹配拒绝并列出候选 —— 「你记错了」不再只能覆盖式追加",
+          "写回闭环：四个记忆写入/纠正工具进 CORE 工具集（不再藏 ToolSearch 两跳之后）+ 幂等分类（崩溃恢复可安全重放）；任务终局引擎兜底直写摘要事实（模型已主动整理时自动跳过，不重复）"
         ]
       }
     ],
-    "markdown": "- 新增显式工具 `TerminalPRootSmoke`（非只读）在 PRoot 已 READY 时运行一次 5 秒上限的 `/bin/true` 冒烟探针，结果缓存 10 分钟；`TerminalBackends` 保持纯只读发现，不执行也不显示探针结果。超时或 SIGTRAP/SIGSYS 只提示 ptrace 限制**可能**存在，建议用户在已获 Root 授权时显式选择 chroot，绝不自动切换。\n- 环境摘要新增 `chroot_ready` 可见性旗标：后端 Ready 为 on（仅 stat/cache 可用性，不代表 su 已授权）、确实找不到 su 为 off；rootfs 未就绪/明确授权拒绝/其它异常则省略（unknown、fail-open），不将旗标设为任何工具的必需前提。\n- 探针在取消时强杀子进程，rootfs 生命周期变化会失效缓存；`RiskAwareToolGate` 的默认确认面为唯一运行门禁，真实 Android/OEM ptrace/Root 行为仍需真机验证。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.49"
+    "markdown": "- 记忆系统 P0 止血批（全景重构方案 v2）：修复 5 个公开缺陷 + 四线记忆统一 + 写回闭环 + 四因子召回 + 逐条纠正面\n- #851 维护调度修正：去掉与充电互斥的 `requiresDeviceIdle` 与不必要的 WiFi 约束（维护纯本地工作），改为「充电 + 电量不低」；每次冷启动追加一次性兜底维护（Worker 内电量门自适应：充电中或电量 > 50% 才执行）—— CS-Mem 自动维护从「真机从未运行」变为可靠触达\n- #822 冷启动解耦：MemKit 单例解析 + 全量旧存储迁移整体挪到 IO 协程（MemoryKitInitializer），Application.onCreate 主线程不再触发 runBlocking 链（冷启动卡顿 + StrictMode 磁盘违例根除）\n- #821 迁移列错位修正：旧 cs-mem episodes 迁移改按列名取值（started_at 不再错读 finished_at），字段值契约测试锁死列名映射\n- #841 写入面双层钳制：Agent 工具（MemoryConsolidateExperience / MemorySaveFact / MemoryGraph）与内置 memory MCP transport 同口径限流（教训 ≤32 / 实体 ≤64 / 关系 ≤128 / 观察 ≤32、单条 2KB 截断带标记），模型幻觉式刷写在两个写入面都被拦下且越限计数显式回报\n- #836 备份排除补全：memory_kit（认知记忆库本体）与 anr（看门狗堆栈转储）加入云备份/换机迁移排除，Android 11- 的 legacy 备份通道补齐全部 file domain 排除（与 12+ 对齐）\n- 四线记忆统一（MemoryAwareCodeEngine）：标准 / 织造 / 信使三条 kit 线补齐「入口召回注入 + 工具轨迹入账 + 任务终局沉淀」闭环（此前仅深潜线有），四个 kit 库零改动（extras 通道复用），换逻辑线不丢长期记忆\n- 四因子召回：0.45 重要性 + 0.30 新近度（14 天半衰）+ 0.10 频率 + 0.15 关键词加权评分，1 小时访问冷却防「越召回越新鲜」正反馈，token 硬截断整行装配（不再把最后一条记忆切成半句）\n- MemoryForget 第 8 个记忆工具：逐条纠正（按内容或 id 删事实 / 删实体级联关系 / 删指定观察），歧义匹配拒绝并列出候选 —— 「你记错了」不再只能覆盖式追加\n- 写回闭环：四个记忆写入/纠正工具进 CORE 工具集（不再藏 ToolSearch 两跳之后）+ 幂等分类（崩溃恢复可安全重放）；任务终局引擎兜底直写摘要事实（模型已主动整理时自动跳过，不重复）\n- 压缩捕获：上下文压缩裁剪掉的对话不再对记忆系统不可见 —— User/Assistant 对自动转进记忆蒸馏管道（后台执行不阻塞压缩）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.50"
   },
   "history": [
+    {
+      "versionName": "1.5.50",
+      "versionCode": 230,
+      "tag": "v1.5.50",
+      "date": "2026-11-14",
+      "title": "v1.5.50 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "memory p0 unification",
+          "notes": [
+            "记忆系统 P0 止血批（全景重构方案 v2）：修复 5 个公开缺陷 + 四线记忆统一 + 写回闭环 + 四因子召回 + 逐条纠正面",
+            "#851 维护调度修正：去掉与充电互斥的 `requiresDeviceIdle` 与不必要的 WiFi 约束（维护纯本地工作），改为「充电 + 电量不低」；每次冷启动追加一次性兜底维护（Worker 内电量门自适应：充电中或电量 > 50% 才执行）—— CS-Mem 自动维护从「真机从未运行」变为可靠触达",
+            "#822 冷启动解耦：MemKit 单例解析 + 全量旧存储迁移整体挪到 IO 协程（MemoryKitInitializer），Application.onCreate 主线程不再触发 runBlocking 链（冷启动卡顿 + StrictMode 磁盘违例根除）",
+            "#821 迁移列错位修正：旧 cs-mem episodes 迁移改按列名取值（started_at 不再错读 finished_at），字段值契约测试锁死列名映射",
+            "#841 写入面双层钳制：Agent 工具（MemoryConsolidateExperience / MemorySaveFact / MemoryGraph）与内置 memory MCP transport 同口径限流（教训 ≤32 / 实体 ≤64 / 关系 ≤128 / 观察 ≤32、单条 2KB 截断带标记），模型幻觉式刷写在两个写入面都被拦下且越限计数显式回报",
+            "#836 备份排除补全：memory_kit（认知记忆库本体）与 anr（看门狗堆栈转储）加入云备份/换机迁移排除，Android 11- 的 legacy 备份通道补齐全部 file domain 排除（与 12+ 对齐）",
+            "四线记忆统一（MemoryAwareCodeEngine）：标准 / 织造 / 信使三条 kit 线补齐「入口召回注入 + 工具轨迹入账 + 任务终局沉淀」闭环（此前仅深潜线有），四个 kit 库零改动（extras 通道复用），换逻辑线不丢长期记忆",
+            "四因子召回：0.45 重要性 + 0.30 新近度（14 天半衰）+ 0.10 频率 + 0.15 关键词加权评分，1 小时访问冷却防「越召回越新鲜」正反馈，token 硬截断整行装配（不再把最后一条记忆切成半句）",
+            "MemoryForget 第 8 个记忆工具：逐条纠正（按内容或 id 删事实 / 删实体级联关系 / 删指定观察），歧义匹配拒绝并列出候选 —— 「你记错了」不再只能覆盖式追加",
+            "写回闭环：四个记忆写入/纠正工具进 CORE 工具集（不再藏 ToolSearch 两跳之后）+ 幂等分类（崩溃恢复可安全重放）；任务终局引擎兜底直写摘要事实（模型已主动整理时自动跳过，不重复）"
+          ]
+        }
+      ],
+      "markdown": "- 记忆系统 P0 止血批（全景重构方案 v2）：修复 5 个公开缺陷 + 四线记忆统一 + 写回闭环 + 四因子召回 + 逐条纠正面\n- #851 维护调度修正：去掉与充电互斥的 `requiresDeviceIdle` 与不必要的 WiFi 约束（维护纯本地工作），改为「充电 + 电量不低」；每次冷启动追加一次性兜底维护（Worker 内电量门自适应：充电中或电量 > 50% 才执行）—— CS-Mem 自动维护从「真机从未运行」变为可靠触达\n- #822 冷启动解耦：MemKit 单例解析 + 全量旧存储迁移整体挪到 IO 协程（MemoryKitInitializer），Application.onCreate 主线程不再触发 runBlocking 链（冷启动卡顿 + StrictMode 磁盘违例根除）\n- #821 迁移列错位修正：旧 cs-mem episodes 迁移改按列名取值（started_at 不再错读 finished_at），字段值契约测试锁死列名映射\n- #841 写入面双层钳制：Agent 工具（MemoryConsolidateExperience / MemorySaveFact / MemoryGraph）与内置 memory MCP transport 同口径限流（教训 ≤32 / 实体 ≤64 / 关系 ≤128 / 观察 ≤32、单条 2KB 截断带标记），模型幻觉式刷写在两个写入面都被拦下且越限计数显式回报\n- #836 备份排除补全：memory_kit（认知记忆库本体）与 anr（看门狗堆栈转储）加入云备份/换机迁移排除，Android 11- 的 legacy 备份通道补齐全部 file domain 排除（与 12+ 对齐）\n- 四线记忆统一（MemoryAwareCodeEngine）：标准 / 织造 / 信使三条 kit 线补齐「入口召回注入 + 工具轨迹入账 + 任务终局沉淀」闭环（此前仅深潜线有），四个 kit 库零改动（extras 通道复用），换逻辑线不丢长期记忆\n- 四因子召回：0.45 重要性 + 0.30 新近度（14 天半衰）+ 0.10 频率 + 0.15 关键词加权评分，1 小时访问冷却防「越召回越新鲜」正反馈，token 硬截断整行装配（不再把最后一条记忆切成半句）\n- MemoryForget 第 8 个记忆工具：逐条纠正（按内容或 id 删事实 / 删实体级联关系 / 删指定观察），歧义匹配拒绝并列出候选 —— 「你记错了」不再只能覆盖式追加\n- 写回闭环：四个记忆写入/纠正工具进 CORE 工具集（不再藏 ToolSearch 两跳之后）+ 幂等分类（崩溃恢复可安全重放）；任务终局引擎兜底直写摘要事实（模型已主动整理时自动跳过，不重复）\n- 压缩捕获：上下文压缩裁剪掉的对话不再对记忆系统不可见 —— User/Assistant 对自动转进记忆蒸馏管道（后台执行不阻塞压缩）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.50"
+    },
     {
       "versionName": "1.5.49",
       "versionCode": 229,
@@ -1344,54 +1379,6 @@
       ],
       "markdown": "- 修复「逻辑·标准」线在 v5 工具注册表（PascalCase id）下 shell / 终端 / 编码工具族整体缺失的问题：工具面优先序前缀失配导致 48 个工具的截断退化为字典序，会话只剩 App 控制 / 浏览器自动化 / 模型配置 + task（表现为 agent 无法执行 Ubuntu 命令，general 子代理同样无 shell 工具）—— 经 apex-kit-standard 工具 id 形态归一修复后锁定 bump @ aae8693\n- 一并恢复被同一根因静默破坏的行为：规划师 / 探索 / 评审只读画像不再空面、DEFAULT 模式不再对 CodeRead 误弹权限询问、子代理读操作不再被 ASK 折叠拒绝、ACCEPT_EDITS 重新放行编辑类、bash 别名不再误判未知工具、read-before-edit 守卫与 Todo / 纪律提示词指引回归",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.1"
-    },
-    {
-      "versionName": "1.5",
-      "versionCode": 180,
-      "tag": "v1.5",
-      "date": "2026-10-31",
-      "title": "v1.5 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "aggregation center",
-          "notes": [
-            "全新「工具聚合中心」取代旧市场顶层：融合面板置顶——把技能、MCP、工具、插件融合成一个聚合，一键新建或导入 Claude 插件包；「我的聚合」横滑卡片集中管理激活/停用/安装成员/编辑",
-            "原市场的五类成员（插件/技能/MCP/连接器/集成）收编为成员体系：「添加成员 / 我的成员」两档段控 + Agent/Coding 工位分级，安装与管理机器全部保留",
-            "抽屉入口更名「工具聚合中心」，老用户导航位置与聚合包数据零迁移",
-            "Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记",
-            "聚合包新增策略路由（因果规则）：互斥组（打架的技能同时最多激活一个，宿主强制执行）、包级同时激活上限、常驻成员（免淘汰）、每技能触发条件（场景描述 + 自动装备关键词双轨）；组合器新增完整策略编辑段；Superpowers 包随包示范"
-          ]
-        },
-        {
-          "title": "role experience git skills github mcp",
-          "notes": [
-            "角色经验卡：每次任务结束自动提炼一条结构化经验（场景 / 工具序列 / 结果 / 下次注意），确定性规则引擎生成而非提示词发挥；同类任务开工时检索注入 top-3 相关经验（含 hitCount 强化信号，被复用的经验更易再次命中），跨会话越用越准",
-            "模板工坊点击任意角色模板打开详情面板：查看该角色的经验卡列表（可单删 / 清空）+ 激活入口；行点击从「直接激活」升级为「先看再激活」",
-            "Git 角色专属技能（9 套，默认全开）：git-advanced-workflows / git-advanced / git-workflows / github-actions-advanced / sync-repos / relay-merge / gh-cherry-pick / github-multi-repo / github-release-management —— 每套为阶段化 runbook（命令模板 + 逐阶段验证 + 安全护栏），上游社区仓库逐一标注；模板工坊 → Git 角色详情可逐个开关，下轮请求即生效",
-            "输入框 GitHub 图标新增「GitHub MCP 配置」：内置 GitHub MCP（进程内 7 工具）与官方远程 GitHub MCP（api.githubcopilot.com 全量工具面）双服务器启停 + 连接态同屏管理；官方服务器支持工具集订阅（repos / issues / pull_requests / actions 等 10 集，全选 = 服务器默认），勾选即重连生效；PAT 经令牌桥零落盘"
-          ]
-        },
-        {
-          "title": "stream order scroll fix",
-          "notes": [
-            "修复收尾回答的落位：agent 最终回答现在出现在全部工具调用记录**之后**（时间轴末尾），不再悬在中间过程上方 —— 旧实现把最终回答原位拼进了工具调用前建立的旧气泡",
-            "流式输出时可自由上滑回看历史，不再被强制吸底拽回",
-            "上滑后底部出现「回到底部」箭头按钮，点击即恢复自动跟随；手动滑回最底部也会自动恢复跟踪",
-            "版本号升级到 1.5（v1.4.9 档期 CI 自动追加序号已到 .102，1.5 起档期归零）"
-          ]
-        },
-        {
-          "title": "toolwright npm mirror",
-          "notes": [
-            "新增内置聚合包「Toolwright · 工具创造者」：两个元能力技能——CreateSkill（把重复流程沉淀为技能：SkillCreate 一行创建、PascalCase 命名规范、正文写法与验证闭环）与 CreateMcp（MCP 工具源接入：远程/沙箱形态选型、配置模板、启动失败三查）；激活后技能在市场与斜杠菜单独立可见可单独卸载",
-            "修复本地 MCP 启动失败的头号根因：沙箱内 npx 首次拉包直连 npmjs.org 国内大面积超时——现默认注入 npmmirror 镜像源（npm 官方 env 机制，已缓存包零影响，用户自配 registry 优先）"
-          ]
-        }
-      ],
-      "markdown": "- 全新「工具聚合中心」取代旧市场顶层：融合面板置顶——把技能、MCP、工具、插件融合成一个聚合，一键新建或导入 Claude 插件包；「我的聚合」横滑卡片集中管理激活/停用/安装成员/编辑\n- 原市场的五类成员（插件/技能/MCP/连接器/集成）收编为成员体系：「添加成员 / 我的成员」两档段控 + Agent/Coding 工位分级，安装与管理机器全部保留\n- 抽屉入口更名「工具聚合中心」，老用户导航位置与聚合包数据零迁移\n- Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记\n- Claude 插件包导入升级：带脚本的技能（scripts/references/assets）不再只收说明文——资源文件随导入落盘技能目录，模型经终端真实执行脚本、按路径读参考文档；注入时自动附带资源路径注记\n- 聚合包新增策略路由（因果规则）：互斥组（打架的技能同时最多激活一个，宿主强制执行）、包级同时激活上限、常驻成员（免淘汰）、每技能触发条件（场景描述 + 自动装备关键词双轨）；组合器新增完整策略编辑段；Superpowers 包随包示范\n\n---\n\n- 角色经验卡：每次任务结束自动提炼一条结构化经验（场景 / 工具序列 / 结果 / 下次注意），确定性规则引擎生成而非提示词发挥；同类任务开工时检索注入 top-3 相关经验（含 hitCount 强化信号，被复用的经验更易再次命中），跨会话越用越准\n- 模板工坊点击任意角色模板打开详情面板：查看该角色的经验卡列表（可单删 / 清空）+ 激活入口；行点击从「直接激活」升级为「先看再激活」\n- Git 角色专属技能（9 套，默认全开）：git-advanced-workflows / git-advanced / git-workflows / github-actions-advanced / sync-repos / relay-merge / gh-cherry-pick / github-multi-repo / github-release-management —— 每套为阶段化 runbook（命令模板 + 逐阶段验证 + 安全护栏），上游社区仓库逐一标注；模板工坊 → Git 角色详情可逐个开关，下轮请求即生效\n- 输入框 GitHub 图标新增「GitHub MCP 配置」：内置 GitHub MCP（进程内 7 工具）与官方远程 GitHub MCP（api.githubcopilot.com 全量工具面）双服务器启停 + 连接态同屏管理；官方服务器支持工具集订阅（repos / issues / pull_requests / actions 等 10 集，全选 = 服务器默认），勾选即重连生效；PAT 经令牌桥零落盘\n\n---\n\n- 修复收尾回答的落位：agent 最终回答现在出现在全部工具调用记录**之后**（时间轴末尾），不再悬在中间过程上方 —— 旧实现把最终回答原位拼进了工具调用前建立的旧气泡\n- 流式输出时可自由上滑回看历史，不再被强制吸底拽回\n- 上滑后底部出现「回到底部」箭头按钮，点击即恢复自动跟随；手动滑回最底部也会自动恢复跟踪\n- 版本号升级到 1.5（v1.4.9 档期 CI 自动追加序号已到 .102，1.5 起档期归零）\n\n---\n\n- 新增内置聚合包「Toolwright · 工具创造者」：两个元能力技能——CreateSkill（把重复流程沉淀为技能：SkillCreate 一行创建、PascalCase 命名规范、正文写法与验证闭环）与 CreateMcp（MCP 工具源接入：远程/沙箱形态选型、配置模板、启动失败三查）；激活后技能在市场与斜杠菜单独立可见可单独卸载\n- 修复本地 MCP 启动失败的头号根因：沙箱内 npx 首次拉包直连 npmjs.org 国内大面积超时——现默认注入 npmmirror 镜像源（npm 官方 env 机制，已缓存包零影响，用户自配 registry 优先）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5"
     }
   ]
 }
