@@ -1,21 +1,35 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-14T07:57:06Z",
+  "generatedAt": "2026-11-14T08:59:43Z",
   "latest": {
-    "versionName": "1.5.55",
-    "versionCode": 235,
-    "tag": "v1.5.55",
+    "versionName": "1.5.56",
+    "versionCode": 236,
+    "tag": "v1.5.56",
     "date": "2026-11-14",
-    "title": "v1.5.55 更新内容",
+    "title": "v1.5.56 更新内容",
     "notes": [
       "例行版本更新与稳定性改进。"
     ],
     "images": [],
     "pr": [],
     "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.55"
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.56"
   },
   "history": [
+    {
+      "versionName": "1.5.56",
+      "versionCode": 236,
+      "tag": "v1.5.56",
+      "date": "2026-11-14",
+      "title": "v1.5.56 更新内容",
+      "notes": [
+        "例行版本更新与稳定性改进。"
+      ],
+      "images": [],
+      "pr": [],
+      "markdown": "例行版本更新与稳定性改进。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.56"
+    },
     {
       "versionName": "1.5.55",
       "versionCode": 235,
@@ -1283,32 +1297,6 @@
       ],
       "markdown": "# 修复\n\n- 修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.7"
-    },
-    {
-      "versionName": "1.5.6",
-      "versionCode": 186,
-      "tag": "v1.5.6",
-      "date": "2026-10-31",
-      "title": "v1.5.6 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "settings regroup",
-          "notes": [
-            "设置中心新增「集成与扩展」一级分类：GitHub / 本地搜索 / 记忆 三页自「工作台」析出独立成类，工作台瘦身为纯会话行为六页（编程工位/子代理/权限/规则/钩子/目标模式），找集成类设置不再混在会话行为里翻",
-            "「模型配置 · 参数」页收纳高级选项（结构化输出/自定义请求头）——原挂在「提示词」页尾，语义归位：二者同为发请求时生效的模型档位设置"
-          ]
-        },
-        {
-          "title": "theme accent circle alias",
-          "notes": [
-            "修复主题配色选择器圆形色点边缘锯齿：色点改用 M3 Surface 直绘（shape 参数抗锯齿 fill/stroke），移除硬件渲染下不抗锯齿的 clip(CircleShape) 手搓圆——点击选中、描边加粗后锯齿尤其明显的问题一并根治"
-          ]
-        }
-      ],
-      "markdown": "- 设置中心新增「集成与扩展」一级分类：GitHub / 本地搜索 / 记忆 三页自「工作台」析出独立成类，工作台瘦身为纯会话行为六页（编程工位/子代理/权限/规则/钩子/目标模式），找集成类设置不再混在会话行为里翻\n- 「模型配置 · 参数」页收纳高级选项（结构化输出/自定义请求头）——原挂在「提示词」页尾，语义归位：二者同为发请求时生效的模型档位设置\n\n---\n\n- 修复主题配色选择器圆形色点边缘锯齿：色点改用 M3 Surface 直绘（shape 参数抗锯齿 fill/stroke），移除硬件渲染下不抗锯齿的 clip(CircleShape) 手搓圆——点击选中、描边加粗后锯齿尤其明显的问题一并根治",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.6"
     }
   ]
 }
