@@ -1,21 +1,35 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-14T08:59:43Z",
+  "generatedAt": "2026-11-14T09:33:01Z",
   "latest": {
-    "versionName": "1.5.56",
-    "versionCode": 236,
-    "tag": "v1.5.56",
+    "versionName": "1.5.57",
+    "versionCode": 237,
+    "tag": "v1.5.57",
     "date": "2026-11-14",
-    "title": "v1.5.56 更新内容",
+    "title": "v1.5.57 更新内容",
     "notes": [
       "例行版本更新与稳定性改进。"
     ],
     "images": [],
     "pr": [],
     "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.56"
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.57"
   },
   "history": [
+    {
+      "versionName": "1.5.57",
+      "versionCode": 237,
+      "tag": "v1.5.57",
+      "date": "2026-11-14",
+      "title": "v1.5.57 更新内容",
+      "notes": [
+        "例行版本更新与稳定性改进。"
+      ],
+      "images": [],
+      "pr": [],
+      "markdown": "例行版本更新与稳定性改进。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.57"
+    },
     {
       "versionName": "1.5.56",
       "versionCode": 236,
@@ -1278,25 +1292,6 @@
       "pr": [],
       "markdown": "例行版本更新与稳定性改进。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.8"
-    },
-    {
-      "versionName": "1.5.7",
-      "versionCode": 187,
-      "tag": "v1.5.7",
-      "date": "2026-10-31",
-      "title": "v1.5.7 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "修复",
-          "notes": [
-            "修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。"
-          ]
-        }
-      ],
-      "markdown": "# 修复\n\n- 修复 GitHub Actions 提交规范检查在旧 PR 分支上的脚本接口错配：工作流和检查脚本统一使用事件检出版本，保留 PR 提交范围校验与不合规提交拦截（#349）。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.7"
     }
   ]
 }
