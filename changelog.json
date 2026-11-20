@@ -1,27 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-15T07:42:24Z",
+  "generatedAt": "2026-11-20T12:02:56Z",
   "latest": {
-    "versionName": "1.5.66",
-    "versionCode": 246,
-    "tag": "v1.5.66",
-    "date": "2026-11-15",
-    "title": "v1.5.66 更新内容",
+    "versionName": "1.5.67",
+    "versionCode": 247,
+    "tag": "v1.5.67",
+    "date": "2026-11-20",
+    "title": "v1.5.67 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "t99 chroot mount ca",
+        "title": "mcphost bind endpoint",
         "notes": [
-          "修复 Root 终端在部分精简 ROM 缺少 mountpoint 时重复叠加挂载、退出后误卸载其他并发会话挂载的问题；清理仅处理本后端记录的挂载，不删除 Ubuntu 内文件。",
-          "完整 Ubuntu 包已包含 CA 证书，不重打包；仅对旧环境缺失或为空的 bundle，Android 生产从 AndroidCAStore 已启用的 `system:` 证书修复（排除用户及停用锚点），其它环境可显式注入可信宿主 bundle。PRoot/chroot 显式创建也执行此检查；可信来源不可用时保持原状，不降级 HTTPS 验证。"
+          "MCP Host 卡片新增真实监听地址显示：运行时展示 127.0.0.1 或 0.0.0.0 与端口（来自服务端实际绑定参数），重启/未就绪显示「准备监听」中态，不再只报会话数",
+          "修复「如何连接」在默认回环模式下仍填手机局域网 IP 导致 PC 必然连不上的问题：host 跟随当前绑定面，回环态填 PC 侧转发地址并附 adb reverse 端口转发指引"
         ]
       }
     ],
-    "markdown": "- 修复 Root 终端在部分精简 ROM 缺少 mountpoint 时重复叠加挂载、退出后误卸载其他并发会话挂载的问题；清理仅处理本后端记录的挂载，不删除 Ubuntu 内文件。\n- 完整 Ubuntu 包已包含 CA 证书，不重打包；仅对旧环境缺失或为空的 bundle，Android 生产从 AndroidCAStore 已启用的 `system:` 证书修复（排除用户及停用锚点），其它环境可显式注入可信宿主 bundle。PRoot/chroot 显式创建也执行此检查；可信来源不可用时保持原状，不降级 HTTPS 验证。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.66"
+    "markdown": "- MCP Host 卡片新增真实监听地址显示：运行时展示 127.0.0.1 或 0.0.0.0 与端口（来自服务端实际绑定参数），重启/未就绪显示「准备监听」中态，不再只报会话数\n- 修复「如何连接」在默认回环模式下仍填手机局域网 IP 导致 PC 必然连不上的问题：host 跟随当前绑定面，回环态填 PC 侧转发地址并附 adb reverse 端口转发指引",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.67"
   },
   "history": [
+    {
+      "versionName": "1.5.67",
+      "versionCode": 247,
+      "tag": "v1.5.67",
+      "date": "2026-11-20",
+      "title": "v1.5.67 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "mcphost bind endpoint",
+          "notes": [
+            "MCP Host 卡片新增真实监听地址显示：运行时展示 127.0.0.1 或 0.0.0.0 与端口（来自服务端实际绑定参数），重启/未就绪显示「准备监听」中态，不再只报会话数",
+            "修复「如何连接」在默认回环模式下仍填手机局域网 IP 导致 PC 必然连不上的问题：host 跟随当前绑定面，回环态填 PC 侧转发地址并附 adb reverse 端口转发指引"
+          ]
+        }
+      ],
+      "markdown": "- MCP Host 卡片新增真实监听地址显示：运行时展示 127.0.0.1 或 0.0.0.0 与端口（来自服务端实际绑定参数），重启/未就绪显示「准备监听」中态，不再只报会话数\n- 修复「如何连接」在默认回环模式下仍填手机局域网 IP 导致 PC 必然连不上的问题：host 跟随当前绑定面，回环态填 PC 侧转发地址并附 adb reverse 端口转发指引",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.67"
+    },
     {
       "versionName": "1.5.66",
       "versionCode": 246,
@@ -1346,28 +1366,6 @@
       ],
       "markdown": "- 修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度\n- 修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲\n- 工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.18"
-    },
-    {
-      "versionName": "1.5.17",
-      "versionCode": 197,
-      "tag": "v1.5.17",
-      "date": "2026-11-01",
-      "title": "v1.5.17 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "settings truth polish",
-          "notes": [
-            "设置页「真设置化」第二波：移除 5 项数据预埋假设置（显示思考过程 / 连接保活 / Auth Type / Organization·Project / Key 轮换策略——均为无运行时消费方的摆设项）",
-            "压缩三件套真接线：保留近轮 / 压缩阈值 / 工具输出长度的设置值现在真实生效（此前引擎侧硬编码、改了没用）；默认值对齐引擎基准，老用户零行为漂移；富载荷模式改为在用户基准上增量抬升",
-            "补全缺失设置：模型原生联网搜索模式下拉（关闭/自动/按 Provider，请求侧真实消费）+ JSON Schema 编辑入口（JSON_SCHEMA 模式生效）",
-            "修正过期文案：模型角色说明改为真实路由描述（FAST 驱动目标校验 / SUMMARY 驱动压缩，缺失自动回退主模型）；多 Key 输入提示如实标注「当前使用第一个 Key」"
-          ]
-        }
-      ],
-      "markdown": "- 设置页「真设置化」第二波：移除 5 项数据预埋假设置（显示思考过程 / 连接保活 / Auth Type / Organization·Project / Key 轮换策略——均为无运行时消费方的摆设项）\n- 压缩三件套真接线：保留近轮 / 压缩阈值 / 工具输出长度的设置值现在真实生效（此前引擎侧硬编码、改了没用）；默认值对齐引擎基准，老用户零行为漂移；富载荷模式改为在用户基准上增量抬升\n- 补全缺失设置：模型原生联网搜索模式下拉（关闭/自动/按 Provider，请求侧真实消费）+ JSON Schema 编辑入口（JSON_SCHEMA 模式生效）\n- 修正过期文案：模型角色说明改为真实路由描述（FAST 驱动目标校验 / SUMMARY 驱动压缩，缺失自动回退主模型）；多 Key 输入提示如实标注「当前使用第一个 Key」",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.17"
     }
   ]
 }
