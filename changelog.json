@@ -1,45 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-20T16:30:27Z",
+  "generatedAt": "2026-11-20T16:47:41Z",
   "latest": {
-    "versionName": "1.5.70",
-    "versionCode": 250,
-    "tag": "v1.5.70",
+    "versionName": "1.5.71",
+    "versionCode": 251,
+    "tag": "v1.5.71",
     "date": "2026-11-20",
-    "title": "v1.5.70 更新内容",
+    "title": "v1.5.71 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "issue 825 truncator hot update",
+        "title": "settings pr4 content consolidation",
         "notes": [
-          "修复：工具输出截断预算热更新失效（#825）——toolTruncator 冻结于引擎构造期的 maxToolOutputLength，设置页 patchConfig/updateConfig 热更新后截断阈值静默失效，深潜任务回灌的输出预算与设置页显示值脱节",
-          "预算变更时整体换 ToolOutputTruncator 实例（head/tail 收敛在构造期完成，不可中途改字段），updateConfig 与 patchConfig 两条配置路径均接上 syncTruncatorBudget"
-        ]
-      },
-      {
-        "title": "app surface 824 852 777",
-        "notes": [
-          "安全：删除零引用的监控级敏感权限 QUERY_ALL_PACKAGES 与 PACKAGE_USAGE_STATS（#824）——「声而不用」是侧载扫描红旗 + Play 政策硬伤；未来按需用 `<queries>` 精确声明",
-          "修复：备份功能文案如实化（#852）——BackupBundle 实际只含设置键 + 可选金库信封，双语 UI 不再声称「包含聊天历史」（聊天历史走聊天页单独导出通道），消除换机场景被 UI 误导后的确定性数据丢失",
-          "a11y：插件卸载与队列取消两处 IconButton 触控目标 28dp → 48dp（#777，项目 UI-012 红线），图标视觉尺寸不变"
-        ]
-      },
-      {
-        "title": "build ci chores 788 787 794 804 797",
-        "notes": [
-          "构建：gradle-wrapper 增加 distributionSha256Sum（#788）——工具链分发包下载后先验 SHA-256，供应链投毒/损坏包直接拒绝",
-          "构建：app 的 androidTest 依赖改走 version catalog 别名（#787），不再硬编码版本绕过目录",
-          "CI：mirror-to-gitee 触发与 2026-10-06 触发去重政策对齐（#794）——push 收敛到 main、tag 收敛到 v*，PR 分支推送不再全量镜像",
-          "CI：media-results 仪表化测试按被测面加 paths 过滤（#804）——文档/徽章/changelog 类 PR 不再烧 60 分钟 emulator 槽位",
-          "清理：删除仓库根过期的 audit-report.md（#797）——一次性审计产物，所报红灯已不成立"
+          "设置中心内容收口：全局压缩分区、全局限速分区统一迁入「system.diagnostics 诊断档案」，档案级与全局级不再混排一页；原页面保留「相关设置 →」跳转行，点击直达新挂载点。",
+          "模型配置导入对话框：导入中状态在旋转屏幕后不再丢失；非预期异常（IO 等）不再导致导入按钮永久卡死，兜底复位并可重试。",
+          "键值编辑器（P2 表单）：键名自动去首尾空格并按 RFC 7230 校验合法性，大小写重复键去重，空 value 拦截，错误提示就地展示。"
         ]
       }
     ],
-    "markdown": "- 修复：工具输出截断预算热更新失效（#825）——toolTruncator 冻结于引擎构造期的 maxToolOutputLength，设置页 patchConfig/updateConfig 热更新后截断阈值静默失效，深潜任务回灌的输出预算与设置页显示值脱节\n- 预算变更时整体换 ToolOutputTruncator 实例（head/tail 收敛在构造期完成，不可中途改字段），updateConfig 与 patchConfig 两条配置路径均接上 syncTruncatorBudget\n\n---\n\n- 安全：删除零引用的监控级敏感权限 QUERY_ALL_PACKAGES 与 PACKAGE_USAGE_STATS（#824）——「声而不用」是侧载扫描红旗 + Play 政策硬伤；未来按需用 `<queries>` 精确声明\n- 修复：备份功能文案如实化（#852）——BackupBundle 实际只含设置键 + 可选金库信封，双语 UI 不再声称「包含聊天历史」（聊天历史走聊天页单独导出通道），消除换机场景被 UI 误导后的确定性数据丢失\n- a11y：插件卸载与队列取消两处 IconButton 触控目标 28dp → 48dp（#777，项目 UI-012 红线），图标视觉尺寸不变\n\n---\n\n- 构建：gradle-wrapper 增加 distributionSha256Sum（#788）——工具链分发包下载后先验 SHA-256，供应链投毒/损坏包直接拒绝\n- 构建：app 的 androidTest 依赖改走 version catalog 别名（#787），不再硬编码版本绕过目录\n- CI：mirror-to-gitee 触发与 2026-10-06 触发去重政策对齐（#794）——push 收敛到 main、tag 收敛到 v*，PR 分支推送不再全量镜像\n- CI：media-results 仪表化测试按被测面加 paths 过滤（#804）——文档/徽章/changelog 类 PR 不再烧 60 分钟 emulator 槽位\n- 清理：删除仓库根过期的 audit-report.md（#797）——一次性审计产物，所报红灯已不成立",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.70"
+    "markdown": "- 设置中心内容收口：全局压缩分区、全局限速分区统一迁入「system.diagnostics 诊断档案」，档案级与全局级不再混排一页；原页面保留「相关设置 →」跳转行，点击直达新挂载点。\n- 模型配置导入对话框：导入中状态在旋转屏幕后不再丢失；非预期异常（IO 等）不再导致导入按钮永久卡死，兜底复位并可重试。\n- 键值编辑器（P2 表单）：键名自动去首尾空格并按 RFC 7230 校验合法性，大小写重复键去重，空 value 拦截，错误提示就地展示。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.71"
   },
   "history": [
+    {
+      "versionName": "1.5.71",
+      "versionCode": 251,
+      "tag": "v1.5.71",
+      "date": "2026-11-20",
+      "title": "v1.5.71 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "settings pr4 content consolidation",
+          "notes": [
+            "设置中心内容收口：全局压缩分区、全局限速分区统一迁入「system.diagnostics 诊断档案」，档案级与全局级不再混排一页；原页面保留「相关设置 →」跳转行，点击直达新挂载点。",
+            "模型配置导入对话框：导入中状态在旋转屏幕后不再丢失；非预期异常（IO 等）不再导致导入按钮永久卡死，兜底复位并可重试。",
+            "键值编辑器（P2 表单）：键名自动去首尾空格并按 RFC 7230 校验合法性，大小写重复键去重，空 value 拦截，错误提示就地展示。"
+          ]
+        }
+      ],
+      "markdown": "- 设置中心内容收口：全局压缩分区、全局限速分区统一迁入「system.diagnostics 诊断档案」，档案级与全局级不再混排一页；原页面保留「相关设置 →」跳转行，点击直达新挂载点。\n- 模型配置导入对话框：导入中状态在旋转屏幕后不再丢失；非预期异常（IO 等）不再导致导入按钮永久卡死，兜底复位并可重试。\n- 键值编辑器（P2 表单）：键名自动去首尾空格并按 RFC 7230 校验合法性，大小写重复键去重，空 value 拦截，错误提示就地展示。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.71"
+    },
     {
       "versionName": "1.5.70",
       "versionCode": 250,
@@ -1359,26 +1363,6 @@
       "pr": [],
       "markdown": "例行版本更新与稳定性改进。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.22"
-    },
-    {
-      "versionName": "1.5.21",
-      "versionCode": 201,
-      "tag": "v1.5.21",
-      "date": "2026-11-01",
-      "title": "v1.5.21 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "toolbench polish",
-          "notes": [
-            "代码页「展开」工具台激活态标识：GitHub 已连 / 工具聚合激活 / 小圆环有开关 / 功能聚合计数实时点亮菜单项尾点与按钮泛光，收起后也能一眼看到有工具在生效",
-            "网络搜索 SearXNG 通道状态可见：菜单副标题随本地服务状态机实时变化（运行中/安装启动中/失败可重试），启用时反馈条指路设置中心进度页"
-          ]
-        }
-      ],
-      "markdown": "- 代码页「展开」工具台激活态标识：GitHub 已连 / 工具聚合激活 / 小圆环有开关 / 功能聚合计数实时点亮菜单项尾点与按钮泛光，收起后也能一眼看到有工具在生效\n- 网络搜索 SearXNG 通道状态可见：菜单副标题随本地服务状态机实时变化（运行中/安装启动中/失败可重试），启用时反馈条指路设置中心进度页",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.21"
     }
   ]
 }
