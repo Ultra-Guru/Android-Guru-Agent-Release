@@ -1,28 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-20T12:20:28Z",
+  "generatedAt": "2026-11-20T16:12:21Z",
   "latest": {
-    "versionName": "1.5.68",
-    "versionCode": 248,
-    "tag": "v1.5.68",
+    "versionName": "1.5.69",
+    "versionCode": 249,
+    "tag": "v1.5.69",
     "date": "2026-11-20",
-    "title": "v1.5.68 更新内容",
+    "title": "v1.5.69 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "markdown parse anr",
+        "title": "issue 817 stream calltimeout",
         "notes": [
-          "修复长任务期间 App「闪退」：真机日志实锤为结论气泡 Markdown 解析在主线程同步执行（超线性，88s 进程寿命主线程烧 85s CPU）→ 输入无响应 ANR → 进程被杀；重进后首帧重解析同一全文再次触发，故反复闪退",
-          "解析迁 Default 线程 + 50ms 合窗：主线程永不阻塞；流式 token 风暴窗口内塌缩为一次解析；重解析期间旧结果保持显示",
-          "流式期间超长结论只渲染尾部 16KB 切片（收束后恢复全文），流式渲染成本与文本长度解耦"
+          "修复：流式对话被 120 秒绝对墙钟掐断（#817）——callTimeout 的真实语义是「call 创建 → 响应体关闭」的绝对墙钟（覆盖响应体读取），此前作用于共享 OkHttpClient 把 SSE 流总时长硬性钉死在 requestTimeoutMs（默认 120s），推理型模型长输出中途报废",
+          "chatStream 改走 callTimeout=0 的流式派生 client（共享连接池）；非流式 chat() 保留原 callTimeout 作为单次请求硬上限，流式活性由 readTimeout 逐包保障"
         ]
       }
     ],
-    "markdown": "- 修复长任务期间 App「闪退」：真机日志实锤为结论气泡 Markdown 解析在主线程同步执行（超线性，88s 进程寿命主线程烧 85s CPU）→ 输入无响应 ANR → 进程被杀；重进后首帧重解析同一全文再次触发，故反复闪退\n- 解析迁 Default 线程 + 50ms 合窗：主线程永不阻塞；流式 token 风暴窗口内塌缩为一次解析；重解析期间旧结果保持显示\n- 流式期间超长结论只渲染尾部 16KB 切片（收束后恢复全文），流式渲染成本与文本长度解耦",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.68"
+    "markdown": "- 修复：流式对话被 120 秒绝对墙钟掐断（#817）——callTimeout 的真实语义是「call 创建 → 响应体关闭」的绝对墙钟（覆盖响应体读取），此前作用于共享 OkHttpClient 把 SSE 流总时长硬性钉死在 requestTimeoutMs（默认 120s），推理型模型长输出中途报废\n- chatStream 改走 callTimeout=0 的流式派生 client（共享连接池）；非流式 chat() 保留原 callTimeout 作为单次请求硬上限，流式活性由 readTimeout 逐包保障",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.69"
   },
   "history": [
+    {
+      "versionName": "1.5.69",
+      "versionCode": 249,
+      "tag": "v1.5.69",
+      "date": "2026-11-20",
+      "title": "v1.5.69 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "issue 817 stream calltimeout",
+          "notes": [
+            "修复：流式对话被 120 秒绝对墙钟掐断（#817）——callTimeout 的真实语义是「call 创建 → 响应体关闭」的绝对墙钟（覆盖响应体读取），此前作用于共享 OkHttpClient 把 SSE 流总时长硬性钉死在 requestTimeoutMs（默认 120s），推理型模型长输出中途报废",
+            "chatStream 改走 callTimeout=0 的流式派生 client（共享连接池）；非流式 chat() 保留原 callTimeout 作为单次请求硬上限，流式活性由 readTimeout 逐包保障"
+          ]
+        }
+      ],
+      "markdown": "- 修复：流式对话被 120 秒绝对墙钟掐断（#817）——callTimeout 的真实语义是「call 创建 → 响应体关闭」的绝对墙钟（覆盖响应体读取），此前作用于共享 OkHttpClient 把 SSE 流总时长硬性钉死在 requestTimeoutMs（默认 120s），推理型模型长输出中途报废\n- chatStream 改走 callTimeout=0 的流式派生 client（共享连接池）；非流式 chat() 保留原 callTimeout 作为单次请求硬上限，流式活性由 readTimeout 逐包保障",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.69"
+    },
     {
       "versionName": "1.5.68",
       "versionCode": 248,
@@ -1336,37 +1355,6 @@
       ],
       "markdown": "- 敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循\n\n---\n\n# 修复文件选择与拍照结果\n\n- 文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。\n- 拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。\n\n---\n\n修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的问题。真实输入的草稿按字段保留，切换服务商不会串写凭证。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.20"
-    },
-    {
-      "versionName": "1.5.19",
-      "versionCode": 199,
-      "tag": "v1.5.19",
-      "date": "2026-11-01",
-      "title": "v1.5.19 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "修复",
-          "notes": [
-            "MCP 工具清单改为有界并发聚合，为每台服务器设置独立的短超时预算；慢源或故障源不再串行拖住正常工具，保留稳定的服务器顺序、失败诊断和调用方取消传播（#488）。"
-          ]
-        },
-        {
-          "title": "batch5 i18n labels",
-          "notes": [
-            "模型设置卡 5 处硬编码标签接入 i18n 体系：Base URL / API Key / Providers… 表单标签与服务商对话框标题、密钥计数改走 stringResource（所在文件其余文本本就走资源，消除同屏不一致）"
-          ]
-        },
-        {
-          "title": "修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内…",
-          "notes": [
-            "修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内…"
-          ]
-        }
-      ],
-      "markdown": "## 修复\n\n- MCP 工具清单改为有界并发聚合，为每台服务器设置独立的短超时预算；慢源或故障源不再串行拖住正常工具，保留稳定的服务器顺序、失败诊断和调用方取消传播（#488）。\n\n---\n\n- 模型设置卡 5 处硬编码标签接入 i18n 体系：Base URL / API Key / Providers… 表单标签与服务商对话框标题、密钥计数改走 stringResource（所在文件其余文本本就走资源，消除同屏不一致）\n\n---\n\n修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内容；重复安装前置拒绝（不进确认门、不动任何文件）；GitHub token 供应器异常折叠为可读失败（不再击穿安装流程），协程取消照常传播。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.19"
     }
   ]
 }
