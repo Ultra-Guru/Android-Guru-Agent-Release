@@ -1,27 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-20T12:02:56Z",
+  "generatedAt": "2026-11-20T12:20:28Z",
   "latest": {
-    "versionName": "1.5.67",
-    "versionCode": 247,
-    "tag": "v1.5.67",
+    "versionName": "1.5.68",
+    "versionCode": 248,
+    "tag": "v1.5.68",
     "date": "2026-11-20",
-    "title": "v1.5.67 更新内容",
+    "title": "v1.5.68 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "mcphost bind endpoint",
+        "title": "markdown parse anr",
         "notes": [
-          "MCP Host 卡片新增真实监听地址显示：运行时展示 127.0.0.1 或 0.0.0.0 与端口（来自服务端实际绑定参数），重启/未就绪显示「准备监听」中态，不再只报会话数",
-          "修复「如何连接」在默认回环模式下仍填手机局域网 IP 导致 PC 必然连不上的问题：host 跟随当前绑定面，回环态填 PC 侧转发地址并附 adb reverse 端口转发指引"
+          "修复长任务期间 App「闪退」：真机日志实锤为结论气泡 Markdown 解析在主线程同步执行（超线性，88s 进程寿命主线程烧 85s CPU）→ 输入无响应 ANR → 进程被杀；重进后首帧重解析同一全文再次触发，故反复闪退",
+          "解析迁 Default 线程 + 50ms 合窗：主线程永不阻塞；流式 token 风暴窗口内塌缩为一次解析；重解析期间旧结果保持显示",
+          "流式期间超长结论只渲染尾部 16KB 切片（收束后恢复全文），流式渲染成本与文本长度解耦"
         ]
       }
     ],
-    "markdown": "- MCP Host 卡片新增真实监听地址显示：运行时展示 127.0.0.1 或 0.0.0.0 与端口（来自服务端实际绑定参数），重启/未就绪显示「准备监听」中态，不再只报会话数\n- 修复「如何连接」在默认回环模式下仍填手机局域网 IP 导致 PC 必然连不上的问题：host 跟随当前绑定面，回环态填 PC 侧转发地址并附 adb reverse 端口转发指引",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.67"
+    "markdown": "- 修复长任务期间 App「闪退」：真机日志实锤为结论气泡 Markdown 解析在主线程同步执行（超线性，88s 进程寿命主线程烧 85s CPU）→ 输入无响应 ANR → 进程被杀；重进后首帧重解析同一全文再次触发，故反复闪退\n- 解析迁 Default 线程 + 50ms 合窗：主线程永不阻塞；流式 token 风暴窗口内塌缩为一次解析；重解析期间旧结果保持显示\n- 流式期间超长结论只渲染尾部 16KB 切片（收束后恢复全文），流式渲染成本与文本长度解耦",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.68"
   },
   "history": [
+    {
+      "versionName": "1.5.68",
+      "versionCode": 248,
+      "tag": "v1.5.68",
+      "date": "2026-11-20",
+      "title": "v1.5.68 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "markdown parse anr",
+          "notes": [
+            "修复长任务期间 App「闪退」：真机日志实锤为结论气泡 Markdown 解析在主线程同步执行（超线性，88s 进程寿命主线程烧 85s CPU）→ 输入无响应 ANR → 进程被杀；重进后首帧重解析同一全文再次触发，故反复闪退",
+            "解析迁 Default 线程 + 50ms 合窗：主线程永不阻塞；流式 token 风暴窗口内塌缩为一次解析；重解析期间旧结果保持显示",
+            "流式期间超长结论只渲染尾部 16KB 切片（收束后恢复全文），流式渲染成本与文本长度解耦"
+          ]
+        }
+      ],
+      "markdown": "- 修复长任务期间 App「闪退」：真机日志实锤为结论气泡 Markdown 解析在主线程同步执行（超线性，88s 进程寿命主线程烧 85s CPU）→ 输入无响应 ANR → 进程被杀；重进后首帧重解析同一全文再次触发，故反复闪退\n- 解析迁 Default 线程 + 50ms 合窗：主线程永不阻塞；流式 token 风暴窗口内塌缩为一次解析；重解析期间旧结果保持显示\n- 流式期间超长结论只渲染尾部 16KB 切片（收束后恢复全文），流式渲染成本与文本长度解耦",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.68"
+    },
     {
       "versionName": "1.5.67",
       "versionCode": 247,
@@ -1345,27 +1367,6 @@
       ],
       "markdown": "## 修复\n\n- MCP 工具清单改为有界并发聚合，为每台服务器设置独立的短超时预算；慢源或故障源不再串行拖住正常工具，保留稳定的服务器顺序、失败诊断和调用方取消传播（#488）。\n\n---\n\n- 模型设置卡 5 处硬编码标签接入 i18n 体系：Base URL / API Key / Providers… 表单标签与服务商对话框标题、密钥计数改走 stringResource（所在文件其余文本本就走资源，消除同屏不一致）\n\n---\n\n修复魔搭技能重复安装或取消时可能覆盖、删除既有资源的问题；安装资源先暂存，完整下载并确认后才发布，下载失败保留用户原有内容；重复安装前置拒绝（不进确认门、不动任何文件）；GitHub token 供应器异常折叠为可读失败（不再击穿安装流程），协程取消照常传播。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.19"
-    },
-    {
-      "versionName": "1.5.18",
-      "versionCode": 198,
-      "tag": "v1.5.18",
-      "date": "2026-11-01",
-      "title": "v1.5.18 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "batch3 casts pumps logging",
-          "notes": [
-            "修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度",
-            "修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲",
-            "工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断"
-          ]
-        }
-      ],
-      "markdown": "- 修复看门狗 ActivityManager 不安全强转：极端 ROM 上 getSystemService 返回 null 时不再抛 ClassCastException，改为 Result.retry() 等待下次调度\n- 修复 MCP stderr 泄放线程 BufferedReader 未显式关闭：对齐主 reader 的 #453 收尾口径，多次重连会话不再累积字符缓冲\n- 工具 schema 清洗回退空对象时不再静默：限次日志留痕（首 3 次 + 之后每 50 条），工具调用能力被降级时可诊断",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.18"
     }
   ]
 }
