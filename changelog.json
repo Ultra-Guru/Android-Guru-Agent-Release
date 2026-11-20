@@ -1,27 +1,83 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-20T16:12:21Z",
+  "generatedAt": "2026-11-20T16:30:27Z",
   "latest": {
-    "versionName": "1.5.69",
-    "versionCode": 249,
-    "tag": "v1.5.69",
+    "versionName": "1.5.70",
+    "versionCode": 250,
+    "tag": "v1.5.70",
     "date": "2026-11-20",
-    "title": "v1.5.69 更新内容",
+    "title": "v1.5.70 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "issue 817 stream calltimeout",
+        "title": "issue 825 truncator hot update",
         "notes": [
-          "修复：流式对话被 120 秒绝对墙钟掐断（#817）——callTimeout 的真实语义是「call 创建 → 响应体关闭」的绝对墙钟（覆盖响应体读取），此前作用于共享 OkHttpClient 把 SSE 流总时长硬性钉死在 requestTimeoutMs（默认 120s），推理型模型长输出中途报废",
-          "chatStream 改走 callTimeout=0 的流式派生 client（共享连接池）；非流式 chat() 保留原 callTimeout 作为单次请求硬上限，流式活性由 readTimeout 逐包保障"
+          "修复：工具输出截断预算热更新失效（#825）——toolTruncator 冻结于引擎构造期的 maxToolOutputLength，设置页 patchConfig/updateConfig 热更新后截断阈值静默失效，深潜任务回灌的输出预算与设置页显示值脱节",
+          "预算变更时整体换 ToolOutputTruncator 实例（head/tail 收敛在构造期完成，不可中途改字段），updateConfig 与 patchConfig 两条配置路径均接上 syncTruncatorBudget"
+        ]
+      },
+      {
+        "title": "app surface 824 852 777",
+        "notes": [
+          "安全：删除零引用的监控级敏感权限 QUERY_ALL_PACKAGES 与 PACKAGE_USAGE_STATS（#824）——「声而不用」是侧载扫描红旗 + Play 政策硬伤；未来按需用 `<queries>` 精确声明",
+          "修复：备份功能文案如实化（#852）——BackupBundle 实际只含设置键 + 可选金库信封，双语 UI 不再声称「包含聊天历史」（聊天历史走聊天页单独导出通道），消除换机场景被 UI 误导后的确定性数据丢失",
+          "a11y：插件卸载与队列取消两处 IconButton 触控目标 28dp → 48dp（#777，项目 UI-012 红线），图标视觉尺寸不变"
+        ]
+      },
+      {
+        "title": "build ci chores 788 787 794 804 797",
+        "notes": [
+          "构建：gradle-wrapper 增加 distributionSha256Sum（#788）——工具链分发包下载后先验 SHA-256，供应链投毒/损坏包直接拒绝",
+          "构建：app 的 androidTest 依赖改走 version catalog 别名（#787），不再硬编码版本绕过目录",
+          "CI：mirror-to-gitee 触发与 2026-10-06 触发去重政策对齐（#794）——push 收敛到 main、tag 收敛到 v*，PR 分支推送不再全量镜像",
+          "CI：media-results 仪表化测试按被测面加 paths 过滤（#804）——文档/徽章/changelog 类 PR 不再烧 60 分钟 emulator 槽位",
+          "清理：删除仓库根过期的 audit-report.md（#797）——一次性审计产物，所报红灯已不成立"
         ]
       }
     ],
-    "markdown": "- 修复：流式对话被 120 秒绝对墙钟掐断（#817）——callTimeout 的真实语义是「call 创建 → 响应体关闭」的绝对墙钟（覆盖响应体读取），此前作用于共享 OkHttpClient 把 SSE 流总时长硬性钉死在 requestTimeoutMs（默认 120s），推理型模型长输出中途报废\n- chatStream 改走 callTimeout=0 的流式派生 client（共享连接池）；非流式 chat() 保留原 callTimeout 作为单次请求硬上限，流式活性由 readTimeout 逐包保障",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.69"
+    "markdown": "- 修复：工具输出截断预算热更新失效（#825）——toolTruncator 冻结于引擎构造期的 maxToolOutputLength，设置页 patchConfig/updateConfig 热更新后截断阈值静默失效，深潜任务回灌的输出预算与设置页显示值脱节\n- 预算变更时整体换 ToolOutputTruncator 实例（head/tail 收敛在构造期完成，不可中途改字段），updateConfig 与 patchConfig 两条配置路径均接上 syncTruncatorBudget\n\n---\n\n- 安全：删除零引用的监控级敏感权限 QUERY_ALL_PACKAGES 与 PACKAGE_USAGE_STATS（#824）——「声而不用」是侧载扫描红旗 + Play 政策硬伤；未来按需用 `<queries>` 精确声明\n- 修复：备份功能文案如实化（#852）——BackupBundle 实际只含设置键 + 可选金库信封，双语 UI 不再声称「包含聊天历史」（聊天历史走聊天页单独导出通道），消除换机场景被 UI 误导后的确定性数据丢失\n- a11y：插件卸载与队列取消两处 IconButton 触控目标 28dp → 48dp（#777，项目 UI-012 红线），图标视觉尺寸不变\n\n---\n\n- 构建：gradle-wrapper 增加 distributionSha256Sum（#788）——工具链分发包下载后先验 SHA-256，供应链投毒/损坏包直接拒绝\n- 构建：app 的 androidTest 依赖改走 version catalog 别名（#787），不再硬编码版本绕过目录\n- CI：mirror-to-gitee 触发与 2026-10-06 触发去重政策对齐（#794）——push 收敛到 main、tag 收敛到 v*，PR 分支推送不再全量镜像\n- CI：media-results 仪表化测试按被测面加 paths 过滤（#804）——文档/徽章/changelog 类 PR 不再烧 60 分钟 emulator 槽位\n- 清理：删除仓库根过期的 audit-report.md（#797）——一次性审计产物，所报红灯已不成立",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.70"
   },
   "history": [
+    {
+      "versionName": "1.5.70",
+      "versionCode": 250,
+      "tag": "v1.5.70",
+      "date": "2026-11-20",
+      "title": "v1.5.70 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "issue 825 truncator hot update",
+          "notes": [
+            "修复：工具输出截断预算热更新失效（#825）——toolTruncator 冻结于引擎构造期的 maxToolOutputLength，设置页 patchConfig/updateConfig 热更新后截断阈值静默失效，深潜任务回灌的输出预算与设置页显示值脱节",
+            "预算变更时整体换 ToolOutputTruncator 实例（head/tail 收敛在构造期完成，不可中途改字段），updateConfig 与 patchConfig 两条配置路径均接上 syncTruncatorBudget"
+          ]
+        },
+        {
+          "title": "app surface 824 852 777",
+          "notes": [
+            "安全：删除零引用的监控级敏感权限 QUERY_ALL_PACKAGES 与 PACKAGE_USAGE_STATS（#824）——「声而不用」是侧载扫描红旗 + Play 政策硬伤；未来按需用 `<queries>` 精确声明",
+            "修复：备份功能文案如实化（#852）——BackupBundle 实际只含设置键 + 可选金库信封，双语 UI 不再声称「包含聊天历史」（聊天历史走聊天页单独导出通道），消除换机场景被 UI 误导后的确定性数据丢失",
+            "a11y：插件卸载与队列取消两处 IconButton 触控目标 28dp → 48dp（#777，项目 UI-012 红线），图标视觉尺寸不变"
+          ]
+        },
+        {
+          "title": "build ci chores 788 787 794 804 797",
+          "notes": [
+            "构建：gradle-wrapper 增加 distributionSha256Sum（#788）——工具链分发包下载后先验 SHA-256，供应链投毒/损坏包直接拒绝",
+            "构建：app 的 androidTest 依赖改走 version catalog 别名（#787），不再硬编码版本绕过目录",
+            "CI：mirror-to-gitee 触发与 2026-10-06 触发去重政策对齐（#794）——push 收敛到 main、tag 收敛到 v*，PR 分支推送不再全量镜像",
+            "CI：media-results 仪表化测试按被测面加 paths 过滤（#804）——文档/徽章/changelog 类 PR 不再烧 60 分钟 emulator 槽位",
+            "清理：删除仓库根过期的 audit-report.md（#797）——一次性审计产物，所报红灯已不成立"
+          ]
+        }
+      ],
+      "markdown": "- 修复：工具输出截断预算热更新失效（#825）——toolTruncator 冻结于引擎构造期的 maxToolOutputLength，设置页 patchConfig/updateConfig 热更新后截断阈值静默失效，深潜任务回灌的输出预算与设置页显示值脱节\n- 预算变更时整体换 ToolOutputTruncator 实例（head/tail 收敛在构造期完成，不可中途改字段），updateConfig 与 patchConfig 两条配置路径均接上 syncTruncatorBudget\n\n---\n\n- 安全：删除零引用的监控级敏感权限 QUERY_ALL_PACKAGES 与 PACKAGE_USAGE_STATS（#824）——「声而不用」是侧载扫描红旗 + Play 政策硬伤；未来按需用 `<queries>` 精确声明\n- 修复：备份功能文案如实化（#852）——BackupBundle 实际只含设置键 + 可选金库信封，双语 UI 不再声称「包含聊天历史」（聊天历史走聊天页单独导出通道），消除换机场景被 UI 误导后的确定性数据丢失\n- a11y：插件卸载与队列取消两处 IconButton 触控目标 28dp → 48dp（#777，项目 UI-012 红线），图标视觉尺寸不变\n\n---\n\n- 构建：gradle-wrapper 增加 distributionSha256Sum（#788）——工具链分发包下载后先验 SHA-256，供应链投毒/损坏包直接拒绝\n- 构建：app 的 androidTest 依赖改走 version catalog 别名（#787），不再硬编码版本绕过目录\n- CI：mirror-to-gitee 触发与 2026-10-06 触发去重政策对齐（#794）——push 收敛到 main、tag 收敛到 v*，PR 分支推送不再全量镜像\n- CI：media-results 仪表化测试按被测面加 paths 过滤（#804）——文档/徽章/changelog 类 PR 不再烧 60 分钟 emulator 槽位\n- 清理：删除仓库根过期的 audit-report.md（#797）——一次性审计产物，所报红灯已不成立",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.70"
+    },
     {
       "versionName": "1.5.69",
       "versionCode": 249,
@@ -1323,38 +1379,6 @@
       ],
       "markdown": "- 代码页「展开」工具台激活态标识：GitHub 已连 / 工具聚合激活 / 小圆环有开关 / 功能聚合计数实时点亮菜单项尾点与按钮泛光，收起后也能一眼看到有工具在生效\n- 网络搜索 SearXNG 通道状态可见：菜单副标题随本地服务状态机实时变化（运行中/安装启动中/失败可重试），启用时反馈条指路设置中心进度页",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.21"
-    },
-    {
-      "versionName": "1.5.20",
-      "versionCode": 200,
-      "tag": "v1.5.20",
-      "date": "2026-11-01",
-      "title": "v1.5.20 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "batch8 redactor traceability",
-          "notes": [
-            "敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循"
-          ]
-        },
-        {
-          "title": "修复文件选择与拍照结果",
-          "notes": [
-            "文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。",
-            "拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。"
-          ]
-        },
-        {
-          "title": "修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的…",
-          "notes": [
-            "修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的…"
-          ]
-        }
-      ],
-      "markdown": "- 敏感参数脱敏器失败路径补留痕：redact 异常折叠为原样返回的防御契约不变，但 AppLogger.warn 留痕（runCatching 包裹）——脱敏静默失效不再无迹可循\n\n---\n\n# 修复文件选择与拍照结果\n\n- 文件选择等待系统返回真实 URI，不再把启动选择器误报为用户取消。\n- 拍照通过受限路径与 content URI 交付输出，只有相机确认且图片有效才报告成功。\n\n---\n\n修复模型设置卡在同一服务商被外部编辑后，陈旧的 Base URL / API Key 在离开页面或防抖保存时覆盖新配置的问题。真实输入的草稿按字段保留，切换服务商不会串写凭证。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.20"
     }
   ]
 }
