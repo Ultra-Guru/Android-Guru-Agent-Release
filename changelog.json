@@ -1,27 +1,53 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-21T13:22:49Z",
+  "generatedAt": "2026-11-21T13:43:48Z",
   "latest": {
-    "versionName": "1.5.79",
-    "versionCode": 259,
-    "tag": "v1.5.79",
+    "versionName": "1.5.80",
+    "versionCode": 260,
+    "tag": "v1.5.80",
     "date": "2026-11-21",
-    "title": "v1.5.79 更新内容",
+    "title": "v1.5.80 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "chip send visibility",
+        "title": "ssh sftp filesystem",
         "notes": [
-          "fix(code): 修复「选择后发送不显示在对话」—— 单 chip 发送的时间轴用户气泡改显示「「技能名」 + 附加文本」（多 chip 管线同款口径），不再显示路由展开后的机器提示词（\"用户触发了快捷指令: /skill:xxx 请根据此指令执行…\"）；徒手敲的斜杠命令同样显示原始命令文本",
-          "fix(code): 斜杠路由回执（🧩 激活 Skill / MCP 未连接门控提示）双写时间轴（injectSystem）——此前只写不被渲染的遗留 messages 列表，用户完全看不见，MCP 未连接时表现为「点了没反应」"
+          "SSH/SFTP 远程文件系统（Operit §4.7 对标缺项补齐）：新增 RemoteSshFilesystem（SSHJ 0.38.0 纯 JVM 客户端），13 个操作覆盖 ping/read/write/append/list/stat/exists/mkdir/remove/move/copy/disconnect/fingerprint",
+          "二进制安全：读写全走 SFTP RemoteFile 字节通道（无 shell、无 base64 往返）；按 SshTarget 缓存 SSHClient，同一目标复用一条 TCP/SSH 连接",
+          "主机密钥安全默认：未知 host 拒绝（防 MITM），先 fingerprint 拿 SHA-256 指纹展示给用户，确认后一次性放行或持久信任",
+          "新增 TerminalSshFsTool：JSON-Schema 化 13 个 action + 结构化错误码（与 TerminalFsTool 同款 subaction 设计）",
+          "DI 接线：TerminalModule 提供 KnownHostsStore + RemoteSshFilesystem；ToolModule 经独立 helper 注册（SRP 预算规避）"
         ]
       }
     ],
-    "markdown": "- fix(code): 修复「选择后发送不显示在对话」—— 单 chip 发送的时间轴用户气泡改显示「「技能名」 + 附加文本」（多 chip 管线同款口径），不再显示路由展开后的机器提示词（\"用户触发了快捷指令: /skill:xxx 请根据此指令执行…\"）；徒手敲的斜杠命令同样显示原始命令文本\n- fix(code): 斜杠路由回执（🧩 激活 Skill / MCP 未连接门控提示）双写时间轴（injectSystem）——此前只写不被渲染的遗留 messages 列表，用户完全看不见，MCP 未连接时表现为「点了没反应」",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.79"
+    "markdown": "- SSH/SFTP 远程文件系统（Operit §4.7 对标缺项补齐）：新增 RemoteSshFilesystem（SSHJ 0.38.0 纯 JVM 客户端），13 个操作覆盖 ping/read/write/append/list/stat/exists/mkdir/remove/move/copy/disconnect/fingerprint\n- 二进制安全：读写全走 SFTP RemoteFile 字节通道（无 shell、无 base64 往返）；按 SshTarget 缓存 SSHClient，同一目标复用一条 TCP/SSH 连接\n- 主机密钥安全默认：未知 host 拒绝（防 MITM），先 fingerprint 拿 SHA-256 指纹展示给用户，确认后一次性放行或持久信任\n- 新增 TerminalSshFsTool：JSON-Schema 化 13 个 action + 结构化错误码（与 TerminalFsTool 同款 subaction 设计）\n- DI 接线：TerminalModule 提供 KnownHostsStore + RemoteSshFilesystem；ToolModule 经独立 helper 注册（SRP 预算规避）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.80"
   },
   "history": [
+    {
+      "versionName": "1.5.80",
+      "versionCode": 260,
+      "tag": "v1.5.80",
+      "date": "2026-11-21",
+      "title": "v1.5.80 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "ssh sftp filesystem",
+          "notes": [
+            "SSH/SFTP 远程文件系统（Operit §4.7 对标缺项补齐）：新增 RemoteSshFilesystem（SSHJ 0.38.0 纯 JVM 客户端），13 个操作覆盖 ping/read/write/append/list/stat/exists/mkdir/remove/move/copy/disconnect/fingerprint",
+            "二进制安全：读写全走 SFTP RemoteFile 字节通道（无 shell、无 base64 往返）；按 SshTarget 缓存 SSHClient，同一目标复用一条 TCP/SSH 连接",
+            "主机密钥安全默认：未知 host 拒绝（防 MITM），先 fingerprint 拿 SHA-256 指纹展示给用户，确认后一次性放行或持久信任",
+            "新增 TerminalSshFsTool：JSON-Schema 化 13 个 action + 结构化错误码（与 TerminalFsTool 同款 subaction 设计）",
+            "DI 接线：TerminalModule 提供 KnownHostsStore + RemoteSshFilesystem；ToolModule 经独立 helper 注册（SRP 预算规避）"
+          ]
+        }
+      ],
+      "markdown": "- SSH/SFTP 远程文件系统（Operit §4.7 对标缺项补齐）：新增 RemoteSshFilesystem（SSHJ 0.38.0 纯 JVM 客户端），13 个操作覆盖 ping/read/write/append/list/stat/exists/mkdir/remove/move/copy/disconnect/fingerprint\n- 二进制安全：读写全走 SFTP RemoteFile 字节通道（无 shell、无 base64 往返）；按 SshTarget 缓存 SSHClient，同一目标复用一条 TCP/SSH 连接\n- 主机密钥安全默认：未知 host 拒绝（防 MITM），先 fingerprint 拿 SHA-256 指纹展示给用户，确认后一次性放行或持久信任\n- 新增 TerminalSshFsTool：JSON-Schema 化 13 个 action + 结构化错误码（与 TerminalFsTool 同款 subaction 设计）\n- DI 接线：TerminalModule 提供 KnownHostsStore + RemoteSshFilesystem；ToolModule 经独立 helper 注册（SRP 预算规避）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.80"
+    },
     {
       "versionName": "1.5.79",
       "versionCode": 259,
@@ -1293,28 +1319,6 @@
       ],
       "markdown": "- 市场完全重构 PR-B：三生态适配器接入统一扩展闸门 —— **OpenCode**（npm/本地 .ts/.js/github → PRoot Ubuntu 沙箱扩展目录，注册元数据）、**Claude**（name@marketplace 真读 marketplace.json 定位实体仓库 → zip 下载防穿越解压 → 复用 ClaudePluginImporter 全套映射 → FusionBundle + 资源技能，纯 android 域零 rootfs 依赖）、**DSH**（DeepSeek Harness：dsh-* npm 前缀强制 / github 源 → 沙箱安装 + dsh plugin add 语义模拟 profile.json）\n- Node 系安装器基座（NodeInstallPort 端口 + NodeFamilyInstaller）：ExecEngine + ProotCommandSpawner 同款接线（与 REA 命令链同 rootfs/home/能力门/PAT 语义）；**白名单命令构造**（npm 包名/仓库形态校验，用户输入永不进 shell 串）；tmp → 同父 rename 原子发布，失败零残留\n- **锁文件**（lock.json）：ExtensionSync 安装成功即钉版；后续 sync 源指纹 ≠ 锁 → 版本漂移默认跳过并如实报告（防 Agent 后续会话悄悄换版本），update=true 才重钉；ExtensionUninstall 联动清锁\n- ExtensionDoctor 增强：ubuntu 域 node/npm 就绪探针 + sync 锁计数；ExtensionInstall/Uninstall/Sync 输出同步域信息\n- 旧入口内部转接：SkillInstall 非侵入改走统一闸门（账本/锁同源，id/schema/输出格式对模型零变化）；McpConnect 保持不动 —— 连接语义（#344 重连闭环）与安装职责不重叠，强行转接破坏重连语义\n\n---\n\n- README v3 美化方案 spec：四阶段改造 —— R1 数据治理（readme_facts.py 单一事实源 + 占位符校验进 CI，清偿 8 处口径冲突与 5 个死链）/ R2 素材激活（96 秒宣传片 details 内嵌 + 基准卡前置 + 真机截图墙声明 + viro-pet GIF 激活）/ R3 结构重组（1408 行瘦身至 ≤900，210 行深水内容下沉 docs/，可组合能力矩阵，双语精简版入口）/ R4 视觉升级（banner 双主题变体 + 章节头 SVG 视觉系统 + 徽章 43→≤28 收敛）\n- 七个任务包实施分解（screenshots 包标注 device-required，唯一需仓库主人亲手采集项）\n- 系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（展示层独立零耦合）/ 系列来源背景",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.31"
-    },
-    {
-      "versionName": "1.5.30",
-      "versionCode": 210,
-      "tag": "v1.5.30",
-      "date": "2026-11-07",
-      "title": "v1.5.30 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "permission degradation ladder spec",
-          "notes": [
-            "权限诚实降级体系 spec：未授权 = 沿声明式降级阶梯（PrivilegeLadder 六域）走到最高可执行层级，走不到则以类型化错误如实告知（含修复指引）",
-            "四个缺口清偿：降级阶梯声明式化（现状散落在三处工具 if/else）/ 能力面统一（CapabilityReport 权限行 + 阶梯结论进 prompt 摘要）/ ShellRouter 选路归一（Detector 与 Manager 两套并行实现收敛，差异显式化为 FallbackPolicy）/ PrivilegeError 五码命名空间（对齐 TerminalError 惯例）",
-            "授权引导闭环：fixHint 单源话术（zh/en）+ 状态流回灌即刻刷新，模型不再反复撞墙",
-            "系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（与 T99 共享授权缓存的并行关系）/ 系列来源背景"
-          ]
-        }
-      ],
-      "markdown": "- 权限诚实降级体系 spec：未授权 = 沿声明式降级阶梯（PrivilegeLadder 六域）走到最高可执行层级，走不到则以类型化错误如实告知（含修复指引）\n- 四个缺口清偿：降级阶梯声明式化（现状散落在三处工具 if/else）/ 能力面统一（CapabilityReport 权限行 + 阶梯结论进 prompt 摘要）/ ShellRouter 选路归一（Detector 与 Manager 两套并行实现收敛，差异显式化为 FallbackPolicy）/ PrivilegeError 五码命名空间（对齐 TerminalError 惯例）\n- 授权引导闭环：fixHint 单源话术（zh/en）+ 状态流回灌即刻刷新，模型不再反复撞墙\n- 系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（与 T99 共享授权缓存的并行关系）/ 系列来源背景",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.30"
     }
   ]
 }
