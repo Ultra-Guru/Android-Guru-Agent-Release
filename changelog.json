@@ -1,43 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-21T14:05:27Z",
+  "generatedAt": "2026-11-21T15:17:28Z",
   "latest": {
-    "versionName": "1.5.81",
-    "versionCode": 261,
-    "tag": "v1.5.81",
+    "versionName": "1.5.82",
+    "versionCode": 262,
+    "tag": "v1.5.82",
     "date": "2026-11-21",
-    "title": "v1.5.81 更新内容",
+    "title": "v1.5.82 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "ui fix",
+        "title": "patch update flow",
         "notes": [
-          "修复流式输出滚动到最底部时顶栏上下文圆环上下抖动的问题",
-          "修复上下文圆环百分比显示不真实：小比例不再显示0%、接近满圆正确显示100%，视觉弧长与数字一致",
-          "优化上下文圆环显示：修复外晕圆角被裁切、满圆端点缺口问题，浅色主题下辨识度提升"
-        ]
-      },
-      {
-        "title": "fix(P0): 流水式输出卡顿回归修复（事件唤醒缺失导致节拍异常）",
-        "notes": [
-          "空闲连击计数`idleStreak`没有在事件到达时重置",
-          "ticker从250ms深巡逻/50ms巡逻档被唤醒后，下一拍`nextDelayMs()`仍返回巡逻延迟",
-          "导致事件到上屏延迟最高可达250ms，首token延迟增加10倍，帧间隔严重抖动，视觉上表现为明显卡顿和出字不连贯",
-          "**核心修复**：在事件唤醒逻辑中添加`renderTickerPolicy.wakeUp()`调用，事件到达时立即重置空闲计数，回到忙档基线25ms",
-          "**零侵入**：不改动自适应档位升降逻辑、不改动双皮肤（rikka链路零改动）、不破坏不丢字/断线安全契约",
-          "事件到上屏延迟：从最高250ms恢复到≤1拍（≤33ms）",
-          "首token延迟：与固定25ms对照组差异≤1拍",
-          "jank占比：恢复到v1.5.62修复后水平",
-          "单帧最长：≤33ms（16.7ms两倍以内）",
-          "不丢字/双皮肤/断线安全：全量保留既有行为"
+          "更新提醒「前往下载」改走应用内：发现新版本弹窗不再跳 GitHub 发布页，一键压栈进关于页（补丁的下载/合成/安装都在那里完成），与浮窗「查看」同款语义；无出口时保留浏览器兜底",
+          "「自动更新补丁」开关默认改为关闭（opt-in）：开启后启动静默检查新版本，命中即自动在后台下载增量补丁（应用级流水线 + 断点续传，签名预检/增量链可用性守卫，绝不自动下载全量包）",
+          "后台下载完成后补丁在关于页就绪展示，点「更新」拉起系统安装器完成补丁更新 —— 安装时机始终由用户主导；开关关闭时手动检查只查不下载（后台零流量）",
+          "双语开关文案与描述同步新语义（自动更新补丁 / Auto-update patches）"
         ]
       }
     ],
-    "markdown": "- 修复流式输出滚动到最底部时顶栏上下文圆环上下抖动的问题\n- 修复上下文圆环百分比显示不真实：小比例不再显示0%、接近满圆正确显示100%，视觉弧长与数字一致\n- 优化上下文圆环显示：修复外晕圆角被裁切、满圆端点缺口问题，浅色主题下辨识度提升\n\n---\n\n# fix(P0): 流水式输出卡顿回归修复（事件唤醒缺失导致节拍异常）\n\n## 修复问题\n修复issue #932 流水式输出「不丝滑/卡/慢」回归问题。\n\n## 根因定位\nP0级bug：`CodeViewModel.kt`事件处理分支中，事件到达时仅发送了`renderWakeSignal.trySend(Unit)`打断delay，**但缺失了`renderTickerPolicy.wakeUp()`调用**：\n- 空闲连击计数`idleStreak`没有在事件到达时重置\n- ticker从250ms深巡逻/50ms巡逻档被唤醒后，下一拍`nextDelayMs()`仍返回巡逻延迟\n- 导致事件到上屏延迟最高可达250ms，首token延迟增加10倍，帧间隔严重抖动，视觉上表现为明显卡顿和出字不连贯\n\n## 修改内容\n1. **核心修复**：在事件唤醒逻辑中添加`renderTickerPolicy.wakeUp()`调用，事件到达时立即重置空闲计数，回到忙档基线25ms\n2. **零侵入**：不改动自适应档位升降逻辑、不改动双皮肤（rikka链路零改动）、不破坏不丢字/断线安全契约\n\n## 验收指标预期恢复\n- 事件到上屏延迟：从最高250ms恢复到≤1拍（≤33ms）\n- 首token延迟：与固定25ms对照组差异≤1拍\n- jank占比：恢复到v1.5.62修复后水平\n- 单帧最长：≤33ms（16.7ms两倍以内）\n- 不丢字/双皮肤/断线安全：全量保留既有行为\n\n## 验证说明\n- 本修复为最小改动（仅新增1行代码）\n- 所有单元测试（RenderTickerPolicyTest等）预期全部通过\n- GitHub Actions CI门禁编译验证通过",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.81"
+    "markdown": "- 更新提醒「前往下载」改走应用内：发现新版本弹窗不再跳 GitHub 发布页，一键压栈进关于页（补丁的下载/合成/安装都在那里完成），与浮窗「查看」同款语义；无出口时保留浏览器兜底\n- 「自动更新补丁」开关默认改为关闭（opt-in）：开启后启动静默检查新版本，命中即自动在后台下载增量补丁（应用级流水线 + 断点续传，签名预检/增量链可用性守卫，绝不自动下载全量包）\n- 后台下载完成后补丁在关于页就绪展示，点「更新」拉起系统安装器完成补丁更新 —— 安装时机始终由用户主导；开关关闭时手动检查只查不下载（后台零流量）\n- 双语开关文案与描述同步新语义（自动更新补丁 / Auto-update patches）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.82"
   },
   "history": [
+    {
+      "versionName": "1.5.82",
+      "versionCode": 262,
+      "tag": "v1.5.82",
+      "date": "2026-11-21",
+      "title": "v1.5.82 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "patch update flow",
+          "notes": [
+            "更新提醒「前往下载」改走应用内：发现新版本弹窗不再跳 GitHub 发布页，一键压栈进关于页（补丁的下载/合成/安装都在那里完成），与浮窗「查看」同款语义；无出口时保留浏览器兜底",
+            "「自动更新补丁」开关默认改为关闭（opt-in）：开启后启动静默检查新版本，命中即自动在后台下载增量补丁（应用级流水线 + 断点续传，签名预检/增量链可用性守卫，绝不自动下载全量包）",
+            "后台下载完成后补丁在关于页就绪展示，点「更新」拉起系统安装器完成补丁更新 —— 安装时机始终由用户主导；开关关闭时手动检查只查不下载（后台零流量）",
+            "双语开关文案与描述同步新语义（自动更新补丁 / Auto-update patches）"
+          ]
+        }
+      ],
+      "markdown": "- 更新提醒「前往下载」改走应用内：发现新版本弹窗不再跳 GitHub 发布页，一键压栈进关于页（补丁的下载/合成/安装都在那里完成），与浮窗「查看」同款语义；无出口时保留浏览器兜底\n- 「自动更新补丁」开关默认改为关闭（opt-in）：开启后启动静默检查新版本，命中即自动在后台下载增量补丁（应用级流水线 + 断点续传，签名预检/增量链可用性守卫，绝不自动下载全量包）\n- 后台下载完成后补丁在关于页就绪展示，点「更新」拉起系统安装器完成补丁更新 —— 安装时机始终由用户主导；开关关闭时手动检查只查不下载（后台零流量）\n- 双语开关文案与描述同步新语义（自动更新补丁 / Auto-update patches）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.82"
+    },
     {
       "versionName": "1.5.81",
       "versionCode": 261,
@@ -1315,28 +1323,6 @@
       ],
       "markdown": "- 流水式输出UI 双选项命名（用户指定）：第一种「默认」= 经典胶囊时间轴、第二种「rikka思考方式UI」= Rikka 聊天式；开关改为双选项选择器，持久化旧档无缝兼容\n- LLM 重试十级精确阶梯（用户规格 1s/3s/5s/8s/13s/20s/30s/60s/120s/180s，确定性无抖动）：重试期间思考卡/加载卡标题从「思考中」切换为「重试中 · 第 N/10 次」，时间轴留「重试中」状态行；阶梯耗尽后最终失败折叠为极简文案（网络失败 / 模型调用失败）不抛原始错误\n- 上下文圆环口径修复：会话边界（清史/恢复）复位陈旧真实 usage、压缩后失效回跳值、PLAN/反思流不再污染圆环分子、分母随 Profile 切换热刷新、详情弹层与圆环分母同源 + 百分比钳制、小比例最小可见弧\n- 文件胶囊重设计（读/写/编三族）：图标井 = 语言官方品牌色 monogram（Kotlin 紫K / Python 蓝Py / TS 蓝TS 等 50+ 扩展名，未知回退族图标）、主体显示文件名、尾部行号范围（读取 L1-Ln，从输出行号前缀解析）与增删行徽标（写入 +N 绿 / 编辑 +N 绿 −M 红）、写入成功胶囊底覆盖浅绿\n- 流式代码窗行级浅色背景：新增行浅绿底 / 删除行浅红底 / 未变行无背景（与 diff 视图同语义）；展开/收束改 220ms/180ms 缓入缓出曲线（丝滑）\n- 任务失败结尾「继续完成」动作行：两种风格的错误卡尾部新增播放入口（重放本任务输入，与底部 ErrorBar 重试同语义）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.33"
-    },
-    {
-      "versionName": "1.5.32",
-      "versionCode": 212,
-      "tag": "v1.5.32",
-      "date": "2026-11-07",
-      "title": "v1.5.32 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "extension market wizard",
-          "notes": [
-            "市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨",
-            "**APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）",
-            "**extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）",
-            "配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）"
-          ]
-        }
-      ],
-      "markdown": "- 市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨\n- **APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）\n- **extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）\n- 配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.32"
     }
   ]
 }

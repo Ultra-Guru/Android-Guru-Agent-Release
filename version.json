@@ -1,35 +1,35 @@
 {
-  "versionName": "1.5.81",
-  "versionCode": 261,
-  "tag": "v1.5.81",
-  "publishedAt": "2026-11-21T14:21:31Z",
-  "releasePage": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.81",
+  "versionName": "1.5.82",
+  "versionCode": 262,
+  "tag": "v1.5.82",
+  "publishedAt": "2026-11-21T15:27:58Z",
+  "releasePage": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.82",
   "download": {
     "arm64": {
-      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.81/ApexAgent-v1.5.81-release-arm64-197965f1.apk",
-      "sizeBytes": 348304537,
-      "sha256": "186b575216501666bfc991753cf4a9554a620f2924a6fe6e07437f96628c3584"
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.82/ApexAgent-v1.5.82-release-arm64-a38b377f.apk",
+      "sizeBytes": 348305278,
+      "sha256": "dbe697578df93dba02293bf8459f1006fdbda8658cb1aee14941a3c1d0a8ccbe"
     },
     "universal": {
-      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.81/ApexAgent-v1.5.81-release-universal-197965f1.apk",
-      "sizeBytes": 963225990,
-      "sha256": "95c3effee6c943a33de35e7892216acaeaa604a79721718794674fcd1a69fc26"
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.82/ApexAgent-v1.5.82-release-universal-a38b377f.apk",
+      "sizeBytes": 963226738,
+      "sha256": "615793e9d42f2a9ee2f6ea8a85e4d06fc3fa78312223186e61e6e61415b99e58"
     }
   },
   "patch": {
     "arm64": {
-      "fromTag": "v1.5.80",
-      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.81/patch_arm64_v1.5.80_to_v1.5.81.vcdiff",
-      "sizeBytes": 10180055,
-      "sha256": "6934d8c5b2cc8e8fab88a2c3797c6d2484095d6f2a910da2666051fa8fc902d4"
+      "fromTag": "v1.5.81",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.82/patch_arm64_v1.5.81_to_v1.5.82.vcdiff",
+      "sizeBytes": 10146877,
+      "sha256": "f2a3fee3af9efce45ac75df3813d012dae2384e02adb90f54e3d72211e0ce3af"
     },
     "universal": {
-      "fromTag": "v1.5.80",
-      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.81/patch_universal_v1.5.80_to_v1.5.81.vcdiff",
-      "sizeBytes": 10201364,
-      "sha256": "8c7c475d86d9dca739a8db965efcc6ff3e87dd6e56fd445400f9825769f4b069"
+      "fromTag": "v1.5.81",
+      "url": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/download/v1.5.82/patch_universal_v1.5.81_to_v1.5.82.vcdiff",
+      "sizeBytes": 10162334,
+      "sha256": "6a3dd3b00467450f848346d99666580a92183584168cf1bf95357f5ffce606f4"
     }
   },
-  "commitSha": "197965f1a2ae36eac970d317547c77c1337f9fac",
+  "commitSha": "a38b377fe7b8949d75b4591187e34b8db8eca77a",
   "signingCertSha256": "bcb9dfdd9b2e197c90ab19fb80fa68fcbf9a9f180702d51b268069538303c913"
 }
