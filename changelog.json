@@ -1,30 +1,181 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-21T12:45:08Z",
+  "generatedAt": "2026-11-21T13:03:19Z",
   "latest": {
-    "versionName": "1.5.77",
-    "versionCode": 257,
-    "tag": "v1.5.77",
+    "versionName": "1.5.78",
+    "versionCode": 258,
+    "tag": "v1.5.78",
     "date": "2026-11-21",
-    "title": "v1.5.77 更新内容",
+    "title": "v1.5.78 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "mcp null toolname",
+        "title": "feat/spe p1 batch",
         "notes": [
-          "修复「MCP null」全链失效：部分网关把流式 tool_calls 的 function.name 发成 JSON null（或参数续块重复携带 null 名），kotlinx 的 JsonNull.content 会返回字面串 \"null\"，旧解析把它当真名透传 —— 模型明明调用的是有效 MCP 工具（如 McpGithubCreateIssue），引擎却收到 \"Tool 'null' not found (255 tools registered)\"，连环重试 20+ 次直至任务报废",
-          "三层同修：① 解析层（StreamingOpenAiClient 流式 + 非流式）tool_calls 的 id/name/arguments 改用 contentOrNull，JSON null 一律视为字段缺席（与 finish_reason 等既有防御同款）；② 累积器（StreamingToolCallAccumulator）拒收字面 \"null\" 名分片，参数续块不再反向覆盖首片的正确工具名；③ MCP 工具清单（McpClient.listTools）同源 JsonNull 陷阱修复，远端服务器把 name/description 序列化成 null 时不再注册出 \"MCP server/null\" 幽灵条目",
-          "空名 / \"null\" 名到达执行器时改发专项指引文案（明说「名称在传输中丢失，请原样重发一次完整调用」），替代旧的通用 \"Tool 'null' not found + 类别清单\"（该文案只会诱导模型继续换名硬猜）；普通未知工具 id 的相近建议文案保持不变",
-          "搜索通道提示语（ChatToolkitStore）displayName 空缺时不再插值出「MCP「null」」诱导模型幻觉调用",
-          "附回归测试：ToolCallJsonNullNameTest（SSE 伪造帧）/ StreamingToolCallAccumulatorNullGuardTest / DegenerateToolNameGuidanceTest"
+          "思考档位切线后立刻生效：四条逻辑线切换时整包重放档位/执行模式/自主级别/全局规则（设置 ULTRACODE → 切标准/织造/信使线 → 立刻读到同档），不再依赖下一次发送前刷新",
+          "流式回答渲染节拍自适应：忙时 16/25/33ms 按设备负载自动升降档；空闲降频巡逻（等待首 token 期间耗电显著降低，事件到达 ≤1 拍上屏）；完整档生成中切片不再每拍全量重扫",
+          "流式回合诊断中心可见：诊断页新增「最近流式回合」区（首 token 延迟 / 帧间隔 P95 / 帧解析与丢弃 / 收尾原因 / 用量来源），一键诊断报告同步携带",
+          "错误提示分类细化：内容被服务端过滤（content_filter）、首 token 超时、流停滞（只有心跳无数据）三种形态获得各自的一步指引文案，不再与「网络错误」混淆",
+          "回答被截断时错误条永远出现在最后一段正文之后（旧口径时序倒挂）；排队任务接力增加新回合守卫——手动发新消息时旧回合收尾不再自动触发接力",
+          "上下文仪表盘新增用量来源徽标：真实（服务端）/估算/未获取——统计帧缺失时明确告知，不再让用户质疑「已用 token 是假的」"
+        ]
+      },
+      {
+        "title": "plugin webview asset domain",
+        "notes": [
+          "安全修复（#818）：功能性插件 UI 页面彻底根除 WebView file:// 域 —— 静态资源改经 WebViewAssetLoader 以 https 资产域（appassets.androidplatform.net）映射回插件目录，allowFileAccess / allowFileAccessFromFileURLs 等四开关全关。旧实现页面 XHR 可读 App 私有目录任意文件（含明文 MCP Host token），市场零签名门槛下即完整攻击链",
+          "子资源请求全量拦截：非资产域请求（外链/任意 scheme）以 403 空响应阻断，不再透传网络栈 —— shouldOverrideUrlLoading 只拦导航管不住 XHR 的口子一并封死",
+          "MCP Host Bearer Token 迁入 EncryptedSharedPreferences（与金库/GitHub token 同款信封，fail-closed 纯内存降级）：明文 JSON 的 token 字段恒置空落盘，旧版明文残留启动时自动迁移并抹除；token 引导惰性异步（主线程零 Keystore 开销，对齐启动税治理方向）",
+          "插件目录 canonical 边界复核抽为 PluginUiAssetGuard 纯逻辑（入口 URL 构造 / 子资源解析 / 目录穿越与绝对段注入拒绝），新增 12 项 JVM 单元测试锁定契约"
+        ]
+      },
+      {
+        "title": "install apk off main thread",
+        "notes": [
+          "修复（#819 P0）：APK 安装的 cache 中转复制（arm64 约 50-117MB / universal 可达数百 MB）不再阻塞主线程 —— installApk 全链改挂起函数（IO 调度器执行复制），点击「立即安装」到拉起系统安装器全程 UI 流畅，彻底消除输入派发 ANR（本仓 AnrWatchdog 5s 阈值必命中的冻结源）",
+          "复制前空间预检：cache 剩余空间不足（文件体积 + 16MB 余量）直接跳过 cache 中转走 external-path 兜底，不再「复制中途 IOException 卡很久然后失败」",
+          "复制进度可见：UpdateCenter 新增安装拉起态（busy 防重入 + 0-100 进度流），关于页本地更新包常驻区顶部进度条、全量包就绪框与增量就绪框均展示复制百分比，按钮同步禁用防重入",
+          "每约 1MB 复制检查协程活性：页面退出/重复请求即时中止复制；协程取消不再被 runCatching 折叠成失败（CancellationException 单独重抛，取消传播不断链）"
+        ]
+      },
+      {
+        "title": "tmux multi session",
+        "notes": [
+          "Terminal 新增 tmux 多会话能力：`platform:terminal` 增 `TmuxSessionManager`（纯 JVM，shell-exec 接缝注入 guest `ExecEngine`/`ProotCommandSpawner`，rootfs 就绪即在 Ubuntu 内驱动 tmux，Android 专有/未就绪回落宿主，tmux 缺失 → 结构化 TmuxError 而非崩溃）、`TmuxSessionStore`（JSON 元数据持久化，Mutex + 原子 temp+rename + `.corrupt` 隔离）、`TmuxException`（类型化 TmuxError code/recoverable）",
+          "对 Agent 暴露六个 `core/tool-registry` 工具：`tmux_new_session`（幂等创建/复用命名会话）、`tmux_switch_session`（切换活动会话）、`tmux_list_sessions`（`tmux ls` 权威列表）、`tmux_send_keys`、`tmux_capture_pane`、`tmux_kill_session`；经纯 JVM 接缝 `TmuxSessionGateway` 解耦，`core/tool-registry` 对 `platform:terminal` **零 Kotlin import**（守 TERMINAL_SDK_BOUNDARY.md 毕业前提）",
+          "诚实存活契约：登记 ≠ 存活，`tmux ls` 为唯一权威（对齐 TERMUX_CAPABILITY_MATRIX §10.4 PRoot tmux-server 生命周期）",
+          "补齐 Operit 对标缺口 docs/terminal/operit-rikkahub-comparison.md §4.7（Operit 有 tmux 多会话而 apex 缺失）"
+        ]
+      },
+      {
+        "title": "tmux multi session",
+        "notes": [
+          "fix(tmux): `TmuxSessionManager` 会话列表改用 `tmux ls` 默认输出格式解析（`name: N windows (created X) (attached)`，畸形行跳过、attached 后缀可选、created 非数字诚实置 null），修复假接缝按默认格式回放时制表符解析器恒空导致的 list/switch/send/capture/kill 系列单测红叉",
+          "fix(tmux): createSession 不传 workingDirectory 误报 InvalidInput（sanitizeDir 空值双义混淆）+ listSessions 忽略 ensureTmuxAvailable 错误载荷两处回归修复"
+        ]
+      },
+      {
+        "title": "feat/aga self introspection",
+        "notes": [
+          "Coding 会话「Active Workspace」段新增工作区工程纪律：绝对路径口径 / environment 显式传递 / CodeRepoMap→CodeGrep→CodeRead 改前三级跳 / 改后回验（与既有方言与文件策略段去重）",
+          "Agent.md 新增「六、根目录布局地图」：core/platform/terminal/plugin 各层边界与 kit 兄弟库接入方式（模块数以 settings.gradle.kts 实数校正）"
+        ]
+      },
+      {
+        "title": "feat/aga self introspection",
+        "notes": [
+          "系统提示新增本轮激活能力清单（Active Extensions）：一行式列出已激活技能 / 已展开工具（含已连接服务并入）/ 当前思考档位（AUTO 附决策理由摘要）",
+          "500 token 预算内按声明序截断（Thinking 行永不截）；未知状态整行省略不编造；空清单整段省略，旧提示词逐字节不变"
+        ]
+      },
+      {
+        "title": "feat/aga self introspection",
+        "notes": [
+          "新增 Prompt 段级观测与全量输入包转储：PromptSectionList 列出本轮提示词段/token 估算/真值源，PromptDump 按 current/last 导出完整输入包（脱敏默认开启，可选原子落盘 + 审计留痕）",
+          "深潜线引擎每次组装系统提示词即产出结构化 PromptSnapshot 快照（段/回合/工具/token 估算四线同构形态）；默认无钩子注册时提示词逐字节不变",
+          "段级钩子 SPI（PromptStageHook：Replace/Append/DropTurns 预算内变异，异常防御式降级为 Pass）为后续上下文治理与激活清单注入提供通道"
+        ]
+      },
+      {
+        "title": "feat/aga self introspection",
+        "notes": [
+          "新增 ContextPolicyGet / ContextPolicySet：白名单九档（3/5/8/10/15/20/30/50/100，保留层数与压缩阈值成对绑定），逐次确认后写入设置、下轮生效；非法档位返回列全允许值的可操作错误",
+          "压缩门接入档位（实时读取，coerceAtMost 引擎窗口防越窗覆写）；压缩前抢救保护无关闭开关，SYSTEM 段永不裁"
         ]
       }
     ],
-    "markdown": "- 修复「MCP null」全链失效：部分网关把流式 tool_calls 的 function.name 发成 JSON null（或参数续块重复携带 null 名），kotlinx 的 JsonNull.content 会返回字面串 \"null\"，旧解析把它当真名透传 —— 模型明明调用的是有效 MCP 工具（如 McpGithubCreateIssue），引擎却收到 \"Tool 'null' not found (255 tools registered)\"，连环重试 20+ 次直至任务报废\n- 三层同修：① 解析层（StreamingOpenAiClient 流式 + 非流式）tool_calls 的 id/name/arguments 改用 contentOrNull，JSON null 一律视为字段缺席（与 finish_reason 等既有防御同款）；② 累积器（StreamingToolCallAccumulator）拒收字面 \"null\" 名分片，参数续块不再反向覆盖首片的正确工具名；③ MCP 工具清单（McpClient.listTools）同源 JsonNull 陷阱修复，远端服务器把 name/description 序列化成 null 时不再注册出 \"MCP server/null\" 幽灵条目\n- 空名 / \"null\" 名到达执行器时改发专项指引文案（明说「名称在传输中丢失，请原样重发一次完整调用」），替代旧的通用 \"Tool 'null' not found + 类别清单\"（该文案只会诱导模型继续换名硬猜）；普通未知工具 id 的相近建议文案保持不变\n- 搜索通道提示语（ChatToolkitStore）displayName 空缺时不再插值出「MCP「null」」诱导模型幻觉调用\n- 附回归测试：ToolCallJsonNullNameTest（SSE 伪造帧）/ StreamingToolCallAccumulatorNullGuardTest / DegenerateToolNameGuidanceTest",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.77"
+    "markdown": "- 思考档位切线后立刻生效：四条逻辑线切换时整包重放档位/执行模式/自主级别/全局规则（设置 ULTRACODE → 切标准/织造/信使线 → 立刻读到同档），不再依赖下一次发送前刷新\n- 流式回答渲染节拍自适应：忙时 16/25/33ms 按设备负载自动升降档；空闲降频巡逻（等待首 token 期间耗电显著降低，事件到达 ≤1 拍上屏）；完整档生成中切片不再每拍全量重扫\n- 流式回合诊断中心可见：诊断页新增「最近流式回合」区（首 token 延迟 / 帧间隔 P95 / 帧解析与丢弃 / 收尾原因 / 用量来源），一键诊断报告同步携带\n- 错误提示分类细化：内容被服务端过滤（content_filter）、首 token 超时、流停滞（只有心跳无数据）三种形态获得各自的一步指引文案，不再与「网络错误」混淆\n- 回答被截断时错误条永远出现在最后一段正文之后（旧口径时序倒挂）；排队任务接力增加新回合守卫——手动发新消息时旧回合收尾不再自动触发接力\n- 上下文仪表盘新增用量来源徽标：真实（服务端）/估算/未获取——统计帧缺失时明确告知，不再让用户质疑「已用 token 是假的」\n\n---\n\n- 安全修复（#818）：功能性插件 UI 页面彻底根除 WebView file:// 域 —— 静态资源改经 WebViewAssetLoader 以 https 资产域（appassets.androidplatform.net）映射回插件目录，allowFileAccess / allowFileAccessFromFileURLs 等四开关全关。旧实现页面 XHR 可读 App 私有目录任意文件（含明文 MCP Host token），市场零签名门槛下即完整攻击链\n- 子资源请求全量拦截：非资产域请求（外链/任意 scheme）以 403 空响应阻断，不再透传网络栈 —— shouldOverrideUrlLoading 只拦导航管不住 XHR 的口子一并封死\n- MCP Host Bearer Token 迁入 EncryptedSharedPreferences（与金库/GitHub token 同款信封，fail-closed 纯内存降级）：明文 JSON 的 token 字段恒置空落盘，旧版明文残留启动时自动迁移并抹除；token 引导惰性异步（主线程零 Keystore 开销，对齐启动税治理方向）\n- 插件目录 canonical 边界复核抽为 PluginUiAssetGuard 纯逻辑（入口 URL 构造 / 子资源解析 / 目录穿越与绝对段注入拒绝），新增 12 项 JVM 单元测试锁定契约\n\n---\n\n- 修复（#819 P0）：APK 安装的 cache 中转复制（arm64 约 50-117MB / universal 可达数百 MB）不再阻塞主线程 —— installApk 全链改挂起函数（IO 调度器执行复制），点击「立即安装」到拉起系统安装器全程 UI 流畅，彻底消除输入派发 ANR（本仓 AnrWatchdog 5s 阈值必命中的冻结源）\n- 复制前空间预检：cache 剩余空间不足（文件体积 + 16MB 余量）直接跳过 cache 中转走 external-path 兜底，不再「复制中途 IOException 卡很久然后失败」\n- 复制进度可见：UpdateCenter 新增安装拉起态（busy 防重入 + 0-100 进度流），关于页本地更新包常驻区顶部进度条、全量包就绪框与增量就绪框均展示复制百分比，按钮同步禁用防重入\n- 每约 1MB 复制检查协程活性：页面退出/重复请求即时中止复制；协程取消不再被 runCatching 折叠成失败（CancellationException 单独重抛，取消传播不断链）\n\n---\n\n- Terminal 新增 tmux 多会话能力：`platform:terminal` 增 `TmuxSessionManager`（纯 JVM，shell-exec 接缝注入 guest `ExecEngine`/`ProotCommandSpawner`，rootfs 就绪即在 Ubuntu 内驱动 tmux，Android 专有/未就绪回落宿主，tmux 缺失 → 结构化 TmuxError 而非崩溃）、`TmuxSessionStore`（JSON 元数据持久化，Mutex + 原子 temp+rename + `.corrupt` 隔离）、`TmuxException`（类型化 TmuxError code/recoverable）\n- 对 Agent 暴露六个 `core/tool-registry` 工具：`tmux_new_session`（幂等创建/复用命名会话）、`tmux_switch_session`（切换活动会话）、`tmux_list_sessions`（`tmux ls` 权威列表）、`tmux_send_keys`、`tmux_capture_pane`、`tmux_kill_session`；经纯 JVM 接缝 `TmuxSessionGateway` 解耦，`core/tool-registry` 对 `platform:terminal` **零 Kotlin import**（守 TERMINAL_SDK_BOUNDARY.md 毕业前提）\n- 诚实存活契约：登记 ≠ 存活，`tmux ls` 为唯一权威（对齐 TERMUX_CAPABILITY_MATRIX §10.4 PRoot tmux-server 生命周期）\n- 补齐 Operit 对标缺口 docs/terminal/operit-rikkahub-comparison.md §4.7（Operit 有 tmux 多会话而 apex 缺失）\n\n---\n\n- fix(tmux): `TmuxSessionManager` 会话列表改用 `tmux ls` 默认输出格式解析（`name: N windows (created X) (attached)`，畸形行跳过、attached 后缀可选、created 非数字诚实置 null），修复假接缝按默认格式回放时制表符解析器恒空导致的 list/switch/send/capture/kill 系列单测红叉\n- fix(tmux): createSession 不传 workingDirectory 误报 InvalidInput（sanitizeDir 空值双义混淆）+ listSessions 忽略 ensureTmuxAvailable 错误载荷两处回归修复\n\n---\n\n- Coding 会话「Active Workspace」段新增工作区工程纪律：绝对路径口径 / environment 显式传递 / CodeRepoMap→CodeGrep→CodeRead 改前三级跳 / 改后回验（与既有方言与文件策略段去重）\n- Agent.md 新增「六、根目录布局地图」：core/platform/terminal/plugin 各层边界与 kit 兄弟库接入方式（模块数以 settings.gradle.kts 实数校正）\n\n---\n\n- 系统提示新增本轮激活能力清单（Active Extensions）：一行式列出已激活技能 / 已展开工具（含已连接服务并入）/ 当前思考档位（AUTO 附决策理由摘要）\n- 500 token 预算内按声明序截断（Thinking 行永不截）；未知状态整行省略不编造；空清单整段省略，旧提示词逐字节不变\n\n---\n\n- 新增 Prompt 段级观测与全量输入包转储：PromptSectionList 列出本轮提示词段/token 估算/真值源，PromptDump 按 current/last 导出完整输入包（脱敏默认开启，可选原子落盘 + 审计留痕）\n- 深潜线引擎每次组装系统提示词即产出结构化 PromptSnapshot 快照（段/回合/工具/token 估算四线同构形态）；默认无钩子注册时提示词逐字节不变\n- 段级钩子 SPI（PromptStageHook：Replace/Append/DropTurns 预算内变异，异常防御式降级为 Pass）为后续上下文治理与激活清单注入提供通道\n\n---\n\n- 新增 ContextPolicyGet / ContextPolicySet：白名单九档（3/5/8/10/15/20/30/50/100，保留层数与压缩阈值成对绑定），逐次确认后写入设置、下轮生效；非法档位返回列全允许值的可操作错误\n- 压缩门接入档位（实时读取，coerceAtMost 引擎窗口防越窗覆写）；压缩前抢救保护无关闭开关，SYSTEM 段永不裁",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.78"
   },
   "history": [
+    {
+      "versionName": "1.5.78",
+      "versionCode": 258,
+      "tag": "v1.5.78",
+      "date": "2026-11-21",
+      "title": "v1.5.78 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "feat/spe p1 batch",
+          "notes": [
+            "思考档位切线后立刻生效：四条逻辑线切换时整包重放档位/执行模式/自主级别/全局规则（设置 ULTRACODE → 切标准/织造/信使线 → 立刻读到同档），不再依赖下一次发送前刷新",
+            "流式回答渲染节拍自适应：忙时 16/25/33ms 按设备负载自动升降档；空闲降频巡逻（等待首 token 期间耗电显著降低，事件到达 ≤1 拍上屏）；完整档生成中切片不再每拍全量重扫",
+            "流式回合诊断中心可见：诊断页新增「最近流式回合」区（首 token 延迟 / 帧间隔 P95 / 帧解析与丢弃 / 收尾原因 / 用量来源），一键诊断报告同步携带",
+            "错误提示分类细化：内容被服务端过滤（content_filter）、首 token 超时、流停滞（只有心跳无数据）三种形态获得各自的一步指引文案，不再与「网络错误」混淆",
+            "回答被截断时错误条永远出现在最后一段正文之后（旧口径时序倒挂）；排队任务接力增加新回合守卫——手动发新消息时旧回合收尾不再自动触发接力",
+            "上下文仪表盘新增用量来源徽标：真实（服务端）/估算/未获取——统计帧缺失时明确告知，不再让用户质疑「已用 token 是假的」"
+          ]
+        },
+        {
+          "title": "plugin webview asset domain",
+          "notes": [
+            "安全修复（#818）：功能性插件 UI 页面彻底根除 WebView file:// 域 —— 静态资源改经 WebViewAssetLoader 以 https 资产域（appassets.androidplatform.net）映射回插件目录，allowFileAccess / allowFileAccessFromFileURLs 等四开关全关。旧实现页面 XHR 可读 App 私有目录任意文件（含明文 MCP Host token），市场零签名门槛下即完整攻击链",
+            "子资源请求全量拦截：非资产域请求（外链/任意 scheme）以 403 空响应阻断，不再透传网络栈 —— shouldOverrideUrlLoading 只拦导航管不住 XHR 的口子一并封死",
+            "MCP Host Bearer Token 迁入 EncryptedSharedPreferences（与金库/GitHub token 同款信封，fail-closed 纯内存降级）：明文 JSON 的 token 字段恒置空落盘，旧版明文残留启动时自动迁移并抹除；token 引导惰性异步（主线程零 Keystore 开销，对齐启动税治理方向）",
+            "插件目录 canonical 边界复核抽为 PluginUiAssetGuard 纯逻辑（入口 URL 构造 / 子资源解析 / 目录穿越与绝对段注入拒绝），新增 12 项 JVM 单元测试锁定契约"
+          ]
+        },
+        {
+          "title": "install apk off main thread",
+          "notes": [
+            "修复（#819 P0）：APK 安装的 cache 中转复制（arm64 约 50-117MB / universal 可达数百 MB）不再阻塞主线程 —— installApk 全链改挂起函数（IO 调度器执行复制），点击「立即安装」到拉起系统安装器全程 UI 流畅，彻底消除输入派发 ANR（本仓 AnrWatchdog 5s 阈值必命中的冻结源）",
+            "复制前空间预检：cache 剩余空间不足（文件体积 + 16MB 余量）直接跳过 cache 中转走 external-path 兜底，不再「复制中途 IOException 卡很久然后失败」",
+            "复制进度可见：UpdateCenter 新增安装拉起态（busy 防重入 + 0-100 进度流），关于页本地更新包常驻区顶部进度条、全量包就绪框与增量就绪框均展示复制百分比，按钮同步禁用防重入",
+            "每约 1MB 复制检查协程活性：页面退出/重复请求即时中止复制；协程取消不再被 runCatching 折叠成失败（CancellationException 单独重抛，取消传播不断链）"
+          ]
+        },
+        {
+          "title": "tmux multi session",
+          "notes": [
+            "Terminal 新增 tmux 多会话能力：`platform:terminal` 增 `TmuxSessionManager`（纯 JVM，shell-exec 接缝注入 guest `ExecEngine`/`ProotCommandSpawner`，rootfs 就绪即在 Ubuntu 内驱动 tmux，Android 专有/未就绪回落宿主，tmux 缺失 → 结构化 TmuxError 而非崩溃）、`TmuxSessionStore`（JSON 元数据持久化，Mutex + 原子 temp+rename + `.corrupt` 隔离）、`TmuxException`（类型化 TmuxError code/recoverable）",
+            "对 Agent 暴露六个 `core/tool-registry` 工具：`tmux_new_session`（幂等创建/复用命名会话）、`tmux_switch_session`（切换活动会话）、`tmux_list_sessions`（`tmux ls` 权威列表）、`tmux_send_keys`、`tmux_capture_pane`、`tmux_kill_session`；经纯 JVM 接缝 `TmuxSessionGateway` 解耦，`core/tool-registry` 对 `platform:terminal` **零 Kotlin import**（守 TERMINAL_SDK_BOUNDARY.md 毕业前提）",
+            "诚实存活契约：登记 ≠ 存活，`tmux ls` 为唯一权威（对齐 TERMUX_CAPABILITY_MATRIX §10.4 PRoot tmux-server 生命周期）",
+            "补齐 Operit 对标缺口 docs/terminal/operit-rikkahub-comparison.md §4.7（Operit 有 tmux 多会话而 apex 缺失）"
+          ]
+        },
+        {
+          "title": "tmux multi session",
+          "notes": [
+            "fix(tmux): `TmuxSessionManager` 会话列表改用 `tmux ls` 默认输出格式解析（`name: N windows (created X) (attached)`，畸形行跳过、attached 后缀可选、created 非数字诚实置 null），修复假接缝按默认格式回放时制表符解析器恒空导致的 list/switch/send/capture/kill 系列单测红叉",
+            "fix(tmux): createSession 不传 workingDirectory 误报 InvalidInput（sanitizeDir 空值双义混淆）+ listSessions 忽略 ensureTmuxAvailable 错误载荷两处回归修复"
+          ]
+        },
+        {
+          "title": "feat/aga self introspection",
+          "notes": [
+            "Coding 会话「Active Workspace」段新增工作区工程纪律：绝对路径口径 / environment 显式传递 / CodeRepoMap→CodeGrep→CodeRead 改前三级跳 / 改后回验（与既有方言与文件策略段去重）",
+            "Agent.md 新增「六、根目录布局地图」：core/platform/terminal/plugin 各层边界与 kit 兄弟库接入方式（模块数以 settings.gradle.kts 实数校正）"
+          ]
+        },
+        {
+          "title": "feat/aga self introspection",
+          "notes": [
+            "系统提示新增本轮激活能力清单（Active Extensions）：一行式列出已激活技能 / 已展开工具（含已连接服务并入）/ 当前思考档位（AUTO 附决策理由摘要）",
+            "500 token 预算内按声明序截断（Thinking 行永不截）；未知状态整行省略不编造；空清单整段省略，旧提示词逐字节不变"
+          ]
+        },
+        {
+          "title": "feat/aga self introspection",
+          "notes": [
+            "新增 Prompt 段级观测与全量输入包转储：PromptSectionList 列出本轮提示词段/token 估算/真值源，PromptDump 按 current/last 导出完整输入包（脱敏默认开启，可选原子落盘 + 审计留痕）",
+            "深潜线引擎每次组装系统提示词即产出结构化 PromptSnapshot 快照（段/回合/工具/token 估算四线同构形态）；默认无钩子注册时提示词逐字节不变",
+            "段级钩子 SPI（PromptStageHook：Replace/Append/DropTurns 预算内变异，异常防御式降级为 Pass）为后续上下文治理与激活清单注入提供通道"
+          ]
+        },
+        {
+          "title": "feat/aga self introspection",
+          "notes": [
+            "新增 ContextPolicyGet / ContextPolicySet：白名单九档（3/5/8/10/15/20/30/50/100，保留层数与压缩阈值成对绑定），逐次确认后写入设置、下轮生效；非法档位返回列全允许值的可操作错误",
+            "压缩门接入档位（实时读取，coerceAtMost 引擎窗口防越窗覆写）；压缩前抢救保护无关闭开关，SYSTEM 段永不裁"
+          ]
+        }
+      ],
+      "markdown": "- 思考档位切线后立刻生效：四条逻辑线切换时整包重放档位/执行模式/自主级别/全局规则（设置 ULTRACODE → 切标准/织造/信使线 → 立刻读到同档），不再依赖下一次发送前刷新\n- 流式回答渲染节拍自适应：忙时 16/25/33ms 按设备负载自动升降档；空闲降频巡逻（等待首 token 期间耗电显著降低，事件到达 ≤1 拍上屏）；完整档生成中切片不再每拍全量重扫\n- 流式回合诊断中心可见：诊断页新增「最近流式回合」区（首 token 延迟 / 帧间隔 P95 / 帧解析与丢弃 / 收尾原因 / 用量来源），一键诊断报告同步携带\n- 错误提示分类细化：内容被服务端过滤（content_filter）、首 token 超时、流停滞（只有心跳无数据）三种形态获得各自的一步指引文案，不再与「网络错误」混淆\n- 回答被截断时错误条永远出现在最后一段正文之后（旧口径时序倒挂）；排队任务接力增加新回合守卫——手动发新消息时旧回合收尾不再自动触发接力\n- 上下文仪表盘新增用量来源徽标：真实（服务端）/估算/未获取——统计帧缺失时明确告知，不再让用户质疑「已用 token 是假的」\n\n---\n\n- 安全修复（#818）：功能性插件 UI 页面彻底根除 WebView file:// 域 —— 静态资源改经 WebViewAssetLoader 以 https 资产域（appassets.androidplatform.net）映射回插件目录，allowFileAccess / allowFileAccessFromFileURLs 等四开关全关。旧实现页面 XHR 可读 App 私有目录任意文件（含明文 MCP Host token），市场零签名门槛下即完整攻击链\n- 子资源请求全量拦截：非资产域请求（外链/任意 scheme）以 403 空响应阻断，不再透传网络栈 —— shouldOverrideUrlLoading 只拦导航管不住 XHR 的口子一并封死\n- MCP Host Bearer Token 迁入 EncryptedSharedPreferences（与金库/GitHub token 同款信封，fail-closed 纯内存降级）：明文 JSON 的 token 字段恒置空落盘，旧版明文残留启动时自动迁移并抹除；token 引导惰性异步（主线程零 Keystore 开销，对齐启动税治理方向）\n- 插件目录 canonical 边界复核抽为 PluginUiAssetGuard 纯逻辑（入口 URL 构造 / 子资源解析 / 目录穿越与绝对段注入拒绝），新增 12 项 JVM 单元测试锁定契约\n\n---\n\n- 修复（#819 P0）：APK 安装的 cache 中转复制（arm64 约 50-117MB / universal 可达数百 MB）不再阻塞主线程 —— installApk 全链改挂起函数（IO 调度器执行复制），点击「立即安装」到拉起系统安装器全程 UI 流畅，彻底消除输入派发 ANR（本仓 AnrWatchdog 5s 阈值必命中的冻结源）\n- 复制前空间预检：cache 剩余空间不足（文件体积 + 16MB 余量）直接跳过 cache 中转走 external-path 兜底，不再「复制中途 IOException 卡很久然后失败」\n- 复制进度可见：UpdateCenter 新增安装拉起态（busy 防重入 + 0-100 进度流），关于页本地更新包常驻区顶部进度条、全量包就绪框与增量就绪框均展示复制百分比，按钮同步禁用防重入\n- 每约 1MB 复制检查协程活性：页面退出/重复请求即时中止复制；协程取消不再被 runCatching 折叠成失败（CancellationException 单独重抛，取消传播不断链）\n\n---\n\n- Terminal 新增 tmux 多会话能力：`platform:terminal` 增 `TmuxSessionManager`（纯 JVM，shell-exec 接缝注入 guest `ExecEngine`/`ProotCommandSpawner`，rootfs 就绪即在 Ubuntu 内驱动 tmux，Android 专有/未就绪回落宿主，tmux 缺失 → 结构化 TmuxError 而非崩溃）、`TmuxSessionStore`（JSON 元数据持久化，Mutex + 原子 temp+rename + `.corrupt` 隔离）、`TmuxException`（类型化 TmuxError code/recoverable）\n- 对 Agent 暴露六个 `core/tool-registry` 工具：`tmux_new_session`（幂等创建/复用命名会话）、`tmux_switch_session`（切换活动会话）、`tmux_list_sessions`（`tmux ls` 权威列表）、`tmux_send_keys`、`tmux_capture_pane`、`tmux_kill_session`；经纯 JVM 接缝 `TmuxSessionGateway` 解耦，`core/tool-registry` 对 `platform:terminal` **零 Kotlin import**（守 TERMINAL_SDK_BOUNDARY.md 毕业前提）\n- 诚实存活契约：登记 ≠ 存活，`tmux ls` 为唯一权威（对齐 TERMUX_CAPABILITY_MATRIX §10.4 PRoot tmux-server 生命周期）\n- 补齐 Operit 对标缺口 docs/terminal/operit-rikkahub-comparison.md §4.7（Operit 有 tmux 多会话而 apex 缺失）\n\n---\n\n- fix(tmux): `TmuxSessionManager` 会话列表改用 `tmux ls` 默认输出格式解析（`name: N windows (created X) (attached)`，畸形行跳过、attached 后缀可选、created 非数字诚实置 null），修复假接缝按默认格式回放时制表符解析器恒空导致的 list/switch/send/capture/kill 系列单测红叉\n- fix(tmux): createSession 不传 workingDirectory 误报 InvalidInput（sanitizeDir 空值双义混淆）+ listSessions 忽略 ensureTmuxAvailable 错误载荷两处回归修复\n\n---\n\n- Coding 会话「Active Workspace」段新增工作区工程纪律：绝对路径口径 / environment 显式传递 / CodeRepoMap→CodeGrep→CodeRead 改前三级跳 / 改后回验（与既有方言与文件策略段去重）\n- Agent.md 新增「六、根目录布局地图」：core/platform/terminal/plugin 各层边界与 kit 兄弟库接入方式（模块数以 settings.gradle.kts 实数校正）\n\n---\n\n- 系统提示新增本轮激活能力清单（Active Extensions）：一行式列出已激活技能 / 已展开工具（含已连接服务并入）/ 当前思考档位（AUTO 附决策理由摘要）\n- 500 token 预算内按声明序截断（Thinking 行永不截）；未知状态整行省略不编造；空清单整段省略，旧提示词逐字节不变\n\n---\n\n- 新增 Prompt 段级观测与全量输入包转储：PromptSectionList 列出本轮提示词段/token 估算/真值源，PromptDump 按 current/last 导出完整输入包（脱敏默认开启，可选原子落盘 + 审计留痕）\n- 深潜线引擎每次组装系统提示词即产出结构化 PromptSnapshot 快照（段/回合/工具/token 估算四线同构形态）；默认无钩子注册时提示词逐字节不变\n- 段级钩子 SPI（PromptStageHook：Replace/Append/DropTurns 预算内变异，异常防御式降级为 Pass）为后续上下文治理与激活清单注入提供通道\n\n---\n\n- 新增 ContextPolicyGet / ContextPolicySet：白名单九档（3/5/8/10/15/20/30/50/100，保留层数与压缩阈值成对绑定），逐次确认后写入设置、下轮生效；非法档位返回列全允许值的可操作错误\n- 压缩门接入档位（实时读取，coerceAtMost 引擎窗口防越窗覆写）；压缩前抢救保护无关闭开关，SYSTEM 段永不裁",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.78"
+    },
     {
       "versionName": "1.5.77",
       "versionCode": 257,
@@ -1230,54 +1381,6 @@
       ],
       "markdown": "- **BrowserTask 流水任务卡**：任务执行期间步级进度（▶ 开始/✓ 完成/✗ 失败/⏸ 检查点）实时流入输出时间轴，最终结果一次性折叠返回——模型往返 N→1 之外，人也能实时看任务推进",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.29"
-    },
-    {
-      "versionName": "1.5.28",
-      "versionCode": 208,
-      "tag": "v1.5.28",
-      "date": "2026-11-07",
-      "title": "v1.5.28 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "search tool capsule",
-          "notes": [
-            "网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）",
-            "搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感",
-            "收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）",
-            "详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块"
-          ]
-        },
-        {
-          "title": "terminal chroot maturity t99 spec",
-          "notes": [
-            "T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活",
-            "六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6"
-          ]
-        },
-        {
-          "title": "agent task packages spec",
-          "notes": [
-            "Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）",
-            "分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）",
-            "反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）"
-          ]
-        },
-        {
-          "title": "glasslab darkbar liquid swipe",
-          "notes": [
-            "玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水",
-            "唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变",
-            "药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原",
-            "全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）",
-            "双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）",
-            "Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化"
-          ]
-        }
-      ],
-      "markdown": "- 网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）\n- 搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感\n- 收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）\n- 详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块\n\n---\n\n- T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活\n- 六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6\n\n---\n\n- Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）\n- 分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）\n- 反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）\n\n---\n\n- 玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水\n- 唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变\n- 药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原\n- 全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）\n- 双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）\n- Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.28"
     }
   ]
 }
