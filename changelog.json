@@ -1,30 +1,79 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-21T13:43:48Z",
+  "generatedAt": "2026-11-21T14:05:27Z",
   "latest": {
-    "versionName": "1.5.80",
-    "versionCode": 260,
-    "tag": "v1.5.80",
+    "versionName": "1.5.81",
+    "versionCode": 261,
+    "tag": "v1.5.81",
     "date": "2026-11-21",
-    "title": "v1.5.80 更新内容",
+    "title": "v1.5.81 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "ssh sftp filesystem",
+        "title": "ui fix",
         "notes": [
-          "SSH/SFTP 远程文件系统（Operit §4.7 对标缺项补齐）：新增 RemoteSshFilesystem（SSHJ 0.38.0 纯 JVM 客户端），13 个操作覆盖 ping/read/write/append/list/stat/exists/mkdir/remove/move/copy/disconnect/fingerprint",
-          "二进制安全：读写全走 SFTP RemoteFile 字节通道（无 shell、无 base64 往返）；按 SshTarget 缓存 SSHClient，同一目标复用一条 TCP/SSH 连接",
-          "主机密钥安全默认：未知 host 拒绝（防 MITM），先 fingerprint 拿 SHA-256 指纹展示给用户，确认后一次性放行或持久信任",
-          "新增 TerminalSshFsTool：JSON-Schema 化 13 个 action + 结构化错误码（与 TerminalFsTool 同款 subaction 设计）",
-          "DI 接线：TerminalModule 提供 KnownHostsStore + RemoteSshFilesystem；ToolModule 经独立 helper 注册（SRP 预算规避）"
+          "修复流式输出滚动到最底部时顶栏上下文圆环上下抖动的问题",
+          "修复上下文圆环百分比显示不真实：小比例不再显示0%、接近满圆正确显示100%，视觉弧长与数字一致",
+          "优化上下文圆环显示：修复外晕圆角被裁切、满圆端点缺口问题，浅色主题下辨识度提升"
+        ]
+      },
+      {
+        "title": "fix(P0): 流水式输出卡顿回归修复（事件唤醒缺失导致节拍异常）",
+        "notes": [
+          "空闲连击计数`idleStreak`没有在事件到达时重置",
+          "ticker从250ms深巡逻/50ms巡逻档被唤醒后，下一拍`nextDelayMs()`仍返回巡逻延迟",
+          "导致事件到上屏延迟最高可达250ms，首token延迟增加10倍，帧间隔严重抖动，视觉上表现为明显卡顿和出字不连贯",
+          "**核心修复**：在事件唤醒逻辑中添加`renderTickerPolicy.wakeUp()`调用，事件到达时立即重置空闲计数，回到忙档基线25ms",
+          "**零侵入**：不改动自适应档位升降逻辑、不改动双皮肤（rikka链路零改动）、不破坏不丢字/断线安全契约",
+          "事件到上屏延迟：从最高250ms恢复到≤1拍（≤33ms）",
+          "首token延迟：与固定25ms对照组差异≤1拍",
+          "jank占比：恢复到v1.5.62修复后水平",
+          "单帧最长：≤33ms（16.7ms两倍以内）",
+          "不丢字/双皮肤/断线安全：全量保留既有行为"
         ]
       }
     ],
-    "markdown": "- SSH/SFTP 远程文件系统（Operit §4.7 对标缺项补齐）：新增 RemoteSshFilesystem（SSHJ 0.38.0 纯 JVM 客户端），13 个操作覆盖 ping/read/write/append/list/stat/exists/mkdir/remove/move/copy/disconnect/fingerprint\n- 二进制安全：读写全走 SFTP RemoteFile 字节通道（无 shell、无 base64 往返）；按 SshTarget 缓存 SSHClient，同一目标复用一条 TCP/SSH 连接\n- 主机密钥安全默认：未知 host 拒绝（防 MITM），先 fingerprint 拿 SHA-256 指纹展示给用户，确认后一次性放行或持久信任\n- 新增 TerminalSshFsTool：JSON-Schema 化 13 个 action + 结构化错误码（与 TerminalFsTool 同款 subaction 设计）\n- DI 接线：TerminalModule 提供 KnownHostsStore + RemoteSshFilesystem；ToolModule 经独立 helper 注册（SRP 预算规避）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.80"
+    "markdown": "- 修复流式输出滚动到最底部时顶栏上下文圆环上下抖动的问题\n- 修复上下文圆环百分比显示不真实：小比例不再显示0%、接近满圆正确显示100%，视觉弧长与数字一致\n- 优化上下文圆环显示：修复外晕圆角被裁切、满圆端点缺口问题，浅色主题下辨识度提升\n\n---\n\n# fix(P0): 流水式输出卡顿回归修复（事件唤醒缺失导致节拍异常）\n\n## 修复问题\n修复issue #932 流水式输出「不丝滑/卡/慢」回归问题。\n\n## 根因定位\nP0级bug：`CodeViewModel.kt`事件处理分支中，事件到达时仅发送了`renderWakeSignal.trySend(Unit)`打断delay，**但缺失了`renderTickerPolicy.wakeUp()`调用**：\n- 空闲连击计数`idleStreak`没有在事件到达时重置\n- ticker从250ms深巡逻/50ms巡逻档被唤醒后，下一拍`nextDelayMs()`仍返回巡逻延迟\n- 导致事件到上屏延迟最高可达250ms，首token延迟增加10倍，帧间隔严重抖动，视觉上表现为明显卡顿和出字不连贯\n\n## 修改内容\n1. **核心修复**：在事件唤醒逻辑中添加`renderTickerPolicy.wakeUp()`调用，事件到达时立即重置空闲计数，回到忙档基线25ms\n2. **零侵入**：不改动自适应档位升降逻辑、不改动双皮肤（rikka链路零改动）、不破坏不丢字/断线安全契约\n\n## 验收指标预期恢复\n- 事件到上屏延迟：从最高250ms恢复到≤1拍（≤33ms）\n- 首token延迟：与固定25ms对照组差异≤1拍\n- jank占比：恢复到v1.5.62修复后水平\n- 单帧最长：≤33ms（16.7ms两倍以内）\n- 不丢字/双皮肤/断线安全：全量保留既有行为\n\n## 验证说明\n- 本修复为最小改动（仅新增1行代码）\n- 所有单元测试（RenderTickerPolicyTest等）预期全部通过\n- GitHub Actions CI门禁编译验证通过",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.81"
   },
   "history": [
+    {
+      "versionName": "1.5.81",
+      "versionCode": 261,
+      "tag": "v1.5.81",
+      "date": "2026-11-21",
+      "title": "v1.5.81 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "ui fix",
+          "notes": [
+            "修复流式输出滚动到最底部时顶栏上下文圆环上下抖动的问题",
+            "修复上下文圆环百分比显示不真实：小比例不再显示0%、接近满圆正确显示100%，视觉弧长与数字一致",
+            "优化上下文圆环显示：修复外晕圆角被裁切、满圆端点缺口问题，浅色主题下辨识度提升"
+          ]
+        },
+        {
+          "title": "fix(P0): 流水式输出卡顿回归修复（事件唤醒缺失导致节拍异常）",
+          "notes": [
+            "空闲连击计数`idleStreak`没有在事件到达时重置",
+            "ticker从250ms深巡逻/50ms巡逻档被唤醒后，下一拍`nextDelayMs()`仍返回巡逻延迟",
+            "导致事件到上屏延迟最高可达250ms，首token延迟增加10倍，帧间隔严重抖动，视觉上表现为明显卡顿和出字不连贯",
+            "**核心修复**：在事件唤醒逻辑中添加`renderTickerPolicy.wakeUp()`调用，事件到达时立即重置空闲计数，回到忙档基线25ms",
+            "**零侵入**：不改动自适应档位升降逻辑、不改动双皮肤（rikka链路零改动）、不破坏不丢字/断线安全契约",
+            "事件到上屏延迟：从最高250ms恢复到≤1拍（≤33ms）",
+            "首token延迟：与固定25ms对照组差异≤1拍",
+            "jank占比：恢复到v1.5.62修复后水平",
+            "单帧最长：≤33ms（16.7ms两倍以内）",
+            "不丢字/双皮肤/断线安全：全量保留既有行为"
+          ]
+        }
+      ],
+      "markdown": "- 修复流式输出滚动到最底部时顶栏上下文圆环上下抖动的问题\n- 修复上下文圆环百分比显示不真实：小比例不再显示0%、接近满圆正确显示100%，视觉弧长与数字一致\n- 优化上下文圆环显示：修复外晕圆角被裁切、满圆端点缺口问题，浅色主题下辨识度提升\n\n---\n\n# fix(P0): 流水式输出卡顿回归修复（事件唤醒缺失导致节拍异常）\n\n## 修复问题\n修复issue #932 流水式输出「不丝滑/卡/慢」回归问题。\n\n## 根因定位\nP0级bug：`CodeViewModel.kt`事件处理分支中，事件到达时仅发送了`renderWakeSignal.trySend(Unit)`打断delay，**但缺失了`renderTickerPolicy.wakeUp()`调用**：\n- 空闲连击计数`idleStreak`没有在事件到达时重置\n- ticker从250ms深巡逻/50ms巡逻档被唤醒后，下一拍`nextDelayMs()`仍返回巡逻延迟\n- 导致事件到上屏延迟最高可达250ms，首token延迟增加10倍，帧间隔严重抖动，视觉上表现为明显卡顿和出字不连贯\n\n## 修改内容\n1. **核心修复**：在事件唤醒逻辑中添加`renderTickerPolicy.wakeUp()`调用，事件到达时立即重置空闲计数，回到忙档基线25ms\n2. **零侵入**：不改动自适应档位升降逻辑、不改动双皮肤（rikka链路零改动）、不破坏不丢字/断线安全契约\n\n## 验收指标预期恢复\n- 事件到上屏延迟：从最高250ms恢复到≤1拍（≤33ms）\n- 首token延迟：与固定25ms对照组差异≤1拍\n- jank占比：恢复到v1.5.62修复后水平\n- 单帧最长：≤33ms（16.7ms两倍以内）\n- 不丢字/双皮肤/断线安全：全量保留既有行为\n\n## 验证说明\n- 本修复为最小改动（仅新增1行代码）\n- 所有单元测试（RenderTickerPolicyTest等）预期全部通过\n- GitHub Actions CI门禁编译验证通过",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.81"
+    },
     {
       "versionName": "1.5.80",
       "versionCode": 260,
@@ -1288,37 +1337,6 @@
       ],
       "markdown": "- 市场完全重构 PR-C 收官：**统一安装向导**上线聚合中心（「统一安装」入口）——粘贴任意 spec（npm / claude: / dsh: / mcp: / skill: / github: / apk:）→ resolve → inspect 预览（目标注册表/运行时域/权限/生命周期脚本）→ 确认安装，与 agent 侧 ExtensionResolve/Inspect/Install 三工具**同一闸门实例**（hash 门/确认门如实传递）；五页签旧安装流保留双轨\n- **APK 扩展包适配器**（type=apk_package）：与 npm 系安装完全隔离 —— 安装语义 = 发起系统 PackageInstaller 会话（用户在系统 UI 确认为第一道确认，闸门 confirm 为第二道）；装完插件宿主经 PLUGIN intent-service 自动发现 + 签名门校验；卸载诚实拒绝（系统级卸载不归闸门）\n- **extension-authoring 内置技能**（assets/skills 通道）：教 Agent 把脚本/配置/App 按目标生态包装成可安装产物（技能/带资源 Claude 包/MCP/OpenCode/功能插件/APK 六形态选择 + 通用纪律 + 交付口径）\n- 配套：ApkInstallPort 端口（app 层接 AndroidApkInstaller 会话安装器）、MarketViewModel 注入向导状态域（ExtensionWizardController，独立 StateFlow 同 hub/mcpSo 惯例）、i18n 两语言、APK 适配器 JVM 测试（路径校验/双重确认/卸载诚实拒绝）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.32"
-    },
-    {
-      "versionName": "1.5.31",
-      "versionCode": 211,
-      "tag": "v1.5.31",
-      "date": "2026-11-07",
-      "title": "v1.5.31 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "extension ecosystems",
-          "notes": [
-            "市场完全重构 PR-B：三生态适配器接入统一扩展闸门 —— **OpenCode**（npm/本地 .ts/.js/github → PRoot Ubuntu 沙箱扩展目录，注册元数据）、**Claude**（name@marketplace 真读 marketplace.json 定位实体仓库 → zip 下载防穿越解压 → 复用 ClaudePluginImporter 全套映射 → FusionBundle + 资源技能，纯 android 域零 rootfs 依赖）、**DSH**（DeepSeek Harness：dsh-* npm 前缀强制 / github 源 → 沙箱安装 + dsh plugin add 语义模拟 profile.json）",
-            "Node 系安装器基座（NodeInstallPort 端口 + NodeFamilyInstaller）：ExecEngine + ProotCommandSpawner 同款接线（与 REA 命令链同 rootfs/home/能力门/PAT 语义）；**白名单命令构造**（npm 包名/仓库形态校验，用户输入永不进 shell 串）；tmp → 同父 rename 原子发布，失败零残留",
-            "**锁文件**（lock.json）：ExtensionSync 安装成功即钉版；后续 sync 源指纹 ≠ 锁 → 版本漂移默认跳过并如实报告（防 Agent 后续会话悄悄换版本），update=true 才重钉；ExtensionUninstall 联动清锁",
-            "ExtensionDoctor 增强：ubuntu 域 node/npm 就绪探针 + sync 锁计数；ExtensionInstall/Uninstall/Sync 输出同步域信息",
-            "旧入口内部转接：SkillInstall 非侵入改走统一闸门（账本/锁同源，id/schema/输出格式对模型零变化）；McpConnect 保持不动 —— 连接语义（#344 重连闭环）与安装职责不重叠，强行转接破坏重连语义"
-          ]
-        },
-        {
-          "title": "readme v3 beautify spec",
-          "notes": [
-            "README v3 美化方案 spec：四阶段改造 —— R1 数据治理（readme_facts.py 单一事实源 + 占位符校验进 CI，清偿 8 处口径冲突与 5 个死链）/ R2 素材激活（96 秒宣传片 details 内嵌 + 基准卡前置 + 真机截图墙声明 + viro-pet GIF 激活）/ R3 结构重组（1408 行瘦身至 ≤900，210 行深水内容下沉 docs/，可组合能力矩阵，双语精简版入口）/ R4 视觉升级（banner 双主题变体 + 章节头 SVG 视觉系统 + 徽章 43→≤28 收敛）",
-            "七个任务包实施分解（screenshots 包标注 device-required，唯一需仓库主人亲手采集项）",
-            "系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（展示层独立零耦合）/ 系列来源背景"
-          ]
-        }
-      ],
-      "markdown": "- 市场完全重构 PR-B：三生态适配器接入统一扩展闸门 —— **OpenCode**（npm/本地 .ts/.js/github → PRoot Ubuntu 沙箱扩展目录，注册元数据）、**Claude**（name@marketplace 真读 marketplace.json 定位实体仓库 → zip 下载防穿越解压 → 复用 ClaudePluginImporter 全套映射 → FusionBundle + 资源技能，纯 android 域零 rootfs 依赖）、**DSH**（DeepSeek Harness：dsh-* npm 前缀强制 / github 源 → 沙箱安装 + dsh plugin add 语义模拟 profile.json）\n- Node 系安装器基座（NodeInstallPort 端口 + NodeFamilyInstaller）：ExecEngine + ProotCommandSpawner 同款接线（与 REA 命令链同 rootfs/home/能力门/PAT 语义）；**白名单命令构造**（npm 包名/仓库形态校验，用户输入永不进 shell 串）；tmp → 同父 rename 原子发布，失败零残留\n- **锁文件**（lock.json）：ExtensionSync 安装成功即钉版；后续 sync 源指纹 ≠ 锁 → 版本漂移默认跳过并如实报告（防 Agent 后续会话悄悄换版本），update=true 才重钉；ExtensionUninstall 联动清锁\n- ExtensionDoctor 增强：ubuntu 域 node/npm 就绪探针 + sync 锁计数；ExtensionInstall/Uninstall/Sync 输出同步域信息\n- 旧入口内部转接：SkillInstall 非侵入改走统一闸门（账本/锁同源，id/schema/输出格式对模型零变化）；McpConnect 保持不动 —— 连接语义（#344 重连闭环）与安装职责不重叠，强行转接破坏重连语义\n\n---\n\n- README v3 美化方案 spec：四阶段改造 —— R1 数据治理（readme_facts.py 单一事实源 + 占位符校验进 CI，清偿 8 处口径冲突与 5 个死链）/ R2 素材激活（96 秒宣传片 details 内嵌 + 基准卡前置 + 真机截图墙声明 + viro-pet GIF 激活）/ R3 结构重组（1408 行瘦身至 ≤900，210 行深水内容下沉 docs/，可组合能力矩阵，双语精简版入口）/ R4 视觉升级（banner 双主题变体 + 章节头 SVG 视觉系统 + 徽章 43→≤28 收敛）\n- 七个任务包实施分解（screenshots 包标注 device-required，唯一需仓库主人亲手采集项）\n- 系列导读块补充（文档前面）：四份姊妹 Spec 全景表 / 推荐阅读顺序（展示层独立零耦合）/ 系列来源背景",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.31"
     }
   ]
 }
