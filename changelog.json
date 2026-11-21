@@ -1,28 +1,35 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-21T08:29:29Z",
+  "generatedAt": "2026-11-21T10:34:43Z",
   "latest": {
-    "versionName": "1.5.74",
-    "versionCode": 254,
-    "tag": "v1.5.74",
+    "versionName": "1.5.75",
+    "versionCode": 255,
+    "tag": "v1.5.75",
     "date": "2026-11-21",
-    "title": "v1.5.74 更新内容",
-    "notes": [],
-    "images": [],
-    "pr": [
-      {
-        "title": "agent task orb",
-        "notes": [
-          "任务动效指示器：agent 回答期间输入栏左下角固定显示「霓虹魔法环」27 帧循环动效（PR#920 品牌标动效版，彗星绕环一圈即一轮任务脉动），任务结束随组合消失",
-          "素材加工：源 GIF 9 关键帧质心对齐 + 边缘羽化后插值为 27 帧（相邻关键帧线性混合，总时长与源动画一致，环版 1.27s/轮），帧资源 drawable-nodpi 224px 逐帧 1:1 解码",
-          "实现口径：帧序经 array 资源 R 常量引用（不走 getIdentifier 反射），位图在 Default 调度器异步解码（运行期驻留约 5MB，离场即释放）；描述文案双语言镜像"
-        ]
-      }
+    "title": "v1.5.75 更新内容",
+    "notes": [
+      "例行版本更新与稳定性改进。"
     ],
-    "markdown": "- 任务动效指示器：agent 回答期间输入栏左下角固定显示「霓虹魔法环」27 帧循环动效（PR#920 品牌标动效版，彗星绕环一圈即一轮任务脉动），任务结束随组合消失\n- 素材加工：源 GIF 9 关键帧质心对齐 + 边缘羽化后插值为 27 帧（相邻关键帧线性混合，总时长与源动画一致，环版 1.27s/轮），帧资源 drawable-nodpi 224px 逐帧 1:1 解码\n- 实现口径：帧序经 array 资源 R 常量引用（不走 getIdentifier 反射），位图在 Default 调度器异步解码（运行期驻留约 5MB，离场即释放）；描述文案双语言镜像",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.74"
+    "images": [],
+    "pr": [],
+    "markdown": "例行版本更新与稳定性改进。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.75"
   },
   "history": [
+    {
+      "versionName": "1.5.75",
+      "versionCode": 255,
+      "tag": "v1.5.75",
+      "date": "2026-11-21",
+      "title": "v1.5.75 更新内容",
+      "notes": [
+        "例行版本更新与稳定性改进。"
+      ],
+      "images": [],
+      "pr": [],
+      "markdown": "例行版本更新与稳定性改进。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.75"
+    },
     {
       "versionName": "1.5.74",
       "versionCode": 254,
@@ -1273,20 +1280,6 @@
       ],
       "markdown": "# Coding 流水输出：发送即显示助手占位\n\n- 发送消息后立即在流水时间轴插入助手等待位，首个正文 token 到达前显示呼吸状态；首字复用同一条目，不闪烁、不复制。\n- 纯工具调用或空回复收束时移除空位，失败与中止保留已生成正文。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.26"
-    },
-    {
-      "versionName": "1.5.25",
-      "versionCode": 205,
-      "tag": "v1.5.25",
-      "date": "2026-11-07",
-      "title": "v1.5.25 更新内容",
-      "notes": [
-        "例行版本更新与稳定性改进。"
-      ],
-      "images": [],
-      "pr": [],
-      "markdown": "例行版本更新与稳定性改进。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.25"
     }
   ]
 }
