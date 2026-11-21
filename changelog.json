@@ -1,28 +1,51 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-20T16:47:41Z",
+  "generatedAt": "2026-11-21T07:12:41Z",
   "latest": {
-    "versionName": "1.5.71",
-    "versionCode": 251,
-    "tag": "v1.5.71",
-    "date": "2026-11-20",
-    "title": "v1.5.71 更新内容",
+    "versionName": "1.5.72",
+    "versionCode": 252,
+    "tag": "v1.5.72",
+    "date": "2026-11-21",
+    "title": "v1.5.72 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "settings pr4 content consolidation",
+        "title": "launcher icon rebrand",
         "notes": [
-          "设置中心内容收口：全局压缩分区、全局限速分区统一迁入「system.diagnostics 诊断档案」，档案级与全局级不再混排一页；原页面保留「相关设置 →」跳转行，点击直达新挂载点。",
-          "模型配置导入对话框：导入中状态在旋转屏幕后不再丢失；非预期异常（IO 等）不再导致导入按钮永久卡死，兜底复位并可重试。",
-          "键值编辑器（P2 表单）：键名自动去首尾空格并按 RFC 7230 校验合法性，大小写重复键去重，空 value 拦截，错误提示就地展示。"
+          "主图标换新：Viro invader 像素吉祥物 → 霓虹环形钻石品牌标（双断环 + 中心圆盘 + 菱形，青→品红渐变）",
+          "Adaptive 图标：前景/monochrome 迁为位图（drawable-nodpi 432px），图案实测占比 54% 完整落在 66dp 安全区（61%），任何 launcher 形状裁切不伤外环；背景保持纯白",
+          "Monochrome 主题图标同步重绘为新品牌剪影（外环 4 断口 + 内环 2 断口 + 圆盘挖菱形孔），Android 13+ 着色图标不再残留旧吉祥物",
+          "Legacy 五密度（mdpi→xxxhdpi）launcher/round 全套重出：图案 72% 居中构图，round 预裁圆形"
         ]
       }
     ],
-    "markdown": "- 设置中心内容收口：全局压缩分区、全局限速分区统一迁入「system.diagnostics 诊断档案」，档案级与全局级不再混排一页；原页面保留「相关设置 →」跳转行，点击直达新挂载点。\n- 模型配置导入对话框：导入中状态在旋转屏幕后不再丢失；非预期异常（IO 等）不再导致导入按钮永久卡死，兜底复位并可重试。\n- 键值编辑器（P2 表单）：键名自动去首尾空格并按 RFC 7230 校验合法性，大小写重复键去重，空 value 拦截，错误提示就地展示。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.71"
+    "markdown": "- 主图标换新：Viro invader 像素吉祥物 → 霓虹环形钻石品牌标（双断环 + 中心圆盘 + 菱形，青→品红渐变）\n- Adaptive 图标：前景/monochrome 迁为位图（drawable-nodpi 432px），图案实测占比 54% 完整落在 66dp 安全区（61%），任何 launcher 形状裁切不伤外环；背景保持纯白\n- Monochrome 主题图标同步重绘为新品牌剪影（外环 4 断口 + 内环 2 断口 + 圆盘挖菱形孔），Android 13+ 着色图标不再残留旧吉祥物\n- Legacy 五密度（mdpi→xxxhdpi）launcher/round 全套重出：图案 72% 居中构图，round 预裁圆形",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.72"
   },
   "history": [
+    {
+      "versionName": "1.5.72",
+      "versionCode": 252,
+      "tag": "v1.5.72",
+      "date": "2026-11-21",
+      "title": "v1.5.72 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "launcher icon rebrand",
+          "notes": [
+            "主图标换新：Viro invader 像素吉祥物 → 霓虹环形钻石品牌标（双断环 + 中心圆盘 + 菱形，青→品红渐变）",
+            "Adaptive 图标：前景/monochrome 迁为位图（drawable-nodpi 432px），图案实测占比 54% 完整落在 66dp 安全区（61%），任何 launcher 形状裁切不伤外环；背景保持纯白",
+            "Monochrome 主题图标同步重绘为新品牌剪影（外环 4 断口 + 内环 2 断口 + 圆盘挖菱形孔），Android 13+ 着色图标不再残留旧吉祥物",
+            "Legacy 五密度（mdpi→xxxhdpi）launcher/round 全套重出：图案 72% 居中构图，round 预裁圆形"
+          ]
+        }
+      ],
+      "markdown": "- 主图标换新：Viro invader 像素吉祥物 → 霓虹环形钻石品牌标（双断环 + 中心圆盘 + 菱形，青→品红渐变）\n- Adaptive 图标：前景/monochrome 迁为位图（drawable-nodpi 432px），图案实测占比 54% 完整落在 66dp 安全区（61%），任何 launcher 形状裁切不伤外环；背景保持纯白\n- Monochrome 主题图标同步重绘为新品牌剪影（外环 4 断口 + 内环 2 断口 + 圆盘挖菱形孔），Android 13+ 着色图标不再残留旧吉祥物\n- Legacy 五密度（mdpi→xxxhdpi）launcher/round 全套重出：图案 72% 居中构图，round 预裁圆形",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.72"
+    },
     {
       "versionName": "1.5.71",
       "versionCode": 251,
@@ -1349,20 +1372,6 @@
       ],
       "markdown": "# 修复\n\n- ModelScope `listSkills` 文件归属改为单遍分桶：从 O(技能数 × 文件数) 降为 O(树大小)，嵌套/同前缀技能目录归属更准确（#354 ③）。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.23"
-    },
-    {
-      "versionName": "1.5.22",
-      "versionCode": 202,
-      "tag": "v1.5.22",
-      "date": "2026-11-01",
-      "title": "v1.5.22 更新内容",
-      "notes": [
-        "例行版本更新与稳定性改进。"
-      ],
-      "images": [],
-      "pr": [],
-      "markdown": "例行版本更新与稳定性改进。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.22"
     }
   ]
 }
