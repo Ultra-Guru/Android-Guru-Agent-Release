@@ -1,21 +1,53 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-21T10:52:49Z",
+  "generatedAt": "2026-11-21T12:45:08Z",
   "latest": {
-    "versionName": "1.5.76",
-    "versionCode": 256,
-    "tag": "v1.5.76",
+    "versionName": "1.5.77",
+    "versionCode": 257,
+    "tag": "v1.5.77",
     "date": "2026-11-21",
-    "title": "v1.5.76 更新内容",
-    "notes": [
-      "例行版本更新与稳定性改进。"
-    ],
+    "title": "v1.5.77 更新内容",
+    "notes": [],
     "images": [],
-    "pr": [],
-    "markdown": "例行版本更新与稳定性改进。",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.76"
+    "pr": [
+      {
+        "title": "mcp null toolname",
+        "notes": [
+          "修复「MCP null」全链失效：部分网关把流式 tool_calls 的 function.name 发成 JSON null（或参数续块重复携带 null 名），kotlinx 的 JsonNull.content 会返回字面串 \"null\"，旧解析把它当真名透传 —— 模型明明调用的是有效 MCP 工具（如 McpGithubCreateIssue），引擎却收到 \"Tool 'null' not found (255 tools registered)\"，连环重试 20+ 次直至任务报废",
+          "三层同修：① 解析层（StreamingOpenAiClient 流式 + 非流式）tool_calls 的 id/name/arguments 改用 contentOrNull，JSON null 一律视为字段缺席（与 finish_reason 等既有防御同款）；② 累积器（StreamingToolCallAccumulator）拒收字面 \"null\" 名分片，参数续块不再反向覆盖首片的正确工具名；③ MCP 工具清单（McpClient.listTools）同源 JsonNull 陷阱修复，远端服务器把 name/description 序列化成 null 时不再注册出 \"MCP server/null\" 幽灵条目",
+          "空名 / \"null\" 名到达执行器时改发专项指引文案（明说「名称在传输中丢失，请原样重发一次完整调用」），替代旧的通用 \"Tool 'null' not found + 类别清单\"（该文案只会诱导模型继续换名硬猜）；普通未知工具 id 的相近建议文案保持不变",
+          "搜索通道提示语（ChatToolkitStore）displayName 空缺时不再插值出「MCP「null」」诱导模型幻觉调用",
+          "附回归测试：ToolCallJsonNullNameTest（SSE 伪造帧）/ StreamingToolCallAccumulatorNullGuardTest / DegenerateToolNameGuidanceTest"
+        ]
+      }
+    ],
+    "markdown": "- 修复「MCP null」全链失效：部分网关把流式 tool_calls 的 function.name 发成 JSON null（或参数续块重复携带 null 名），kotlinx 的 JsonNull.content 会返回字面串 \"null\"，旧解析把它当真名透传 —— 模型明明调用的是有效 MCP 工具（如 McpGithubCreateIssue），引擎却收到 \"Tool 'null' not found (255 tools registered)\"，连环重试 20+ 次直至任务报废\n- 三层同修：① 解析层（StreamingOpenAiClient 流式 + 非流式）tool_calls 的 id/name/arguments 改用 contentOrNull，JSON null 一律视为字段缺席（与 finish_reason 等既有防御同款）；② 累积器（StreamingToolCallAccumulator）拒收字面 \"null\" 名分片，参数续块不再反向覆盖首片的正确工具名；③ MCP 工具清单（McpClient.listTools）同源 JsonNull 陷阱修复，远端服务器把 name/description 序列化成 null 时不再注册出 \"MCP server/null\" 幽灵条目\n- 空名 / \"null\" 名到达执行器时改发专项指引文案（明说「名称在传输中丢失，请原样重发一次完整调用」），替代旧的通用 \"Tool 'null' not found + 类别清单\"（该文案只会诱导模型继续换名硬猜）；普通未知工具 id 的相近建议文案保持不变\n- 搜索通道提示语（ChatToolkitStore）displayName 空缺时不再插值出「MCP「null」」诱导模型幻觉调用\n- 附回归测试：ToolCallJsonNullNameTest（SSE 伪造帧）/ StreamingToolCallAccumulatorNullGuardTest / DegenerateToolNameGuidanceTest",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.77"
   },
   "history": [
+    {
+      "versionName": "1.5.77",
+      "versionCode": 257,
+      "tag": "v1.5.77",
+      "date": "2026-11-21",
+      "title": "v1.5.77 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "mcp null toolname",
+          "notes": [
+            "修复「MCP null」全链失效：部分网关把流式 tool_calls 的 function.name 发成 JSON null（或参数续块重复携带 null 名），kotlinx 的 JsonNull.content 会返回字面串 \"null\"，旧解析把它当真名透传 —— 模型明明调用的是有效 MCP 工具（如 McpGithubCreateIssue），引擎却收到 \"Tool 'null' not found (255 tools registered)\"，连环重试 20+ 次直至任务报废",
+            "三层同修：① 解析层（StreamingOpenAiClient 流式 + 非流式）tool_calls 的 id/name/arguments 改用 contentOrNull，JSON null 一律视为字段缺席（与 finish_reason 等既有防御同款）；② 累积器（StreamingToolCallAccumulator）拒收字面 \"null\" 名分片，参数续块不再反向覆盖首片的正确工具名；③ MCP 工具清单（McpClient.listTools）同源 JsonNull 陷阱修复，远端服务器把 name/description 序列化成 null 时不再注册出 \"MCP server/null\" 幽灵条目",
+            "空名 / \"null\" 名到达执行器时改发专项指引文案（明说「名称在传输中丢失，请原样重发一次完整调用」），替代旧的通用 \"Tool 'null' not found + 类别清单\"（该文案只会诱导模型继续换名硬猜）；普通未知工具 id 的相近建议文案保持不变",
+            "搜索通道提示语（ChatToolkitStore）displayName 空缺时不再插值出「MCP「null」」诱导模型幻觉调用",
+            "附回归测试：ToolCallJsonNullNameTest（SSE 伪造帧）/ StreamingToolCallAccumulatorNullGuardTest / DegenerateToolNameGuidanceTest"
+          ]
+        }
+      ],
+      "markdown": "- 修复「MCP null」全链失效：部分网关把流式 tool_calls 的 function.name 发成 JSON null（或参数续块重复携带 null 名），kotlinx 的 JsonNull.content 会返回字面串 \"null\"，旧解析把它当真名透传 —— 模型明明调用的是有效 MCP 工具（如 McpGithubCreateIssue），引擎却收到 \"Tool 'null' not found (255 tools registered)\"，连环重试 20+ 次直至任务报废\n- 三层同修：① 解析层（StreamingOpenAiClient 流式 + 非流式）tool_calls 的 id/name/arguments 改用 contentOrNull，JSON null 一律视为字段缺席（与 finish_reason 等既有防御同款）；② 累积器（StreamingToolCallAccumulator）拒收字面 \"null\" 名分片，参数续块不再反向覆盖首片的正确工具名；③ MCP 工具清单（McpClient.listTools）同源 JsonNull 陷阱修复，远端服务器把 name/description 序列化成 null 时不再注册出 \"MCP server/null\" 幽灵条目\n- 空名 / \"null\" 名到达执行器时改发专项指引文案（明说「名称在传输中丢失，请原样重发一次完整调用」），替代旧的通用 \"Tool 'null' not found + 类别清单\"（该文案只会诱导模型继续换名硬猜）；普通未知工具 id 的相近建议文案保持不变\n- 搜索通道提示语（ChatToolkitStore）displayName 空缺时不再插值出「MCP「null」」诱导模型幻觉调用\n- 附回归测试：ToolCallJsonNullNameTest（SSE 伪造帧）/ StreamingToolCallAccumulatorNullGuardTest / DegenerateToolNameGuidanceTest",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.77"
+    },
     {
       "versionName": "1.5.76",
       "versionCode": 256,
@@ -1246,34 +1278,6 @@
       ],
       "markdown": "- 网络搜索专属流水式输出：WebSearch/WebFetch 与三台搜索 MCP 的 web_search/web_read 归入独立「网络搜索」胶囊族（天蓝地球图标，与本地代码搜索的 secondary 拉开色相）\n- 搜索词流水预览：模型生成参数时 query 逐字流入胶囊目标行（半截 JSON 增量解码复用），等待期即有过程感\n- 收束摘要结构化：「网页搜索 · N 条来源」（按输出中来源链接去重计数，内置 JSON 信封与 MCP 的 Markdown 结果通吃）\n- 详情页搜索结果 Markdown 主题化渲染（标题/列表/链接直接可读），替代等宽代码块\n\n---\n\n- T99 spec：chroot 后端生产化纵深方案 —— su 候选表统一（SuCandidateRegistry 单一事实源）/ 授权状态 30s TTL 缓存与负反馈修正 / mountpoint 三链守卫与孤儿挂载清理 / PRoot 冒烟探针与后端显式建议 / CA bundle 三链供给 / chroot 遥测旗标接活\n- 六个 Agent 任务包（P1-P6）实施分解，JVM 侧全量可验证，依赖 DAG：P1→P2→(P3∥P4∥P5)→P6\n\n---\n\n- Agent Task Packages 规范：把「方案 → 实施」的翻译层标准化 —— 任务包六条硬约束（≤3 文件 / 验收可脚本化 / 回滚无残留 / 依赖显式 / ≤400 行 / device-required 标注）\n- 分解方法四步（按数据流切 / DAG 并行标注 / 验收翻译成自查命令 / 风险自愈路径）+ 执行协议（AGENTS.md 注入 → 边界执行 → 单 commit 交付 → journal 恢复）\n- 反模式清单六条（历史教训：半成品接口上 main / 不可 grep 的验收 / 一包跨 5+ 文件等）\n\n---\n\n- 玻璃实验室 Dark 栏升级「液态玻璃可滑动预览」：4 项固定导航 → 8 项双页 Dock（HorizontalPager），横向手势自由滑动，导航项目从中央实心发布按钮下滑过——实心如石，项目流过如水\n- 唯一液态滑动药丸取代逐项淡入淡出：位置 = f(选中项浮点槽位，pager 实时偏移)，随手势连续跟手位移；点击换选经 MediumBouncy 弹簧落位，跨页选择与页面滚动同程共享连续轨迹，无跳变\n- 药丸果冻挤压：滑动偏移分数越大横向拉伸越多、纵向等比压缩（体积近似守恒），回中复原\n- 全部形变在 graphicsLayer draw 通道读取 State（animateFloatAsState/pager 偏移均为 State 读数），滑动帧零重组（#262 同款纪律）\n- 双页页点指示器（当前页加宽点亮）+ 初始页跟随恢复的选中项（rememberSaveable 跨重建不脱页）\n- Dock 保持 kyant0 backdrop 真采样玻璃（Floating 档：blur + lens 折射 + 色散）——滚动内容掠过栏后画面实时变化",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.28"
-    },
-    {
-      "versionName": "1.5.27",
-      "versionCode": 207,
-      "tag": "v1.5.27",
-      "date": "2026-11-07",
-      "title": "v1.5.27 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "Coding 流水输出 · 未闭合代码围栏渐进容错",
-          "notes": [
-            "Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。",
-            "表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。"
-          ]
-        },
-        {
-          "title": "流水思考交互",
-          "notes": [
-            "思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。",
-            "设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。",
-            "收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。"
-          ]
-        }
-      ],
-      "markdown": "# Coding 流水输出 · 未闭合代码围栏渐进容错\n\n- Coding 助手回复生成到一半时，尚未闭合的代码围栏保留原文和换行，不把后续文字误识别成标题、粗体或已完成的代码卡；收到闭合围栏后才切换为现有等宽代码卡（不包含语法高亮）。\n- 表格、LaTeX、Mermaid 的结构化渲染尚未实现，保留在 #762 后续任务中。\n\n---\n\n# 流水思考交互\n\n- 思考文本按 Unicode 字符脉冲揭示，全文仍由原始会话保留；结束后自动收起，可再次展开。\n- 设置支持记住默认展开/折叠；正文开始后提供“直接看回答”。\n- 收起后使用明确标注的首句预览，不将原文截断冒充模型摘要。",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.27"
     }
   ]
 }
