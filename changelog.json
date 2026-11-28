@@ -1,27 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-28T15:50:34Z",
+  "generatedAt": "2026-11-28T16:07:02Z",
   "latest": {
-    "versionName": "1.5.95",
-    "versionCode": 275,
-    "tag": "v1.5.95",
+    "versionName": "1.5.96",
+    "versionCode": 276,
+    "tag": "v1.5.96",
     "date": "2026-11-28",
-    "title": "v1.5.95 更新内容",
+    "title": "v1.5.96 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "appquality batch",
+        "title": "engine p1 batch",
         "notes": [
-          "冷启动主线程不再初始化 Keystore：SettingsRepository 密钥迁移/回填改懒触发（ApexApp 后台预热 + defaultLlmConfig / getProviderApiKey 幂等兜底）—— Application.onCreate 零 Keystore 开销（#861）",
-          "Provider 保存校验接入系统明文放行口径：局域网 http:// 端点（如 http://192.168.1.20:11434）保存时即报结构化错误 —— 不再运行期才以 Cleartext not permitted 连接失败暴露（#838）"
+          "BUILD/GOAL 循环三条 continue 路径（肌肉记忆旁路 / 承诺催促 / GOAL 续跑）补发 ResponseComplete —— 流式气泡不再跨轮悬挂、下一轮回复不再粘连成同一条消息（#820）",
+          "历史图片 keep-last-K 退场：早前轮次附件以占位文本替换 —— 不再每轮重传旧图按 vision 计费、内存历史不再无限驻留（#827）",
+          "上下文压缩门计入 system prompt 与工具 schema 载荷 headroom（60% 钳制防小窗死循环）+ 图片按 1000 token/图计费 —— 8K 窗口模型不再「永远不触发压缩」（#826）"
         ]
       }
     ],
-    "markdown": "- 冷启动主线程不再初始化 Keystore：SettingsRepository 密钥迁移/回填改懒触发（ApexApp 后台预热 + defaultLlmConfig / getProviderApiKey 幂等兜底）—— Application.onCreate 零 Keystore 开销（#861）\n- Provider 保存校验接入系统明文放行口径：局域网 http:// 端点（如 http://192.168.1.20:11434）保存时即报结构化错误 —— 不再运行期才以 Cleartext not permitted 连接失败暴露（#838）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.95"
+    "markdown": "- BUILD/GOAL 循环三条 continue 路径（肌肉记忆旁路 / 承诺催促 / GOAL 续跑）补发 ResponseComplete —— 流式气泡不再跨轮悬挂、下一轮回复不再粘连成同一条消息（#820）\n- 历史图片 keep-last-K 退场：早前轮次附件以占位文本替换 —— 不再每轮重传旧图按 vision 计费、内存历史不再无限驻留（#827）\n- 上下文压缩门计入 system prompt 与工具 schema 载荷 headroom（60% 钳制防小窗死循环）+ 图片按 1000 token/图计费 —— 8K 窗口模型不再「永远不触发压缩」（#826）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.96"
   },
   "history": [
+    {
+      "versionName": "1.5.96",
+      "versionCode": 276,
+      "tag": "v1.5.96",
+      "date": "2026-11-28",
+      "title": "v1.5.96 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "engine p1 batch",
+          "notes": [
+            "BUILD/GOAL 循环三条 continue 路径（肌肉记忆旁路 / 承诺催促 / GOAL 续跑）补发 ResponseComplete —— 流式气泡不再跨轮悬挂、下一轮回复不再粘连成同一条消息（#820）",
+            "历史图片 keep-last-K 退场：早前轮次附件以占位文本替换 —— 不再每轮重传旧图按 vision 计费、内存历史不再无限驻留（#827）",
+            "上下文压缩门计入 system prompt 与工具 schema 载荷 headroom（60% 钳制防小窗死循环）+ 图片按 1000 token/图计费 —— 8K 窗口模型不再「永远不触发压缩」（#826）"
+          ]
+        }
+      ],
+      "markdown": "- BUILD/GOAL 循环三条 continue 路径（肌肉记忆旁路 / 承诺催促 / GOAL 续跑）补发 ResponseComplete —— 流式气泡不再跨轮悬挂、下一轮回复不再粘连成同一条消息（#820）\n- 历史图片 keep-last-K 退场：早前轮次附件以占位文本替换 —— 不再每轮重传旧图按 vision 计费、内存历史不再无限驻留（#827）\n- 上下文压缩门计入 system prompt 与工具 schema 载荷 headroom（60% 钳制防小窗死循环）+ 图片按 1000 token/图计费 —— 8K 窗口模型不再「永远不触发压缩」（#826）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.96"
+    },
     {
       "versionName": "1.5.95",
       "versionCode": 275,
@@ -1280,28 +1302,6 @@
       ],
       "markdown": "- 修复 libcode_native.so JNI 符号名错绑：导出符号曾以 CodeNativeBridge 结尾，而 Kotlin 声明类是 NativeTextKernel —— 编译期无感，运行期每次调用 UnsatisfiedLinkError 刷 E 级 logcat 后静默回退纯 Kotlin（加速核从未生效，还倒贴 JNI 查找 + 异常构造成本），现已按 JNI 静态绑定规则对齐，标准线文本加速核真正启用\n- 同步修正 JNI 第二形参 jclass → jobject（external fun 为实例方法，jclass 是静态方法绑定的形参类型）\n- 新增源级 JNI 符号契约单测（core:code-native 首个进 CI 的测试）：Kotlin external 声明 ↔ .cpp 导出符号双向核对 + 实例方法 jobject 形参校验，符号漂移在 CI 就地翻红，不再等真机 logcat 暴露\n\n---\n\n- **安全修复（更新链离线信任锚）**：App 内更新检查不再「信任拉到的清单本身」—— version.json / patches.json 全量携带发布者数字签名（ECDSA P-256），由 App 内置的发布者公钥逐字节验证；镜像加速节点、CDN、任何中间环节对下载地址 / 校验指纹 / 版本号改动一个字节都会被拒绝，且界面明确告知拒绝原因（不再静默失败）\n- **无签名 / 无指纹 fail-closed**：过渡期（至 2027-03-01）兼容存量发布仓库的无签名清单，到期后一律拒绝；此前「清单缺指纹就跳过校验直接放行」的三处分支全部移除，指纹缺失即拒绝下载\n- **热更新前增加确认与回滚**：热更内容按代码对待 —— 注入生效前弹出变更清单确认框（目标版本 + 全部文件路径，可取消）；应用后可一键回滚到上一版热更内容（技能与目录原样恢复）\n- 检查更新的镜像回退行为不变：单镜像故障 / 被劫持自动降级下一节点，全链失败才报错；被劫持镜像返回的伪造内容绝不会被采用",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.47"
-    },
-    {
-      "versionName": "1.5.46",
-      "versionCode": 226,
-      "tag": "v1.5.46",
-      "date": "2026-11-13",
-      "title": "v1.5.46 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "websearch server tool gating",
-          "notes": [
-            "修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止",
-            "协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误",
-            "引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛",
-            "非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算"
-          ]
-        }
-      ],
-      "markdown": "- 修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止\n- 协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误\n- 引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛\n- 非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.46"
     }
   ]
 }
