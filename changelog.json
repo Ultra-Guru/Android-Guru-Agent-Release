@@ -1,26 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-28T14:59:07Z",
+  "generatedAt": "2026-11-28T15:16:11Z",
   "latest": {
-    "versionName": "1.5.92",
-    "versionCode": 272,
-    "tag": "v1.5.92",
+    "versionName": "1.5.93",
+    "versionCode": 273,
+    "tag": "v1.5.93",
     "date": "2026-11-28",
-    "title": "v1.5.92 更新内容",
+    "title": "v1.5.93 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "scope exception handlers",
+        "title": "fix plan reflection ground truth",
         "notes": [
-          "应用层 37 处自建 CoroutineScope 统一经 AppScopes 工厂建造 —— 未捕获 launch 异常一律留痕（AppLogger error + 站点名）不再杀死进程（SupervisorJob 只隔离子协程取消传播，不吞未捕获异常；此前仅 3 处手工补过 handler，其余零防护）（#834 第一波：app 模块全量）"
+          "修复计划模式收尾总结「凭空编造」的问题：最终反思现在基于各步骤的真实执行结果（成功摘要与失败原因），而不是只看计划文本就宣称交付完成",
+          "中途放弃的任务在总结中如实标注未执行的步骤"
         ]
       }
     ],
-    "markdown": "- 应用层 37 处自建 CoroutineScope 统一经 AppScopes 工厂建造 —— 未捕获 launch 异常一律留痕（AppLogger error + 站点名）不再杀死进程（SupervisorJob 只隔离子协程取消传播，不吞未捕获异常；此前仅 3 处手工补过 handler，其余零防护）（#834 第一波：app 模块全量）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.92"
+    "markdown": "- 修复计划模式收尾总结「凭空编造」的问题：最终反思现在基于各步骤的真实执行结果（成功摘要与失败原因），而不是只看计划文本就宣称交付完成\n- 中途放弃的任务在总结中如实标注未执行的步骤",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.93"
   },
   "history": [
+    {
+      "versionName": "1.5.93",
+      "versionCode": 273,
+      "tag": "v1.5.93",
+      "date": "2026-11-28",
+      "title": "v1.5.93 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "fix plan reflection ground truth",
+          "notes": [
+            "修复计划模式收尾总结「凭空编造」的问题：最终反思现在基于各步骤的真实执行结果（成功摘要与失败原因），而不是只看计划文本就宣称交付完成",
+            "中途放弃的任务在总结中如实标注未执行的步骤"
+          ]
+        }
+      ],
+      "markdown": "- 修复计划模式收尾总结「凭空编造」的问题：最终反思现在基于各步骤的真实执行结果（成功摘要与失败原因），而不是只看计划文本就宣称交付完成\n- 中途放弃的任务在总结中如实标注未执行的步骤",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.93"
+    },
     {
       "versionName": "1.5.92",
       "versionCode": 272,
@@ -1288,29 +1309,6 @@
       ],
       "markdown": "- Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）\n- 新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略\n- PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状\n- 诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.44"
-    },
-    {
-      "versionName": "1.5.43",
-      "versionCode": 223,
-      "tag": "v1.5.43",
-      "date": "2026-11-08",
-      "title": "v1.5.43 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "plugin host 2 claude compat",
-          "notes": [
-            "Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定",
-            "宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造",
-            "插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删",
-            ".lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持",
-            "prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行"
-          ]
-        }
-      ],
-      "markdown": "- Native Plugin Host 2.0 Phase 5 落地：Claude 插件 Hooks 兼容 —— 官方 hooks.json 协议调度（stdin JSON 输入 / stdout hookSpecificOutput 解析 / exit 0 成功与 exit 2 阻断语义 / matcher 工具名 regex / 命令超时强杀），真实 shell 端到端锁定\n- 宿主事件映射表：SessionStart/End、UserPromptSubmit、PreToolUse、PostToolUse(Failure)、Notification 按官方事件名分发；无对应的宿主内部事件如实跳过不伪造\n- 插件 .mcp.json 接入既有 MCP 体系：stdio 命令强制沙箱执行、http/sse 直连；来源归属账本保证卸载只删插件带来的服务器，用户自建配置永不被误删\n- .lsp.json 诚实检测：识别语言服务器声明并明确报告「宿主 LSP 运行时尚未就绪」—— 不启动、不伪装支持\n- prompt/agent/http 类型钩子如实标注未支持（跳过并留痕），不冒充执行",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.43"
     }
   ]
 }
