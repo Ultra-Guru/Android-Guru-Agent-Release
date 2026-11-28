@@ -1,28 +1,49 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-28T16:07:02Z",
+  "generatedAt": "2026-11-28T16:25:51Z",
   "latest": {
-    "versionName": "1.5.96",
-    "versionCode": 276,
-    "tag": "v1.5.96",
+    "versionName": "1.5.97",
+    "versionCode": 277,
+    "tag": "v1.5.97",
     "date": "2026-11-28",
-    "title": "v1.5.96 更新内容",
+    "title": "v1.5.97 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "engine p1 batch",
+        "title": "terminal resource safety",
         "notes": [
-          "BUILD/GOAL 循环三条 continue 路径（肌肉记忆旁路 / 承诺催促 / GOAL 续跑）补发 ResponseComplete —— 流式气泡不再跨轮悬挂、下一轮回复不再粘连成同一条消息（#820）",
-          "历史图片 keep-last-K 退场：早前轮次附件以占位文本替换 —— 不再每轮重传旧图按 vision 计费、内存历史不再无限驻留（#827）",
-          "上下文压缩门计入 system prompt 与工具 schema 载荷 headroom（60% 钳制防小窗死循环）+ 图片按 1000 token/图计费 —— 8K 窗口模型不再「永远不触发压缩」（#826）"
+          "终端会话数量上限 16（SessionLimitReached 结构化报错）+ 满额驱逐最旧 IDLE（EXITED 优先于 READY，在用会话绝不驱逐）—— 失败循环反复建会话不再内存无界增长（#839）",
+          "onTrimMemory 接入终端子系统（ApexCoreService 转发）：RUNNING_LOW+ 驱逐超出保留数 4 的 IDLE 会话，与 close 同一回收链",
+          "PtySession 关闭补齐 setsid 守护孙进程清扫：信号梯度前 /proc children 递归快照后代，梯度后逐 pid SIGKILL 兜底（host 测试真机验证 setsid 守护进程被收编；util-linux setsid 孤儿形态为 pid 树不可达，与 Termux 同款边界如实记录）（#842）"
         ]
       }
     ],
-    "markdown": "- BUILD/GOAL 循环三条 continue 路径（肌肉记忆旁路 / 承诺催促 / GOAL 续跑）补发 ResponseComplete —— 流式气泡不再跨轮悬挂、下一轮回复不再粘连成同一条消息（#820）\n- 历史图片 keep-last-K 退场：早前轮次附件以占位文本替换 —— 不再每轮重传旧图按 vision 计费、内存历史不再无限驻留（#827）\n- 上下文压缩门计入 system prompt 与工具 schema 载荷 headroom（60% 钳制防小窗死循环）+ 图片按 1000 token/图计费 —— 8K 窗口模型不再「永远不触发压缩」（#826）",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.96"
+    "markdown": "- 终端会话数量上限 16（SessionLimitReached 结构化报错）+ 满额驱逐最旧 IDLE（EXITED 优先于 READY，在用会话绝不驱逐）—— 失败循环反复建会话不再内存无界增长（#839）\n- onTrimMemory 接入终端子系统（ApexCoreService 转发）：RUNNING_LOW+ 驱逐超出保留数 4 的 IDLE 会话，与 close 同一回收链\n- PtySession 关闭补齐 setsid 守护孙进程清扫：信号梯度前 /proc children 递归快照后代，梯度后逐 pid SIGKILL 兜底（host 测试真机验证 setsid 守护进程被收编；util-linux setsid 孤儿形态为 pid 树不可达，与 Termux 同款边界如实记录）（#842）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.97"
   },
   "history": [
+    {
+      "versionName": "1.5.97",
+      "versionCode": 277,
+      "tag": "v1.5.97",
+      "date": "2026-11-28",
+      "title": "v1.5.97 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "terminal resource safety",
+          "notes": [
+            "终端会话数量上限 16（SessionLimitReached 结构化报错）+ 满额驱逐最旧 IDLE（EXITED 优先于 READY，在用会话绝不驱逐）—— 失败循环反复建会话不再内存无界增长（#839）",
+            "onTrimMemory 接入终端子系统（ApexCoreService 转发）：RUNNING_LOW+ 驱逐超出保留数 4 的 IDLE 会话，与 close 同一回收链",
+            "PtySession 关闭补齐 setsid 守护孙进程清扫：信号梯度前 /proc children 递归快照后代，梯度后逐 pid SIGKILL 兜底（host 测试真机验证 setsid 守护进程被收编；util-linux setsid 孤儿形态为 pid 树不可达，与 Termux 同款边界如实记录）（#842）"
+          ]
+        }
+      ],
+      "markdown": "- 终端会话数量上限 16（SessionLimitReached 结构化报错）+ 满额驱逐最旧 IDLE（EXITED 优先于 READY，在用会话绝不驱逐）—— 失败循环反复建会话不再内存无界增长（#839）\n- onTrimMemory 接入终端子系统（ApexCoreService 转发）：RUNNING_LOW+ 驱逐超出保留数 4 的 IDLE 会话，与 close 同一回收链\n- PtySession 关闭补齐 setsid 守护孙进程清扫：信号梯度前 /proc children 递归快照后代，梯度后逐 pid SIGKILL 兜底（host 测试真机验证 setsid 守护进程被收编；util-linux setsid 孤儿形态为 pid 树不可达，与 Termux 同款边界如实记录）（#842）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.97"
+    },
     {
       "versionName": "1.5.96",
       "versionCode": 276,
@@ -1272,36 +1293,6 @@
       ],
       "markdown": "- 让 chroot 与权限检测识别同一批 su 路径，避免 KernelSU/APatch 设备误报不可用。\n- 明确区分 su 存在与已获授权；拒绝授权时提供修复指引，避免反复尝试失败会话。",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.48"
-    },
-    {
-      "versionName": "1.5.47",
-      "versionCode": 227,
-      "tag": "v1.5.47",
-      "date": "2026-11-13",
-      "title": "v1.5.47 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "native text kernel jni symbols",
-          "notes": [
-            "修复 libcode_native.so JNI 符号名错绑：导出符号曾以 CodeNativeBridge 结尾，而 Kotlin 声明类是 NativeTextKernel —— 编译期无感，运行期每次调用 UnsatisfiedLinkError 刷 E 级 logcat 后静默回退纯 Kotlin（加速核从未生效，还倒贴 JNI 查找 + 异常构造成本），现已按 JNI 静态绑定规则对齐，标准线文本加速核真正启用",
-            "同步修正 JNI 第二形参 jclass → jobject（external fun 为实例方法，jclass 是静态方法绑定的形参类型）",
-            "新增源级 JNI 符号契约单测（core:code-native 首个进 CI 的测试）：Kotlin external 声明 ↔ .cpp 导出符号双向核对 + 实例方法 jobject 形参校验，符号漂移在 CI 就地翻红，不再等真机 logcat 暴露"
-          ]
-        },
-        {
-          "title": "s02 update trust anchor",
-          "notes": [
-            "**安全修复（更新链离线信任锚）**：App 内更新检查不再「信任拉到的清单本身」—— version.json / patches.json 全量携带发布者数字签名（ECDSA P-256），由 App 内置的发布者公钥逐字节验证；镜像加速节点、CDN、任何中间环节对下载地址 / 校验指纹 / 版本号改动一个字节都会被拒绝，且界面明确告知拒绝原因（不再静默失败）",
-            "**无签名 / 无指纹 fail-closed**：过渡期（至 2027-03-01）兼容存量发布仓库的无签名清单，到期后一律拒绝；此前「清单缺指纹就跳过校验直接放行」的三处分支全部移除，指纹缺失即拒绝下载",
-            "**热更新前增加确认与回滚**：热更内容按代码对待 —— 注入生效前弹出变更清单确认框（目标版本 + 全部文件路径，可取消）；应用后可一键回滚到上一版热更内容（技能与目录原样恢复）",
-            "检查更新的镜像回退行为不变：单镜像故障 / 被劫持自动降级下一节点，全链失败才报错；被劫持镜像返回的伪造内容绝不会被采用"
-          ]
-        }
-      ],
-      "markdown": "- 修复 libcode_native.so JNI 符号名错绑：导出符号曾以 CodeNativeBridge 结尾，而 Kotlin 声明类是 NativeTextKernel —— 编译期无感，运行期每次调用 UnsatisfiedLinkError 刷 E 级 logcat 后静默回退纯 Kotlin（加速核从未生效，还倒贴 JNI 查找 + 异常构造成本），现已按 JNI 静态绑定规则对齐，标准线文本加速核真正启用\n- 同步修正 JNI 第二形参 jclass → jobject（external fun 为实例方法，jclass 是静态方法绑定的形参类型）\n- 新增源级 JNI 符号契约单测（core:code-native 首个进 CI 的测试）：Kotlin external 声明 ↔ .cpp 导出符号双向核对 + 实例方法 jobject 形参校验，符号漂移在 CI 就地翻红，不再等真机 logcat 暴露\n\n---\n\n- **安全修复（更新链离线信任锚）**：App 内更新检查不再「信任拉到的清单本身」—— version.json / patches.json 全量携带发布者数字签名（ECDSA P-256），由 App 内置的发布者公钥逐字节验证；镜像加速节点、CDN、任何中间环节对下载地址 / 校验指纹 / 版本号改动一个字节都会被拒绝，且界面明确告知拒绝原因（不再静默失败）\n- **无签名 / 无指纹 fail-closed**：过渡期（至 2027-03-01）兼容存量发布仓库的无签名清单，到期后一律拒绝；此前「清单缺指纹就跳过校验直接放行」的三处分支全部移除，指纹缺失即拒绝下载\n- **热更新前增加确认与回滚**：热更内容按代码对待 —— 注入生效前弹出变更清单确认框（目标版本 + 全部文件路径，可取消）；应用后可一键回滚到上一版热更内容（技能与目录原样恢复）\n- 检查更新的镜像回退行为不变：单镜像故障 / 被劫持自动降级下一节点，全链失败才报错；被劫持镜像返回的伪造内容绝不会被采用",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.47"
     }
   ]
 }
