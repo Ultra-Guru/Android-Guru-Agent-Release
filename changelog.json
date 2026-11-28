@@ -1,27 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-28T15:33:48Z",
+  "generatedAt": "2026-11-28T15:50:34Z",
   "latest": {
-    "versionName": "1.5.94",
-    "versionCode": 274,
-    "tag": "v1.5.94",
+    "versionName": "1.5.95",
+    "versionCode": 275,
+    "tag": "v1.5.95",
     "date": "2026-11-28",
-    "title": "v1.5.94 更新内容",
+    "title": "v1.5.95 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "clipboard bridge gate",
+        "title": "appquality batch",
         "notes": [
-          "剪贴板桥默认关闭（安全默认，#854）：LLM 工具（TerminalBridge call clipboard / legacy Clipboard）与 PRoot guest 内任意进程（`apexctl clipboard`，含 npm/pip 钩子）不再零门槛读剪贴板 —— 密码管理器 OTP/收码不再直入模型上下文，set 静默投毒通道同步关闭；关闭时 get/set 一律结构化拒绝（稳定错误码 CLIPBOARD_ACCESS_DISABLED + 引导 hint，桥层新 BridgeAccessRefused 契约贯穿直连与文件队列两条路径）",
-          "新增「剪贴板桥」设置开关（默认关，设置→代理与安全→权限）：开启后 get/set 恢复；开关实时读取（切完即生效，无需重启）；拒绝文案引导改用金库 VaultSave/VaultPaste"
+          "冷启动主线程不再初始化 Keystore：SettingsRepository 密钥迁移/回填改懒触发（ApexApp 后台预热 + defaultLlmConfig / getProviderApiKey 幂等兜底）—— Application.onCreate 零 Keystore 开销（#861）",
+          "Provider 保存校验接入系统明文放行口径：局域网 http:// 端点（如 http://192.168.1.20:11434）保存时即报结构化错误 —— 不再运行期才以 Cleartext not permitted 连接失败暴露（#838）"
         ]
       }
     ],
-    "markdown": "- 剪贴板桥默认关闭（安全默认，#854）：LLM 工具（TerminalBridge call clipboard / legacy Clipboard）与 PRoot guest 内任意进程（`apexctl clipboard`，含 npm/pip 钩子）不再零门槛读剪贴板 —— 密码管理器 OTP/收码不再直入模型上下文，set 静默投毒通道同步关闭；关闭时 get/set 一律结构化拒绝（稳定错误码 CLIPBOARD_ACCESS_DISABLED + 引导 hint，桥层新 BridgeAccessRefused 契约贯穿直连与文件队列两条路径）\n- 新增「剪贴板桥」设置开关（默认关，设置→代理与安全→权限）：开启后 get/set 恢复；开关实时读取（切完即生效，无需重启）；拒绝文案引导改用金库 VaultSave/VaultPaste",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.94"
+    "markdown": "- 冷启动主线程不再初始化 Keystore：SettingsRepository 密钥迁移/回填改懒触发（ApexApp 后台预热 + defaultLlmConfig / getProviderApiKey 幂等兜底）—— Application.onCreate 零 Keystore 开销（#861）\n- Provider 保存校验接入系统明文放行口径：局域网 http:// 端点（如 http://192.168.1.20:11434）保存时即报结构化错误 —— 不再运行期才以 Cleartext not permitted 连接失败暴露（#838）",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.95"
   },
   "history": [
+    {
+      "versionName": "1.5.95",
+      "versionCode": 275,
+      "tag": "v1.5.95",
+      "date": "2026-11-28",
+      "title": "v1.5.95 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "appquality batch",
+          "notes": [
+            "冷启动主线程不再初始化 Keystore：SettingsRepository 密钥迁移/回填改懒触发（ApexApp 后台预热 + defaultLlmConfig / getProviderApiKey 幂等兜底）—— Application.onCreate 零 Keystore 开销（#861）",
+            "Provider 保存校验接入系统明文放行口径：局域网 http:// 端点（如 http://192.168.1.20:11434）保存时即报结构化错误 —— 不再运行期才以 Cleartext not permitted 连接失败暴露（#838）"
+          ]
+        }
+      ],
+      "markdown": "- 冷启动主线程不再初始化 Keystore：SettingsRepository 密钥迁移/回填改懒触发（ApexApp 后台预热 + defaultLlmConfig / getProviderApiKey 幂等兜底）—— Application.onCreate 零 Keystore 开销（#861）\n- Provider 保存校验接入系统明文放行口径：局域网 http:// 端点（如 http://192.168.1.20:11434）保存时即报结构化错误 —— 不再运行期才以 Cleartext not permitted 连接失败暴露（#838）",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.95"
+    },
     {
       "versionName": "1.5.94",
       "versionCode": 274,
@@ -1282,31 +1302,6 @@
       ],
       "markdown": "- 修复：开启「模型内置搜索」后接通用 OpenAI 兼容网关时，非标准 tools[].type（\"WebSearch\" 等 server-side 搜索 tool 形态）被严格端点整请求 422 拒绝（unknown variant `WebSearch`, expected `function`），Agent 任务直接终止\n- 协议层：显式选择的搜索模式（智谱 / DeepSeek / Anthropic server tool 形态）现按端点能力门控（与 AUTO 推断同口径），端点不匹配时不再下发非标准条目 —— 搜索意图降级为不发，而不是把任务变成协议错误\n- 引擎层兜底：端点仍以「未知 tools[].type」类 4xx 拒绝时，自动剔除搜索条目降级重发一次（每客户端实例一次，非重放），任务继续推进；重发仍失败则原样上抛\n- 非该形态的 4xx（上下文超长 / 鉴权 / 参数错）维持不重试、诚实暴露，不烧预算",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.46"
-    },
-    {
-      "versionName": "1.5.45",
-      "versionCode": 225,
-      "tag": "v1.5.45",
-      "date": "2026-11-08",
-      "title": "v1.5.45 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "dsh native host",
-          "notes": [
-            "DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具",
-            "shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）",
-            "**平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）",
-            "**版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）",
-            "`DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes",
-            "Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）",
-            "测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围"
-          ]
-        }
-      ],
-      "markdown": "- DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具\n- shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）\n- **平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）\n- **版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）\n- `DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes\n- Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）\n- 测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.45"
     }
   ]
 }
