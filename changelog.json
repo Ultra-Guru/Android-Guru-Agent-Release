@@ -1,27 +1,47 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-28T15:16:11Z",
+  "generatedAt": "2026-11-28T15:33:48Z",
   "latest": {
-    "versionName": "1.5.93",
-    "versionCode": 273,
-    "tag": "v1.5.93",
+    "versionName": "1.5.94",
+    "versionCode": 274,
+    "tag": "v1.5.94",
     "date": "2026-11-28",
-    "title": "v1.5.93 更新内容",
+    "title": "v1.5.94 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "fix plan reflection ground truth",
+        "title": "clipboard bridge gate",
         "notes": [
-          "修复计划模式收尾总结「凭空编造」的问题：最终反思现在基于各步骤的真实执行结果（成功摘要与失败原因），而不是只看计划文本就宣称交付完成",
-          "中途放弃的任务在总结中如实标注未执行的步骤"
+          "剪贴板桥默认关闭（安全默认，#854）：LLM 工具（TerminalBridge call clipboard / legacy Clipboard）与 PRoot guest 内任意进程（`apexctl clipboard`，含 npm/pip 钩子）不再零门槛读剪贴板 —— 密码管理器 OTP/收码不再直入模型上下文，set 静默投毒通道同步关闭；关闭时 get/set 一律结构化拒绝（稳定错误码 CLIPBOARD_ACCESS_DISABLED + 引导 hint，桥层新 BridgeAccessRefused 契约贯穿直连与文件队列两条路径）",
+          "新增「剪贴板桥」设置开关（默认关，设置→代理与安全→权限）：开启后 get/set 恢复；开关实时读取（切完即生效，无需重启）；拒绝文案引导改用金库 VaultSave/VaultPaste"
         ]
       }
     ],
-    "markdown": "- 修复计划模式收尾总结「凭空编造」的问题：最终反思现在基于各步骤的真实执行结果（成功摘要与失败原因），而不是只看计划文本就宣称交付完成\n- 中途放弃的任务在总结中如实标注未执行的步骤",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.93"
+    "markdown": "- 剪贴板桥默认关闭（安全默认，#854）：LLM 工具（TerminalBridge call clipboard / legacy Clipboard）与 PRoot guest 内任意进程（`apexctl clipboard`，含 npm/pip 钩子）不再零门槛读剪贴板 —— 密码管理器 OTP/收码不再直入模型上下文，set 静默投毒通道同步关闭；关闭时 get/set 一律结构化拒绝（稳定错误码 CLIPBOARD_ACCESS_DISABLED + 引导 hint，桥层新 BridgeAccessRefused 契约贯穿直连与文件队列两条路径）\n- 新增「剪贴板桥」设置开关（默认关，设置→代理与安全→权限）：开启后 get/set 恢复；开关实时读取（切完即生效，无需重启）；拒绝文案引导改用金库 VaultSave/VaultPaste",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.94"
   },
   "history": [
+    {
+      "versionName": "1.5.94",
+      "versionCode": 274,
+      "tag": "v1.5.94",
+      "date": "2026-11-28",
+      "title": "v1.5.94 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "clipboard bridge gate",
+          "notes": [
+            "剪贴板桥默认关闭（安全默认，#854）：LLM 工具（TerminalBridge call clipboard / legacy Clipboard）与 PRoot guest 内任意进程（`apexctl clipboard`，含 npm/pip 钩子）不再零门槛读剪贴板 —— 密码管理器 OTP/收码不再直入模型上下文，set 静默投毒通道同步关闭；关闭时 get/set 一律结构化拒绝（稳定错误码 CLIPBOARD_ACCESS_DISABLED + 引导 hint，桥层新 BridgeAccessRefused 契约贯穿直连与文件队列两条路径）",
+            "新增「剪贴板桥」设置开关（默认关，设置→代理与安全→权限）：开启后 get/set 恢复；开关实时读取（切完即生效，无需重启）；拒绝文案引导改用金库 VaultSave/VaultPaste"
+          ]
+        }
+      ],
+      "markdown": "- 剪贴板桥默认关闭（安全默认，#854）：LLM 工具（TerminalBridge call clipboard / legacy Clipboard）与 PRoot guest 内任意进程（`apexctl clipboard`，含 npm/pip 钩子）不再零门槛读剪贴板 —— 密码管理器 OTP/收码不再直入模型上下文，set 静默投毒通道同步关闭；关闭时 get/set 一律结构化拒绝（稳定错误码 CLIPBOARD_ACCESS_DISABLED + 引导 hint，桥层新 BridgeAccessRefused 契约贯穿直连与文件队列两条路径）\n- 新增「剪贴板桥」设置开关（默认关，设置→代理与安全→权限）：开启后 get/set 恢复；开关实时读取（切完即生效，无需重启）；拒绝文案引导改用金库 VaultSave/VaultPaste",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.94"
+    },
     {
       "versionName": "1.5.93",
       "versionCode": 273,
@@ -1287,28 +1307,6 @@
       ],
       "markdown": "- DSH Native Plugin Host P0+P1（市场 DSH 插件从「安装模拟」升级为「能力发现」）：统一安装闸门装完 DSH 插件后，沙箱内 shim 动态验证（加载插件模块 → apply(ctx) 捕获 ctx.tools.register 注册面）+ Acorn 静态分析（不执行被检代码）调和产出 `profile/dsh/capabilities.json` 能力快照 —— 工具/技能/UI/不可用原因逐项如实落账，绝不凭包名或静态线索注册虚构工具\n- shim 脚本四件套（core 资源 `dsh-host/`，版本化部署 `<extRoot>/.dsh-host/scripts-v1/`）：CJS/ESM × 函数/对象/类三形态加载（类形态如实拒绝）、inject 依赖就绪语义（未支持服务不执行 apply）、DSH parameters → JSON Schema 白名单转换、`dsh-run-tool.js` 冷执行器（参数走 stdin JSON、结果 safeStringify）\n- **平台底座**：ExecEngine 新增一次性 stdin 载荷通道（写满即 EOF、1MB 上限诚实失败、结构化数据永不拼命令串）；`PersistentFrameChannel` 长驻进程长度前缀 JSON 帧通道（P2 持久 Worker 底座：破损 fail-fast、终态恰好一次、stderr 必须分离否则拒启）\n- **版本锁定补真**（修正四）：npm 安装回读产物真实版本 + package-lock tarball integrity，GitHub clone 钉 commit SHA（`PinnedSource` 入 InstallOutcome + 账本 `pinnedSource` 字段）；`ExtensionInstaller` 账本版本改以安装产物为准（此前 spec 占位 0.0.0 直接入账）\n- `DshExtensionAdapter` 三修：entryHint 解析 package.json main 到真实入口文件（此前返回 package.json 自身路径 → `node package.json` 必失败）；install 后接能力验证回填真实版本；能力摘要进 InstallOutcome notes\n- Doctor 账实一致探针补 dsh_plugin 专用检查（pkg 目录 + package.json + capabilities 快照三重存在，此前默认 true 虚报健康）；兼容性判定器（Node ≥18 门 + DSH 依赖族范围 + 服务支持层级白名单，acorn 8.12.1 钉版 bootstrap）\n- 测试：`DshNativeHostTest`（真 node 端到端八场景 + 纯 JVM 契约锁）、`DshBridgeTransportTest`（stdin 语义 + 帧通道 + CI 真实 node 帧回显）；台账 `docs/dsh-compat.md` 钉验证状态与已验证范围",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.45"
-    },
-    {
-      "versionName": "1.5.44",
-      "versionCode": 224,
-      "tag": "v1.5.44",
-      "date": "2026-11-08",
-      "title": "v1.5.44 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "plugin host 2 app wiring",
-          "notes": [
-            "Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）",
-            "新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略",
-            "PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状",
-            "诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论"
-          ]
-        }
-      ],
-      "markdown": "- Native Plugin Host 2.0 Phase 6 落地：App 层完整接线 —— PluginHostModule DI 模块（事件总线 / 工具桥 / 生命周期管理器 / OpenCode 加载器 / Claude 兼容组件全部进入 Hilt 图）\n- 新增 PluginHostDoctor 诊断工具：Agent 可自检插件宿主（生命周期状态 / Worker 存活与 ping / 已绑定工具清单 / node-bun 真实探测 / 生态兼容性评级），插件工具失败后可先诊断再决定重试策略\n- PRoot 沙箱长驻进程通道：ProotCommandSpawner 新增 spawnLongLived（复用全部路由/bind/env 约定，stdin 保持打开 = Worker IPC 通道）；Claude 钩子沙箱执行端口同款协议形状\n- 诚实边界：沙箱长驻进程实机行为（rootfs 就绪度 / bind 映射 / ARM64 node）标注待设备验证 —— CI 验证编译与 JVM E2E，不冒充实机结论",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.44"
     }
   ]
 }
