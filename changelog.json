@@ -1,29 +1,61 @@
 {
   "schema": "apex-changelog-v3",
-  "generatedAt": "2026-11-28T13:59:06Z",
+  "generatedAt": "2026-11-28T14:19:03Z",
   "latest": {
-    "versionName": "1.5.89",
-    "versionCode": 269,
-    "tag": "v1.5.89",
+    "versionName": "1.5.90",
+    "versionCode": 270,
+    "tag": "v1.5.90",
     "date": "2026-11-28",
-    "title": "v1.5.89 更新内容",
+    "title": "v1.5.90 更新内容",
     "notes": [],
     "images": [],
     "pr": [
       {
-        "title": "agent fleet dashboard",
+        "title": "背景",
         "notes": [
-          "新增 Coding 工位「子 Agent / 终端命令」轻量仪表盘：输入栏工具栏行右端小按钮（运行中子 Agent + 运行中命令角标）弹出只读浮层，双 Tab 集中展示当前对话的子代理列表与终端命令执行状态",
-          "每个对话独立：会话号按新会话 / 恢复历史 / 切工作区换号弃桶，迟到旧会话事件直接丢弃不串台；仪表盘纯内存态不落盘，恢复历史对话后为空（严格「关闭即清」）",
-          "只读观察层零侵入：SubAgentRunner 新增可选观察者（默认 NoOp 零开销），主代理命令在 VM 事件收集处一行旁路；子代理中间过程不进主对话历史、不改隔离上下文语义",
-          "状态诚实口径：命令成败以 exitCode / success 为准（0 成功，127/126/-1 失败），子代理终态以收官原因为准（完成/超时/取消/失败）；中止时在飞行就地收口为「已中断/已取消」，不挂永久「运行中」"
+          "`CodeToolDetailSheet.kt`：`GrepDetailBody` 的 LazyColumn 已有 `heightIn(max = 480.dp)`；流式窗口位于 `heightIn(max = 480.dp)` 的 Box 内",
+          "`CodeLongTaskSheet.kt`：`CheckpointTimeline` / `CopyOptionsDialog` 滚动区为叶子文本内容，无 Lazy 嵌套",
+          "`UbuntuEnvironmentScreen.kt`：`LogPane` 为独立滚动叶子；主 LazyColumn 无滚动父容器",
+          "`MarketDialogs.kt`：表单滚动区为表单叶子；两个 LazyColumn 均在 Dialog 直属作用域",
+          "`StorageScreen.kt` / `TerminalView.kt`：仅单一滚动域",
+          "永不在垂直滚动的父布局中直接嵌套另一个垂直滚动的子布局；头部内容作为 `item()` 放入 Lazy 作用域",
+          "非滚动父容器内的可滚动子组件必须给明确高度约束（`heightIn(max=...)` / `fillMaxHeight()` / `weight()`）",
+          "不使用 `Modifier.wrapContentSize(unbounded = true)` 包裹垂直滚动组件",
+          "LinearLayout 中的 ComposeView 必须在滚动层次上给出确定高度（勿依赖 weight 语义）"
         ]
       }
     ],
-    "markdown": "- 新增 Coding 工位「子 Agent / 终端命令」轻量仪表盘：输入栏工具栏行右端小按钮（运行中子 Agent + 运行中命令角标）弹出只读浮层，双 Tab 集中展示当前对话的子代理列表与终端命令执行状态\n- 每个对话独立：会话号按新会话 / 恢复历史 / 切工作区换号弃桶，迟到旧会话事件直接丢弃不串台；仪表盘纯内存态不落盘，恢复历史对话后为空（严格「关闭即清」）\n- 只读观察层零侵入：SubAgentRunner 新增可选观察者（默认 NoOp 零开销），主代理命令在 VM 事件收集处一行旁路；子代理中间过程不进主对话历史、不改隔离上下文语义\n- 状态诚实口径：命令成败以 exitCode / success 为准（0 成功，127/126/-1 失败），子代理终态以收官原因为准（完成/超时/取消/失败）；中止时在飞行就地收口为「已中断/已取消」，不挂永久「运行中」",
-    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.89"
+    "markdown": "---\ntitle: Compose 嵌套滚动约束防线审计 —— 现存代码零违规\nseverity: none\ncategory: ui\n---\n\n## 背景\n\n`java.lang.IllegalStateException: Vertically scrollable component was measured with an infinity maximum height constraints` 是 Compose 的运行时约束检查崩溃：垂直滚动容器（LazyColumn/LazyVerticalGrid）在高度未约束的父布局（典型：另一个 `Column(verticalScroll)` 内，或 `wrapContentSize(unbounded=true)`）中被测量为无限最大高度。\n\n## 审计结论（2026-11-28，main @ 964c02a）\n\n全量排查 `verticalScroll` × `Lazy*` 共现的 6 个文件，**均无现存违规**：\n\n- `CodeToolDetailSheet.kt`：`GrepDetailBody` 的 LazyColumn 已有 `heightIn(max = 480.dp)`；流式窗口位于 `heightIn(max = 480.dp)` 的 Box 内\n- `CodeLongTaskSheet.kt`：`CheckpointTimeline` / `CopyOptionsDialog` 滚动区为叶子文本内容，无 Lazy 嵌套\n- `UbuntuEnvironmentScreen.kt`：`LogPane` 为独立滚动叶子；主 LazyColumn 无滚动父容器\n- `MarketDialogs.kt`：表单滚动区为表单叶子；两个 LazyColumn 均在 Dialog 直属作用域\n- `StorageScreen.kt` / `TerminalView.kt`：仅单一滚动域\n\n仓库中亦无 `wrapContentSize(unbounded = true)` 使用点。\n\n## 防线清单（回归守护）\n\n1. 永不在垂直滚动的父布局中直接嵌套另一个垂直滚动的子布局；头部内容作为 `item()` 放入 Lazy 作用域\n2. 非滚动父容器内的可滚动子组件必须给明确高度约束（`heightIn(max=...)` / `fillMaxHeight()` / `weight()`）\n3. 不使用 `Modifier.wrapContentSize(unbounded = true)` 包裹垂直滚动组件\n4. LinearLayout 中的 ComposeView 必须在滚动层次上给出确定高度（勿依赖 weight 语义）\n\n新增 Lazy* 组件时按本清单自查；若出现该崩溃，优先按清单逐条定位。",
+    "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.90"
   },
   "history": [
+    {
+      "versionName": "1.5.90",
+      "versionCode": 270,
+      "tag": "v1.5.90",
+      "date": "2026-11-28",
+      "title": "v1.5.90 更新内容",
+      "notes": [],
+      "images": [],
+      "pr": [
+        {
+          "title": "背景",
+          "notes": [
+            "`CodeToolDetailSheet.kt`：`GrepDetailBody` 的 LazyColumn 已有 `heightIn(max = 480.dp)`；流式窗口位于 `heightIn(max = 480.dp)` 的 Box 内",
+            "`CodeLongTaskSheet.kt`：`CheckpointTimeline` / `CopyOptionsDialog` 滚动区为叶子文本内容，无 Lazy 嵌套",
+            "`UbuntuEnvironmentScreen.kt`：`LogPane` 为独立滚动叶子；主 LazyColumn 无滚动父容器",
+            "`MarketDialogs.kt`：表单滚动区为表单叶子；两个 LazyColumn 均在 Dialog 直属作用域",
+            "`StorageScreen.kt` / `TerminalView.kt`：仅单一滚动域",
+            "永不在垂直滚动的父布局中直接嵌套另一个垂直滚动的子布局；头部内容作为 `item()` 放入 Lazy 作用域",
+            "非滚动父容器内的可滚动子组件必须给明确高度约束（`heightIn(max=...)` / `fillMaxHeight()` / `weight()`）",
+            "不使用 `Modifier.wrapContentSize(unbounded = true)` 包裹垂直滚动组件",
+            "LinearLayout 中的 ComposeView 必须在滚动层次上给出确定高度（勿依赖 weight 语义）"
+          ]
+        }
+      ],
+      "markdown": "---\ntitle: Compose 嵌套滚动约束防线审计 —— 现存代码零违规\nseverity: none\ncategory: ui\n---\n\n## 背景\n\n`java.lang.IllegalStateException: Vertically scrollable component was measured with an infinity maximum height constraints` 是 Compose 的运行时约束检查崩溃：垂直滚动容器（LazyColumn/LazyVerticalGrid）在高度未约束的父布局（典型：另一个 `Column(verticalScroll)` 内，或 `wrapContentSize(unbounded=true)`）中被测量为无限最大高度。\n\n## 审计结论（2026-11-28，main @ 964c02a）\n\n全量排查 `verticalScroll` × `Lazy*` 共现的 6 个文件，**均无现存违规**：\n\n- `CodeToolDetailSheet.kt`：`GrepDetailBody` 的 LazyColumn 已有 `heightIn(max = 480.dp)`；流式窗口位于 `heightIn(max = 480.dp)` 的 Box 内\n- `CodeLongTaskSheet.kt`：`CheckpointTimeline` / `CopyOptionsDialog` 滚动区为叶子文本内容，无 Lazy 嵌套\n- `UbuntuEnvironmentScreen.kt`：`LogPane` 为独立滚动叶子；主 LazyColumn 无滚动父容器\n- `MarketDialogs.kt`：表单滚动区为表单叶子；两个 LazyColumn 均在 Dialog 直属作用域\n- `StorageScreen.kt` / `TerminalView.kt`：仅单一滚动域\n\n仓库中亦无 `wrapContentSize(unbounded = true)` 使用点。\n\n## 防线清单（回归守护）\n\n1. 永不在垂直滚动的父布局中直接嵌套另一个垂直滚动的子布局；头部内容作为 `item()` 放入 Lazy 作用域\n2. 非滚动父容器内的可滚动子组件必须给明确高度约束（`heightIn(max=...)` / `fillMaxHeight()` / `weight()`）\n3. 不使用 `Modifier.wrapContentSize(unbounded = true)` 包裹垂直滚动组件\n4. LinearLayout 中的 ComposeView 必须在滚动层次上给出确定高度（勿依赖 weight 语义）\n\n新增 Lazy* 组件时按本清单自查；若出现该崩溃，优先按清单逐条定位。",
+      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.90"
+    },
     {
       "versionName": "1.5.89",
       "versionCode": 269,
@@ -1218,29 +1250,6 @@
       ],
       "markdown": "- Native Plugin Host 2.0 Phase 3 落地：插件工具正式成为一等 Agent 工具 —— Worker 发现的工具经 PluginToolBridge 注册进 ToolRegistry（Plugin 前缀 + 无分隔符 PascalCase 命名），可被 ToolSearch 搜到、被引擎直接调用\n- 统一生命周期管理器：14 态状态机驱动启动（Worker → 握手 → 加载 → 工具注册 → ACTIVE）与逆序清理（注销工具 → 取消事件订阅 → 停 Worker），禁用/启用/卸载全链路，状态流转非法即拒绝并留原因\n- 统一插件事件总线：异步分发 + 异常隔离 + 单处理器超时 + 并发信号量 —— 插件处理慢或拖死不阻塞 Agent 主循环；卸载时订阅全量清理\n- 工具冲突防护：第三方插件工具与内置工具撞名时拒绝注册（数据永不覆盖代码）；同插件重启重放幂等 REPLACE\n- 修复 suspend 边界 Result 双重装箱陷阱（执行路由改用 DTO 跨协程边界）",
       "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.41"
-    },
-    {
-      "versionName": "1.5.40",
-      "versionCode": 220,
-      "tag": "v1.5.40",
-      "date": "2026-11-08",
-      "title": "v1.5.40 更新内容",
-      "notes": [],
-      "images": [],
-      "pr": [
-        {
-          "title": "plugin host 2 worker runtime",
-          "notes": [
-            "Native Plugin Host 2.0 Phase 2 落地：插件 Worker 运行时 —— 持久化 node/bun Worker 进程 + 换行 JSON IPC 协议（STDOUT 纯协议、日志走 STDERR），工具热调用复用 Worker，不再每次调用冷启动 node",
-            "Worker 崩溃自动恢复：Supervisor 窗口计数重启策略（超上限 GaveUp 如实报告），重启后自动重放握手与模块加载；用户主动停止不误触发重启",
-            "错误隔离三重保障：插件工具抛异常进程不死；进程死亡时在途请求失败返回而非悬挂；Worker 致命错误带 fatal 原因可诊断（stderr 环形缓冲）",
-            "Node 与 Bun 运行时分离探测、分离启动命令 —— 探测失败如实报缺失，禁止互相冒充（TypeScript 入口在 node 下明确拒绝执行）",
-            "真实 node 端到端测试 19 项（协议编解码 + 全链路 IPC + 崩溃恢复），node 缺失环境如实标记 skipped 而非假通过"
-          ]
-        }
-      ],
-      "markdown": "- Native Plugin Host 2.0 Phase 2 落地：插件 Worker 运行时 —— 持久化 node/bun Worker 进程 + 换行 JSON IPC 协议（STDOUT 纯协议、日志走 STDERR），工具热调用复用 Worker，不再每次调用冷启动 node\n- Worker 崩溃自动恢复：Supervisor 窗口计数重启策略（超上限 GaveUp 如实报告），重启后自动重放握手与模块加载；用户主动停止不误触发重启\n- 错误隔离三重保障：插件工具抛异常进程不死；进程死亡时在途请求失败返回而非悬挂；Worker 致命错误带 fatal 原因可诊断（stderr 环形缓冲）\n- Node 与 Bun 运行时分离探测、分离启动命令 —— 探测失败如实报缺失，禁止互相冒充（TypeScript 入口在 node 下明确拒绝执行）\n- 真实 node 端到端测试 19 项（协议编解码 + 全链路 IPC + 崩溃恢复），node 缺失环境如实标记 skipped 而非假通过",
-      "releaseUrl": "https://github.com/Ultra-Guru/Android-Guru-Agent-Release/releases/tag/v1.5.40"
     }
   ]
 }
